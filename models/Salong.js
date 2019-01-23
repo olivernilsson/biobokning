@@ -5,5 +5,11 @@ let salongSchema = new Schema ( {
     "seatsPerRow": Number
 
 });
+
+//class in case its needed
+class SalongClass {
+
+}
+
 salongSchema.loadClass(SalongClass);
 module.exports = db.model('Salong', salongSchema);
