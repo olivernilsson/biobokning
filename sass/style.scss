@@ -1,9 +1,9 @@
 // Variable overrides for Bootstrap
-@import '_variable-overrides';
+@import 'variable-overrides';
 
 // The whole Bootstrap library
-//@import '_bootstrap/bootstrap';
+@import 'bootstrap/bootstrap';
 
 // My own partials
-@import '_body-related';
-@import '_footer';
+@import 'body-related';
+@import 'reg-page.scss';
