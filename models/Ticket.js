@@ -9,6 +9,10 @@ let ticketSchema = new Schema ( {
     "family 2 + 2": Number,
     "family big": Number,
 });
+//class in case its needed
+class TicketClass {
 
+}
 
+ticketSchema.loadClass(TicketClass);
 module.exports = db.model('Ticket', ticketSchema);
