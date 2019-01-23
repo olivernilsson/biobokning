@@ -4,6 +4,7 @@
   height: 300px;
   background-color: rgba(0, 0, 0, 0.397);
   padding: 20px;
+  border-radius: 10%;
   
 }
 
@@ -38,10 +39,12 @@
 }
 
 .place-style{
+  font-size: 18px;
+  font-style: italic;
    position: absolute;
   pointer-events: none;
-  left: 15px;
-  top: 18px;
+  left: 4px;
+  top: 20px;
   transition: 0.2s ease all;
   color:rgba(180, 240, 225, 0.712); 
 
@@ -50,17 +53,22 @@
 input:focus + span, input:not(:placeholder-shown) + span {
   opacity:1;
   transform: scale(0.75) translateY(-100%) translateX(-30px);
-  top:-2px;
+  top:10px;
+  left: 15px;
   color:rgba(180, 240, 225, 0.712);
+  
 }
 
 input[type=text]:focus, textarea:focus{
   background-color: transparent;
   padding: 3px 0px 3px 3px;
-  border: none;
-
   color: whitesmoke;
-
+  border:none;
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+  outline: none;
+  border-bottom: 1px solid aquamarine; 
 }
 
 
@@ -70,6 +78,6 @@ input[type=text], textarea {
   border:none;
   border-bottom: 1px solid aquamarine;
   color: whitesmoke;
+ 
 }
-
 
