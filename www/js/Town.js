@@ -1,1 +1,0 @@
-class Town extends REST {}

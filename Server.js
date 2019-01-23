@@ -42,10 +42,7 @@ module.exports = class Server {
 
     // Set keys to names of rest routes
     const models = {
-      books: require('./Book'),
-      authors: require('./Author'),
-      libraries: require('./Library'),
-      towns: require('./Town')
+
     };
 
     app.get('/autoload-js-and-templates', (req, res) => {
