@@ -5,6 +5,7 @@ const CreateRestRoutes = require('./CreateRestRoutes');
 const jsonflex = require('jsonflex')();
 const fs = require('fs');
 const path = require('path');
+const connectionString = require('./connectionString.js');
 
 module.exports = class Server {
 
@@ -19,8 +20,7 @@ module.exports = class Server {
 
   connectToDb() {
     return new Promise((resolve, reject) => {
-      let dbName = 'famous_books'
-      mongoose.connect(`mongodb://localhost/${dbName}`);
+      mongoose.connect(connectionString, { useNewUrlParser: true });
       global.db = mongoose.connection;
       db.on('error', () => reject('Could not connect to DB'));
       db.once('open', () => resolve('Connected to DB'));
