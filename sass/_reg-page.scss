@@ -1,0 +1,75 @@
+.reg-form{
+  margin: 0 auto;
+  max-width: 500px;
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.397);
+  padding: 20px;
+  
+}
+
+
+.form-style{
+  
+  border:none;
+  background-color: transparent;
+  border-bottom: 2px solid white;
+}
+
+.group1{
+  margin-top: 30px;
+  margin-bottom:30px;
+}
+
+#email{
+  padding-top: 20px;
+  max-width: 100%;
+ 
+}
+
+
+.blocking{
+  position: relative;
+  margin-right: 40px;
+}
+
+.blocking2{
+  position: relative;
+  width: 300px;
+}
+
+.place-style{
+   position: absolute;
+  pointer-events: none;
+  left: 15px;
+  top: 18px;
+  transition: 0.2s ease all;
+  color:rgba(180, 240, 225, 0.712); 
+
+}
+
+input:focus + span, input:not(:placeholder-shown) + span {
+  opacity:1;
+  transform: scale(0.75) translateY(-100%) translateX(-30px);
+  top:-2px;
+  color:rgba(180, 240, 225, 0.712);
+}
+
+input[type=text]:focus, textarea:focus{
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  border: none;
+
+  color: whitesmoke;
+
+}
+
+
+input[type=text], textarea {
+  padding: 3px 0px 3px 3px;
+  margin: 5px 5px 3px 0px;
+  border:none;
+  border-bottom: 1px solid aquamarine;
+  color: whitesmoke;
+}
+
+
