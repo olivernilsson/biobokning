@@ -8,7 +8,7 @@ class RegPage extends Component {
       'keyup #lastname': 'validateRegForm',
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
-      'keyup #email': 'emailVerification',
+      'keyup #email': 'validateRegForm',
     })
 
 
@@ -26,6 +26,31 @@ class RegPage extends Component {
     let bigLetter = /[A-Z]+/.test(passwordValue);
     let oneNumber = /[0-9]+/.test(passwordValue);
     let styleCount = 0;
+    let minLength = false;
+    let emailInput = $('#email').val();
+    let emailLength = $('#email').val().length;
+    let dot = '.';
+    let indexOfAtSign = emailInput.indexOf('@');
+    let indexOfLastDot = emailInput.lastIndexOf(dot);
+
+
+
+    if (emailLength > 9) {
+      minLength = true;
+    }
+
+    if (minLength === true && indexOfAtSign > 3 && indexOfLastDot > 3) {
+      $('.verify-email').css("color", "lightgreen")
+      $('#email').css("border-bottom", "1px solid lightgreen")
+      this.emailValid = true;
+
+    } else {
+      $('.verify-email').css("color", "lightcoral")
+      $('#email').css("border-bottom", "1px solid lightcoral")
+      this.emailValid=false;
+    }
+
+  
 
     if (passwordInput > 7) {
       $('.verify-tecken').css("color", "lightgreen")
@@ -57,7 +82,7 @@ class RegPage extends Component {
       $(`#password`).css("border-bottom", "1px solid lightcoral")
     }
 
-    if (passwordValue === verifyValue && passwordInput>7) {
+    if (passwordValue === verifyValue && styleCount===3) {
 
       $(`#password-verify`).css("border-bottom", "1px solid lightgreen")
     } else {
@@ -80,7 +105,7 @@ class RegPage extends Component {
     }
 
 
-    if (firstName.length > 2 && lastName.length > 2 && passwordValue === verifyValue && passwordInput > 7) {
+    if (firstName.length > 2 && lastName.length > 2 && passwordValue === verifyValue && passwordInput > 7 && this.emailValid===true ) {
 
       this.done = true;
     } else {
@@ -88,38 +113,11 @@ class RegPage extends Component {
     }
 
 
-    if (this.done === true && this.emailValid === true) {
+    if (this.done === true && styleCount===3) {
       $('.done-btn').removeClass('disabled');
     } else {
       $('.done-btn').addClass('disabled');
     }
   }
 
-  emailVerification() {
-    let minLength = false;
-    let emailInput = $('#email').val();
-    let emailLength = $('#email').val().length;
-    let dot = '.';
-    let indexOfAtSign = emailInput.indexOf('@');
-    let indexOfLastDot = emailInput.lastIndexOf(dot);
-
-
-
-    if (emailLength > 9) {
-      minLength = true;
-    }
-
-    if (minLength === true && indexOfAtSign > 3 && indexOfLastDot > 3) {
-      $('.verify-email').css("color", "lightgreen")
-      $('#email').css("border-bottom", "1px solid lightgreen")
-      this.emailValid = true;
-
-    } else {
-      $('.verify-email').css("color", "lightcoral")
-      $('#email').css("border-bottom", "1px solid lightcoral")
-    }
-
-  }
-
 }
-
