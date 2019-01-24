@@ -7,27 +7,25 @@ let filmSchema = new Schema(  {
     "productionCountries" : String,
     "productionYear" : Number,
     "length" : Number,
-    "desc" : String,
-    "regi" : String,
+    "description" : String,
+    "director" : String,
     "actor" : String,
     "language" : String,
     "subtitle" : String,
-    "premier" : String,
+    "premier" : Number,
     "trailer" : String,
     "image" : String,
-    "review": String
+    "review" : String
   });
   
-/* Example properties:
-  "author": { type: String, required: true },
-  "link": { type: String, unique: true, required: true },
-*/
 
-// 2. Create a class with methods/or getters/setters
-//    that every Film should have
-
-  
-  // 3. Create the model and export it
+  class filmClass{
+    get age(){
+      let currentYear = new Date().getFullYear();
+      return currentYear - this.year;
+    }
+  }
+  //Create the model and export it
   filmSchema.loadClass(filmClass);
   module.exports = db.model('Film', filmSchema);
   
