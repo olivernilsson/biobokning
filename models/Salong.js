@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let salongSchema = new Schema ( {
     "name": {type: Schema.Types.ObjectId, ref: 'Name'},
-    "seatsPerRow": string,
+    "seatsPerRow": Number
 
 });
 salongSchema.loadClass(SalongClass);

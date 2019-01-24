@@ -1,0 +1,11 @@
+body > .base-div{
+  background-image: linear-gradient( rgba(0, 0, 0, 0.8), rgb(255, 255, 255));
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: rgb(255, 255, 255);
+}
+
+main {
+  flex: 1;
+}

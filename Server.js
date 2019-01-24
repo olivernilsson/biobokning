@@ -1,3 +1,10 @@
+const Sass = require('./sass');
+const config = require('./config.json');
+ 
+for(let conf of config.sass){
+    new Sass(conf);
+}
+ 
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -5,6 +12,7 @@ const CreateRestRoutes = require('./CreateRestRoutes');
 const jsonflex = require('jsonflex')();
 const fs = require('fs');
 const path = require('path');
+
 
 module.exports = class Server {
 
