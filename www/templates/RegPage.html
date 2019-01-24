@@ -1,19 +1,38 @@
 <form class="reg-form d-flex align-content-center flex-wrap">
 	<h4>Var god och skriv in dina uppgifter för att boka!</h4>
 	<div class="input-group group1">
-			<span class="blocking">
-		<input id="firstname" type="text" class="form-control form-style" name="first" placeholder=" "><span class="place-style">Förnamn</span>
+		<span class="blocking">
+			<input id="firstname" type="text" class="form-control form-style" name="first" placeholder=" "><span class="place-style">Förnamn</span>
 		</span>
 		<span class="blocking">
-		<input id="lastname" type="text" class="form-control form-style" name="last" placeholder=" "><span class="place-style">Efternamn</span>
-	</span>
+			<input id="lastname" type="text" class="form-control form-style" name="last" placeholder=" "><span class="place-style">Efternamn</span>
+		</span>
 	</div>
 
 	<div class="input-group group2">
-			<span class="blocking2">
-		<input id="email" type="text" class=" form-control form-style" name="email" placeholder=" "><span class="place-style">Email</span>
-	</span>
+		<span class="blocking2">
+			<input id="email" type="text" class=" form-control form-style" name="email" placeholder=" "><span class="place-style">Email</span>
+		</span>
 	</div>
 
+	<div class="input-group group3">
+		<span class="blocking">
+			<input id="password" type="text" class="form-control form-style" name="password" placeholder=" "><span class="place-style">Lösenord</span>
+		</span>
+		<span class="blocking">
+			<input id="password-verify" type="text" class="form-control form-style" name="passwordverify" placeholder=" "><span class="place-style">Repetera
+				lösenord</span>
+		</span>
+	</div>
 
+	<div class="check-pass">
+		<small class="verify-tecken" >Minst sju tecken</small>
+		<br>
+		<small class="verify-bokstav ">Minst en stor bokstav</small>
+		<br>
+		<small class="verify-number ">Minst en siffra</small>
+	</div>
+<div class="btn-block">
+	<button type="button" class=" done-btn btn btn-primary btn-sm disabled">Small button</button>
+</div>
 </form>

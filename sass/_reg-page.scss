@@ -1,7 +1,7 @@
 .reg-form{
   margin: 0 auto;
   max-width: 500px;
-  height: 300px;
+  height: 400px;
   background-color: rgba(0, 0, 0, 0.397);
   padding: 20px;
   border-radius: 10%;
@@ -10,7 +10,7 @@
 
 
 .form-style{
-  
+  position: relative;
   border:none;
   background-color: transparent;
   border-bottom: 2px solid white;
@@ -27,6 +27,10 @@
  
 }
 
+
+.group2{
+  margin-bottom: 30px;
+}
 
 .blocking{
   position: relative;
@@ -80,4 +84,30 @@ input[type=text], textarea {
   color: whitesmoke;
  
 }
+
+.check-pass{
+  margin-top: 10px;
+
+}
+
+.verify-red{
+color: rgb(235, 198, 198);
+font-size: 12px;
+
+
+}
+
+
+.btn-block{
+  position: relative;
+}
+
+.done-btn{
+  position: absolute;
+  align-content: flex-end;
+  height: 50px;
+  bottom: 0;
+  right: 40px;
+}
+
 
