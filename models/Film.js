@@ -24,16 +24,8 @@ let filmSchema = new Schema(  {
 */
 
 // 2. Create a class with methods/or getters/setters
-//    that every books should have
+//    that every Film should have
 
-  class filmClass {
-
-    get age(){
-      let currentYear = new Date().getFullYear();
-      return currentYear - this.year;
-    }
-  
-  }
   
   // 3. Create the model and export it
   filmSchema.loadClass(filmClass);
