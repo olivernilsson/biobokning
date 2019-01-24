@@ -72,7 +72,7 @@ input[type=text]:focus, textarea:focus{
   -moz-box-shadow:none;
   box-shadow:none;
   outline: none;
-  border-bottom: 1px solid aquamarine; 
+  border-bottom: 1px solid lightcoral; 
 }
 
 
@@ -80,7 +80,7 @@ input[type=text], textarea {
   padding: 3px 0px 3px 3px;
   margin: 5px 5px 3px 0px;
   border:none;
-  border-bottom: 1px solid aquamarine;
+  border-bottom: 1px solid lightcoral;
   color: whitesmoke;
  
 }
@@ -89,9 +89,16 @@ input[type=password], textarea {
   padding: 3px 0px 3px 3px;
   margin: 5px 5px 3px 0px;
   border:none;
-  border-bottom: 1px solid aquamarine;
+  border-bottom: 1px solid lightcoral;
   color: whitesmoke;
  
+}
+
+
+input[type=text]::placeholder,input[type=password]::placeholder {
+  font-size: 14px;
+ color:lightcoral;
+ text-align: right;
 }
 
 
@@ -104,7 +111,7 @@ input[type=password]:focus, textarea:focus{
   -moz-box-shadow:none;
   box-shadow:none;
   outline: none;
-  border-bottom: 1px solid aquamarine; 
+  border-bottom: 1px solid lightcoral; 
 }
 .verify-tecken,.verify-bokstav,.verify-number,.verify-email{
 color: lightcoral;
