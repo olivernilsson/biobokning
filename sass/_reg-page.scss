@@ -1,7 +1,7 @@
 .reg-form{
   margin: 0 auto;
   max-width: 500px;
-  height: 400px;
+  height: 500px;
   background-color: rgba(0, 0, 0, 0.397);
   padding: 20px;
   border-radius: 10%;
@@ -43,7 +43,7 @@
 }
 
 .place-style{
-  font-size: 18px;
+  font-size: 13px;
   font-style: italic;
    position: absolute;
   pointer-events: none;
@@ -85,29 +85,49 @@ input[type=text], textarea {
  
 }
 
-.check-pass{
-  margin-top: 10px;
-
+input[type=password], textarea {
+  padding: 3px 0px 3px 3px;
+  margin: 5px 5px 3px 0px;
+  border:none;
+  border-bottom: 1px solid aquamarine;
+  color: whitesmoke;
+ 
 }
 
-.verify-red{
-color: rgb(235, 198, 198);
+
+input[type=password]:focus, textarea:focus{
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  color: whitesmoke;
+  border:none;
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+  outline: none;
+  border-bottom: 1px solid aquamarine; 
+}
+.verify-tecken,.verify-bokstav,.verify-number,.verify-email{
+color: lightcoral;
 font-size: 12px;
 
 
 }
 
 
-.btn-block{
-  position: relative;
-}
+.validate-box{
+  margin-top: 40px;
 
+  width: 100%;
+  max-width: 100%;
+}
 .done-btn{
-  position: absolute;
-  align-content: flex-end;
+  float:right;
   height: 50px;
-  bottom: 0;
-  right: 40px;
+
 }
 
 
+
+.email-style{
+  margin: 0 auto;
+}
