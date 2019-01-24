@@ -6,4 +6,4 @@ class NavItem extends Component {
     this.url = url;
   }
 
-}
+} 
