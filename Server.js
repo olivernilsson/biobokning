@@ -16,6 +16,7 @@ module.exports = class Server {
   async start() {
     await this.connectToDb();
     await this.startWebServer();
+    await this.testAdd();
     await this.testConsole();
   }
 
@@ -34,6 +35,21 @@ module.exports = class Server {
     found.each(function (err, doc) {
         console.log(doc);
     });
+  }
+
+  testAdd(){
+
+    db.collection('movies').insertMany([
+      { name: "film1",
+        lenght: "120",
+        age: "12+"},
+        { name: "film2",
+        lenght: "123",
+        age: "125+"},
+        { name: "film3",
+        lenght: "102",
+        age: "18+"},
+    ])
   }
 
   startWebServer() {
