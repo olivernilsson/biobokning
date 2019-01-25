@@ -7,8 +7,11 @@ class NavBar extends Component {
       new NavItem('Om oss', '/about'),
       new NavItem('Filmer & trailers', '/moviesandtrailers'),
       new NavItem('Sök filmer', '/searchmovie'),
-      new NavItem('RegPage','/regPage')
+      new NavItem('RegPage','/regPage'),
+      new UserLogin('')
     ];
+
+   
   }
 
 }
