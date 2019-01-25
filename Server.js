@@ -18,6 +18,7 @@ module.exports = class Server {
     await this.startWebServer();
     await this.testAdd();
     await this.testConsole();
+    //await this.dropCollection();
   }
 
   connectToDb() {
@@ -50,6 +51,11 @@ module.exports = class Server {
         lenght: "102",
         age: "18+"},
     ])
+  }
+
+  dropCollection(){
+
+    db.collection('movies').drop();
   }
 
   startWebServer() {
