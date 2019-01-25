@@ -1,2 +1,2 @@
-let connectionString = `mongodb+srv://olinil:nintendo64.@cinema-2o7xd.mongodb.net/test?retryWrites=true`;
+let connectionString = `mongodb://olinil:nintendo64.@cinema-shard-00-00-2o7xd.mongodb.net:27017,cinema-shard-00-01-2o7xd.mongodb.net:27017,cinema-shard-00-02-2o7xd.mongodb.net:27017/cinema?ssl=true&replicaSet=Cinema-shard-0&authSource=admin&retryWrites=true`;
 module.exports = connectionString;

@@ -16,6 +16,7 @@ module.exports = class Server {
   async start() {
     await this.connectToDb();
     await this.startWebServer();
+    await this.testConsole();
   }
 
   connectToDb() {
@@ -24,6 +25,14 @@ module.exports = class Server {
       global.db = mongoose.connection;
       db.on('error', () => reject('Could not connect to DB'));
       db.once('open', () => resolve('Connected to DB'));
+      console.log("hej");
+    });
+  }
+
+  testConsole() {
+    var found = db.collection('movies').find();
+    found.each(function (err, doc) {
+        console.log(doc);
     });
   }
 
