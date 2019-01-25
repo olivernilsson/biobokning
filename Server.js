@@ -9,7 +9,7 @@ const connectionString = require('./connectionString.js');
 
 module.exports = class Server {
 
-  constructor() {
+  constructor() { 
     this.start();
   }
 
@@ -53,11 +53,15 @@ module.exports = class Server {
     ])
   }
 
+<<<<<<< Updated upstream
   dropCollection(){
 
     db.collection('movies').drop();
   }
 
+=======
+  
+>>>>>>> Stashed changes
   startWebServer() {
 
     // Create a web server
