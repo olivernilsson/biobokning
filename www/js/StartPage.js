@@ -11,4 +11,4 @@ class StartPage extends Component {
     this.render();
   }
 
-}
+} 
