@@ -9,6 +9,7 @@ class PageContent extends Component {
     this.moviesAndTrailersPage = new MoviesAndTrailersPage();
     this.searchMovie = new SearchMoviePage();
     this.userLogin = new UserLogin();
+    this.userRegistration = new UserRegistration();
   }
   
   
