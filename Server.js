@@ -3,14 +3,14 @@ const config = require('./config.json');
  
 for(let conf of config.sass){
     new Sass(conf);
-}
- 
+} 
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const CreateRestRoutes = require('./CreateRestRoutes');
 const jsonflex = require('jsonflex')();
-const fs = require('fs');
+const fs = require('fs'); 
 const path = require('path');
 const connectionString = require('./connectionString.js');
 
@@ -18,8 +18,8 @@ const connectionString = require('./connectionString.js');
 module.exports = class Server {
 
   constructor() {
-    this.start();
-  }
+    this.start(); 
+  } 
 
   async start() {
     await this.connectToDb();
@@ -44,10 +44,10 @@ module.exports = class Server {
   testConsole() {
     var found = db.collection('movies').find();
     found.each(function (err, doc) {
-      console.log(doc);
+      //console.log(doc);
     });
   }
-
+ 
   testAdd() {
     db.collection('movies').insertMany([
       {
@@ -447,9 +447,9 @@ module.exports = class Server {
         ]
       }
     ])
-  }
+  } 
 
-  addViewings() {
+  addViewings() { 
     db.collection('viewings').insertMany([
       {
         "auditorium": "Stora Salongen",
@@ -642,9 +642,9 @@ module.exports = class Server {
 
     // Set keys to names of rest routes
     const models = {
-
-    };
-
+      views: require('./models/View')
+    }; 
+   
     app.get('/autoload-js-and-templates', (req, res) => {
       let files = fs.readdirSync(path.join(__dirname, '/www/js'));
       files = files.filter(x => x.substr(-3) === '.js')
@@ -663,7 +663,7 @@ module.exports = class Server {
       html = req.params.template.split('.html')[0] +
         '.prototype.render = function(){ return `\n' + html + '\n`};'
       res.send(html);
-    });
+    }); 
 
     // create all necessary rest routes for the models
     new CreateRestRoutes(app, db, models);
@@ -675,7 +675,7 @@ module.exports = class Server {
       if (req.url === '/jsonflex.js' || req.url == '/json-save') { next(); return; }
       res.sendFile(path.join(__dirname, '/www/index.html'));
     });
-
-  }
-
-}
+  
+  } 
+   
+}    
