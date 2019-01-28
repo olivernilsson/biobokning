@@ -9,6 +9,7 @@ class RegPage extends Component {
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
       'keyup #email': 'validateRegForm',
+      'click #saveuser': 'saveUserToDb'
     })
 
 
@@ -47,10 +48,10 @@ class RegPage extends Component {
     } else {
       $('.verify-email').css("color", "lightcoral")
       $('#email').css("border-bottom", "1px solid lightcoral")
-      this.emailValid=false;
+      this.emailValid = false;
     }
 
-  
+
 
     if (passwordInput > 7) {
       $('.verify-tecken').css("color", "lightgreen")
@@ -82,7 +83,7 @@ class RegPage extends Component {
       $(`#password`).css("border-bottom", "1px solid lightcoral")
     }
 
-    if (passwordValue === verifyValue && styleCount===3) {
+    if (passwordValue === verifyValue && styleCount === 3) {
 
       $(`#password-verify`).css("border-bottom", "1px solid lightgreen")
     } else {
@@ -105,7 +106,7 @@ class RegPage extends Component {
     }
 
 
-    if (firstName.length > 2 && lastName.length > 2 && passwordValue === verifyValue && passwordInput > 7 && this.emailValid===true ) {
+    if (firstName.length > 2 && lastName.length > 2 && passwordValue === verifyValue && passwordInput > 7 && this.emailValid === true) {
 
       this.done = true;
     } else {
@@ -113,11 +114,27 @@ class RegPage extends Component {
     }
 
 
-    if (this.done === true && styleCount===3) {
+    if (this.done === true && styleCount === 3) {
       $('.done-btn').removeClass('disabled');
     } else {
       $('.done-btn').addClass('disabled');
     }
   }
 
+  asyncsaveUserToDb() {
+    this.app.post('/json/users', async (req, res) => {
+      let saved = await $.ajax({
+        url: '/json/users',
+        // if _id exists update/put otherwise create/post
+        method: this._id ? 'PUT' : 'POST',
+        contentType: 'application/json',
+        processData: false,
+        data: JSON.stringify(this)
+      }).catch(err => console.error(err));
+
+      res.json({ saved });
+    }
+    )}
 }
+
+

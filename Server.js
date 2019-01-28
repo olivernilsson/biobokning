@@ -13,7 +13,10 @@ const jsonflex = require('jsonflex')();
 const fs = require('fs'); 
 const path = require('path');
 const connectionString = require('./connectionString.js');
+const LoginHandler = require('./LoginHandler');
 const settings = require('./settings.json');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 
 module.exports = class Server {
@@ -39,7 +42,7 @@ module.exports = class Server {
       global.db = mongoose.connection;
       db.on('error', () => reject('Could not connect to DB'));
       db.once('open', () => resolve('Connected to DB'));
-      console.log("hej");
+      
     });
   }
 
@@ -49,6 +52,8 @@ module.exports = class Server {
       //console.log(doc);
     });
   } 
+
+
  
   testAdd() { 
     db.collection('movies').insertMany([
@@ -656,7 +661,7 @@ module.exports = class Server {
       film: require('./models/Film'),
       salong: require('./models/Salong'),
       ticket: require('./models/Ticket'),
-      user: require('./models/User'),
+      users: require('./models/User'),
       views: require('./models/View')
 
     };
@@ -680,6 +685,12 @@ module.exports = class Server {
         '.prototype.render = function(){ return `\n' + html + '\n`};'
       res.send(html);
     }); 
+
+
+
+
+    
+
 
     // create all necessary rest routes for the models
     new CreateRestRoutes(app, db, models);

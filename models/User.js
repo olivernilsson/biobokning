@@ -1,14 +1,20 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let userSchema = new Schema({
-    "FirstName":{type: String, require: true},
-    "LastName":{type: String, require: true},
+    "firstName":{type: String, require: true},
+    "lastName":{type: String, require: true},
     "email":{type: String, require: true, unique: true},
     "password":{type: String, require: true}
 
 });
 
+
+userSchema.pre('save', async function(){
+  // here we replace the password with the encrypted password
+  this.password = await bcrypt.hash(this.password + passwordSalt, 10);
+});
 
 
 module.exports = db.model('User', userSchema);
