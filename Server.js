@@ -642,9 +642,14 @@ module.exports = class Server {
 
     // Set keys to names of rest routes
     const models = {
-      views: require('./models/View')
-    }; 
-   
+      film: require('./models/Film'),
+      salong: require('./models/Salong'),
+      ticket: require('./models/Ticket'),
+      user: require('./models/User'),
+      view: require('./models/View')
+
+    };
+
     app.get('/autoload-js-and-templates', (req, res) => {
       let files = fs.readdirSync(path.join(__dirname, '/www/js'));
       files = files.filter(x => x.substr(-3) === '.js')
