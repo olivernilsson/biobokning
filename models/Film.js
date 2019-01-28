@@ -7,21 +7,17 @@ let filmSchema = new Schema(  {
     "productionCountries" : String,
     "productionYear" : Number,
     "length" : Number,
-    "desc" : String,
-    "regi" : String,
+    "description" : String,
+    "director" : String,
     "actor" : String,
     "language" : String,
     "subtitle" : String,
-    "premier" : String,
+    "premier" : Number,
     "trailer" : String,
     "image" : String,
-    "review": String
+    "review" : String
   });
   
-/* Example properties:
-  "author": { type: String, required: true },
-  "link": { type: String, unique: true, required: true },
-*/
 
 // 2. Create a class with methods/or getters/setters
 //    that every Film should have
