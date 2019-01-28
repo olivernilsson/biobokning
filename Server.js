@@ -13,6 +13,7 @@ const jsonflex = require('jsonflex')();
 const fs = require('fs'); 
 const path = require('path');
 const connectionString = require('./connectionString.js');
+const settings = require('./settings.json');
 
 
 module.exports = class Server {
@@ -34,6 +35,7 @@ module.exports = class Server {
   connectToDb() {
     return new Promise((resolve, reject) => {
       mongoose.connect(connectionString, { useNewUrlParser: true });
+      global.passwordSalt = settings.passwordSalt;
       global.db = mongoose.connection;
       db.on('error', () => reject('Could not connect to DB'));
       db.once('open', () => resolve('Connected to DB'));
@@ -48,7 +50,7 @@ module.exports = class Server {
     });
   } 
  
-  testAdd() {
+  testAdd() { 
     db.collection('movies').insertMany([
       {
         "title": "Call me by your name",
@@ -640,13 +642,22 @@ module.exports = class Server {
 
     app.use(jsonflex);
 
+    app.use(session({
+      secret: settings.cookieSecret,
+      resave: true,
+      saveUninitialized: true,
+      store: new MongoStore({
+        mongooseConnection: db
+      })
+    }));
+
     // Set keys to names of rest routes
     const models = {
       film: require('./models/Film'),
       salong: require('./models/Salong'),
       ticket: require('./models/Ticket'),
       user: require('./models/User'),
-      view: require('./models/View')
+      views: require('./models/View')
 
     };
 
@@ -672,6 +683,12 @@ module.exports = class Server {
 
     // create all necessary rest routes for the models
     new CreateRestRoutes(app, db, models);
+
+
+
+ 
+     // create special routes for login
+     new LoginHandler(app, models.users);
 
     // Start the web server
     app.listen(3000, () => console.log('Listening on port 3000'));
