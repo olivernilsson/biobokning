@@ -25,9 +25,11 @@ let filmSchema = new Schema(  {
 
 // 2. Create a class with methods/or getters/setters
 //    that every Film should have
+class FilmClass {
 
+}
   
   // 3. Create the model and export it
-  filmSchema.loadClass(filmClass);
+  filmSchema.loadClass(FilmClass);
   module.exports = db.model('Film', filmSchema);
   

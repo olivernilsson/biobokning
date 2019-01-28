@@ -46,7 +46,7 @@ module.exports = class Server {
     found.each(function (err, doc) {
       //console.log(doc);
     });
-  }
+  } 
  
   testAdd() {
     db.collection('movies').insertMany([
