@@ -48,7 +48,7 @@ module.exports = class Server {
     });
   } 
  
-  testAdd() {
+  testAdd() { 
     db.collection('movies').insertMany([
       {
         "title": "Call me by your name",
@@ -646,7 +646,7 @@ module.exports = class Server {
       salong: require('./models/Salong'),
       ticket: require('./models/Ticket'),
       user: require('./models/User'),
-      view: require('./models/View')
+      views: require('./models/View')
 
     };
 
