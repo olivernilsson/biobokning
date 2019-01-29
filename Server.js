@@ -696,8 +696,7 @@ module.exports = class Server {
     // create all necessary rest routes for the models
     new CreateRestRoutes(app, db, models);
 
-    // create all necessary rest routes for the models
- 
+  
 
     // create special routes for login
     new LoginHandler(app, models.users);
