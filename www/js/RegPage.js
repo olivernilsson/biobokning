@@ -115,18 +115,20 @@ class RegPage extends Component {
 
 
     if (this.done === true && styleCount === 3) {
-      $('.done-btn').removeClass('disabled');
+      $('#save-user').removeClass('disabled');
     } else {
-      $('.done-btn').addClass('disabled');
+      $('#save-user').addClass('disabled');
     }
   }
 
   saveUserToDb() {
     $("#userform").submit(async function (event) {
+
       let firstName = $('#firstname').val();
       let lastName = $('#lastname').val();
       let verifyValue = $('#password-verify').val();
-      let emailInput = $('#email').val();
+      let emailInput = $('#email').val().toLowerCase();
+
       let addedUser = new User({
         firstName: firstName,
         lastName: lastName,
@@ -136,7 +138,14 @@ class RegPage extends Component {
 
       event.preventDefault();
       await addedUser.save();
+      
+      alert('added to db');
+      $("#userform").find("input[type=text], textarea").val("")
+      $("#userform").find("input[type=password], textarea").val("")
+      this.done = false;
+      this.emailValid = false;
 
     });
+
   }
 }
