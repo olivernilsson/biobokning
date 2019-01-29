@@ -15,7 +15,8 @@ const path = require('path');
 const connectionString = require('./connectionString.js');
 const LoginHandler = require('./LoginHandler');
 const settings = require('./settings.json');
-
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 
 module.exports = class Server {
@@ -645,6 +646,15 @@ module.exports = class Server {
     app.use(express.static('www'));
 
     app.use(jsonflex);
+
+    app.use(session({
+      secret: settings.cookieSecret,
+      resave: true,
+      saveUninitialized: true,
+      store: new MongoStore({
+        mongooseConnection: db
+      })
+    }));
 
     // Set keys to names of rest routes
     const models = {
