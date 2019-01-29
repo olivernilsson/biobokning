@@ -1,7 +1,9 @@
 async function testLogin(){
  
   // credentials we want to login with
-  let login = new Login({
+  let login = new User({
+    firstName: 'anna',
+    lastName:'annaa',
     email: 'anna@yahoo.com',
     password: 'anna'
   });
@@ -20,6 +22,6 @@ async function testLogout(){
   console.log(await loginObj.delete());
 }
  
-//testLogin();
+// testLogin();
 //testCheckLogin();
 // testLogout();

@@ -1,16 +1,16 @@
 const Sass = require('./sass');
 const config = require('./config.json');
- 
-for(let conf of config.sass){
-    new Sass(conf);
-} 
+
+for (let conf of config.sass) {
+  new Sass(conf);
+}
 
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const CreateRestRoutes = require('./CreateRestRoutes');
 const jsonflex = require('jsonflex')();
-const fs = require('fs'); 
+const fs = require('fs');
 const path = require('path');
 const connectionString = require('./connectionString.js');
 const LoginHandler = require('./LoginHandler');
@@ -22,8 +22,8 @@ const MongoStore = require('connect-mongo')(session);
 module.exports = class Server {
 
   constructor() {
-    this.start(); 
-  } 
+    this.start();
+  }
 
   async start() {
     await this.connectToDb();
@@ -42,7 +42,7 @@ module.exports = class Server {
       global.db = mongoose.connection;
       db.on('error', () => reject('Could not connect to DB'));
       db.once('open', () => resolve('Connected to DB'));
-      
+
     });
   }
 
@@ -51,11 +51,11 @@ module.exports = class Server {
     found.each(function (err, doc) {
       //console.log(doc);
     });
-  } 
+  }
 
 
- 
-  testAdd() { 
+
+  testAdd() {
     db.collection('movies').insertMany([
       {
         "title": "Call me by your name",
@@ -454,9 +454,9 @@ module.exports = class Server {
         ]
       }
     ])
-  } 
+  }
 
-  addViewings() { 
+  addViewings() {
     db.collection('viewings').insertMany([
       {
         "auditorium": "Stora Salongen",
@@ -684,22 +684,23 @@ module.exports = class Server {
       html = req.params.template.split('.html')[0] +
         '.prototype.render = function(){ return `\n' + html + '\n`};'
       res.send(html);
-    }); 
+    });
 
 
 
 
-    
+
+
 
 
     // create all necessary rest routes for the models
     new CreateRestRoutes(app, db, models);
 
-
-
+    // create all necessary rest routes for the models
  
-     // create special routes for login
-     new LoginHandler(app, models.users);
+
+    // create special routes for login
+    new LoginHandler(app, models.users);
 
     // Start the web server
     app.listen(3000, () => console.log('Listening on port 3000'));
@@ -708,7 +709,7 @@ module.exports = class Server {
       if (req.url === '/jsonflex.js' || req.url == '/json-save') { next(); return; }
       res.sendFile(path.join(__dirname, '/www/index.html'));
     });
-  
-  } 
-   
+
+  }
+
 }    

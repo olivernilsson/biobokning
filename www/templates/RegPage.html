@@ -1,11 +1,11 @@
-<form  method="post" action="/addUser" class="reg-form d-flex align-content-center flex-wrap">
+<form id="userform" action="/" class="reg-form d-flex align-content-center flex-wrap">
 	<h4>Var god och skriv in dina uppgifter för att boka!</h4>
 	<div class="input-group group1">
 		<span class="blocking">
-			<input id="firstname" type="text" class="form-control form-style" name="first" placeholder=" "><span class="place-style">Förnamn</span>
+			<input id="firstname" type="text" class="form-control form-style" name="firstName" placeholder=" "><span class="place-style">Förnamn</span>
 		</span>
 		<span class="blocking">
-			<input id="lastname" type="text" class="form-control form-style" name="last" placeholder=" "><span class="place-style">Efternamn</span>
+			<input id="lastname" type="text" class="form-control form-style" name="lastName" placeholder=" "><span class="place-style">Efternamn</span>
 		</span>
 	</div>
 
@@ -32,7 +32,7 @@
 	
 	<div class="validate-box">
 		
-		<button id="save-user" type="submit" value="submit" class=" done-btn btn btn-primary btn-sm disabled">Klicka för att boka</button>
+		<button id="save-user" type="submit"  class=" done-btn btn btn-primary btn-sm disabled">Klicka för att boka</button>
 		<small class="verify-tecken">Minst sju tecken</small>
 		<br>
 		<small class="verify-bokstav ">Minst en stor bokstav</small>

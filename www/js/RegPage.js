@@ -9,7 +9,7 @@ class RegPage extends Component {
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
       'keyup #email': 'validateRegForm',
-      'click #saveuser': 'saveUserToDb'
+      'click #save-user': 'saveUserToDb'
     })
 
 
@@ -121,20 +121,22 @@ class RegPage extends Component {
     }
   }
 
-  asyncsaveUserToDb() {
-    this.app.post('/json/users', async (req, res) => {
-      let saved = await $.ajax({
-        url: '/json/users',
-        // if _id exists update/put otherwise create/post
-        method: this._id ? 'PUT' : 'POST',
-        contentType: 'application/json',
-        processData: false,
-        data: JSON.stringify(this)
-      }).catch(err => console.error(err));
+  saveUserToDb() {
+    $("#userform").submit(async function (event) {
+      let firstName = $('#firstname').val();
+      let lastName = $('#lastname').val();
+      let verifyValue = $('#password-verify').val();
+      let emailInput = $('#email').val();
+      let addedUser = new User({
+        firstName: firstName,
+        lastName: lastName,
+        email: emailInput,
+        password: verifyValue
+      });
 
-      res.json({ saved });
-    }
-    )}
+      event.preventDefault();
+      await addedUser.save();
+
+    });
+  }
 }
-
-
