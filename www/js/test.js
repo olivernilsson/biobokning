@@ -1,9 +1,7 @@
 async function testLogin(){
  
   // credentials we want to login with
-  let login = new User({
-    firstName: 'anna',
-    lastName:'annaa',
+  let login = new login({
     email: 'anna@yahoo.com',
     password: 'anna'
   });
