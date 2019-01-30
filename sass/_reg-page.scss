@@ -118,20 +118,24 @@ color: lightcoral;
 font-size: 12px;
 
 
+
 }
 
 
 .validate-box{
-  margin-top: 20px;
-
+  margin-top: 10px;
+line-height: normal;
   width: 100%;
   max-width: 100%;
+  display: flex;
+  
 }
 .done-btn{
-  float:right;
   height: 50px;
-  margin-top: 30px;
-  margin-right: 20px;
+ position: absolute;
+ bottom: 0;
+ width: 100%;
+ left:0;
 
 }
 

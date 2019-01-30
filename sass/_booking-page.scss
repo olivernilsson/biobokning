@@ -2,6 +2,7 @@
   width: 100%;
 justify-content: center;
   display: flex;
+  margin: 0 auto;
 
   
 }
@@ -19,31 +20,26 @@ justify-content: center;
   }
 
 
- 
 
   .progressbar{
     list-style-type: none;
   }
 
   .step-style{
-    
-    width: 30px;
     height: 30px;
-    border: 2px solid #bebebe;
+    border: 2px solid #000000;
     display: block;
     margin: 0 auto 10px auto;
-    border-radius: 50%;
     line-height: 27px;
-    background: white;
-    color: #bebebe;
+    background: whitesmoke;
+    color: #9b9999;
     text-align: center;
     font-weight: bold;
   }
       
   
 .active-page{
-  border-color: #3aac5d;
-background: #3aac5d;
+background: #399e9e;
 color: white
 }
 
@@ -64,17 +60,20 @@ color: white
 
 
 .pagewrap{
- 
-  padding: 20px;
+justify-content: center;
+
   width: 100%;
   margin: 0 auto;
-height: 550px;
+height: 500px;
 display: flex;
  
 }
 
 
 #forward {
+  color:#C5C6C7;
+  align-self: center;
+  height: 100px;
   font-weight: 900;
   width: 150px;
   background-color: Transparent;
@@ -83,10 +82,14 @@ display: flex;
   cursor:pointer;
   overflow: hidden;
   outline:none;
-  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(217, 248, 245));
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 20%;
 
 }
 #backtext{
+  color:#C5C6C7;
+  align-self: center;
+  height: 100px;
   font-weight: 900;
   width: 150px;
   background-color: Transparent;
@@ -95,15 +98,15 @@ display: flex;
   cursor:pointer;
   overflow: hidden;
   outline:none;
-  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(217, 248, 245));
+  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 20%;
 }
 
 .example{
-margin-top: 30px;
   font-size: 40px;
-  margin: 0 auto;
- width: 60%;
-background-color: rgba(73, 75, 75, 0.6)
+  position: relative;
+  width: 60%;
+  background-color: rgba(31, 40, 51,0.6);
 
 }
 
@@ -112,3 +115,13 @@ background-color: rgba(73, 75, 75, 0.6)
   width: 100%;
   text-align: center;
 }
+
+
+.jumbotron{
+
+  background-image:url('http://images6.fanpop.com/image/photos/36100000/Frozen-image-frozen-36144799-640-200.jpg');
+  height: 40vh;
+  background-size: cover;
+
+}
+
