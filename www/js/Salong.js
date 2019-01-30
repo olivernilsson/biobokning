@@ -1,1 +1,1 @@
-class Salong extends REST {}
+class Salon extends REST {}

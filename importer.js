@@ -12,7 +12,7 @@ db.once('open', () => {
   console.log('Connected to DB');
   importJsonDataToDb();
 });
-
+ 
 // Load Mongoose models
 let Book = require('./Book');
 let Author = require('./Author');
