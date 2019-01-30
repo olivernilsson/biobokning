@@ -4,18 +4,19 @@ const Schema = mongoose.Schema;
 // 1. Create a schema for a film
 let filmSchema = new Schema(  {
     "title" :  String,
-    "productionCountries" : String,
+    "productionCountries" : [String],
     "productionYear" : Number,
     "length" : Number,
     "description" : String,
     "director" : String,
-    "actor" : String,
+    "actor" : [String], 
     "language" : String,
     "subtitle" : String,
     "premier" : Number,
     "trailer" : String,
-    "image" : String,
-    "review" : String
+    "image" : [String],
+    "youtubeTrailers": [String],
+    "review" : [String]
   });
   
 
