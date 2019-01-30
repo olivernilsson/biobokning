@@ -3,8 +3,8 @@ class MoviesAndTrailersPage extends Component {
   constructor(){
     super();
     this.addRoute('/moviesandtrailers', 'Movies and Trailers');
-    this.moviePrint();
     this.movieArray = [];
+    this.moviePrint();
   }
 
   async moviePrint(){
