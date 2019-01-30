@@ -11,6 +11,7 @@ class PageContent extends Component {
     this.bookdemoPage=new BookingPage();
     this.userLogin = new UserLogin();
     this.userRegistration = new UserRegistration();
+
   }
   
   

@@ -1,0 +1,114 @@
+.progress-wrap{
+  width: 100%;
+justify-content: center;
+  display: flex;
+
+  
+}
+
+
+
+.progressbar li{
+  justify-content: center;
+  vertical-align: middle;
+    float: left;
+    width: 100px;
+    position: relative;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+
+ 
+
+  .progressbar{
+    list-style-type: none;
+  }
+
+  .step-style{
+    
+    width: 30px;
+    height: 30px;
+    border: 2px solid #bebebe;
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    line-height: 27px;
+    background: white;
+    color: #bebebe;
+    text-align: center;
+    font-weight: bold;
+  }
+      
+  
+.active-page{
+  border-color: #3aac5d;
+background: #3aac5d;
+color: white
+}
+
+
+// .booking-page{
+//   height: 500px;
+//   width:80%;
+//   display: flex;
+//   justify-content: center;
+// }
+
+
+.seats-booking{
+  
+  align-self: center;
+  vertical-align: middle;
+}
+
+
+.pagewrap{
+ 
+  padding: 20px;
+  width: 100%;
+  margin: 0 auto;
+height: 550px;
+display: flex;
+ 
+}
+
+
+#forward {
+  font-weight: 900;
+  width: 150px;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(217, 248, 245));
+
+}
+#backtext{
+  font-weight: 900;
+  width: 150px;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(217, 248, 245));
+}
+
+.example{
+margin-top: 30px;
+  font-size: 40px;
+  margin: 0 auto;
+ width: 60%;
+background-color: rgba(73, 75, 75, 0.6)
+
+}
+
+
+.demo{
+  width: 100%;
+  text-align: center;
+}
