@@ -73,7 +73,7 @@ display: flex;
 #forward {
   color:#C5C6C7;
   align-self: center;
-  height: 100px;
+  height: 100%;
   font-weight: 900;
   width: 150px;
   background-color: Transparent;
@@ -83,13 +83,13 @@ display: flex;
   overflow: hidden;
   outline:none;
   background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
-  border-radius: 20%;
+  border-radius: 2%;
 
 }
 #backtext{
   color:#C5C6C7;
   align-self: center;
-  height: 100px;
+  height: 100%;
   font-weight: 900;
   width: 150px;
   background-color: Transparent;
@@ -99,7 +99,7 @@ display: flex;
   overflow: hidden;
   outline:none;
   background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(41, 115, 115));
-  border-radius: 20%;
+  border-radius: 2%;
 }
 
 .example{
