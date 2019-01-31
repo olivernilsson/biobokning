@@ -117,11 +117,34 @@ display: flex;
 }
 
 
-.jumbotron{
-
-  background-image:url('http://images6.fanpop.com/image/photos/36100000/Frozen-image-frozen-36144799-640-200.jpg');
-  height: 40vh;
-  background-size: cover;
-
+.mobile-buttons{
+margin: 0 auto;
+display: none;
 }
 
+#mobback{
+  position: absolute;
+  left: 0;
+  width: 40%
+}
+
+#mobforward{
+  position: absolute;
+  right: 0;
+  width: 40%
+}
+
+
+@media screen and (max-width: 950px) {
+  #backtext,#forward{
+   display: none;
+  
+  }
+
+ .mobile-buttons{
+   display:block;
+  margin-bottom: 50px;
+ }
+
+  
+}

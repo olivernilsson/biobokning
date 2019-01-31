@@ -32,9 +32,42 @@
   color: white;
 }
 
+
+.mymodal-style{
+  height: 500px;
+}
+
+
+
+.mverify-tecken,.mverify-bokstav,.mverify-number,.mverify-email{
+  color: lightcoral;
+  font-size: 12px;
+   
+  }
+
 @media screen and (max-width: 990px) {
   .registration-field{
     position: relative;
     margin: 10px 0 0 116px;
   }
+}
+
+@media screen and (max-width: 950px) {
+  #modalsave-user,.done-btn{
+    position: absolute;
+    height: 50px;
+   bottom: 0;
+   width: 90%;
+  
+  }
+
+  .reg-text{
+    display: none;
+  }
+
+  .reg-form {
+    width: 100%;
+  }
+
+
 }
