@@ -1,1 +1,1 @@
-class Salon extends REST {}
+class Salon extends Component {}

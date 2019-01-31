@@ -9,74 +9,29 @@ class BookingPage extends Component {
 
     })
 
-    this.stepCounter = 0;
+    this.stepCounter = 1;
     this.regPage = new RegPage();
+    this.salonPage = new Salon();
+    this.pricePage = new PricePage();
+ 
 
   }
 
 
-
-
-
   countUp() {
-    if (this.stepCounter === 2) {
-      return;
-    } else {
-      this.stepCounter++;
-      this.pageViews();
-    }
+    this.stepCounter++;
+    if(this.stepCounter > 4){ this.stepCounter = 4;}
+    this.render();
+
 
   }
 
   countDown() {
-    if (this.stepCounter === 0) {
-      return;
-    }
-    this.stepCounter--
-    this.pageViews();
+    this.stepCounter--;
+    if(this.stepCounter < 1){ this.stepCounter = 1;}
+    this.render();
+ 
   }
 
 
-  pageViews() {
-
-    let page1 = document.getElementsByClassName('example')
-
-
-
-    if (this.stepCounter === 0) {
-      $('.step1').addClass(' active-page');
-      $('.step2').removeClass(' active-page');
-      $(page1).empty();
-      $(page1).append(`
-        <p class="demo">Välj platser</p>`);
-    }
-
-
-    if (this.stepCounter === 1) {
-      $(page1).empty();
-      $('.step1,.step3').removeClass(' active-page');
-      $('.step2').addClass(' active-page');
-      $('#forward').show();
-      $(page1).append(`
-        <p class="demo">Välj Pris/Antal</p>`);
-
-    }
-
-    if (this.stepCounter === 2) {
-      $(page1).empty();
-      $('.step2').removeClass(' active-page');
-      $('.step3').addClass(' active-page');
-      $('#forward').hide();
-      $(page1).append(`
-      ${this.regPage}`);
-    }
-
-
-
-
-
-
-
-
-  }
 }
