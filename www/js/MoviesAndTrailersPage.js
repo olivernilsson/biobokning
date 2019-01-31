@@ -7,6 +7,8 @@ class MoviesAndTrailersPage extends Component {
     this.moviePrint();
   }
 
+
+  //incorrect, dont use
   async moviePrint(){
     //console.log(await Film.find());
     this.movieArray = await Film.find();
