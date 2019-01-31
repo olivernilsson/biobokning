@@ -663,7 +663,6 @@ module.exports = class Server {
       ticket: require('./models/Ticket'),
       users: require('./models/User'),
       views: require('./models/View')
-
     };
 
     app.get('/autoload-js-and-templates', (req, res) => {
