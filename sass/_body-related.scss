@@ -1,5 +1,5 @@
 body > .base-div{
-  background-image: linear-gradient( rgba(0, 0, 0, 0.8), rgb(255, 255, 255));
+  background-color: #0B0C10;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -8,4 +8,10 @@ body > .base-div{
 
 main {
   flex: 1;
+}
+
+.dropdown-menu{
+
+  max-height: 200px;
+  overflow-x: hidden;
 }

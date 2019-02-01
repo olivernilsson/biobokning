@@ -1,0 +1,1 @@
+class Salon extends Component {}

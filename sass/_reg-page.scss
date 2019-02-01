@@ -1,9 +1,9 @@
 .reg-form{
   margin: 0 auto;
-  max-width: 500px;
-  height: 500px;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
+  // max-width: 550px;
+  // height: 400px;
+  // background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
   border-radius: 10%;
   
 }
@@ -118,19 +118,24 @@ color: lightcoral;
 font-size: 12px;
 
 
+
 }
 
 
 .validate-box{
-  margin-top: 20px;
-
+  margin-top: 10px;
+line-height: normal;
   width: 100%;
   max-width: 100%;
+  display: flex;
+  
 }
 .done-btn{
-  float:right;
   height: 50px;
-  margin-top: 30px;
+ position: absolute;
+ bottom: 0;
+ width: 100%;
+ left:0;
 
 }
 

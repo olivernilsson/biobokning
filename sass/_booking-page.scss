@@ -1,0 +1,127 @@
+.progress-wrap{
+  width: 100%;
+justify-content: center;
+  display: flex;
+  margin: 0 auto;
+
+  
+}
+
+
+
+.progressbar li{
+  justify-content: center;
+  vertical-align: middle;
+    float: left;
+    width: 100px;
+    position: relative;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+
+
+  .progressbar{
+    list-style-type: none;
+  }
+
+  .step-style{
+    height: 30px;
+    border: 2px solid #000000;
+    display: block;
+    margin: 0 auto 10px auto;
+    line-height: 27px;
+    background: whitesmoke;
+    color: #9b9999;
+    text-align: center;
+    font-weight: bold;
+  }
+      
+  
+.active-page{
+background: #399e9e;
+color: white
+}
+
+
+// .booking-page{
+//   height: 500px;
+//   width:80%;
+//   display: flex;
+//   justify-content: center;
+// }
+
+
+.seats-booking{
+  
+  align-self: center;
+  vertical-align: middle;
+}
+
+
+.pagewrap{
+justify-content: center;
+
+  width: 100%;
+  margin: 0 auto;
+height: 500px;
+display: flex;
+ 
+}
+
+
+#forward {
+  color:#C5C6C7;
+  align-self: center;
+  height: 100%;
+  font-weight: 900;
+  width: 150px;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 2%;
+
+}
+#backtext{
+  color:#C5C6C7;
+  align-self: center;
+  height: 100%;
+  font-weight: 900;
+  width: 150px;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 2%;
+}
+
+.example{
+  font-size: 40px;
+  position: relative;
+  width: 60%;
+  background-color: rgba(31, 40, 51,0.6);
+
+}
+
+
+.demo{
+  width: 100%;
+  text-align: center;
+}
+
+
+.jumbotron{
+
+  background-image:url('http://images6.fanpop.com/image/photos/36100000/Frozen-image-frozen-36144799-640-200.jpg');
+  height: 40vh;
+  background-size: cover;
+
+}
+

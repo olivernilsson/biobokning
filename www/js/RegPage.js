@@ -1,8 +1,7 @@
 class RegPage extends Component {
 
-  constructor() {
+  constructor(page) {
     super();
-    this.addRoute('/regPage', 'regPage');
     this.addEvents({
       'keyup #firstname': 'validateRegForm',
       'keyup #lastname': 'validateRegForm',
@@ -11,8 +10,7 @@ class RegPage extends Component {
       'keyup #email': 'validateRegForm',
       'click #save-user': 'saveUserToDb'
     })
-
-
+    this.page = page;
     this.done = false;
     this.emailValid = false;
   }
@@ -115,37 +113,46 @@ class RegPage extends Component {
 
 
     if (this.done === true && styleCount === 3) {
+
       $('#save-user').removeClass('disabled');
     } else {
+
       $('#save-user').addClass('disabled');
     }
   }
 
-  saveUserToDb() {
-    $("#userform").submit(async function (event) {
 
-      let firstName = $('#firstname').val();
-      let lastName = $('#lastname').val();
-      let verifyValue = $('#password-verify').val();
-      let emailInput = $('#email').val().toLowerCase();
 
-      let addedUser = new User({
-        firstName: firstName,
-        lastName: lastName,
-        email: emailInput,
-        password: verifyValue
-      });
-
+  saveUserToDb(event) {
+    if ($('#save-user').hasClass('disabled')) {
       event.preventDefault();
-      await addedUser.save();
-      
-      alert('added to db');
-      $("#userform").find("input[type=text], textarea").val("")
-      $("#userform").find("input[type=password], textarea").val("")
-      this.done = false;
-      this.emailValid = false;
 
-    }); 
+      return;
+    } else {
+      $("#userform").submit(async function (event) {
 
+        let firstName = $('#firstname').val();
+        let lastName = $('#lastname').val();
+        let verifyValue = $('#password-verify').val();
+        let emailInput = $('#email').val().toLowerCase();
+
+        let addedUser = new User({
+          firstName: firstName,
+          lastName: lastName,
+          email: emailInput,
+          password: verifyValue
+        });
+
+        event.preventDefault();
+        await addedUser.save();
+
+        alert('added to db');
+        $("#userform").find("input[type=text], textarea").val("")
+        $("#userform").find("input[type=password], textarea").val("")
+        this.done = false;
+        this.emailValid = false;
+
+      });
+    }
   }
 }

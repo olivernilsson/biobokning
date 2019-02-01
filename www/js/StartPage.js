@@ -4,6 +4,7 @@ class StartPage extends Component {
     super();
     this.addRoute('/', 'Start');
     this.mountCount = 0;
+
   }
 
   mount(){
