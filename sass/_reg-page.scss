@@ -1,10 +1,13 @@
 .reg-form{
   margin: 0 auto;
-  max-width: 500px;
-  height: 500px;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
+  // max-width: 550px;
+  // height: 400px;
+  // background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
   border-radius: 10%;
+  position: relative;
+  width: 50%;
+  
   
 }
 
@@ -17,7 +20,7 @@
 }
 
 .group1{
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom:30px;
 }
 
@@ -117,20 +120,29 @@ input[type=password]:focus, textarea:focus{
 color: lightcoral;
 font-size: 12px;
 
-
 }
 
+
+.reg-text{
+  font-size: 16px;
+  font-size:2vw;
+}
 
 .validate-box{
   margin-top: 20px;
-
+line-height: normal;
   width: 100%;
   max-width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+  
 }
 .done-btn{
-  float:right;
+  position: absolute;
   height: 50px;
-  margin-top: 30px;
+ bottom: 0;
+ width: 50%;
+
 
 }
 
@@ -138,4 +150,24 @@ font-size: 12px;
 
 .email-style{
   margin: 0 auto;
+}
+
+
+@media screen and (max-width: 950px) {
+  .done-btn{
+    position: absolute;
+    height: 50px;
+   width: 100%;
+  
+  }
+
+  .reg-text{
+    display: none;
+  }
+
+  .reg-form {
+    width: 100%;
+  }
+
+
 }

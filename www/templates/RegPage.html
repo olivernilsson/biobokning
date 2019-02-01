@@ -1,6 +1,9 @@
 <form id="userform" action="/" class="reg-form d-flex align-content-center flex-wrap">
-	<h4>Var god och skriv in dina uppgifter för att boka!</h4>
+
+		<h4 class="reg-text">Var god och skriv in dina uppgifter för att boka!</h4>
+	
 	<div class="input-group group1">
+
 		<span class="blocking">
 			<input id="firstname" type="text" class="form-control form-style" name="firstName" placeholder=" "><span class="place-style">Förnamn</span>
 		</span>
@@ -29,18 +32,22 @@
 				lösenord</span>
 		</span>
 	</div>
-	
-	<div class="validate-box">
-		
-		<button id="save-user" type="submit"  class=" done-btn btn btn-primary btn-sm disabled">Klicka för att boka</button>
-		<small class="verify-tecken">Minst sju tecken</small>
-		<br>
-		<small class="verify-bokstav ">Minst en stor bokstav</small>
-		<br>
-		<small class="verify-number ">Minst en siffra</small>
+
+	<div class="validate-box flex-column">
 
 
+		<div class="verify-tecken">
+			<p>Minst sju tecken</p>
+		</div>
 
+		<div class="verify-bokstav ">
+			<p>Minst en stor bokstav</p>
+		</div>
+
+		<div class="verify-number ">
+			<p>Minst en siffra</p>
+		</div>
 
 	</div>
+	<button id="save-user" type="submit" class=" done-btn btn btn-primary btn-sm disabled">Klicka för att boka</button>
 </form>

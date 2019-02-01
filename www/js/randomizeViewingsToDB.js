@@ -41,4 +41,3 @@ async function insertViewingsToDB() {
     await viewings.save();
   }
 }
-
