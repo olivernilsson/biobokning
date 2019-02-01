@@ -125,25 +125,48 @@ display: none;
 #mobback{
   position: absolute;
   left: 0;
-  width: 40%
+  height: 80px;
+  width: 40%;
+  color:#C5C6C7;
+  font-weight: 900;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 2%;
 }
 
 #mobforward{
   position: absolute;
   right: 0;
-  width: 40%
+  height: 80px;
+  width: 40%;
+  color:#C5C6C7;
+  font-weight: 900;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 2%;
 }
 
 
 @media screen and (max-width: 950px) {
   #backtext,#forward{
    display: none;
-  
+ 
   }
 
  .mobile-buttons{
    display:block;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  height: 100px;
  }
 
   
