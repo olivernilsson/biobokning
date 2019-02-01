@@ -37,6 +37,13 @@
   height: 500px;
 }
 
+.mob-btn{
+  position: absolute;
+  height: 50px;
+ bottom: 0;
+ width: 100%;
+ left: 0px;
+}
 
 
 .mverify-tecken,.mverify-bokstav,.mverify-number,.mverify-email{
@@ -57,7 +64,8 @@
     position: absolute;
     height: 50px;
    bottom: 0;
-   width: 90%;
+   width: 100%;
+   left: 0px;
   
   }
 
