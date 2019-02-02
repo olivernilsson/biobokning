@@ -6,6 +6,8 @@ class BookingPage extends Component {
     this.addEvents({
       'click #forward': 'countUp',
       'click #backtext': 'countDown',
+      'click #mobforward': 'countUp',
+      'click #mobback': 'countDown',
 
     })
 
@@ -13,6 +15,7 @@ class BookingPage extends Component {
     this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
+    this.bookingConfirm = new BookingConfirm();
  
 
   }
