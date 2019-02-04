@@ -31,8 +31,15 @@ class MoviesAndTrailersPage extends Component {
   
   async viewingsfind(movie){
     console.log(movie.title);
+    this.list = [];
     this.test = JSON.stringify(movie.title)
     this.viewings = await View.find(`.find({film:${this.test}})`);
+
+    for(let view of this.viewings){
+      console.log(JSON.stringify(view));
+      this.list.push(`<p>${JSON.stringify(view)}</p>`);
+    }
     console.log(this.viewings);
+    this.render();
   }
 }
