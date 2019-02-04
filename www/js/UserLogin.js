@@ -5,9 +5,8 @@ class UserLogin extends Component {
     this.addEvents({
       'click .login-button': 'showModal',
       'click .close-btn': 'hideModal',
-      //'click .base-div': 'hideModal'
-
     })
+    
     this.modalShown = false;
     this.loginModal = new LoginModal();
     this.checkIfLoggedIn();
@@ -24,6 +23,10 @@ class UserLogin extends Component {
     }
     this.modalShown = true;
     this.render();
+
+    // Hides failed login attempts text
+    this.baseEl.find('#wrong-email').hide()
+    this.baseEl.find('#wrong-password').hide()
   }
   
   hideModal(){
