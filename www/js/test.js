@@ -25,6 +25,6 @@ async function start(){
   await testCheckLogin();
 }
 
-start();
+//start();
 
 //testLogout();
