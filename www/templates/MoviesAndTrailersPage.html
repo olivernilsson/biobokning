@@ -4,7 +4,7 @@
 
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
-      Movies
+      ${this.title ? this.title : 'Movies'}
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
