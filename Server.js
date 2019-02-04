@@ -30,7 +30,7 @@ module.exports = class Server {
     await this.startWebServer();
     await this.testConsole();
     //await this.addFilms();
-    await this.addSalons();
+    //await this.addSalons();
     //await this.addViewings();
     //await this.dropCollection(); 
   }
@@ -272,7 +272,7 @@ module.exports = class Server {
       store: new MongoStore({
         mongooseConnection: db
       })
-    }));
+    })); 
 
     // Set keys to names of rest routes
     const models = {
@@ -280,7 +280,8 @@ module.exports = class Server {
       salongs: require('./models/Salon'),
       tickets: require('./models/Ticket'),
       users: require('./models/User'),
-      views: require('./models/View')
+      views: require('./models/View'),
+      bookings: require('./models/Booking')
 
     };
 
