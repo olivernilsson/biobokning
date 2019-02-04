@@ -1,3 +1,5 @@
+//import { Schema } from "mongoose";
+
 function randomItem(arr){
   let randNbr = Math.floor(Math.random()*arr.length);
   return arr[randNbr];
@@ -41,3 +43,30 @@ async function insertViewingsToDB() {
     await viewings.save();
   }
 }
+
+
+async function insertBookingsToDb(){
+ 
+ let getOneFilm = await Film.find(`.findOne({title: 'Call me by your name'})`);
+ //let getOneUser = await User.find(`.findOne({firstName: 'aaa'})`);
+ //let getOneSalon = await Salon.find(`.findOne({name: 'Stora Salongen'})`);
+ //let getOneTicket = await Ticket.find(`.findOne({adult: '5'})`);
+
+ let myNewBooking = new Booking({
+  date: '2019-08-02',
+  time: '20.00',
+  film: getOneFilm._id,
+  name: 'abc'
+ });
+ await myNewBooking.save();
+
+ let populera= await Booking.find(`.find({name:'abc'})
+  .populate('film')
+  .exec() 
+ `);
+
+  console.log(populera);
+
+}
+
+insertBookingsToDb();
