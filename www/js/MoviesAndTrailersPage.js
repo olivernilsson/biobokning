@@ -23,6 +23,7 @@ class MoviesAndTrailersPage extends Component {
     let movie = this.movies.filter(movie => movie._id === id)[0];
     //console.log(movie);
     this.movie = movie;
+    this.title = movie.title;
     this.render();
     this.viewingsfind(this.movie)
 
