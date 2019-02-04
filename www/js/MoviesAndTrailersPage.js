@@ -21,8 +21,17 @@ class MoviesAndTrailersPage extends Component {
   movieSelect(e){
     let id = $(e.currentTarget).attr('data-movie-id');
     let movie = this.movies.filter(movie => movie._id === id)[0];
-    console.log(movie);
+    //console.log(movie);
     this.movie = movie;
     this.render();
+    this.viewingsfind(this.movie)
+
+  }
+  
+  async viewingsfind(movie){
+    console.log(movie.title);
+    this.test = JSON.stringify(movie.title)
+    this.viewings = await View.find(`.find({film:${this.test}})`);
+    console.log(this.viewings);
   }
 }
