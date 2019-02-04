@@ -3,7 +3,8 @@
   <p>This is the movies and trailers page.</p>
 
   <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
+    <button class="btn btn-secondary dropdown-toggle type=" button" id="dropdownMenuButton" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
       ${this.title ? this.title : 'Movies'}
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -11,6 +12,9 @@
     </div>
     <div>
       <p>${this.movie ? JSON.stringify(this.movie) : ''}</p>
+    </div>
+    <div>
+      ${this.list ? JSON.stringify(this.list) : ''}
     </div>
   </div>
 </div>
