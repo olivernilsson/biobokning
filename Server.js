@@ -30,7 +30,7 @@ module.exports = class Server {
     await this.startWebServer();
     await this.testConsole();
     //await this.addFilms();
-    await this.addSalons();
+    //await this.addSalons();
     //await this.addViewings();
     //await this.dropCollection(); 
   }
