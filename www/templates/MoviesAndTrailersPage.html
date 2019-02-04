@@ -7,7 +7,10 @@
       Movies
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      ${this.movieArray.map((movieArray) => `<a class="dropdown-item">${movieArray}</a>`).join('')}
+      ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
+    </div>
+    <div>
+      <p>${this.movie ? JSON.stringify(this.movie) : ''}</p>
     </div>
   </div>
 </div>
