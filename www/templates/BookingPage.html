@@ -1,28 +1,34 @@
 <section>
 
 
-    <div class="wrapper progress-wrap">
+    <div class="wrapper progress-wrap ">
         <ul class="progressbar">
-            <li class="step1 step-style active-page">1</li>
-            <li class="step2 step-style">2</li>
-            <li class="step3 step-style">3</li>
-            <li class="step4 step-style">4</li>
+
+            <li class="step1 step-style ${this.stepCounter === 1 ? 'active-page' : ''}">1</li>
+            <li class="step2 step-style ${this.stepCounter === 2 ? 'active-page' : ''}">2</li>
+            <li class="step3 step-style ${this.stepCounter === 3 ? 'active-page' : ''}">3</li>
+            <li class="step4 step-style ${this.stepCounter === 4 ? 'active-page' : ''}">4</li>
         </ul>
+
+    </div>
+    <div class="mobile-buttons">
+        <button id="mobback" type="button" class="align-self-center btn btn-light">Bakåt</button>
+        <button id="mobforward" type="button" class="align-self-center btn btn-light ">Framåt</button>
     </div>
 
-
-
     <div class="pagewrap ">
+
         <button id="backtext" type="button" class="btn btn-light">Bakåt</button>
 
-        <div class="example">
-
-            <p class="demo">Välj platser</p>
 
 
-        </div>
+        ${this.stepCounter === 1 ? this.salonPage : ''}
+        ${this.stepCounter === 2 ? this.pricePage : ''}
+        ${this.stepCounter === 3 ? this.regPage : ''}
+        ${this.stepCounter === 4 ? this.bookingConfirm : ''}
 
         <button id="forward" type="button" class="btn btn-light ">Framåt</button>
+
 
     </div>
 

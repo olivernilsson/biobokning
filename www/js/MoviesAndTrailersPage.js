@@ -3,19 +3,36 @@ class MoviesAndTrailersPage extends Component {
   constructor(){
     super();
     this.addRoute('/moviesandtrailers', 'Movies and Trailers');
-    this.movieArray = [];
+    this.movies = [];
     this.moviePrint();
+    this.addEvents({
+      'click .dropdown-item': 'movieSelect'
+    })
   }
 
 
-  //incorrect, dont use
   async moviePrint(){
-    //console.log(await Film.find());
-    this.movieArray = await Film.find();
-    for(let i in this.movieArray){
-    //console.log(this.movieArray[i].title);
-    $(".dropdown-menu").append(`<a class="dropdown-item">${this.movieArray[i].title}</a>`);
-    }
+    this.movies = await Film.find();
+    console.log(this.movies);
+    this.render();
 
+  }
+
+  movieSelect(e){
+    let id = $(e.currentTarget).attr('data-movie-id');
+    let movie = this.movies.filter(movie => movie._id === id)[0];
+    //console.log(movie);
+    this.movie = movie;
+    this.title = movie.title;
+    this.render();
+    this.viewingsfind(this.movie)
+
+  }
+  
+  async viewingsfind(movie){
+    console.log(movie.title);
+    this.test = JSON.stringify(movie.title)
+    this.viewings = await View.find(`.find({film:${this.test}})`);
+    console.log(this.viewings);
   }
 }

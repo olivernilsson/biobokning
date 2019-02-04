@@ -10,6 +10,9 @@ class PageContent extends Component {
     this.bookdemoPage=new BookingPage();
     this.userLogin = new UserLogin();
     this.userRegistration = new UserRegistration();
+    this.salonPage = new Salon();
+    this.pricePage = new PricePage();
+    this.bookingConfirm = new BookingConfirm();
 
   }
   
