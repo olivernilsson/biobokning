@@ -7,7 +7,7 @@
       Movies
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      
+      ${this.movieArray.map((movieArray) => `<a class="dropdown-item">${movieArray}</a>`).join('')}
     </div>
   </div>
 </div>
