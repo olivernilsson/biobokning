@@ -272,7 +272,7 @@ module.exports = class Server {
       store: new MongoStore({
         mongooseConnection: db
       })
-    }));
+    })); 
 
     // Set keys to names of rest routes
     const models = {
@@ -280,7 +280,9 @@ module.exports = class Server {
       salongs: require('./models/Salon'),
       tickets: require('./models/Ticket'),
       users: require('./models/User'),
-      views: require('./models/View')
+      views: require('./models/View'),
+      bookings: require('./models/Booking')
+
     };
 
     app.get('/autoload-js-and-templates', (req, res) => {
