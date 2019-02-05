@@ -8,7 +8,6 @@ class PageContent extends Component {
     this.regPage = new RegPage();
     this.moviesAndTrailersPage = new MoviesAndTrailersPage();
     this.bookdemoPage=new BookingPage();
-    this.userLogin = new UserLogin();
     this.userRegistration = new UserRegistration();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();

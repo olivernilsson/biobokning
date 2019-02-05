@@ -26,7 +26,7 @@ module.exports = class Sass {
         : console.log(this.getFormattedTime(), 'SASS re-compiled in', this.timeTaken);
     });
   }
-
+  
   compile() {
     this.timeBegun = process.hrtime();
     nodeSass.render(this.config.arguments, (err, result)=>{
