@@ -14,15 +14,17 @@
       <br>
       <h2>${this.movie ? this.movie.title : ''}</h2>
       <h4>${this.movie ? this.movie.productionYear : ''}
+        ${this.movie ? "| Minutes: " : ''}
         ${this.movie ? this.movie.length: ''}
+        ${this.movie ? "| Genre: " : ''}
         ${this.movie ? this.movie.genre: ''} </h4>
       <p>${this.movie ? this.movie.description: ''} </p>
       <p>${this.movie ? "Director: " : ''}
         ${this.movie ? this.movie.director: ''} </p>
       <p>${this.movie ? "Actors: " : ''}
         ${this.movie ? JSON.stringify(this.movie.actors): ''} </p>
-        <p>${this.movie ? "Språk: " : ''}
-          ${this.movie ? this.movie.language: ''} </p>
+      <p>${this.movie ? "Språk: " : ''}
+        ${this.movie ? this.movie.language: ''} </p>
       <br>
     </div>
     <div>
