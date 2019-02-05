@@ -12,11 +12,11 @@ let filmSchema = new Schema(  {
     "actors" : [String], 
     "language" : String,
     "subtitle" : String,
-    "premier" : Number,
+    "distributor" : String,
     "trailer" : String,
     "images" : [String],
     "youtubeTrailers": [String],
-    "review" : [String]
+    "reviews" : [String]
   });
   
 

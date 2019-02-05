@@ -8,7 +8,7 @@
       ${this.title ? this.title : 'Movies'}
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
+      ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie}</div>`).join('')}
     </div>
     <div>
       <br>
@@ -31,4 +31,4 @@
       ${this.list ? JSON.stringify(this.list) : ''}
     </div>
   </div>
-</div>
+</div> 
