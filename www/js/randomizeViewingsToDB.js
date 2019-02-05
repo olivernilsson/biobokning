@@ -49,23 +49,21 @@ async function insertBookingsToDb(){
  
  let getOneFilm = await Film.find(`.findOne({title: 'Call me by your name'})`);
  let getOneView = await View.find(`.findOne({film: 'Burning', date: '2018-01-01'})`);
- console.log(getOneView);
+ //console.log(getOneView);
  //let getOneUser = await User.find(`.findOne({firstName: 'aaa'})`);
  //let getOneSalon = await Salon.find(`.findOne({name: 'Stora Salongen'})`);
  //let getOneTicket = await Ticket.find(`.findOne({adult: '5'})`);
 
  
  let myNewBooking = new Booking({
-  date: '2019-08-02',
-  time: '20.00',
   view: getOneView._id,
   film: getOneFilm._id,
-  name: 'lol'
+  name: 'hej'
  });
  await myNewBooking.save();
 
- let populera= await Booking.find(`.find({name:'lol'})
-  .populate('view')
+ let populera= await Booking.find(`.find({name:'hej'})
+  .populate('view','film')
   .populate('film')
   .exec() 
  `);
