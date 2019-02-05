@@ -43,6 +43,7 @@ typings/
 .env
 # next.js build output
 .next
+#skip css file
 *.css
 # Skip sourcemaps (...)
 *.map
