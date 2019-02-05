@@ -1,9 +1,33 @@
 .nav-link{
-color: #297373!important;
+color: #85FFC7!important;
+}
+
+
+.nav-link:hover{
+    color: #297373!important;
 }
 
 .btn-primary:hover{
     transition: 1s;
     background-color: #297373;
     border: #297373;
+    color: #fff;
+}
+
+.navbar{
+    padding: 1rem;
+    background-color: #0B0C10 ;
+    border-bottom: 2px solid #0b3b32;
+}
+
+.navbar-toggle, .icon-bar {
+    border:1px solid red!important;
+    color: #85FFC7!important;
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(133,255,199);
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(133,255,199, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
