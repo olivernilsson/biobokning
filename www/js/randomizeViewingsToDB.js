@@ -75,6 +75,10 @@ insertBookingsToDb();
 
 async function getUserBookings(){
 
-  alert('hej');
+  let findUser1 = await User.find(`.findOne({firstName: 'dsafaf', lastName: 'dasfa'})`);
+  let findUser2 = await User.find(`.findOne({_id: '5c50bddc24b5d138a656f9f2'})`);
+  console.log(findUser2);
+  let thisUserBooking = await Booking.find(`.findOne({user.firstName: 'aaa'})`);
+  console.log(thisUserBooking);
 }
 getUserBookings();
