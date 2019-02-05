@@ -69,4 +69,4 @@ async function insertBookingsToDb(){
 
 }
 
-insertBookingsToDb();
+//insertBookingsToDb();
