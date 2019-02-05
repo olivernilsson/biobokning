@@ -8,13 +8,20 @@ class RegPage extends Component {
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
       'keyup #email': 'validateRegForm',
-      'click #save-user': 'saveUserToDb'
+      'click #save-user': 'saveUserToDb',
+      'click .reg-loginbtn': 'showModal',
     })
     this.page = page;
     this.done = false;
     this.emailValid = false;
   }
 
+
+  showModal(){
+    $('.full-modal').css("display","block")
+    $('#loginnamereg').css("border-bottom","1px solid white") 
+    $('#loginpasswordreg').css("border-bottom","1px solid white") 
+  }
 
   validateRegForm() {
     let firstName = $('#firstname').val();

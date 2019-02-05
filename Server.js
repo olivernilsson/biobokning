@@ -23,7 +23,7 @@ module.exports = class Server {
 
   constructor() {
     this.start();
-  }
+  } 
 
   async start() {
     await this.connectToDb();
@@ -60,14 +60,14 @@ module.exports = class Server {
 
     for(let data of films) {
       let film = new Film(data);
-      await film.save();
-    }
+      console.log( await film.save());
+    } 
   } 
 
   async addSalons() {
     let Salon = require('./models/Salon');
     let salons = require('./www/json/salons.json');
-
+ 
     for(let data of salons) {
       let salon = new Salon(data);
       await salon.save();
