@@ -11,7 +11,17 @@
       ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
     </div>
     <div>
-      <p>${this.movie ? JSON.stringify(this.movie) : ''}</p>
+      <br>
+      <h2>${this.movie ? this.movie.title : ''}</h2>
+      <h3>${this.movie ? this.movie.productionYear : ''}
+        ${this.movie ? this.movie.length: ''}
+        ${this.movie ? this.movie.genre: ''} </h3>
+      <p>${this.movie ? this.movie.description: ''} </p>
+      <p>${this.movie ? "Director: " : ''}
+        ${this.movie ? this.movie.director: ''} </p>
+      <p>${this.movie ? "Actors: " : ''}
+        ${this.movie ? JSON.stringify(this.movie.actors): ''} </p>
+      <br>
     </div>
     <div>
       ${this.list ? JSON.stringify(this.list) : ''}
