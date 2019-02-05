@@ -1,0 +1,17 @@
+body > .base-div{
+  background-color: #0B0C10;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: rgb(255, 255, 255);
+}
+
+main {
+  flex: 1;
+}
+
+.dropdown-menu{
+
+  max-height: 200px;
+  overflow-x: hidden;
+}

@@ -1,0 +1,68 @@
+<section>
+  <div class="registration-field">
+    <button type="button" class="register-button btn btn-primary" data-toggle="modal" data-target="#regModal">
+      Registrering
+    </button>
+  </div>
+
+
+  <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title" id="modalLabel">Registrera dig</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body  mymodal-style bg-dark">
+          <form id="modalform" action="/" class="modalreg-form d-flex align-content-center flex-wrap">
+            <h4 class="reg-text">Var god och skriv in dina uppgifter för att boka!</h4>
+            <div class="input-group group1">
+              <span class="blocking">
+                <input id="modalfirstname" type="text" class="form-control form-style" name="firstName" placeholder=" "><span class="place-style">Förnamn</span>
+              </span>
+              <span class="blocking">
+                <input id="modallastname" type="text" class="form-control form-style" name="lastName" placeholder=" "><span class="place-style">Efternamn</span>
+              </span>
+            </div>
+          
+            <div class="input-group group2">
+              <span class="blocking2">
+                <input id="modalemail" type="text" class=" form-control form-style" name="email" placeholder=" "><span class="place-style">Email</span>
+              </span>
+              <!-- <div class=" email-style d-flex align-items-end">
+                <small class="verify-email">Valid email adress</small>
+              </div> -->
+          
+            </div>
+          
+            <div class="input-group group3">
+              <span class="blocking">
+                <input id="modalpassword" type="password" class="form-control form-style" name="password" placeholder=" "><span class="place-style">Lösenord</span>
+              </span>
+              <span class="blocking">
+                <input id="modalpassword-verify" type="password" class="form-control form-style" name="passwordverify" placeholder=" "><span
+                 class="place-style">Repetera
+                  lösenord</span>
+              </span>
+            </div>
+            
+            <div class="validate-box flex-column">
+              
+              
+              <div class="mverify-tecken"><p>Minst sju tecken</p></div>
+          
+              <div class="mverify-bokstav "><p>Minst en stor bokstav</p></div>
+          
+              <div class="mverify-number "><p>Minst en siffra</p></div>
+          
+            </div class="mt-4">
+            <button id="modalsave-user" type="submit"  class=" mob-btn btn btn-primary btn-sm disabled" ">Klicka för att registrera dig</button>
+          </form>
+        </div>
+     
+      </div>
+    </div>
+  </div>
+</section>
