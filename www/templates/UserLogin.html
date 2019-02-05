@@ -1,44 +1,10 @@
 <section>
   <div class="login-field">
-    <button type="button" class=" login-button btn btn-primary" data-toggle="modal" data-target="#myModal">
-      Logga in
+    <button type="button" class="login-button btn btn-primary" data-toggle="modall" data-target="#myModall">
+      ${this.loggedIn ? 'Logga Ut' : 'Logga In'}    
     </button>
-
   </div>
-  <div class="full-modal">
-    <!-- The Modal -->
-    <div class="modal fade" id="myModal">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-          <!-- Modal Header -->
-          <div class="modal-header bg-dark my-modal-header">
-            <h4 class="modal-title">Logga In</h4>
-            <button type="button" class="close close-btn" data-dismiss="modal">&times;</button>
-          </div>
-
-          <!-- Modal body -->
-          <div class="modal-body bg-dark my-modal-body">
-            <div class="input-group login-group">
-              <span class="blocking">
-                <input id="loginname" type="text" class="form-control form-style" name="first" placeholder=" "><span
-                  class="place-style">Email</span>
-              </span>
-              <span class="blockinglogin">
-                <input id="loginpassword" type="password" class="form-control form-style" name="last" placeholder=" "><span
-                  class="place-style">Lösenord</span>
-              </span>
-            </div>
-
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer bg-dark">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Logga in</button>
-          </div>
-
-        </div>
-      </div>
-    </div>
+  <div>
+    ${this.modalShown ? this.loginModal : ''}
   </div>
-</section>
+</section> 

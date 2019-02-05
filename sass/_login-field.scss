@@ -1,43 +1,45 @@
-.login-field{
+.login-field {
   position: absolute;
+  right: 20px;
 
-    right: 20px;
-
-  p{
-padding: 5px;
+  p {
+    padding: 5px;
     text-align: center;
     color: black;
   }
 }
 
+.login-modal {
+  position: absolute;
+  z-index: 1;
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 300px;
+}
 
-.my-modal-header{
+.my-modal-header {
   color: whitesmoke;
 }
 
-.my-modal-body{
-  height: 150px;
-}
-
-.full-modal{
-  display: none;
-  
-}
-
-.blockinglogin{
+.blockinglogin {
   margin-top: 20px;
   position: relative;
   margin-right: 40px;
 }
 
-.close-button{
-  
+.close-button {
   color: white;
 }
 
 @media screen and (max-width: 990px) {
-  .login-field{
-  position: relative;
-  margin: 10px 0 0 16px;
+  .login-field {
+    position: relative;
+    margin: 10px 0 0 16px;
+  }
+  .login-modal {
+    margin-top: 50px;
   }
 }

@@ -8,11 +8,10 @@ class NavBar extends Component {
       new NavItem('Filmer & trailers', '/moviesandtrailers'),
       new NavItem('Sök filmer', '/searchmovie'),
       new NavItem('BookDemo','/bookdemo'),
-      new UserLogin(''),
       new UserRegistration('')
     ];
+    this.userLogin = new UserLogin();
 
-   
   }
-
+ 
 }
