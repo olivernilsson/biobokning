@@ -20,8 +20,8 @@
 }
 
 .group1{
-  margin-top: 20px;
-  margin-bottom:30px;
+  margin-top: 10px;
+  margin-bottom:20px;
 }
 
 #email{
@@ -32,7 +32,7 @@
 
 
 .group2{
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .blocking{
@@ -124,12 +124,13 @@ font-size: 12px;
 
 
 .reg-text{
-  font-size: 16px;
-  font-size:2vw;
+  text-align:right;
+  font-size: 18px;
+
 }
 
 .validate-box{
-  margin-top: 20px;
+  margin-top: 10px;
 line-height: normal;
   width: 100%;
   max-width: 100%;
@@ -152,6 +153,11 @@ line-height: normal;
   margin: 0 auto;
 }
 
+.reg-login-button{
+  margin: 5px;
+}
+
+
 
 @media screen and (max-width: 950px) {
   .done-btn{
@@ -162,7 +168,7 @@ line-height: normal;
   }
 
   .reg-text{
-    display: none;
+    font-size: 18px;
   }
 
   .reg-form {
