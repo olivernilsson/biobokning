@@ -49,15 +49,14 @@ async function insertBookingsToDb(){
  
  let getOneFilm = await Film.find(`.findOne({title: 'Call me by your name'})`);
  let getOneView = await View.find(`.findOne({film: 'Burning', date: '2018-01-01'})`);
- //console.log(getOneView);
- //let getOneUser = await User.find(`.findOne({firstName: 'aaa'})`);
+ let getOneUser = await User.find(`.findOne({firstName: 'aaa'})`);
  //let getOneSalon = await Salon.find(`.findOne({name: 'Stora Salongen'})`);
  //let getOneTicket = await Ticket.find(`.findOne({adult: '5'})`);
 
- 
  let myNewBooking = new Booking({
   view: getOneView._id,
   film: getOneFilm._id,
+  user: getOneUser._id,
   name: 'hej'
  });
  await myNewBooking.save();
@@ -65,11 +64,17 @@ async function insertBookingsToDb(){
  let populera= await Booking.find(`.find({name:'hej'})
   .populate('view','film')
   .populate('film')
+  .populate('user')
   .exec() 
  `);
 
   console.log(populera);
-
 }
-
 insertBookingsToDb();
+
+
+async function getUserBookings(){
+
+  alert('hej');
+}
+getUserBookings();
