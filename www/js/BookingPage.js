@@ -17,7 +17,6 @@ class BookingPage extends Component {
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
     this.userLogin = new UserLogin();
-
   }
 
 
@@ -25,7 +24,6 @@ class BookingPage extends Component {
     this.stepCounter++;
     if(this.stepCounter > 4){ this.stepCounter = 4;}
     this.render();
-
 
   }
 
@@ -35,6 +33,7 @@ class BookingPage extends Component {
     this.render();
  
   }
+
 
  
 
