@@ -18,7 +18,7 @@ class MoviesAndTrailersPage extends Component {
 
   async moviePrint() {
     this.movies = await Film.find();
-    console.log(this.movies);
+    //console.log(this.movies);
     this.render();
 
   }
@@ -55,7 +55,7 @@ class MoviesAndTrailersPage extends Component {
       // console.log(JSON.stringify(view));
       //this.list.push(`<p>${JSON.stringify(view)}</p>`);
     }
-    console.log(this.viewings);
+    //console.log(this.viewings);
     this.render();
     this.testlist.length = 0;
   }
