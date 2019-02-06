@@ -15,7 +15,7 @@ class MoviesAndTrailersPage extends Component {
 
   async moviePrint(){
     this.movies = await Film.find();
-    console.log(this.movies);
+    //console.log(this.movies);
     this.render();
 
   }
@@ -32,7 +32,7 @@ class MoviesAndTrailersPage extends Component {
   }
   
   async viewingsfind(movie){
-    console.log(movie.title);
+    //console.log(movie.title);
     this.list = [];
     this.test = JSON.stringify(movie.title)
     this.viewings = await View.find(`.find({film:${this.test}})`);
@@ -40,11 +40,11 @@ class MoviesAndTrailersPage extends Component {
 
     for(let view of this.viewings){
       this.testlist.push(view);
-      console.log("ashfajfj")
+      //console.log("ashfajfj")
      // console.log(JSON.stringify(view));
       //this.list.push(`<p>${JSON.stringify(view)}</p>`);
     }
-    console.log(this.viewings);
+    //console.log(this.viewings);
     this.render();
     this.testlist.length = 0;
   }
