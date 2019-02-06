@@ -6,7 +6,7 @@ class UserLogin extends Component {
       'click .login-button': 'showModal',
       'click .close-btn': 'hideModal',
     })
-    
+    this.userLoggedIn= false;
     this.modalShown = false;
     this.loginModal = new LoginModal();
     this.checkIfLoggedIn();
