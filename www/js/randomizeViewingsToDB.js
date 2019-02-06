@@ -68,7 +68,8 @@ async function insertBookingsToDb(){
   .exec() 
  `);
 
-  console.log(populera);
+ await console.log(populera);
+  //console.log(populera[18].film.title);
 }
 insertBookingsToDb();
 
