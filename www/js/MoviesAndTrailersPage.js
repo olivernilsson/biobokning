@@ -24,6 +24,7 @@ class MoviesAndTrailersPage extends Component {
   }
 
   movieSelect(e) {
+    this.testlist.length = 0;
     let id = $(e.currentTarget).attr('data-movie-id');
     let movie = this.movies.filter(movie => movie._id === id)[0];
     //console.log(movie);
@@ -31,6 +32,7 @@ class MoviesAndTrailersPage extends Component {
     this.title = movie.title;
     this.render();
     this.viewingsfind(this.movie)
+    
 
   }
 
@@ -40,6 +42,7 @@ class MoviesAndTrailersPage extends Component {
     let view = this.viewings.filter(view => view._id === id)[0];
     this.view = view;
     this.selectedView = view;
+    //console.log(this.selectedView);
   }
 
   async viewingsfind(movie) {
@@ -51,12 +54,12 @@ class MoviesAndTrailersPage extends Component {
 
     for (let view of this.viewings) {
       this.testlist.push(view);
-      console.log("ashfajfj")
+      //console.log("ashfajfj")
       // console.log(JSON.stringify(view));
       //this.list.push(`<p>${JSON.stringify(view)}</p>`);
     }
     //console.log(this.viewings);
     this.render();
-    this.testlist.length = 0;
+    
   }
 }
