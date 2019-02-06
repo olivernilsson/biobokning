@@ -1,1 +1,4 @@
-class Salon extends Component {}
+class Salon extends Component {
+
+
+}

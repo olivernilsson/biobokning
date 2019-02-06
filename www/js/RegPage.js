@@ -1,6 +1,6 @@
 class RegPage extends Component {
 
-  constructor(page) {
+  constructor() {
     super();
     this.addEvents({
       'keyup #firstname': 'validateRegForm',
@@ -11,10 +11,12 @@ class RegPage extends Component {
       'click #save-user': 'saveUserToDb',
       'click .reg-loginbtn': 'showModal',
     })
-    this.page = page;
     this.done = false;
     this.emailValid = false;
+    
   }
+
+ 
 
 
   showModal(){
@@ -162,4 +164,7 @@ class RegPage extends Component {
       });
     }
   }
+
 }
+
+

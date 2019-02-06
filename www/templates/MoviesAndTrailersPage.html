@@ -31,7 +31,7 @@
     <div>
      <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
 
-     ${this.testlist.map((listitem) => `<p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p>`).join('')}
+     ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}
     </div>
   </div>
 </div>

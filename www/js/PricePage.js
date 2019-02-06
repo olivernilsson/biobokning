@@ -1,1 +1,11 @@
-class PricePage extends Component {}
+class PricePage extends Component {
+
+  constructor(view) {
+    super();
+
+    this.view = view
+
+
+  }
+
+}

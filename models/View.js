@@ -5,7 +5,8 @@ let viewSchema = new Schema ({
     "auditorium": String,
     "film": String,
     "date": String,
-    "time": String
+    "time": String,
+    "seats": Array
 
 });
 
