@@ -1,6 +1,6 @@
 class MoviesAndTrailersPage extends Component {
 
-  constructor() {
+  constructor(page) {
     super();
     this.addRoute('/bookdemo', 'Movies and Trailers');
     this.movies = [];
@@ -14,9 +14,17 @@ class MoviesAndTrailersPage extends Component {
     this.testlist = [];
     this.selectedView;
     this.bookPage = new BookingPage();
+    this.page=page;
     this.choosen = false;
   }
 
+
+
+changeVal(){
+  console.log('calling')
+  this.choosen = false;
+  this.render();
+}
 
   async moviePrint() {
     this.movies = await Film.find();

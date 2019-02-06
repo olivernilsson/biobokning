@@ -15,11 +15,13 @@ class BookingPage extends Component {
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
-    this.userLogin = new UserLogin();
+    this.userLogin = new LoginModal();
     
   
 
   }
+
+
 
 
   change(selectedView){
@@ -37,7 +39,10 @@ class BookingPage extends Component {
 
   countDown() {
     this.stepCounter--;
-    if (this.stepCounter < 1) { this.stepCounter = 1; }
+    if (this.stepCounter < 1 ) { 
+      App.moviesAndTrailersPage.changeVal();
+      this.stepCounter = 1
+   }
     this.render();
 
   }
