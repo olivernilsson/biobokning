@@ -24,12 +24,12 @@ class AboutPage extends Component {
   async toggleDetails(){
     this.showDetails = !this.showDetails;
     
+    this.userEmails.length = 0;
     let users = await User.find();
     for( let user of users ) {
       
       this.userEmails.push(user.email);
     }
-    console.log(this.userEmails);
     this.render();
   }
 

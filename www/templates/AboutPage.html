@@ -1,15 +1,9 @@
 <div>
-  <h2>About</h2>
-  <p>This is the about page.</p>
+  <h2>Dina bokningar</h2>
   <button class="btn btn-details">
-    ${this.showDetails ? 'Hide details' : 'Show details'}
+    ${this.showDetails ? 'Dölj bokningar' : 'Visa bokningar'}
   </button>
   ${!this.showDetails ? '' :`<section>
-    <h4 class="mt-3">All the gory details</h4>
-    <p>Now you know it all.</p>
+    ${this.userEmails.map((email) => `<p> ${email} </p>`).join('')}
   </section>`}
-  <div>
-    ${this.hello}
-    ${this.userEmails}
-  </div>
 </div> 

@@ -44,6 +44,7 @@ async function insertViewingsToDB() {
   }
 }
 
+//insertBookingsToDb();
 
 async function insertBookingsToDb(){
  
@@ -66,7 +67,16 @@ async function insertBookingsToDb(){
  `);
 
   console.log(populera);
-
 }
 
-//insertBookingsToDb();
+async function insertUserToDb(){
+  
+  let addedUser = new User({
+    firstName: firstName,
+    lastName: lastName,
+    email: emailInput,
+    password: verifyValue
+  }); 
+
+  await addedUser.save();
+}
