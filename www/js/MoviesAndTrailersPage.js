@@ -2,7 +2,7 @@ class MoviesAndTrailersPage extends Component {
 
   constructor() {
     super();
-    this.addRoute('/moviesandtrailers', 'Movies and Trailers');
+    this.addRoute('/bookdemo', 'Movies and Trailers');
     this.movies = [];
     this.viewings = [];
     this.moviePrint();
@@ -10,9 +10,11 @@ class MoviesAndTrailersPage extends Component {
       'click .dropdown-item': 'movieSelect',
       'click #select-view': 'viewSelect'
     })
+
     this.testlist = [];
     this.selectedView;
-  
+    this.bookPage = new BookingPage();
+    this.choosen = false;
   }
 
 
@@ -40,6 +42,10 @@ class MoviesAndTrailersPage extends Component {
     let view = this.viewings.filter(view => view._id === id)[0];
     this.view = view;
     this.selectedView = view;
+    this.choosen = true;
+    this.bookPage.change(view);
+    this.render()
+
   }
 
   async viewingsfind(movie) {
@@ -59,4 +65,7 @@ class MoviesAndTrailersPage extends Component {
     this.render();
     this.testlist.length = 0;
   }
+
+
 }
+
