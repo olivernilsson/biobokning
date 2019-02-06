@@ -8,6 +8,7 @@ let filmSchema = new Schema(  {
     "productionYear" : Number,
     "length" : Number,
     "description" : String,
+    "genre" : String,
     "director" : String,
     "actors" : [String], 
     "language" : String,
