@@ -8,6 +8,8 @@ class MoviesAndTrailersPage extends Component {
     this.addEvents({
       'click .dropdown-item': 'movieSelect'
     })
+    this.testlist =[];
+
   }
 
 
@@ -34,12 +36,16 @@ class MoviesAndTrailersPage extends Component {
     this.list = [];
     this.test = JSON.stringify(movie.title)
     this.viewings = await View.find(`.find({film:${this.test}})`);
+    //this.viewings = await View.find();
 
     for(let view of this.viewings){
-      console.log(JSON.stringify(view));
-      this.list.push(`<p>${JSON.stringify(view)}</p>`);
+      this.testlist.push(view);
+      console.log("ashfajfj")
+     // console.log(JSON.stringify(view));
+      //this.list.push(`<p>${JSON.stringify(view)}</p>`);
     }
     console.log(this.viewings);
     this.render();
+    this.testlist.length = 0;
   }
 }

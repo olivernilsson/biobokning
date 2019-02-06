@@ -28,7 +28,9 @@
       <br>
     </div>
     <div>
-      ${this.list ? JSON.stringify(this.list) : ''}
+     <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
+
+     ${this.testlist.map((listitem) => `<p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p>`).join('')}
     </div>
   </div>
 </div>
