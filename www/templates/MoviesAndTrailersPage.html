@@ -33,7 +33,7 @@ ${this.choosen === false ? `<div>
        <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
   
       <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->
-       ${this.testlist.map((listitem) => `<div><h5><a class="test" id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light "  href="/bookdemo">| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</h5> </a></div>`).join('')}
+       ${this.testlist.map((listitem) => `<div><h5><a class="testing" id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light "  href="/bookdemo">| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</h5> </a></div>`).join('')}
       </div>
     </div>
   </div> ` : this.bookPage}
