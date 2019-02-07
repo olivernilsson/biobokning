@@ -6,7 +6,8 @@ let userSchema = new Schema({
     "firstName":{type: String, require: true},
     "lastName":{type: String, require: true},
     "email":{type: String, require: true, unique: true},
-    "password":{type: String, require: true}
+    "password":{type: String, require: true},
+    "bookings": {type: Schema.Types.ObjectId, ref: 'Booking'}
 
 });
 

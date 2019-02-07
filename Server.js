@@ -278,7 +278,6 @@ module.exports = class Server {
     const models = {
       films: require('./models/Film'),
       salongs: require('./models/Salon'),
-      tickets: require('./models/Ticket'),
       users: require('./models/User'),
       views: require('./models/View'),
       bookings: require('./models/Booking')
