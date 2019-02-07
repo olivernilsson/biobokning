@@ -34,6 +34,7 @@ changeVal(){
   }
 
   movieSelect(e) {
+    this.testlist.length = 0;
     let id = $(e.currentTarget).attr('data-movie-id');
     let movie = this.movies.filter(movie => movie._id === id)[0];
     //console.log(movie);
@@ -71,7 +72,7 @@ changeVal(){
     }
     //console.log(this.viewings);
     this.render();
-    this.testlist.length = 0;
+    
   }
 
 
