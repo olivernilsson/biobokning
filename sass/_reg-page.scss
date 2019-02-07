@@ -1,0 +1,179 @@
+.reg-form{
+  margin: 0 auto;
+  // max-width: 550px;
+  // height: 400px;
+  // background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 10%;
+  position: relative;
+  width: 50%;
+  
+  
+}
+
+
+.form-style{
+  position: relative;
+  border:none;
+  background-color: transparent;
+  border-bottom: 2px solid white;
+}
+
+.group1{
+  margin-top: 10px;
+  margin-bottom:20px;
+}
+
+#email{
+  padding-top: 20px;
+  max-width: 100%;
+ 
+}
+
+
+.group2{
+  margin-bottom: 20px;
+}
+
+.blocking{
+  position: relative;
+  margin-right: 40px;
+}
+
+.blocking2{
+  position: relative;
+  width: 300px;
+}
+
+.place-style{
+  font-size: 13px;
+  font-style: italic;
+   position: absolute;
+  pointer-events: none;
+  left: 4px;
+  top: 20px;
+  transition: 0.2s ease all;
+  color:rgba(180, 240, 225, 0.712); 
+
+}
+
+input:focus + span, input:not(:placeholder-shown) + span {
+  opacity:1;
+  transform: scale(0.75) translateY(-100%) translateX(-30px);
+  top:10px;
+  left: 15px;
+  color:rgba(180, 240, 225, 0.712);
+  
+}
+
+input[type=text]:focus, textarea:focus{
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  color: whitesmoke;
+  border:none;
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+  outline: none;
+  border-bottom: 1px solid lightcoral; 
+}
+
+
+input[type=text], textarea {
+  padding: 3px 0px 3px 3px;
+  margin: 5px 5px 3px 0px;
+  border:none;
+  border-bottom: 1px solid lightcoral;
+  color: whitesmoke;
+ 
+}
+
+input[type=password], textarea {
+  padding: 3px 0px 3px 3px;
+  margin: 5px 5px 3px 0px;
+  border:none;
+  border-bottom: 1px solid lightcoral;
+  color: whitesmoke;
+ 
+}
+
+
+input[type=text]::placeholder,input[type=password]::placeholder {
+  font-size: 14px;
+ color:lightcoral;
+ text-align: right;
+}
+
+
+input[type=password]:focus, textarea:focus{
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  color: whitesmoke;
+  border:none;
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+  outline: none;
+  border-bottom: 1px solid lightcoral; 
+}
+.verify-tecken,.verify-bokstav,.verify-number,.verify-email{
+color: lightcoral;
+font-size: 12px;
+
+}
+
+
+.reg-text{
+  text-align:left;
+  font-size: 18px;
+
+}
+
+.validate-box{
+  margin-top: 10px;
+line-height: normal;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+  
+}
+.done-btn{
+  position: absolute;
+  height: 50px;
+ bottom: 0;
+ width: 50%;
+
+
+}
+
+
+
+.email-style{
+  margin: 0 auto;
+}
+
+.reg-login-button{
+  margin: 5px;
+}
+
+
+
+@media screen and (max-width: 950px) {
+  .done-btn{
+    position: absolute;
+    height: 50px;
+   width: 100%;
+  
+  }
+
+  .reg-text{
+    font-size: 18px;
+  }
+
+  .reg-form {
+    width: 100%;
+  }
+
+
+}

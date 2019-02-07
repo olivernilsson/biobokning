@@ -1,0 +1,5 @@
+class PricePage extends Component {
+
+
+
+}

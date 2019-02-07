@@ -1,0 +1,16 @@
+// Variable overrides for Bootstrap
+@import 'variable-overrides';
+
+// The whole Bootstrap library
+@import 'bootstrap/bootstrap';
+
+// My own partials
+@import 'body-related';
+@import 'footer';
+@import 'reg-page';
+@import 'login-field';
+@import 'registration-field';
+@import 'booking-page';
+@import 'movies-page';
+@import 'frontend-bookning';
+@import 'navbar';

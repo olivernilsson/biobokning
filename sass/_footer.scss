@@ -1,0 +1,29 @@
+footer {
+  color: rgb(0, 0, 0);
+  border-top: 3px solid rgb(6, 26, 22);
+  background: #0B0C10;
+}
+
+.footer-copy{
+  color:#fff;
+}
+.social-icons{
+  color: #85FFC7;
+  font-size: 32px;
+  padding: 1rem;
+  
+  .fab:hover{
+    color: #85FFC7;
+    transform: scale(1.1);
+   }
+   .fab{
+    padding: 0.5rem;
+    transition: 0.8s;
+    border: solid 3px #297373;
+    background: #297373;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all .2s ease-in-out;  
+  }
+}
+
