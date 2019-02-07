@@ -1,10 +1,13 @@
 .nav-link{
 color: #85FFC7!important;
+border: 1px solid #0B0C10;
+transition: 0.3s;
 }
 
 
 .nav-link:hover{
     color: #297373!important;
+    border-bottom: 1px solid #297373;
 }
 
 .btn-primary:hover{
