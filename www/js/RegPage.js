@@ -14,6 +14,7 @@ class RegPage extends Component {
     this.done = false;
     this.emailValid = false;
     
+    
   }
 
  
