@@ -1,4 +1,8 @@
 <div>
-  <h2>Start</h2>
-  <p>This is the start page.</p>
+  ${this.movies.map((movie) => `
+
+    <div class="col-md-12 start-picture">
+
+        <h3>${movie.images}</h3>
+    </div>`).join('')}
 </div>
