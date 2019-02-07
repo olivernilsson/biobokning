@@ -4,7 +4,6 @@ border: 1px solid #0B0C10;
 transition: 0.3s;
 }
 
-
 .nav-link:hover{
     color: #297373!important;
     border-bottom: 1px solid #297373;
@@ -31,6 +30,25 @@ transition: 0.3s;
 .custom-toggler.navbar-toggler {
     border-color: rgb(133,255,199);
 }
+
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(133,255,199, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
+
+.email-btn {
+	position: absolute;
+	right: 120px;
+	border: 1px solid  rgb(133, 255, 199);
+	background-color: rgb(0, 0, 0);
+	color: rgb(133, 255, 199);
+	padding: 7px;
+	text-align: center;
+}
+
+@media screen and (max-width: 990px) {
+	.email-btn {
+		position: relative;
+		margin-top: 10px;
+		margin-left: 117px;
+	}
+} 

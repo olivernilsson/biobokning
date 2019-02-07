@@ -8,9 +8,14 @@
     <ul class="navbar-nav mr-auto">
       ${this.navItems}
       ${this.userLogin}
+      ${this.userRegistration ? this.userRegistration : `
+        <div class="navbar-email">
+          <button class="email-btn btn">
+            ${this.email}
+          </button>
+        </div>`}
     </ul>
-    ${this.userRegistration ? this.userRegistration : ''}
   </div>
 
 </nav>
-  
+   
