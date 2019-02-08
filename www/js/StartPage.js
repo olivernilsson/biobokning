@@ -13,11 +13,13 @@ class StartPage extends Component {
   async getMovies() {
     this.movies = await Film.find();
 
-this.render();
+    this.render();
 
   }
 
- 
+  selectMovie() {
+
+  }
 
   mount() {
     this.mountCount++;

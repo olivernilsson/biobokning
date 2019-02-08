@@ -14,17 +14,16 @@ class MoviesAndTrailersPage extends Component {
     this.testlist = [];
     this.selectedView;
     this.bookPage = new BookingPage();
-    this.page=page;
+    this.page = page;
     this.choosen = false;
   }
 
 
 
-changeVal(){
-  console.log('calling')
-  this.choosen = false;
-  this.render();
-}
+  changeVal() {
+    this.choosen = false;
+    this.render();
+  }
 
   async moviePrint() {
     this.movies = await Film.find();
@@ -53,7 +52,7 @@ changeVal(){
     this.selectedView = view;
     this.choosen = true;
     this.bookPage.change(view);
-    this.render()
+    this.render();
 
   }
 
@@ -72,7 +71,7 @@ changeVal(){
     }
     //console.log(this.viewings);
     this.render();
-    
+
   }
 
 
