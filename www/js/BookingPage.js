@@ -29,11 +29,17 @@ class BookingPage extends Component {
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
       seniors: this.pricePage.seniors,
-      bookingId: 'abcdef'
+      //view: this.view._id,
+      bookingId: 'ddd'
     })
     await booking.save();
+
+    let populatedBooking = await Booking.find(`.findOne({bookingId:'ddd'})`);
+    console.log(populatedBooking);
     console.log(booking);
-    console.log(this.view);
+    //console.log(this.view);
+
+
   }
 
 
