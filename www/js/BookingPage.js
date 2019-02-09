@@ -7,8 +7,11 @@ class BookingPage extends Component {
       'click #forward': 'countUp',
       'click #backtext': 'countDown',
       'click #mobforward': 'countUp',
-      'click #mobback': 'countDown'
+      'click #mobback': 'countDown',
+      'click .bookTicket': 'bookTicket'
     })
+
+    this.view;
 
     this.stepCounter = 1;
     this.regPage = new RegPage();
@@ -18,12 +21,27 @@ class BookingPage extends Component {
 
   }
 
+  async bookTicket(){
+
+    //alert(this.pricePage.kids);
+
+    let booking = new Booking({
+      adults: this.pricePage.adults,
+      kids: this.pricePage.kids,
+      seniors: this.pricePage.seniors,
+      bookingId: 'abcdef'
+    })
+    await booking.save();
+    console.log(booking);
+    console.log(this.view);
+  }
+
 
 
 
   change(selectedView){
     console.log(selectedView)
-
+    this.view= selectedView;
   }
 
   countUp() {
