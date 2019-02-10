@@ -1,6 +1,6 @@
 class MoviesAndTrailersPage extends Component {
 
-  constructor(page) {
+  constructor() {
     super();
     this.addRoute('/bookdemo', 'Movies and Trailers');
     this.movies = [];
@@ -14,8 +14,9 @@ class MoviesAndTrailersPage extends Component {
     this.testlist = [];
     this.selectedView;
     this.bookPage = new BookingPage();
-    this.page = page;
     this.choosen = false;
+
+
   }
 
 
@@ -32,8 +33,11 @@ class MoviesAndTrailersPage extends Component {
 
   }
 
-  movieSelect(e) {
-    this.testlist.length = 0;
+  
+
+
+ movieSelect(e) {
+    
     let id = $(e.currentTarget).attr('data-movie-id');
     let movie = this.movies.filter(movie => movie._id === id)[0];
     //console.log(movie);

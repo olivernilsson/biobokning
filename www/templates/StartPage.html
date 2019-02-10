@@ -1,16 +1,21 @@
-<section class="start-box d-flex align-content-start flex-wrap">
-  ${this.movies.map((movie) => `
+<section class="start-box d-flex align-content-start flex-wrap ">
 
+
+
+
+  ${this.movies.map((movie) => `
+    
   <div class="col-md-12 start-picture" data-movie-id="${movie._id}">
     <img class="movie-image" src="/images/${movie.images[0]}">
-
+    
     <div class="overlay-title">${movie.title}</div>
     <div class="overlay-year">${movie.productionYear}</div>
-
-    <div class="overlay ">
+    <a href="/bookdemo">
+    <div class="overlay select-movie" data-movie-id="${movie._id}">
       <p class="overlay-text">
         ${movie.description.slice(0,150)}.....</p>
     </div>
+  </a>
   </div>
 
   `).join('')}

@@ -47,6 +47,7 @@ position: relative;
 
 
 .overlay{
+  cursor: pointer;
   background: rgba(0,0,0,0.4);
   position: absolute;
   height: 99%;
@@ -91,7 +92,11 @@ position: relative;
 }
 
 
+.jumbotron{
 
+
+  background-color:transparent !important;
+}
 
   
 @media screen and (max-width: 800px) {
