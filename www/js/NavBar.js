@@ -8,8 +8,24 @@ class NavBar extends Component {
       new NavItem('Filmer & trailers', '/moviesandtrailers'),
       new UserRegistration('')
     ];
-    this.userLogin = new UserLogin();
 
+    this.userRegistration = new UserRegistration();
+    this.userLogin = new UserLogin();
+    NavBar.current = this;
+    this.email;
+  }
+  
+  async toggleRegisterButton(){
+    this.userRegistration = false;
+    this.logg = await Login.find();
+    this.email = this.logg.email;
+    this.render();
+  }
+  
+  removeEmail(){
+    this.email = ''; 
+    this.userRegistration = new UserRegistration;
+    this.render();
   }
  
-}
+} 

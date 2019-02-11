@@ -11,13 +11,14 @@ class UserLogin extends Component {
     this.checkIfLoggedIn();
     UserLogin.current = this;
   } 
-  
+   
   async showModal(){
     if(this.loggedIn){
       // log out
       let a = new Login();
       await a.delete();
       this.checkIfLoggedIn();
+      NavBar.current.removeEmail();
       return;
     }
     this.modalShown = true;
