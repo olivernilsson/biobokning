@@ -23,7 +23,7 @@ class BookingPage extends Component {
 
   //----------------- BOOKING FUNCTION----------------//
   //Tar in data, gör ny bokning och populerar, allt funkar fasst 
-  //seats läggs ej till än.
+  //seats läggs ej till än. Booking Id läggs till automatiskt i ny boking
 
   async bookTicket(){
 
@@ -48,6 +48,18 @@ class BookingPage extends Component {
     `); 
 
     console.log(populatedBooking);
+
+
+    let booking2 = await new Booking({
+      adults: this.pricePage.adults,
+      kids: this.pricePage.kids,
+      seniors: this.pricePage.seniors
+    })
+    await booking2.save();
+
+    let populatedBooking2 = await Booking.find(booking2._id);
+
+    console.log(populatedBooking2);
 
   }
 
