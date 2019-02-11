@@ -18,15 +18,23 @@ class MoviesAndTrailersPage extends Component {
   }
 
 
+  async moviePrint() {
+    this.movies = await Film.find();
+    //console.log(this.movies);
+    this.render();
+
+  }
 
 
 
-  async mount(){
+  async mount() {
     let id = this.routeParts[0];
     let film = await Film.find(id);
     Object.assign(this, film._props);
     console.log("VISA UPP FILMEN", this.title);
     document.title = 'Film: ' + this.title;
+    this.render();
+
   }
 
 
@@ -36,23 +44,17 @@ class MoviesAndTrailersPage extends Component {
     this.render();
   }
 
-  async moviePrint() {
-    this.movies = await Film.find();
-    //console.log(this.movies);
-    this.render();
-
-  }
-
-  
 
 
- movieSelect(e) {
-    
+
+  movieSelect(e) {
+    this.testlist.length = 0;
     let id = $(e.currentTarget).attr('data-movie-id');
     let movie = this.movies.filter(movie => movie._id === id)[0];
     //console.log(movie);
     this.movie = movie;
     this.title = movie.title;
+    Router.goto(`/movie-details/${id}`)
     this.render();
     this.viewingsfind(this.movie)
 
@@ -69,10 +71,10 @@ class MoviesAndTrailersPage extends Component {
     this.bookPage.change(view);
     this.render();
 
+
   }
 
   async viewingsfind(movie) {
-    console.log(movie.title);
     this.list = [];
     this.test = JSON.stringify(movie.title)
     this.viewings = await View.find(`.find({film:${this.test}})`);
