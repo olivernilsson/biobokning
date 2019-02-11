@@ -5,6 +5,7 @@ class MoviesAndTrailersPage extends Component {
     this.addRoute('/moviesandtrailers', 'Movies and Trailers');
     this.movies = [];
     this.viewings = [];
+    this.youtube = "https://www.youtube.com/embed/";
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
