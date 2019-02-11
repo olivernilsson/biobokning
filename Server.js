@@ -100,11 +100,12 @@ module.exports = class Server {
     // Set keys to names of rest routes
     const models = {
       films: require('./models/Film'),
-      salongs: require('./models/Salon'),
+      salons: require('./models/Salon'),
       users: require('./models/User'),
       views: require('./models/View'),
       bookings: require('./models/Booking')
 
+ 
     };
 
     app.get('/autoload-js-and-templates', (req, res) => {
