@@ -2,7 +2,6 @@ class BookingPage extends Component {
 
   constructor() {
     super();
-    this.addRoute('/moviesandtrailers', 'Movies and Trailers');
     this.addEvents({
       'click #forward': 'countUp',
       'click #backtext': 'countDown',
@@ -15,11 +14,7 @@ class BookingPage extends Component {
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
-
   }
-
-
-
 
   change(selectedView){
     console.log(selectedView)

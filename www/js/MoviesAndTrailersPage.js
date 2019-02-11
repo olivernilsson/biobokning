@@ -2,7 +2,7 @@ class MoviesAndTrailersPage extends Component {
 
   constructor() {
     super();
-    this.addRoute('/moviesandtrailers', 'Movies and Trailers');
+    this.addRoute(/\/movie-details\/(.*)/)
     this.movies = [];
     this.viewings = [];
     this.moviePrint();
@@ -15,8 +15,18 @@ class MoviesAndTrailersPage extends Component {
     this.selectedView;
     this.bookPage = new BookingPage();
     this.choosen = false;
+  }
 
 
+
+
+
+  async mount(){
+    let id = this.routeParts[0];
+    let film = await Film.find(id);
+    Object.assign(this, film._props);
+    console.log("VISA UPP FILMEN", this.title);
+    document.title = 'Film: ' + this.title;
   }
 
 
@@ -55,6 +65,7 @@ class MoviesAndTrailersPage extends Component {
     this.view = view;
     this.selectedView = view;
     this.choosen = true;
+    console.log(this.choosen)
     this.bookPage.change(view);
     this.render();
 
@@ -69,7 +80,6 @@ class MoviesAndTrailersPage extends Component {
 
     for (let view of this.viewings) {
       this.testlist.push(view);
-      console.log("ashfajfj")
       // console.log(JSON.stringify(view));
       //this.list.push(`<p>${JSON.stringify(view)}</p>`);
     }
