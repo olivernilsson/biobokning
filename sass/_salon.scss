@@ -1,0 +1,38 @@
+.salon-rows > .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat {
+  display: inline-block;
+  background-color: rgb(16, 133, 16);
+  margin: 3px 1px 1px 1px;
+  width: 35px;
+  height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
+.seat:hover {
+  background-color: rgb(36, 166, 36);
+}
+
+.row1 {
+  margin-top: 150px;
+}
+
+.screen {
+  margin-left: auto;
+  margin-right: auto;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-top: 100px;
+  height: 5px;
+  width: 350px;
+  background-color: rgb(60, 60, 60);
+  box-shadow: 0px 3px 2px 1px rgb(255, 255, 255);
+}
