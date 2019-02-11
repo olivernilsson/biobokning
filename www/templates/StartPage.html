@@ -1,4 +1,23 @@
-<div>
-  <h2>Start</h2>
-  <p>This is the start page.</p>
-</div>
+<section class="start-box d-flex align-content-start flex-wrap ">
+
+
+
+
+  ${this.movies.map((movie) => `
+    
+  <div class="col-md-12 start-picture" data-movie-id="${movie._id}">
+    <img class="movie-image" src="/images/${movie.images[0]}">
+    
+    <div class="overlay-title">${movie.title}</div>
+    <div class="overlay-year">${movie.productionYear}</div>
+    <a href="/moviesandtrailers">
+    <div class="overlay select-movie" data-movie-id="${movie._id}">
+      <p class="overlay-text">
+        ${movie.description.slice(0,150)}.....</p>
+    </div>
+  </a>
+  </div>
+
+  `).join('')}
+
+</section>

@@ -12,7 +12,7 @@ class LoginModal extends Component{
     let email = this.baseEl.find('#login-email').val();
     let password = this.baseEl.find('#login-password').val();
     
-    let login = new Login({
+    let login = new Login({ 
       email : email,
       password : password
     })
@@ -22,6 +22,7 @@ class LoginModal extends Component{
     if( !login.loggedIn ) { return this.rewriteLogin(login)} 
  
     UserLogin.current.hideModal();
+    NavBar.current.toggleRegisterButton();
   }
   
   // Notifies the user if login attempts failed 
