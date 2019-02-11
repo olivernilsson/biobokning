@@ -22,33 +22,32 @@ class BookingPage extends Component {
   }
 
   //----------------- BOOKING FUNCTION----------------//
+  //Tar in data, gör ny bokning och populerar, allt funkar fasst 
+  //seats läggs ej till än.
 
   async bookTicket(){
 
     let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
     //console.log(getTheUser);
+    //console.log(this.view);
 
     let booking = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
       seniors: this.pricePage.seniors,
-      user: getTheUser,
+      user: getTheUser._id,
       view: this.view._id,
-      bookingId: 'bla'
+      bookingId: 'knast'
     })
     await booking.save();
 
-    let populatedBooking = await Booking.find(`.findOne({bookingId:'bla'})
-    .populate('user')
+    let populatedBooking = await Booking.find(`.findOne({bookingId:'knast'})
     .populate('view')
-    exec()
-    `);
+    .populate('user')
+    .exec()
+    `); 
 
-    console.log(booking);
     console.log(populatedBooking);
-    
-    //console.log(this.view);
-
 
   }
 
