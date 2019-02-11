@@ -52,3 +52,20 @@ transition: 0.3s;
 		margin-left: 117px;
 	}
 } 
+
+.dd-menu{
+    background-color: #1F2833;   
+    text-align: center;
+}
+
+.dd-account{
+    color: #297373;
+    border-bottom: 1px solid #1F2833;
+}
+
+.dd-account:hover{
+    color: #85FFC7;
+    border-bottom: 1px solid #85FFC7;
+    background-color: #1F2833!important;
+    transition: 0.5s;
+}
