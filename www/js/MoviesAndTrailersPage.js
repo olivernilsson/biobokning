@@ -1,8 +1,8 @@
 class MoviesAndTrailersPage extends Component {
 
-  constructor(page) {
+  constructor() {
     super();
-    this.addRoute('/bookdemo', 'Movies and Trailers');
+    this.addRoute(/\/movie-details\/(.*)/)
     this.movies = [];
     this.viewings = [];
     this.moviePrint();
@@ -14,17 +14,27 @@ class MoviesAndTrailersPage extends Component {
     this.testlist = [];
     this.selectedView;
     this.bookPage = new BookingPage();
-    this.page=page;
     this.choosen = false;
   }
 
 
 
-changeVal(){
-  console.log('calling')
-  this.choosen = false;
-  this.render();
-}
+
+
+  async mount(){
+    let id = this.routeParts[0];
+    let film = await Film.find(id);
+    Object.assign(this, film._props);
+    console.log("VISA UPP FILMEN", this.title);
+    document.title = 'Film: ' + this.title;
+  }
+
+
+
+  changeVal() {
+    this.choosen = false;
+    this.render();
+  }
 
   async moviePrint() {
     this.movies = await Film.find();
@@ -33,8 +43,11 @@ changeVal(){
 
   }
 
-  movieSelect(e) {
-    this.testlist.length = 0;
+  
+
+
+ movieSelect(e) {
+    
     let id = $(e.currentTarget).attr('data-movie-id');
     let movie = this.movies.filter(movie => movie._id === id)[0];
     //console.log(movie);
@@ -52,8 +65,9 @@ changeVal(){
     this.view = view;
     this.selectedView = view;
     this.choosen = true;
+    console.log(this.choosen)
     this.bookPage.change(view);
-    this.render()
+    this.render();
 
   }
 
@@ -66,13 +80,12 @@ changeVal(){
 
     for (let view of this.viewings) {
       this.testlist.push(view);
-      console.log("ashfajfj")
       // console.log(JSON.stringify(view));
       //this.list.push(`<p>${JSON.stringify(view)}</p>`);
     }
     //console.log(this.viewings);
     this.render();
-    
+
   }
 
 

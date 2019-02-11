@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let bookingSchema = new Schema({
-   "adult": Number,
+   "adults": Number,
    "kids": Number,
-   "senior": Number,
+   "seniors": Number,
    "user": { type: Schema.Types.ObjectId, ref: 'User' },
    "view": { type: Schema.Types.ObjectId, ref: 'View' },
    "seats": Array,

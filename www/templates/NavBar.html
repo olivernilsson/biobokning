@@ -10,10 +10,17 @@
       ${this.userLogin}
       ${this.userRegistration ? this.userRegistration : `
         <div class="navbar-email">
-          <button class="email-btn btn">
-            ${this.email}
-          </button>
-        </div>`}
+            <button class="email-btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ${this.email}
+                <i class="far fa-user"></i>
+                <div class="dropdown-menu ml-5 p-3 dd-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item dd-account" href="#">min profil</a>
+                    <a class="dropdown-item dd-account" href="#">Bokningar</a>
+                    <a class="dropdown-item dd-account" href="#">Logga ut</a>
+                  </div>
+              </button>
+        </div>
+        `}
     </ul>
   </div>
 
