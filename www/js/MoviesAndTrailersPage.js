@@ -2,7 +2,7 @@ class MoviesAndTrailersPage extends Component {
 
   constructor() {
     super();
-    this.addRoute('/bookdemo', 'Movies and Trailers');
+    this.addRoute('/moviesandtrailers', 'Movies and Trailers');
     this.movies = [];
     this.viewings = [];
     this.moviePrint();

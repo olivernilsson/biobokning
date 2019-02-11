@@ -2,7 +2,7 @@ class BookingPage extends Component {
 
   constructor() {
     super();
-    this.addRoute('/bookdemo', 'Movies and Trailers');
+    this.addRoute('/moviesandtrailers', 'Movies and Trailers');
     this.addEvents({
       'click #forward': 'countUp',
       'click #backtext': 'countDown',
@@ -23,7 +23,7 @@ class BookingPage extends Component {
 
   change(selectedView){
     console.log(selectedView)
-
+this.render()
   }
 
   countUp() {

@@ -10,7 +10,7 @@
     
     <div class="overlay-title">${movie.title}</div>
     <div class="overlay-year">${movie.productionYear}</div>
-    <a href="/bookdemo">
+    <a href="/bookdemo${movie._id}">
     <div class="overlay select-movie" data-movie-id="${movie._id}">
       <p class="overlay-text">
         ${movie.description.slice(0,150)}.....</p>

@@ -21,25 +21,17 @@ class StartPage extends Component {
     this.movies = await Film.find();
 
 
-    let newArr = this.movies.map(function (elem) {
-      return {
-        title: elem.title,
-        img: elem.images
-      };
-    });
+    // let newArr = this.movies.map(function (elem) {
+    //   return {
+    //     title: elem.title,
+    //     img: elem.images
+    //   };
+    // });
 
-    this.movielist.push(newArr)
-
-
-    this.name = newArr[4].title;
-    this.image = newArr[4].img[0];
-
-
-    console.log(this.image)
     this.mount();
 
 
-
+    
 
   }
 
