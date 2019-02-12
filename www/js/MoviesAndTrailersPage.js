@@ -18,6 +18,7 @@ class MoviesAndTrailersPage extends Component {
   }
 
 
+
   async moviePrint() {
     this.movies = await Film.find();
     //console.log(this.movies);
@@ -25,17 +26,28 @@ class MoviesAndTrailersPage extends Component {
 
   }
 
-
-
   async mount() {
+    this.testlist.length = 0;
     let id = this.routeParts[0];
-    let film = await Film.find(id);
-    Object.assign(this, film._props);
-    console.log("VISA UPP FILMEN", this.title);
-    document.title = 'Film: ' + this.title;
+    let movie = await Film.find(id);
+    Object.assign(this, movie._props);
+    document.title = 'Film:' + this.title;
+    this.movie = movie;
+    this.title = movie.title;
+    this.list = [];
+    this.test = JSON.stringify(movie.title)
+    this.viewings = await View.find(`.find({film:${this.test}})`);
+
+    for (let view of this.viewings) {
+      this.testlist.push(view);
+    }
     this.render();
 
+  
+    
+    
   }
+
 
 
 
