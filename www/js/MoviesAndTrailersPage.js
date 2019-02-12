@@ -30,7 +30,7 @@ class MoviesAndTrailersPage extends Component {
     this.testlist.length = 0;
     let id = this.routeParts[0];
     let movie = await Film.find(id);
-    Object.assign(this, movie._props);
+    await Object.assign(this, movie._props);
     document.title = 'Film:' + this.title;
     this.movie = movie;
     this.title = movie.title;
@@ -48,6 +48,7 @@ class MoviesAndTrailersPage extends Component {
     
   }
 
+ 
 
 
 

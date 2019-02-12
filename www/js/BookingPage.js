@@ -21,11 +21,13 @@ class BookingPage extends Component {
   }
 
 
+
+
   //----------------- BOOKING FUNCTION----------------//
   //Tar in data, gör ny bokning och populerar, allt funkar fasst 
   //seats läggs ej till än. Booking Id läggs till automatiskt i ny boking
 
-  async bookTicket(){
+  async bookTicket() {
 
     let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
     //console.log(getTheUser);
@@ -45,7 +47,7 @@ class BookingPage extends Component {
     .populate('view')
     .populate('user')
     .exec()
-    `); 
+    `);
 
     console.log(populatedBooking);
 
@@ -66,10 +68,10 @@ class BookingPage extends Component {
 
 
 
-  change(selectedView){
+  change(selectedView) {
     console.log(selectedView)
-    this.view= selectedView;
-this.render()
+    this.view = selectedView;
+    this.render()
   }
 
   countUp() {
@@ -82,10 +84,10 @@ this.render()
 
   countDown() {
     this.stepCounter--;
-    if (this.stepCounter < 1 ) { 
+    if (this.stepCounter < 1) {
       App.moviesAndTrailersPage.changeVal();
       this.stepCounter = 1
-   }
+    }
     this.render();
 
   }
