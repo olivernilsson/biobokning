@@ -17,7 +17,9 @@ class BookingPage extends Component {
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
+
   }
+
 
   //----------------- BOOKING FUNCTION----------------//
   //Tar in data, gör ny bokning och populerar, allt funkar fasst 
