@@ -11,6 +11,9 @@ class Salon extends Component {
     this.bookedSeats = []; 
     this.salonSeats = [];
 
+    //This value (3) is at the moment hard coded. Should be an inargument instead.
+    this.nbrOfPickedSeats = 3; 
+
     this.row1 = [];
     this.row2 = [];
     this.row3 = [];
@@ -19,22 +22,36 @@ class Salon extends Component {
     this.row6 = [];
     this.row7 = [];
     this.row8 = [];
-  }
+  } 
 
   toggleSeat(e){
-    let seatNr = e.target.id;
+    let seatNr = parseInt(e.target.id, 10);
+    //Index of picked seat
     let seatIndex = this.bookedSeats.indexOf(seatNr);
-  
-    if(seatIndex < 0){
-      this.bookedSeats.push(seatNr);
-      $(`#${seatNr}`).css("background-color", "rgb(65,55,55)");
+    //Index of the last seat in the row 
+    let lastSeatIndex = this.bookedSeats.indexOf(seatNr + this.nbrOfPickedSeats - 1); 
+    //Index of seats outside of the salon
+    let outOfSeatsIndex = this.salonSeats.length - this.nbrOfPickedSeats + 1; 
+
+    //Ensures the salon is empty, doesn't pick already picked seats, or pick seats outside of the salon.
+    if(seatIndex < 0 && lastSeatIndex < 0 && seatNr <= outOfSeatsIndex){
+      this.bookedSeats.length = 0;
+      for(let j = 0; j < this.salonSeats.length+1; j++){
+        $(`#${j}`).css("background-color", "");
+      }
+      for(let i = 0; i < this.nbrOfPickedSeats; i++){
+        this.bookedSeats.push(seatNr+i);
+        $(`#${seatNr+i}`).css("background-color", "rgb(65,55,55)");
+      }
     }
+    //If seat/seats is already picked, deselect it/them.
     if(seatIndex >= 0){
-      let clickedNr = this.bookedSeats.indexOf(seatNr);
-      this.bookedSeats.splice(clickedNr, 1);
-      $(`#${seatNr}`).css("background-color", "");
+      for(let i = 0; i <= this.salonSeats.length+1; i++){
+        $(`#${i}`).css("background-color", "");
+      }
+      this.bookedSeats.length = 0;
     }
-    // console.log this.bookedSeats to see the booked seats
+    console.log(this.bookedSeats) //To see the booked seats.
   }
   
   async showSmallSalon(){
@@ -90,22 +107,22 @@ class Salon extends Component {
         if(i <= 7 ){
           this.row1.push(rows[i]);
         }
-        if( 8 <= i && i <= 15 ){
+        if( 8 <= i && i <= 16 ){
           this.row2.push(rows[i]);
         }
-        if( 16 <= i && i <= 25 ){
+        if( 17 <= i && i <= 26 ){
           this.row3.push(rows[i]);
         }
-        if( 26 <= i && i <= 35 ){
+        if( 27 <= i && i <= 36 ){
           this.row4.push(rows[i]);
         }
-        if( 36 <= i && i <= 45 ){
+        if( 37 <= i && i <= 46 ){
           this.row5.push(rows[i]);
         }
-        if( 46 <= i && i <= 57 ){
+        if( 47 <= i && i <= 58 ){
           this.row6.push(rows[i]);
         }
-        if( 58 <= i && i <= 69 ){
+        if( 59 <= i && i <= 71 ){
           this.row7.push(rows[i]);
         }
         i++;
@@ -131,25 +148,25 @@ class Salon extends Component {
         if(i <= 7 ){
           this.row1.push(rows[i]);
         }
-        if( 8 <= i && i <= 15 ){
+        if( 8 <= i && i <= 16 ){
           this.row2.push(rows[i]);
         }
-        if( 16 <= i && i <= 25 ){
+        if( 17 <= i && i <= 26 ){
           this.row3.push(rows[i]);
         }
-        if( 26 <= i && i <= 35 ){
+        if( 27 <= i && i <= 36 ){
           this.row4.push(rows[i]);
         }
-        if( 36 <= i && i <= 45 ){
+        if( 37 <= i && i <= 46 ){
           this.row5.push(rows[i]);
         }
-        if( 46 <= i && i <= 55 ){
+        if( 47 <= i && i <= 56 ){
           this.row6.push(rows[i]);
         }
-        if( 56 <= i && i <= 67 ){
+        if( 57 <= i && i <= 68 ){
           this.row7.push(rows[i]);
         }
-        if( 68 <= i && i <= 79 ){
+        if( 69 <= i && i <= 81 ){
           this.row8.push(rows[i]);
         }
         i++;
@@ -171,5 +188,4 @@ class Salon extends Component {
     this.row8.length = 0;
   }
   
-
 } 
