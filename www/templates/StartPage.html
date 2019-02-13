@@ -1,10 +1,27 @@
-<section class="d-flex  justify-content-center flex-wrap ">
+<section>
+
+    <a href="/movie-details/${this.singleMovieId}"> 
+    <div class="head-movie" data-movie-id="${this.singleMovieId}">
+       
+        
+        
+        
+        <div class="headoverlay">
+        <img class="head-image" src="/images/${this.singleMovieImg}">
+      </div>
+      <div class="headoverlay-title">${this.singleMovieTitle}</div>
+      
+  
+      </div>
+    </a>
+
+<div class="start-box d-inline-flex  justify-content-around flex-wrap ">
 
 
+  
 
-
-  ${this.movies.map((movie) => `
-    
+  ${this.movies.slice(0,4).map((movie) => `
+   
   <div class="col-md-12 start-picture" data-movie-id="${movie._id}">
     <img class="movie-image" src="/images/${movie.images[0]}">
     
@@ -19,5 +36,7 @@
   </div>
 
   `).join('')}
+
+</div>
 
 </section>

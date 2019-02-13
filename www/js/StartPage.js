@@ -7,11 +7,12 @@ class StartPage extends Component {
       'click .select-movie': 'selectMovie',
 
     })
-    this.mountCount = 0;
     this.movies = [];
     this.movielist = [];
     this.moviePage = new MoviesAndTrailersPage();
     this.getMovies();
+    this.singleMovie;
+
 
 
 
@@ -19,21 +20,28 @@ class StartPage extends Component {
 
   async getMovies() {
     this.movies = await Film.find();
+ 
+    let newArr = this.movies.map(function (elem) {
+      return {
+        id: elem._id,
+        title: elem.title,
+        img: elem.images,
+        year: elem.productionYear,
+        desc: elem.description
+      };
+    });
+
+    this.singleMovieTitle = newArr[4].title;
+    this.singleMovieImg = newArr[4].img;
+    this.singleMovieYear = newArr[4].year;
+    this.singleMovieDesc = newArr[4].desc;
+    this.singleMovieId = newArr[4].id;
 
 
-    // let newArr = this.movies.map(function (elem) {
-    //   return {
-    //     title: elem.title,
-    //     img: elem.images
-    //   };
-    // });
-
-    this.mount();
-
-
-    
+    this.render();
 
   }
+
 
 
 
@@ -49,7 +57,6 @@ class StartPage extends Component {
   }
 
   mount() {
-    this.mountCount++;
     this.render();
   }
 
