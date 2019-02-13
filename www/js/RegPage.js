@@ -13,10 +13,15 @@ class RegPage extends Component {
     })
     this.done = false;
     this.emailValid = false;
-    
-    
+    this.myNewBooking;
+    this.tester()
   }
 
+
+  tester(myNewBooking){
+    console.log(myNewBooking)
+    this.render();
+  }
  
 
 
