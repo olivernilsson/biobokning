@@ -77,28 +77,29 @@ class BookingPage extends Component {
 
     console.log(myNewBookingPopulated);
 
+    //---- Nedan skriver vi ut bokningen på booking confirm sidan ---//   
+    
+        this.bookingConfirm.bookingId = myNewBooking.bookingId;
+        this.bookingConfirm.totalPrice = this.TotalPersons * 100;
+        this.bookingConfirm.seats = myNewBooking.seats;
+        this.bookingConfirm.film = myNewBooking.view.film;
+        this.bookingConfirm.date = myNewBooking.view.date;
+        this.bookingConfirm.time = myNewBooking.view.time;
+        this.bookingConfirm.salon = myNewBooking.view.auditorium;
+
+        this.bookingConfirm.adults = myNewBooking.adults;
+        this.bookingConfirm.kids = myNewBooking.kids;
+        this.bookingConfirm.seniors = myNewBooking.seniors;
+
+
+
+
+
+
+
+
   }
-
-
 
 }
 
 
-
- //---- Ta oss vidare till confirm sidan med all data. ---//
-/*
-    this.bookingConfirm.bookingId = booking.bookingId;
-    this.bookingCoonfirm.adults = booking.adults;
-    this.kids;
-    this.seniors; 
-    this.bookingConfirm.totalPrice = 
-    this.seats;
-    this.film;
-    this.date;
-    this.time;
-    this.salon;
-
-    */
-
-    //this.stepCounter =4;
-    //this.render();
