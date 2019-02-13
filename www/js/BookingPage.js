@@ -18,14 +18,20 @@ class BookingPage extends Component {
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
-   
+    this.userLogin =  new UserLogin();
   }
 
+
+
+  checkLogin(){
+    this.userLogin.checkIfLoggedIn();
+  }
 
   async mount(){
     let id = this.routeParts[0];
     let view = await View.find(id);
    Object.assign(this, view._props);
+  this.checkLogin();
     this.render();
  
   }
@@ -83,6 +89,8 @@ class BookingPage extends Component {
 
   countUp() {
     this.stepCounter++;
+    
+
     if (this.stepCounter > 4) { this.stepCounter = 4; }
     this.render();
 
@@ -92,7 +100,7 @@ class BookingPage extends Component {
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1) {
-      App.moviesAndTrailersPage.changeVal();
+      // App.moviesAndTrailersPage.changeVal();
       this.stepCounter = 1
     }
     this.render();

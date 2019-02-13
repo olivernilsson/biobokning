@@ -15,6 +15,7 @@ class MoviesAndTrailersPage extends Component {
     this.selectedView;
     this.bookPage = new BookingPage();
     this.choosen = false;
+    this.moviePrint();
   }
 
 
@@ -47,11 +48,6 @@ class MoviesAndTrailersPage extends Component {
     
   }
 
-
-  changeVal() {
-    this.choosen = false;
-    this.render();
-  }
 
   movieSelect(e) {
     this.testlist.length = 0;
