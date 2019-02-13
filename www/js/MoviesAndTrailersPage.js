@@ -65,16 +65,15 @@ class MoviesAndTrailersPage extends Component {
     this.viewingsfind(this.movie)
   }
 
-  viewSelect(e) {
-    let id = $(e.currentTarget).attr('data-view-id');
-    let view = this.viewings.filter(view => view._id === id)[0];
-    this.view = view;
-    this.selectedView = view;
-    this.choosen = true;
-    console.log(this.choosen)
-    this.bookPage.change(view);
-    this.render();
-  }
+  // viewSelect(e) {
+  //   let id = $(e.currentTarget).attr('data-view-id');
+  //   let view = this.viewings.filter(view => view._id === id)[0];
+  //   this.view = view;
+  //   this.selectedView = view;
+  //   console.log(this.choosen)
+  //   this.bookPage.change(view);
+  //   this.render();
+  // }
 
   async viewingsfind(movie) {
     this.list = [];

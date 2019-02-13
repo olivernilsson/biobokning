@@ -2,6 +2,7 @@ class BookingPage extends Component {
 
   constructor() {
     super();
+    this.addRoute(/\/view\/(.*)/)
     this.addEvents({
       'click #forward': 'countUp',
       'click #backtext': 'countDown',
@@ -17,8 +18,19 @@ class BookingPage extends Component {
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
+   
   }
 
+
+  async mount(){
+    console.log('yey')
+    let id = this.routeParts[0];
+    let view = await View.find(id);
+   Object.assign(this, view._props);
+    console.log(id)
+    this.render();
+ 
+  }
 
   //----------------- BOOKING FUNCTION----------------//
   //Tar in data, gör ny bokning och populerar, allt funkar fasst 
@@ -65,11 +77,11 @@ class BookingPage extends Component {
 
 
 
-  change(selectedView) {
-    console.log(selectedView)
-    this.view = selectedView;
-    this.render()
-  }
+  // change(selectedView) {
+  //   console.log(selectedView)
+  //   this.view = selectedView;
+  //   this.render()
+  // }
 
   countUp() {
     this.stepCounter++;
