@@ -21,20 +21,21 @@
   
 
   ${this.movies.slice(0,4).map((movie) => `
-   
+    <a href="/movie-details/${movie._id}">
   <div class="col-md-12 start-picture" data-movie-id="${movie._id}">
+    
     <img class="movie-image" src="/images/${movie.images[0]}">
     
     <div class="overlay-title">${movie.title}</div>
     <div class="overlay-year">${movie.productionYear}</div>
-    <a href="/movie-details/${movie._id}">
+   
     <div class="overlay select-movie" data-movie-id="${movie._id}">
       <p class="overlay-text">
         ${movie.description.slice(0,150)}.....</p>
     </div>
-  </a>
-  </div>
 
+  </div>
+</a>
   `).join('')}
 
 </div>
