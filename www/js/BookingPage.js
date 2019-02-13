@@ -13,13 +13,21 @@ class BookingPage extends Component {
     this.view;
 
     this.stepCounter = 1;
-    this.regPage = new RegPage();
+    this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
 
   }
 
+  async toggleRegPage(){
+    if(!((await Login.find()).error)){
+      this.regPage = new Button();
+    } else {
+      this.regPage = new RegPage();
+    }
+    this.render();
+  }
 
   //----------------- BOOKING FUNCTION----------------//
   //Tar in data, gör ny bokning och populerar, allt funkar fasst 
@@ -67,7 +75,6 @@ class BookingPage extends Component {
 
 
   change(selectedView){
-    console.log(selectedView)
     this.view= selectedView;
 this.render()
   }
