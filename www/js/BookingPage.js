@@ -23,11 +23,9 @@ class BookingPage extends Component {
 
 
   async mount(){
-    console.log('yey')
     let id = this.routeParts[0];
     let view = await View.find(id);
    Object.assign(this, view._props);
-    console.log(id)
     this.render();
  
   }
@@ -77,11 +75,11 @@ class BookingPage extends Component {
 
 
 
-  // change(selectedView) {
-  //   console.log(selectedView)
-  //   this.view = selectedView;
-  //   this.render()
-  // }
+  change(selectedView) {
+    console.log(selectedView)
+    this.view = selectedView;
+    this.render()
+  }
 
   countUp() {
     this.stepCounter++;

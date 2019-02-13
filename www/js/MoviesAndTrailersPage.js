@@ -8,7 +8,7 @@ class MoviesAndTrailersPage extends Component {
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click #select-view': 'viewSelect'
+      'click .view-select': 'viewSelect'
     })
 
     this.testlist = [];
@@ -65,15 +65,14 @@ class MoviesAndTrailersPage extends Component {
     this.viewingsfind(this.movie)
   }
 
-  // viewSelect(e) {
-  //   let id = $(e.currentTarget).attr('data-view-id');
-  //   let view = this.viewings.filter(view => view._id === id)[0];
-  //   this.view = view;
-  //   this.selectedView = view;
-  //   console.log(this.choosen)
-  //   this.bookPage.change(view);
-  //   this.render();
-  // }
+  viewSelect(e) {
+    let id = $(e.currentTarget).attr('data-view-id');
+    let view = this.viewings.filter(view => view._id === id)[0];
+    this.view = view;
+    this.selectedView = view;
+    this.bookPage.change(view);
+    this.render();
+  }
 
   async viewingsfind(movie) {
     this.list = [];
