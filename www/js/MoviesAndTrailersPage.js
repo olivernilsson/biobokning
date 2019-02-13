@@ -79,7 +79,12 @@ class MoviesAndTrailersPage extends Component {
     this.render();
 
   }
+  
+  showTrailer(){
 
+    this.trailer = this.movie.youtubeTrailers[0];
+    this.render();
+  }
 
 }
 

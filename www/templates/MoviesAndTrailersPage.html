@@ -11,6 +11,8 @@ ${this.choosen === false ? `<div>
       <div class="page-info">
         <br>
         <img src= ${this.movie ? `/images/${this.movie.images[0]}` : ''}>
+        <iframe class="trailer" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe>
+
         <img class="play" src= ${this.movie ? `/images/play.png` : ''}>
         <br>
         <!--<iframe width="100%" height="315" src=${this.movie ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe>-->
@@ -31,7 +33,7 @@ ${this.choosen === false ? `<div>
           ${this.movie ? this.movie.language: ''} </p>
         <br>
       </div>
-      <div>
+      <div class="viewings-list">
        <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
   
       <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->

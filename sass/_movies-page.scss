@@ -27,18 +27,13 @@
     z-index: 0;
   }
 
-  iframe{
-
-    border: none;
-  }
-
   .movie-section{
 
     margin: 0;
     padding-left: 0;
   }
 
- img{
+  img{
 
   position: absolute;
   top:0;
@@ -56,9 +51,17 @@
   height: 200px;
   width: 200px;
   top: 30vh;
-  left: calc(50% - 100px);;
+  left: calc(50% - 100px);
   z-index: 2;
  }
+
+ .trailer{
+  position: absolute;
+  border: none;
+  top: 25vh;
+  left: calc(50% - 225px);
+  z-index: 1;
+}
 
  div{
 
@@ -69,6 +72,10 @@
   padding-left: 2%;
   padding-top: 64vh;
   border: none;
+ }
+
+ .viewings-list{
+  padding-left: 2%;
  }
 
  h2,h3{
