@@ -7,7 +7,8 @@ class BookingPage extends Component {
       'click #backtext': 'countDown',
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
-      'click .bookTicket': 'bookTicket'
+      'click .bookTicket': 'bookTicket',
+      'click .hej' : 'tellseats'
     })
 
     this.view;
@@ -18,6 +19,9 @@ class BookingPage extends Component {
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
 
+    this.totalPersons;
+    this.bookedSeats=[];
+
   }
 
 
@@ -27,11 +31,18 @@ class BookingPage extends Component {
 
   async bookTicket(){
 
-    let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
+    this.totalPersons= this.pricePage.adults+this.pricePage.kids+this.pricePage.seniors;
+    this.salonPage.nbrOfPickedSeats = this.totalPersons;
+
+    console.log(this.salonPage.nbrOfPickedSeats);
+
+
+
+    //let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
     //console.log(getTheUser);
     //console.log(this.view);
 
-    
+   /* 
     let booking = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
@@ -48,10 +59,10 @@ class BookingPage extends Component {
     .exec()
     `); 
 
-    console.log(populatedBooking);   
+    console.log(populatedBooking);   */
 
     //-----------------------------------------------------//
-
+/*
     let booking2 = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
@@ -68,7 +79,7 @@ class BookingPage extends Component {
     .exec()
     `); 
 
-    console.log(populatedBooking2);
+    console.log(populatedBooking2);    */
 
     //---- Ta oss vidare till confirm sidan med all data. ---//
 /*
@@ -90,7 +101,37 @@ class BookingPage extends Component {
 
   }
 
+  async tellseats(){
+    this.bookedSeats = this.salonPage.bookedSeats;
 
+    console.log(this.bookedSeats);
+
+    let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
+
+    let myNewBooking = await new Booking({
+      adults: this.pricePage.adults,
+      kids: this.pricePage.kids,
+      seniors: this.pricePage.seniors,
+      user: getTheUser._id,
+      seats: this.bookedSeats,
+      view: this.view._id
+    })
+    await myNewBooking.save();
+
+    //let populatedBooking2 = await Booking.find(booking2._id);
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})
+    .populate('view')
+    .populate('user')
+    .exec()
+    `); 
+
+    console.log(myNewBookingPopulated);
+
+
+
+
+
+  }
 
 
   change(selectedView){

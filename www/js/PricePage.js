@@ -9,6 +9,8 @@ class PricePage extends Component {
         this.adults=0;
         this.kids=0;
         this.seniors=0;
+
+        //this.total= this.adults+this.kids+this.seniors;
     }
 
     count(event){
