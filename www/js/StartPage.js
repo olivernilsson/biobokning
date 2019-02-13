@@ -3,10 +3,7 @@ class StartPage extends Component {
   constructor() {
     super();
     this.addRoute('/', 'Start');
-    this.addEvents({
-      'click .select-movie': 'selectMovie',
 
-    })
     this.movies = [];
     this.movielist = [];
     this.moviePage = new MoviesAndTrailersPage();
@@ -44,21 +41,6 @@ class StartPage extends Component {
 
 
 
-
-  selectMovie(e) {
-    console.log(this.movielist)
-    let id = $(e.currentTarget).attr('data-movie-id');
-    let movie = this.movies.filter(movie => movie._id === id)[0];
-    console.log(movie);
-    this.moviePage.movieSelect(e)
-
-
-
-  }
-
-  mount() {
-    this.render();
-  }
 
 
 

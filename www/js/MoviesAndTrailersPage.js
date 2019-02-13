@@ -42,23 +42,15 @@ class MoviesAndTrailersPage extends Component {
       this.testlist.push(view);
     }
     this.render();
-
-  
     
     
   }
-
- 
-
 
 
   changeVal() {
     this.choosen = false;
     this.render();
   }
-
-
-
 
   movieSelect(e) {
     this.testlist.length = 0;
@@ -70,9 +62,7 @@ class MoviesAndTrailersPage extends Component {
     Router.goto(`/movie-details/${id}`)
     this.render();
     this.viewingsfind(this.movie)
-
   }
-
 
   viewSelect(e) {
     let id = $(e.currentTarget).attr('data-view-id');
@@ -83,8 +73,6 @@ class MoviesAndTrailersPage extends Component {
     console.log(this.choosen)
     this.bookPage.change(view);
     this.render();
-
-
   }
 
   async viewingsfind(movie) {

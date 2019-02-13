@@ -1,17 +1,25 @@
 class NavBar extends Component {
 
   constructor(){
-    super();
+    super()
     this.navItems = [
       new NavItem('Start', '/'),
       new NavItem('Om oss', '/about'),
       new NavItem('Filmer & trailers', '/movie-details/')
     ];
+    this.addEvents({
+      'click .nav-link': 'changeVal',
+    })
     
     NavBar.current = this;
     this.userLogin = new UserLogin();
     this.showEmailOrRegisterBtn();
   }
+
+
+changeVal(){
+  App.moviesAndTrailersPage.changeVal();
+}
 
   async showEmailOrRegisterBtn(){
     if(!((await Login.find()).error)){
