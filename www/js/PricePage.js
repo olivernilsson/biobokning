@@ -2,15 +2,12 @@ class PricePage extends Component {
 
     constructor(){
         super();
-        //this.addRoute('/antal','antal');
         this.addEvents({
             'click button': 'count'
         })
         this.adults=0;
         this.kids=0;
         this.seniors=0;
-
-        //this.total= this.adults+this.kids+this.seniors;
     }
 
     count(event){
@@ -38,5 +35,4 @@ class PricePage extends Component {
         this.render();
     }
    
-
 }
