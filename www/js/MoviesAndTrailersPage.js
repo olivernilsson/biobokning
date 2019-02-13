@@ -9,7 +9,8 @@ class MoviesAndTrailersPage extends Component {
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click #select-view': 'viewSelect'
+      'click #select-view': 'viewSelect',
+      'click .play': 'showTrailer'
     })
 
     this.testlist = [];
