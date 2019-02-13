@@ -10,10 +10,15 @@ class StartPage extends Component {
     this.getMovies();
     this.singleMovie;
 
-
-
+    this.singleMovieTitle = '';
+    this.singleMovieImg = '';
+    this.singleMovieYear = '';
+    this.singleMovieDesc = '';
+    this.singleMovieId= '';
 
   }
+
+
 
   async getMovies() {
     this.movies = await Film.find();

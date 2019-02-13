@@ -19,6 +19,7 @@ class MoviesAndTrailersPage extends Component {
 
 
 
+
   async moviePrint() {
     this.movies = await Film.find();
     //console.log(this.movies);

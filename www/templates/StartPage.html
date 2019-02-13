@@ -1,9 +1,9 @@
-<section>
+<section >
 
   <a href="/movie-details/${this.singleMovieId}">
     <div class="head-movie" data-movie-id="${this.singleMovieId}">
       <div class="headoverlay">
-        <img class="head-image" src="/images/${this.singleMovieImg}">
+       ${this.singleMovieImg ? ` <img class="head-image" src="/images/${this.singleMovieImg}">` : ''}
       </div>
       <div class="headoverlay-title">${this.singleMovieTitle}</div>
 
