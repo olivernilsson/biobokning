@@ -12,7 +12,7 @@ class MoviesAndTrailersPage extends Component {
     })
 
     this.testlist = [];
-    this.selectedView;
+    this.view;
     this.bookPage = new BookingPage();
     this.choosen = false;
     this.moviePrint();
@@ -65,8 +65,8 @@ class MoviesAndTrailersPage extends Component {
     let id = $(e.currentTarget).attr('data-view-id');
     let view = this.viewings.filter(view => view._id === id)[0];
     this.view = view;
-    this.selectedView = view;
-    this.bookPage.change(view);
+    console.log('körs')
+    this.bookPage.change(this.view);
     this.render();
   }
 
