@@ -2,7 +2,6 @@ class PricePage extends Component {
 
     constructor(){
         super();
-        //this.addRoute('/antal','antal');
         this.addEvents({
             'click button': 'count'
         })
@@ -36,5 +35,4 @@ class PricePage extends Component {
         this.render();
     }
    
-
 }

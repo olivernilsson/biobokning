@@ -6,13 +6,13 @@ class Salon extends Component {
       'click .small-salon-btn' : 'showSmallSalon',
       'click .medium-salon-btn' : 'showMediumSalon',
       'click .large-salon-btn' : 'showLargeSalon',
-      'click .seat' : 'toggleSeat'
+      'click .seat' : 'toggleSeat'    
     });
     this.bookedSeats = []; 
     this.salonSeats = [];
 
     //This value (3) is at the moment hard coded. Should be an inargument instead.
-    this.nbrOfPickedSeats = 3; 
+    this.nbrOfPickedSeats;
 
     this.row1 = [];
     this.row2 = [];
