@@ -23,8 +23,7 @@ class LoginModal extends Component{
     App.loggedIn = true;
     UserLogin.current.hideModal();
     NavBar.current.toggleRegisterButton();
-    //Prevents hard reload of the page
-    BookingPage.current.equalizeStepCounter();
+    BookingPage.current.smoothLogIn();
   }
   
   // Notifies the user if login attempts failed 

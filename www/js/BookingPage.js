@@ -14,20 +14,10 @@ class BookingPage extends Component {
 
     this.stepCounter = 1;
     this.regPage = new RegPage();
-    //this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
     BookingPage.current = this;
-  }
-
-  async toggleRegPage(){
-    if(!((await Login.find()).error)){
-      this.regPage = new Button();
-    } else {
-      this.regPage = new RegPage();
-    }
-    this.render();
   }
 
   //----------------- BOOKING FUNCTION----------------//
@@ -119,8 +109,15 @@ class BookingPage extends Component {
     this.render();
   }
 
-  equalizeStepCounter(){
+  smoothLogIn(){
     this.stepCounter = this.stepCounter;
+    this.render();
+  }
+  
+  smoothLogOut(){
+    if(App.loggedIn){
+      App.loggedIn = false;
+    }
     this.render();
   }
 

@@ -11,12 +11,6 @@ class UserLogin extends Component {
     this.checkIfLoggedIn();
     UserLogin.current = this;
   } 
-
-  reDirectMethod(){
-    BookingPage.current.equalizeStepCounter();
-    console.log('heljo')
-    this.render();
-  }
    
   async showModal(){
     if(this.loggedIn){
@@ -25,10 +19,7 @@ class UserLogin extends Component {
       await user.delete();
       this.checkIfLoggedIn();
       NavBar.current.removeEmail();
-      //Hard reload when logged out
-      for(let i = 0; i < 2; i++){
-        location.reload();
-      }
+      BookingPage.current.smoothLogOut();
       return;
     }
     this.modalShown = true;
