@@ -7,8 +7,7 @@ class BookingPage extends Component {
       'click #backtext': 'countDown',
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
-      'click .bookTicket': 'bookTicket',
-      'click .hej' : 'tellseats'
+      'click .bookTicket': 'bookTicket'
     })
 
     this.view;
@@ -34,16 +33,7 @@ class BookingPage extends Component {
     this.stepCounter++;
     if (this.stepCounter > 4) { this.stepCounter = 4; }
     this.render();
-
-    if(this.stepCounter==2){
-      this.totalPersons= this.pricePage.adults+this.pricePage.kids+this.pricePage.seniors;
-      this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      console.log(this.salonPage.nbrOfPickedSeats);
-    }
-    if(this.stepCounter==3){
-      this.bookedSeats = this.salonPage.bookedSeats;
-      console.log(this.bookedSeats);
-    }
+    this.dataChanges();   
   }
 
   countDown() {
@@ -53,6 +43,19 @@ class BookingPage extends Component {
       this.stepCounter = 1
     }
     this.render();
+  }
+
+  dataChanges(){
+    if(this.stepCounter==2){
+      this.totalPersons= this.pricePage.adults+this.pricePage.kids+this.pricePage.seniors;
+      this.salonPage.nbrOfPickedSeats = this.totalPersons;
+      console.log(this.salonPage.nbrOfPickedSeats);
+    }
+    if(this.stepCounter==3){
+      this.bookedSeats = this.salonPage.bookedSeats;
+      console.log(this.bookedSeats);
+    }
+
   }
 
   async bookTicket(){
@@ -77,8 +80,8 @@ class BookingPage extends Component {
 
     console.log(myNewBookingPopulated);
 
-    //---- Nedan skriver vi ut bokningen på booking confirm sidan ---//   
-    
+    //---- Nedan skickar vi data till confirm sidan ---//   
+      /*
         this.bookingConfirm.bookingId = myNewBooking.bookingId;
         this.bookingConfirm.totalPrice = this.TotalPersons * 100;
         this.bookingConfirm.seats = myNewBooking.seats;
@@ -90,13 +93,7 @@ class BookingPage extends Component {
         this.bookingConfirm.adults = myNewBooking.adults;
         this.bookingConfirm.kids = myNewBooking.kids;
         this.bookingConfirm.seniors = myNewBooking.seniors;
-
-
-
-
-
-
-
+      */
 
   }
 
