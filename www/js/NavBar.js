@@ -5,11 +5,14 @@ class NavBar extends Component {
     this.navItems = [
       new NavItem('Start', '/'),
       new NavItem('Om oss', '/about'),
+      new NavItem('Salonger', '/salons'),
+      new NavItem('Butik', '/store'),
+      new NavItem('Regler', '/rules'),
       new NavItem('Filmer & trailers', '/movie-details/')
     ];
-    this.addEvents({
-      'click .nav-link': 'changeVal',
-    })
+    // this.addEvents({
+    //   'click .nav-link': 'changeVal',
+    // })
     
     NavBar.current = this;
     this.userLogin = new UserLogin();
@@ -17,9 +20,9 @@ class NavBar extends Component {
   }
 
 
-changeVal(){
-  App.moviesAndTrailersPage.changeVal();
-}
+// changeVal(){
+//   App.moviesAndTrailersPage.changeVal();
+// }
 
   async showEmailOrRegisterBtn(){
     if(!((await Login.find()).error)){

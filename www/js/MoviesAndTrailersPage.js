@@ -8,13 +8,14 @@ class MoviesAndTrailersPage extends Component {
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click #select-view': 'viewSelect'
+      'click .view-select': 'viewSelect'
     })
 
     this.testlist = [];
     this.selectedView;
     this.bookPage = new BookingPage();
     this.choosen = false;
+    this.moviePrint();
   }
 
 
@@ -48,11 +49,6 @@ class MoviesAndTrailersPage extends Component {
   }
 
 
-  changeVal() {
-    this.choosen = false;
-    this.render();
-  }
-
   movieSelect(e) {
     this.testlist.length = 0;
     let id = $(e.currentTarget).attr('data-movie-id');
@@ -70,8 +66,6 @@ class MoviesAndTrailersPage extends Component {
     let view = this.viewings.filter(view => view._id === id)[0];
     this.view = view;
     this.selectedView = view;
-    this.choosen = true;
-    console.log(this.choosen)
     this.bookPage.change(view);
     this.render();
   }
