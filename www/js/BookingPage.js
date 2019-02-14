@@ -14,7 +14,7 @@ class BookingPage extends Component {
     this.view;
 
     this.stepCounter = 1;
-    this.regPage = new RegPage();
+    this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
@@ -27,6 +27,14 @@ class BookingPage extends Component {
     this.userLogin.checkIfLoggedIn();
   }
 
+  async toggleRegPage(){
+    if(!((await Login.find()).error)){
+      this.regPage = new Button();
+    } else {
+      this.regPage = new RegPage();
+    }
+    this.render();
+  }
   async mount(){
     let id = this.routeParts[0];
     let view = await View.find(id);
@@ -46,35 +54,62 @@ class BookingPage extends Component {
     //console.log(getTheUser);
     //console.log(this.view);
 
+    
     let booking = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
       seniors: this.pricePage.seniors,
       user: getTheUser._id,
       view: this.view._id,
-      bookingId: 'knast'
+      bookingId: 'hejhej'
     })
     await booking.save();
 
-    let populatedBooking = await Booking.find(`.findOne({bookingId:'knast'})
+    let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
     .populate('view')
     .populate('user')
     .exec()
     `);
 
-    console.log(populatedBooking);
+    console.log(populatedBooking);   
 
+    //-----------------------------------------------------//
 
     let booking2 = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
-      seniors: this.pricePage.seniors
+      seniors: this.pricePage.seniors,
+      user: getTheUser._id,
+      view: this.view._id
     })
     await booking2.save();
 
-    let populatedBooking2 = await Booking.find(booking2._id);
+    //let populatedBooking2 = await Booking.find(booking2._id);
+    let populatedBooking2 = await Booking.find(`.findOne({bookingId:'${booking2.bookingId}'})
+    .populate('view')
+    .populate('user')
+    .exec()
+    `); 
 
     console.log(populatedBooking2);
+
+    //---- Ta oss vidare till confirm sidan med all data. ---//
+/*
+    this.bookingConfirm.bookingId = booking.bookingId;
+    this.bookingCoonfirm.adults = booking.adults;
+    this.kids;
+    this.seniors; 
+    this.bookingConfirm.totalPrice = 
+    this.seats;
+    this.film;
+    this.date;
+    this.time;
+    this.salon;
+
+    */
+
+    //this.stepCounter =4;
+    //this.render();
 
   }
 
