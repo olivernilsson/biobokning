@@ -23,6 +23,10 @@ class LoginModal extends Component{
  
     UserLogin.current.hideModal();
     NavBar.current.toggleRegisterButton();
+    // Hard reload
+    for(let i=0; i<2; i++){
+      window.location.reload();
+    }
   }
   
   // Notifies the user if login attempts failed 

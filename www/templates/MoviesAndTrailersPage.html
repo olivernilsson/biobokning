@@ -1,18 +1,22 @@
 <section>
-${this.choosen === false ? `<div>
-    <h2>Movies and trailers page</h2>
-    <p>This is the movies and trailers page.</p>
+${!this.choosen ? `
+  
+  <div>
   
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle type=" button" id="dropdownMenuButton" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
+
         ${this.title ? this.title : 'Movies'}
       </button>
+
+     
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
       </div>
       <div>
         <br>
+        ${this.title === undefined ? '' : `
         <h2>${this.movie ? this.movie.title : ''}</h2>
         <h4>${this.movie ? "År: " : ''}
           ${this.movie ? this.movie.productionYear : ''}
@@ -33,8 +37,8 @@ ${this.choosen === false ? `<div>
        <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
   
       <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->
-       ${this.testlist.map((listitem) => `<div><h5><a class="testing btn "  id="select-view" data-view-id="${listitem._id}"   href="/moviesandtrailers">| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</h5> </a></div>`).join('')}
-      </div>
+       ${this.testlist.map((listitem) => `<div><h5><button class="btn btn-primary testing"  id="select-view" data-view-id="${listitem._id}">| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</h5> </a></div>`).join('')}
+      </div>`}
     </div>
   </div> ` : this.bookPage}
 </section>

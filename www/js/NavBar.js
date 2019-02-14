@@ -5,14 +5,22 @@ class NavBar extends Component {
     this.navItems = [
       new NavItem('Start', '/'),
       new NavItem('Om oss', '/about'),
-      new NavItem('Filmer & trailers', '/moviesandtrailers'),
-      new UserRegistration('')
+      new NavItem('Filmer & trailers', '/movie-details/')
     ];
-
-    this.userRegistration = new UserRegistration();
-    this.userLogin = new UserLogin();
+    
     NavBar.current = this;
-    this.email;
+    this.userLogin = new UserLogin();
+    this.showEmailOrRegisterBtn();
+  }
+
+  async showEmailOrRegisterBtn(){
+    if(!((await Login.find()).error)){
+      this.logg = await Login.find();
+      this.email = this.logg.email;
+    } else {
+      this.userRegistration = new UserRegistration();
+    }
+    this.render();
   }
   
   async toggleRegisterButton(){
