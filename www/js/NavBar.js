@@ -5,6 +5,9 @@ class NavBar extends Component {
     this.navItems = [
       new NavItem('Start', '/'),
       new NavItem('Om oss', '/about'),
+      new NavItem('Salonger', '/salons'),
+      new NavItem('Butik', '/store'),
+      new NavItem('Regler', '/rules'),
       new NavItem('Filmer & trailers', '/movie-details/')
     ];
     
