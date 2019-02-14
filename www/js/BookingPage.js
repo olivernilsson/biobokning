@@ -12,25 +12,23 @@ class BookingPage extends Component {
     })
 
     this.view;
-
     this.stepCounter = 1;
-    this.regPage = this.toggleRegPage();
+    this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
+    BookingPage.current = this;
     this.userLogin = new UserLogin();
     this.totalPersons;
     this.bookedSeats = [];
   }
-
-
-
 
   change(selectedView) {
     console.log(selectedView)
     this.view = selectedView;
     this.render()
   }
+
   async toggleRegPage() {
     if (!((await Login.find()).error)) {
       this.regPage = new Button();
@@ -39,6 +37,7 @@ class BookingPage extends Component {
     }
     this.render();
   }
+
   async mount() {
     let id = this.routeParts[0];
     this.view = await View.find(id);
@@ -53,6 +52,7 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
   }
+
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1) {
@@ -60,7 +60,6 @@ class BookingPage extends Component {
       this.stepCounter = 1
     }
     this.render();
-
   }
 
   dataChanges() {
@@ -118,20 +117,24 @@ class BookingPage extends Component {
       this.bookingConfirm.kids = myNewBooking.kids;
       this.bookingConfirm.seniors = myNewBooking.seniors;
     */
-this.stepCounter=1;
-this.totalPersons;
-this.bookedSeats = [];
-this.pricePage.adults=0;
-this.pricePage.kids=0;
-this.pricePage.seniors=0;
+    this.stepCounter=1;
+    this.totalPersons;
+    this.bookedSeats = [];
+    this.pricePage.adults=0;
+    this.pricePage.kids=0;
+    this.pricePage.seniors=0;
   }
 
-
-
-
-
-
+  smoothLogIn(){
+    this.stepCounter = this.stepCounter;
+    this.render();
+  }
+  
+  smoothLogOut(){
+    if(App.loggedIn){
+      App.loggedIn = false;
+    }
+    this.render();
+  }
 
 }
-
-

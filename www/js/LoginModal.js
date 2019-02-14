@@ -20,13 +20,10 @@ class LoginModal extends Component{
     await login.save()
     
     if( !login.loggedIn ) { return this.rewriteLogin(login)} 
- 
+    App.loggedIn = true;
     UserLogin.current.hideModal();
     NavBar.current.toggleRegisterButton();
-    // Hard reload
-    for(let i=0; i<2; i++){
-      window.location.reload();
-    }
+    BookingPage.current.smoothLogIn();
   }
   
   // Notifies the user if login attempts failed 
