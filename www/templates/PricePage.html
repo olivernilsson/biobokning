@@ -1,21 +1,36 @@
 <section class="demo">
 
-  <div>
-    <button class="AdultsDown">-</button>
-    <h1>Vuxna: ${this.adults} </h1>
-    <button class="AdultsUp">+</button>
-  </div><br>
-  <div>
-    <button class="KidsDown">-</button>
-    <h1>Barn: ${this.kids} </h1>
-    <button class="KidsUp">+</button>   
-  </div> <br>
-  <div>
-    <button class="SeniorsDown">-</button>
-    <h1>Pensionärer: ${this.seniors} </h1>
-    <button class="SeniorsUp">+</button>
+  <div class="wrapit">
+
+    <div class="outer-box">
+      <h2>Vuxna </h2><h5 class="price">120 SEK</h5>
+      <div class="inner-box">
+        <button class="AdultsDown">-</button>
+        <p class="count-num">${this.adults}</p>
+        <button class="AdultsUp">+</button>
+      </div>
+    </div>
+
+
+    <div class="outer-box">
+      <h2>Barn</h2><h5 class="price">75 SEK</h5>
+      <div class="inner-box">
+        <button class="KidsDown">-</button>
+        <p class="count-num">${this.kids}</p>
+        <button class="KidsUp">+</button>
+      </div>
+    </div>
+
+    <div class="outer-box">
+      <h2>Pensionärer</h2><h5 class="price">90 SEK</h5>
+      <div class="inner-box">
+        <button class="SeniorsDown">-</button>
+        <p class="count-num">${this.seniors}</p>
+        <button class="SeniorsUp">+</button>
+      </div>
+    </div>
+
+
   </div>
-
-  <button class="bookTicket"><h1>Boka biljett</h1></button>
-
+  
 </section>
