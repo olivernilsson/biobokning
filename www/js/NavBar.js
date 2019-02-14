@@ -17,9 +17,12 @@ class NavBar extends Component {
     NavBar.current = this;
     this.userLogin = new UserLogin();
     this.showEmailOrRegisterBtn();
+
+
+
   }
 
-
+   
 // changeVal(){
 //   App.moviesAndTrailersPage.changeVal();
 // }

@@ -76,6 +76,7 @@ class BookingPage extends Component {
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
       console.log(this.bookedSeats);
+      //$("#mobforward").addClass("bookTicket");
     }
     
   }
