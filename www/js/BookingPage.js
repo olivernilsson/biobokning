@@ -12,7 +12,6 @@ class BookingPage extends Component {
     })
 
     this.view;
-
     this.stepCounter = 1;
     this.regPage = new RegPage();
     this.salonPage = new Salon();
@@ -24,14 +23,12 @@ class BookingPage extends Component {
     this.bookedSeats = [];
   }
 
-
-
-
   change(selectedView) {
     console.log(selectedView)
     this.view = selectedView;
     this.render()
   }
+
   async toggleRegPage() {
     if (!((await Login.find()).error)) {
       this.regPage = new Button();
@@ -40,6 +37,7 @@ class BookingPage extends Component {
     }
     this.render();
   }
+
   async mount() {
     let id = this.routeParts[0];
     this.view = await View.find(id);
@@ -54,6 +52,7 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
   }
+
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1) {
@@ -61,7 +60,6 @@ class BookingPage extends Component {
       this.stepCounter = 1
     }
     this.render();
-
   }
 
   dataChanges() {
@@ -119,37 +117,13 @@ class BookingPage extends Component {
       this.bookingConfirm.kids = myNewBooking.kids;
       this.bookingConfirm.seniors = myNewBooking.seniors;
     */
-this.stepCounter=1;
-this.totalPersons;
-this.bookedSeats = [];
-this.pricePage.adults=0;
-this.pricePage.kids=0;
-this.pricePage.seniors=0;
+    this.stepCounter=1;
+    this.totalPersons;
+    this.bookedSeats = [];
+    this.pricePage.adults=0;
+    this.pricePage.kids=0;
+    this.pricePage.seniors=0;
   }
-
-
-
-
-  change(selectedView){
-    this.view= selectedView;
-this.render()
-  }
-
-  countUp() {
-    this.stepCounter++;
-    if (this.stepCounter > 4) { this.stepCounter = 4; }
-    this.render();
-
-
-  }
-
-  countDown() {
-    this.stepCounter--;
-    if (this.stepCounter < 1 ) { 
-      App.moviesAndTrailersPage.changeVal();
-      this.stepCounter = 1
-   }
-    this.render();
 
   smoothLogIn(){
     this.stepCounter = this.stepCounter;
