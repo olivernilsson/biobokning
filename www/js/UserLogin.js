@@ -19,6 +19,10 @@ class UserLogin extends Component {
       await a.delete();
       this.checkIfLoggedIn();
       NavBar.current.removeEmail();
+      //Hard reload
+      for(let i=0; i < 2; i++){
+        window.location.href = window.location.href;
+      }
       return;
     }
     this.modalShown = true;

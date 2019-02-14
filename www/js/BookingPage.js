@@ -2,6 +2,7 @@ class BookingPage extends Component {
 
   constructor() {
     super();
+    this.addRoute(/\/view\/(.*)/)
     this.addEvents({
       'click #forward': 'countUp',
       'click #backtext': 'countDown',
@@ -13,10 +14,12 @@ class BookingPage extends Component {
     this.view;
 
     this.stepCounter = 1;
-    this.regPage = new RegPage();
+    this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
+    this.userLogin =  new UserLogin();
+  }
 
     this.totalPersons;
     this.bookedSeats=[];
@@ -28,6 +31,22 @@ class BookingPage extends Component {
     this.view= selectedView;
     this.render()
   }
+  async toggleRegPage(){
+    if(!((await Login.find()).error)){
+      this.regPage = new Button();
+    } else {
+      this.regPage = new RegPage();
+    }
+    this.render();
+  }
+  async mount(){
+    let id = this.routeParts[0];
+    let view = await View.find(id);
+   Object.assign(this, view._props);
+  this.checkLogin();
+    this.render();
+ 
+  }
 
   countUp() {
     this.stepCounter++;
@@ -36,14 +55,7 @@ class BookingPage extends Component {
     this.dataChanges();   
   }
 
-  countDown() {
-    this.stepCounter--;
-    if (this.stepCounter < 1 ) { 
-      App.moviesAndTrailersPage.changeVal();
-      this.stepCounter = 1
-    }
-    this.render();
-  }
+  async bookTicket() {
 
   dataChanges(){
     if(this.stepCounter==2){
@@ -58,7 +70,11 @@ class BookingPage extends Component {
 
   }
 
-  async bookTicket(){
+    let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
+    .populate('view')
+    .populate('user')
+    .exec()
+    `); 
 
     let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
 
@@ -100,3 +116,31 @@ class BookingPage extends Component {
 }
 
 
+
+  change(selectedView){
+    console.log(selectedView)
+    this.view= selectedView;
+this.render()
+  }
+
+  countUp() {
+    this.stepCounter++;
+    if (this.stepCounter > 4) { this.stepCounter = 4; }
+    this.render();
+
+
+  }
+
+  countDown() {
+    this.stepCounter--;
+    if (this.stepCounter < 1 ) { 
+      App.moviesAndTrailersPage.changeVal();
+      this.stepCounter = 1
+   }
+    this.render();
+
+  }
+
+
+
+}
