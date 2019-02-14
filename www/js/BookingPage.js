@@ -56,7 +56,7 @@ class BookingPage extends Component {
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1) {
-      App.moviesAndTrailersPage.changeVal();
+      // App.moviesAndTrailersPage.changeVal();
       this.stepCounter = 1
     }
     this.render();
@@ -118,7 +118,12 @@ class BookingPage extends Component {
       this.bookingConfirm.kids = myNewBooking.kids;
       this.bookingConfirm.seniors = myNewBooking.seniors;
     */
-
+this.stepCounter=1;
+this.totalPersons;
+this.bookedSeats = [];
+this.pricePage.adults=0;
+this.pricePage.kids=0;
+this.pricePage.seniors=0;
   }
 
 
