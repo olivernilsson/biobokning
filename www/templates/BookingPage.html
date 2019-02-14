@@ -21,9 +21,20 @@
 
         ${this.stepCounter === 1 ? this.pricePage : ''}
         ${this.stepCounter === 2 ? this.salonPage : ''}
-        ${this.stepCounter === 3 ? this.regPage : ''}
+        ${this.stepCounter === 3 ? (App.loggedIn ? `
+					<div class="demo booking-btn">
+						<div class="booking-btn-card">
+							<h2 class="h2-booking-btn-topp">Kära kund,</h2><br>
+							<h2 class="h2-booking-btn-bottom">för att bekräfta din bokning </h2><br> 
+							<h2 class="h2-booking-btn-bottom">vänligen klicka på boka.</h2>
+							<button type="button" id="booking-btn" class="login-button btn btn-primary" data-toggle="modall" data-target="#myModall">
+								<h3>Boka</h3>
+							</button>
+						</div>
+					</div>
+        ` : this.regPage) : ''} 
         ${this.stepCounter === 4 ? this.bookingConfirm : ''}
-
+        
         <button id="forward" type="button" class="btn btn-light">Framåt</button>
 
 

@@ -13,11 +13,12 @@ class BookingPage extends Component {
     this.view;
 
     this.stepCounter = 1;
-    this.regPage = this.toggleRegPage();
+    this.regPage = new RegPage();
+    //this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
-
+    BookingPage.current = this;
   }
 
   async toggleRegPage(){
@@ -98,32 +99,29 @@ class BookingPage extends Component {
 
   }
 
-
-
-
   change(selectedView){
     this.view= selectedView;
-this.render()
+    this.render();
   }
 
   countUp() {
     this.stepCounter++;
     if (this.stepCounter > 4) { this.stepCounter = 4; }
     this.render();
-
-
   }
 
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1 ) { 
       App.moviesAndTrailersPage.changeVal();
-      this.stepCounter = 1
+      this.stepCounter = 1;
    }
     this.render();
-
   }
 
-
+  equalizeStepCounter(){
+    this.stepCounter = this.stepCounter;
+    this.render();
+  }
 
 }
