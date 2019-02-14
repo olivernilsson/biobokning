@@ -10,30 +10,32 @@ class BookingPage extends Component {
       'click #mobback': 'countDown',
       'click .bookTicket': 'bookTicket',
       'click #save-user-1': 'saveUser'
-      
+
     })
-
+    this.user= "";
     this.view;
-
+    this.myNewBooking;
     this.stepCounter = 1;
     this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
     this.userLogin = new UserLogin();
+    this.newUser;
     this.totalPersons;
     this.bookedSeats = [];
   }
 
-saveUser(){
-  
-this.regPage.tester();
+  async saveUser() {
+    await this.regPage.tester();
+    this.bookTicket();
 
-if(this.regPage.done===true){
-  this.countUp();
-}
 
-}
+    if (this.regPage.done === true) {
+      this.countUp();
+    }
+
+  }
 
   change(selectedView) {
     console.log(selectedView)
@@ -85,33 +87,46 @@ if(this.regPage.done===true){
 
   }
 
+
+
+
   async bookTicket() {
 
-    let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
-    .populate('view')
-    .populate('user')
-    .exec()
-    `);
 
-    let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
+    // let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
+    // .populate('view')
+    // .populate('user')
+    // .exec()
+    // `);
+// let testtt = `${this.regPage.emaillow}`
+//     this.user = await User.find(testtt._id);
+//     console.log(this.user)
+//     // let getNewUser = await User.find(`.find({email:' ${this.regPage.emailInput}'})`);
+//     if (this.user=== true) {
+//       console.log('found')
+//     } else {
+//       console.log('found-not')
+//     }
 
-    let myNewBooking = await new Booking({
+    this.myNewBooking = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
       seniors: this.pricePage.seniors,
-      user: getTheUser._id,
+      // user: this.user._id,
       seats: this.bookedSeats,
       view: this.view
     })
-    await myNewBooking.save();
 
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})
+    await this.myNewBooking.save();
+    console.log(this.myNewBooking)
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
     .populate('view')
-    .populate('user')
+    
     .exec()
     `);
 
-    console.log(myNewBookingPopulated);
+    this.regPage.newbookings.push(this.myNewBooking);
+    console.log(myNewBookingPopulated)
 
     //---- Nedan skickar vi data till confirm sidan ---//   
     /*
@@ -127,12 +142,12 @@ if(this.regPage.done===true){
       this.bookingConfirm.kids = myNewBooking.kids;
       this.bookingConfirm.seniors = myNewBooking.seniors;
     */
-this.stepCounter=1;
-this.totalPersons;
-this.bookedSeats = [];
-this.pricePage.adults=0;
-this.pricePage.kids=0;
-this.pricePage.seniors=0;
+    this.stepCounter = 1;
+    this.totalPersons;
+    this.bookedSeats = [];
+    this.pricePage.adults = 0;
+    this.pricePage.kids = 0;
+    this.pricePage.seniors = 0;
   }
 
 

@@ -13,17 +13,18 @@ class RegPage extends Component {
     })
     this.done = false;
     this.emailValid = false;
+    this.newbookings = [];
+    this.emaillow;
 
-    
   }
 
- 
 
 
-  showModal(){
-    $('.full-modal').css("display","block")
-    $('#loginnamereg').css("border-bottom","1px solid white") 
-    $('#loginpasswordreg').css("border-bottom","1px solid white") 
+
+  showModal() {
+    $('.full-modal').css("display", "block")
+    $('#loginnamereg').css("border-bottom", "1px solid white")
+    $('#loginpasswordreg').css("border-bottom", "1px solid white")
   }
 
   validateRegForm() {
@@ -39,7 +40,7 @@ class RegPage extends Component {
     let emailInput = $('#email').val();
     let emailLength = $('#email').val().length;
     let dot = '.';
-    let indexOfAtSign = emailInput.indexOf('@');
+    let indexOfAtSign =  emailInput.indexOf('@');
     let indexOfLastDot = emailInput.lastIndexOf(dot);
 
 
@@ -126,46 +127,54 @@ class RegPage extends Component {
       $('#save-user-1').addClass('blinker');
       $('#save-user-1').removeClass('disabled');
     } else {
-    
+
       $('#save-user-1').removeClass('blinker');
       $('#save-user-1').addClass('disabled');
     }
   }
 
-tester(){
-  $('#save-user').trigger('click')
-}
+  tester() {
+    $('#save-user').trigger('click')
 
-  saveUserToDb(event) {
+  }
+
+
+
+  async saveUserToDb(event) {
     if ($('#save-user-1').hasClass('disabled')) {
       event.preventDefault();
-    
+
 
       return;
     } else {
-      $("#userform").submit(async function (event) {
-        let firstName = $('#firstname').val();
-        let lastName = $('#lastname').val();
-        let verifyValue = $('#password-verify').val();
-        let emailInput = $('#email').val().toLowerCase();
 
-        let addedUser = new User({
-          firstName: firstName,
-          lastName: lastName,
-          email: emailInput,
-          password: verifyValue
-        });
+      let firstName = $('#firstname').val();
+      let lastName = $('#lastname').val();
+      let verifyValue = $('#password-verify').val();
+      let emailInput = $('#email').val().toLowerCase();
+      this.emaillow = emailInput;
 
-        event.preventDefault();
-        await addedUser.save();
-
-        alert('added to db');
-        $("#userform").find("input[type=text], textarea").val("")
-        $("#userform").find("input[type=password], textarea").val("")
-        this.done = false;
-        this.emailValid = false;
-
+      let addedUser = new User({
+        firstName: firstName,
+        lastName: lastName,
+        email: this.emaillow,
+        password: verifyValue,
+        bookings: this.newbookings
       });
+
+      event.preventDefault();
+
+      await addedUser.save();
+      
+      console.log(addedUser)
+
+
+      $("#userform").find("input[type=text], textarea").val("")
+      $("#userform").find("input[type=password], textarea").val("")
+      this.done = false;
+      this.emailValid = false;
+
+
     }
   }
 
