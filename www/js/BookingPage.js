@@ -8,7 +8,9 @@ class BookingPage extends Component {
       'click #backtext': 'countDown',
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
-      'click .bookTicket': 'bookTicket'
+      'click .bookTicket': 'bookTicket',
+      'click #save-user-1': 'saveUser'
+      
     })
 
     this.view;
@@ -23,8 +25,15 @@ class BookingPage extends Component {
     this.bookedSeats = [];
   }
 
+saveUser(){
+  
+this.regPage.tester();
 
+if(this.regPage.done===true){
+  this.countUp();
+}
 
+}
 
   change(selectedView) {
     console.log(selectedView)

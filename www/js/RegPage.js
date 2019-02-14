@@ -8,12 +8,12 @@ class RegPage extends Component {
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
       'keyup #email': 'validateRegForm',
-      'click #save-user': 'saveUserToDb',
       'click .reg-loginbtn': 'showModal',
+      'click #save-user': 'saveUserToDb'
     })
     this.done = false;
     this.emailValid = false;
-    
+
     
   }
 
@@ -123,24 +123,27 @@ class RegPage extends Component {
 
 
     if (this.done === true && styleCount === 3) {
-
-      $('#save-user').removeClass('disabled');
+      $('#save-user-1').addClass('blinker');
+      $('#save-user-1').removeClass('disabled');
     } else {
-
-      $('#save-user').addClass('disabled');
+    
+      $('#save-user-1').removeClass('blinker');
+      $('#save-user-1').addClass('disabled');
     }
   }
 
-
+tester(){
+  $('#save-user').trigger('click')
+}
 
   saveUserToDb(event) {
-    if ($('#save-user').hasClass('disabled')) {
+    if ($('#save-user-1').hasClass('disabled')) {
       event.preventDefault();
+    
 
       return;
     } else {
       $("#userform").submit(async function (event) {
-
         let firstName = $('#firstname').val();
         let lastName = $('#lastname').val();
         let verifyValue = $('#password-verify').val();
