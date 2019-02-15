@@ -5,10 +5,12 @@ class MoviesAndTrailersPage extends Component {
     this.addRoute(/\/movie-details\/(.*)/)
     this.movies = [];
     this.viewings = [];
+    this.youtube = "https://www.youtube.com/embed/";
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click .view-select': 'viewSelect'
+      'click .view-select': 'viewSelect',
+      'click .play': 'showTrailer'
     })
 
     this.testlist = [];
@@ -86,6 +88,12 @@ class MoviesAndTrailersPage extends Component {
 
   }
 
+  showTrailer(){
+
+    console.log(this.trailer);
+    this.trailer = this.movie.youtubeTrailers[0];
+    this.render();
+  }
 
 }
 
