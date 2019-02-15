@@ -128,6 +128,7 @@ class BookingPage extends Component {
     console.log(myNewBookingPopulated);   
 
     //this.bookingConfirm.bookingId= myNewBooking.bookingId;
+    //this.bookingConfirm.loadBooking();
 
   }
 
