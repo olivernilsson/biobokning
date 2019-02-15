@@ -15,7 +15,6 @@ class RegPage extends Component {
     this.emailValid = false;
     this.newbookings = [];
     this.emaillow;
-
   }
 
 
@@ -131,41 +130,43 @@ class RegPage extends Component {
       $('#save-user-1').removeClass('blinker');
       $('#save-user-1').addClass('disabled');
     }
+
+
+    this.emaillow = $('#email').val()
   }
 
-  tester() {
-    $('#save-user').trigger('click')
+  // tester() {
+  //   $('#save-user').trigger('click')
 
-  }
+  // }
 
 
-
-  async saveUserToDb(event) {
+  async saveUserToDb() {
     if ($('#save-user-1').hasClass('disabled')) {
       event.preventDefault();
 
 
       return;
     } else {
+     
 
       let firstName = $('#firstname').val();
       let lastName = $('#lastname').val();
       let verifyValue = $('#password-verify').val();
-      let emailInput = $('#email').val().toLowerCase();
-      this.emaillow = emailInput;
+      let emailInput = this.emaillow.toLowerCase();
+     
 
       let addedUser = new User({
         firstName: firstName,
         lastName: lastName,
-        email: this.emaillow,
+        email: emailInput,
         password: verifyValue,
         bookings: this.newbookings
       });
 
-      event.preventDefault();
+      // event.preventDefault();
 
       await addedUser.save();
-      
       console.log(addedUser)
 
 
@@ -174,7 +175,7 @@ class RegPage extends Component {
       this.done = false;
       this.emailValid = false;
 
-
+      console.log(this.emaillow)
     }
   }
 
