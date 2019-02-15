@@ -10,8 +10,8 @@ class Salon extends Component {
     });
     this.bookedSeats = []; 
     this.salonSeats = [];
+    this.alreadyBookedSeats = [];
 
-    //This value (3) is at the moment hard coded. Should be an inargument instead.
     this.nbrOfPickedSeats;
 
     this.row1 = [];
@@ -22,7 +22,35 @@ class Salon extends Component {
     this.row6 = [];
     this.row7 = [];
     this.row8 = [];
+
+    //This value('5c5839d578802e1b79b5ef6b') is hard coded at the moment. 
+    //It should come from previous stage in the wizard.
+    this.chosenView = '5c5839d878802e1b79b5ef7c'; 
+    this.checkIfSeatsAreTaken();
   } 
+
+  async checkIfSeatsAreTaken(){
+    let fakeViewingIndexes = [];
+    let takenSeats = await Booking.find();
+    for( let viewing = 0; viewing < takenSeats.length; viewing++ ){
+      if(takenSeats[viewing].view === this.chosenView){
+        fakeViewingIndexes.push(viewing);
+      }
+    }
+    for( let viewIndex = 0; viewIndex < fakeViewingIndexes.length; viewIndex++){
+      let realViewingIndex = fakeViewingIndexes[viewIndex];
+      let arrayWithSeats = takenSeats[realViewingIndex].seats;
+      for (let seat = 0; seat < arrayWithSeats.length; seat++ ){
+        this.alreadyBookedSeats.push(arrayWithSeats[seat]);
+      }
+    }
+    console.log(this.bookedSeats)
+    
+    for(let i = 0; i < this.alreadyBookedSeats.length; i++){
+      $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+    }
+    this.alreadyBookedSeats
+  }
 
   toggleSeat(e){
     let seatNr = parseInt(e.target.id, 10);
@@ -33,26 +61,43 @@ class Salon extends Component {
     //Index of seats outside of the salon
     let outOfSeatsIndex = this.salonSeats.length - this.nbrOfPickedSeats + 1; 
 
+    //Just indexes as above, but for this.alreadyBookedSeats-array
+    let alreadyIndex = this.alreadyBookedSeats.indexOf(seatNr);
+    let lastAlreadyIndex = this.alreadyBookedSeats.indexOf(seatNr + this.nbrOfPickedSeats - 1);
+
+
     //Ensures the salon is empty, doesn't pick already picked seats, or pick seats outside of the salon.
-    if(seatIndex < 0 && lastSeatIndex < 0 && seatNr <= outOfSeatsIndex){
+    if(seatIndex < 0 && lastSeatIndex < 0 && seatNr <= outOfSeatsIndex && alreadyIndex < 0 && lastAlreadyIndex < 0){
+     
       this.bookedSeats.length = 0;
+      //Uncolors all seats in salon
       for(let j = 0; j < this.salonSeats.length+1; j++){
         $(`#${j}`).css("background-color", "");
       }
+      //Colors all already booked seats
+      for(let i = 0; i < this.salonSeats.length+1; i++){
+        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      }
+      //Colors the newly picked seats
       for(let i = 0; i < this.nbrOfPickedSeats; i++){
         this.bookedSeats.push(seatNr+i);
         $(`#${seatNr+i}`).css("background-color", "rgb(65,55,55)");
       }
     }
+
     //If seat/seats is already picked, deselect it/them.
     if(seatIndex >= 0){
       for(let i = 0; i <= this.salonSeats.length+1; i++){
         $(`#${i}`).css("background-color", "");
       }
+      //Colors all already booked seats
+      for(let i = 0; i < this.salonSeats.length+1; i++){
+        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      }
       this.bookedSeats.length = 0;
     }
     console.log(this.bookedSeats) //To see the booked seats.
-  }
+  } 
   
   async showSmallSalon(){
     let rows = [];
