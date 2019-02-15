@@ -8,7 +8,8 @@ let bookingSchema = new Schema({
    "user": { type: Schema.Types.ObjectId, ref: 'User' },
    "view": { type: Schema.Types.ObjectId, ref: 'View' },
    "seats": Array,
-   "bookingId": { type: String, unique: true }
+   "bookingId": { type: String, unique: true },
+   "name": String
 });
 
 

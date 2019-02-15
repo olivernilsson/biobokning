@@ -103,13 +103,8 @@ class BookingPage extends Component {
 
   async bookTicket() {
 
-    let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
-    .populate('view')
-    .populate('user')
-    .exec()
-    `);
-
     let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
+    console.log(getTheUser);
 
     let myNewBooking = await new Booking({
       adults: this.pricePage.adults,
@@ -121,28 +116,18 @@ class BookingPage extends Component {
     })
     await myNewBooking.save();
 
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})
+    console.log(myNewBooking);
+    console.log(myNewBooking.bookingId);
+
+     let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})
     .populate('view')
     .populate('user')
     .exec()
-    `);
+    `); 
 
-    console.log(myNewBookingPopulated);
+    console.log(myNewBookingPopulated);   
 
-    //---- Nedan skickar vi data till confirm sidan ---//   
-    /*
-      this.bookingConfirm.bookingId = myNewBooking.bookingId;
-      this.bookingConfirm.totalPrice = this.TotalPersons * 100;
-      this.bookingConfirm.seats = myNewBooking.seats;
-      this.bookingConfirm.film = myNewBooking.view.film;
-      this.bookingConfirm.date = myNewBooking.view.date;
-      this.bookingConfirm.time = myNewBooking.view.time;
-      this.bookingConfirm.salon = myNewBooking.view.auditorium;
-  
-      this.bookingConfirm.adults = myNewBooking.adults;
-      this.bookingConfirm.kids = myNewBooking.kids;
-      this.bookingConfirm.seniors = myNewBooking.seniors;
-    */
+    //this.bookingConfirm.bookingId= myNewBooking.bookingId;
 
   }
 
