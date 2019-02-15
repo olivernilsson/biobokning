@@ -10,7 +10,8 @@ ${this.choosen === false ? `<div>
       </div>
       <div class="page-info">
         <br>
-        <img src= ${this.movie ? `/images/${this.movie.images[0]}` : ''}>
+        <div class="film-bg">
+        <img src= ${this.movie ? `/images/${this.movie.images[0]}` : ''}></div>
         <iframe class="trailer" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe>
 
         <img class="play" src= ${this.movie ? `/images/play.png` : ''}>

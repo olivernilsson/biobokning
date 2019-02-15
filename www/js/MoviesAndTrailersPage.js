@@ -45,9 +45,8 @@ class MoviesAndTrailersPage extends Component {
     //console.log(movie);
     this.movie = movie;
     this.title = movie.title;
-    this.render();
     this.viewingsfind(this.movie)
-
+    this.render();
   }
 
 
