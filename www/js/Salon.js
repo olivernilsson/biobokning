@@ -23,33 +23,37 @@ class Salon extends Component {
     this.row7 = [];
     this.row8 = [];
 
-    //This value('5c5839d578802e1b79b5ef6b') is hard coded at the moment. 
+    //This value('5c5839d578802e1b79b5e...') is hard coded at the moment. 
     //It should come from previous stage in the wizard.
     this.chosenView = '5c5839d878802e1b79b5ef7c'; 
     this.checkIfSeatsAreTaken();
   } 
 
+  //This method searches for the specific view in the DB and recognizes 
+  //seats already booked by other users. These seats are then pushed
+  //to the alreadyBookedSeats-array. 
   async checkIfSeatsAreTaken(){
     let fakeViewingIndexes = [];
     let takenSeats = await Booking.find();
+
+    //Searches for the specific view in the DB.
     for( let viewing = 0; viewing < takenSeats.length; viewing++ ){
       if(takenSeats[viewing].view === this.chosenView){
         fakeViewingIndexes.push(viewing);
       }
     }
+    //Pushes the already booked seats by other users to the alreadyBooked-array.
     for( let viewIndex = 0; viewIndex < fakeViewingIndexes.length; viewIndex++){
       let realViewingIndex = fakeViewingIndexes[viewIndex];
       let arrayWithSeats = takenSeats[realViewingIndex].seats;
       for (let seat = 0; seat < arrayWithSeats.length; seat++ ){
         this.alreadyBookedSeats.push(arrayWithSeats[seat]);
       }
-    }
-    console.log(this.bookedSeats)
-    
+    }    
+    //Gives the alreadyBookedSeats a red color.
     for(let i = 0; i < this.alreadyBookedSeats.length; i++){
       $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
     }
-    this.alreadyBookedSeats
   }
 
   toggleSeat(e){
@@ -64,7 +68,6 @@ class Salon extends Component {
     //Just indexes as above, but for this.alreadyBookedSeats-array
     let alreadyIndex = this.alreadyBookedSeats.indexOf(seatNr);
     let lastAlreadyIndex = this.alreadyBookedSeats.indexOf(seatNr + this.nbrOfPickedSeats - 1);
-
 
     //Ensures the salon is empty, doesn't pick already picked seats, or pick seats outside of the salon.
     if(seatIndex < 0 && lastSeatIndex < 0 && seatNr <= outOfSeatsIndex && alreadyIndex < 0 && lastAlreadyIndex < 0){
@@ -100,6 +103,7 @@ class Salon extends Component {
   } 
   
   async showSmallSalon(){
+    this.salonSeats.length = 0;
     let rows = [];
     let seatCounter = 1;
     let i = 0;
@@ -138,6 +142,7 @@ class Salon extends Component {
   }
 
   async showMediumSalon(){
+    this.salonSeats.length = 0;
     let rows = [];
     let seatCounter = 1;
     let i = 0;
@@ -179,6 +184,7 @@ class Salon extends Component {
   }
 
   async showLargeSalon(){
+    this.salonSeats.length = 0;
     let rows = [];
     let seatCounter = 1;
     let i = 0;
