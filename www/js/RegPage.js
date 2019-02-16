@@ -12,9 +12,11 @@ class RegPage extends Component {
       'click #save-user': 'saveUserToDb'
     })
     this.done = false;
+    this.userSubmited = false;
     this.emailValid = false;
-    this.newbookings = [];
     this.emaillow;
+    this.newBooking = [];
+    this.userDone;
   }
 
 
@@ -39,7 +41,7 @@ class RegPage extends Component {
     let emailInput = $('#email').val();
     let emailLength = $('#email').val().length;
     let dot = '.';
-    let indexOfAtSign =  emailInput.indexOf('@');
+    let indexOfAtSign = emailInput.indexOf('@');
     let indexOfLastDot = emailInput.lastIndexOf(dot);
 
 
@@ -135,47 +137,52 @@ class RegPage extends Component {
     this.emaillow = $('#email').val()
   }
 
-  // tester() {
-  //   $('#save-user').trigger('click')
-
-  // }
 
 
   async saveUserToDb() {
     if ($('#save-user-1').hasClass('disabled')) {
-      event.preventDefault();
 
 
+      console.log('yey')
       return;
     } else {
-     
 
       let firstName = $('#firstname').val();
       let lastName = $('#lastname').val();
       let verifyValue = $('#password-verify').val();
-      let emailInput = this.emaillow.toLowerCase();
-     
+      let emailInput = $('#email').val().toLowerCase();
+
 
       let addedUser = new User({
         firstName: firstName,
         lastName: lastName,
         email: emailInput,
         password: verifyValue,
-        bookings: this.newbookings
+
       });
 
-      // event.preventDefault();
-
       await addedUser.save();
-      console.log(addedUser)
+
+      this.userDone = addedUser;
+
+      let regUser = await User.find(`.findOneAndUpdate(
+        {_id: '${addedUser._id}' },
+        {  "$set": {
+          "bookings": '${this.newBooking[0]._id}'
+      }
+    },
+        function(err,result){
+            if (!err) {
+                console.log(result);
+            }
+        })`);
 
 
       $("#userform").find("input[type=text], textarea").val("")
       $("#userform").find("input[type=password], textarea").val("")
       this.done = false;
       this.emailValid = false;
-
-      console.log(this.emaillow)
+      this.userSubmited = true;
     }
   }
 

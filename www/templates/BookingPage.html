@@ -22,7 +22,7 @@
         ${this.stepCounter === 1 ? this.pricePage : ''}
         ${this.stepCounter === 2 ? this.salonPage : ''}
         ${this.stepCounter === 3 ? this.regPage : ''}
-        ${this.stepCounter === 3 ? `<button id="save-user-1" type="submit" class=" done-btn btn  btn-sm ">Slutför bokningen</button>  ` : ''}
+        ${this.stepCounter === 3 ? `<button id="save-user-1" type="submit" class=" done-btn btn  btn-sm disabled">Slutför bokningen</button>  ` : ''}
         ${this.stepCounter === 4 ? this.bookingConfirm : ''}
 
         ${this.stepCounter === 3 ? '' : `<button id="forward" type="button" class="btn btn-light">Framåt</button>`}

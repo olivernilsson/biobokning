@@ -12,7 +12,6 @@ class BookingPage extends Component {
       'click #save-user-1': 'saveUser'
 
     })
-    this.user;
     this.view;
     this.myNewBooking;
     this.stepCounter = 1;
@@ -37,11 +36,13 @@ class BookingPage extends Component {
   }
 
   async saveUser() {
+    if ($('#save-user-1').hasClass('disabled')) {
+      return;
+    }
+    await this.bookTicket();
     await this.regPage.saveUserToDb();
-    this.bookTicket();
-
-
-    if (this.regPage.done === true) {
+    await this.addUserToBooking()
+    if (this.regPage.userSubmited === true) {
       this.countUp();
     }
 
@@ -90,45 +91,25 @@ class BookingPage extends Component {
 
   }
 
-
-
-
   async bookTicket() {
-
-    let uss = `${this.regPage.emaillow}`;
-    this.user = await User.find(`.findOne({email: '${uss}' })`);
-
-    console.log(this.user)
     this.myNewBooking = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
       seniors: this.pricePage.seniors,
-      user: this.user,
       view: this.view,
       seats: this.bookedSeats
     })
     await this.myNewBooking.save();
+    this.regPage.newBooking.push(this.myNewBooking)
 
- 
+
     // let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
     // .populate('view')
     // .populate('user')
     // .exec()
     // `);
-    
- console.log(this.myNewBooking)
 
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
-    .populate('user')
-    .populate('view')
-    .exec();
-    `);
 
-    console.log(myNewBookingPopulated)
-
-    this.regPage.newbookings.push(myNewBookingPopulated);
-   
-   
 
     //---- Nedan skickar vi data till confirm sidan ---//   
     /*
@@ -153,8 +134,19 @@ class BookingPage extends Component {
   }
 
 
-
-
+  async addUserToBooking() {
+    let putUser = await Booking.find(`.findOneAndUpdate(
+      {_id: '${this.myNewBooking._id}' },
+      {  "$set": {
+        "user": '${this.regPage.userDone._id}'
+    }
+  },
+      function(err,result){
+          if (!err) {
+              console.log(result);
+          }
+      })`);
+  }
 
 
 

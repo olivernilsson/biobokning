@@ -7,7 +7,7 @@ let userSchema = new Schema({
   lastName: { type: String, require: true },
   email: { type: String, require: true, unique: true },
   password: { type: String, require: true },
-  bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }]
+  bookings: {type: Schema.Types.ObjectId, ref: 'Booking'}
 
 });
 

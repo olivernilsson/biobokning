@@ -5,7 +5,7 @@ let bookingSchema = new Schema({
    adults: Number,
    kids: Number,
    seniors: Number,
-   user: { type: Schema.Types.ObjectId, ref: 'User' },
+   user: {type: Schema.Types.ObjectId, ref: 'User'},
    view: { type: Schema.Types.ObjectId, ref: 'View' },
    seats: Array,
    bookingId: { type: String, unique: true }
