@@ -97,7 +97,7 @@ class Salon extends Component {
     let alreadyIndex = this.alreadyBookedSeats.indexOf(this.seatNr);
     let lastAlreadyIndex = this.alreadyBookedSeats.indexOf(this.seatNr + this.nbrOfPickedSeats - 1);
 
-    //Ensures the salon is empty, doesn't pick already picked seats, or pick seats outside of the salon.
+    //Ensures the picked seat is empty, doesn't pick already picked seats, or pick seats outside of the salon.
     if(seatIndex < 0 && this.lastSeatIndex < 0 && this.seatNr <= outOfSeatsIndex && alreadyIndex < 0 && lastAlreadyIndex < 0 && this.checksIfChosenSeatsAreEmpty()){
       this.bookedSeats.length = 0;
       //Uncolors all seats in salon
