@@ -17,6 +17,7 @@ class BookingPage extends Component {
     this.regPage = this.toggleRegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
+    //this.bookingConfirm = new BookingConfirm({bookingPage: this});
     this.bookingConfirm = new BookingConfirm();
     this.userLogin = new UserLogin();
     this.totalPersons;
@@ -103,8 +104,8 @@ class BookingPage extends Component {
 
   async bookTicket() {
 
-    let getTheUser = await User.find(`.findOne({firstName: 'aaa'})`);
-    console.log(getTheUser);
+    let getTheUser = await User.find(`.findOne({firstName: 'vdsav'})`);
+    //console.log(getTheUser);
 
     let myNewBooking = await new Booking({
       adults: this.pricePage.adults,
@@ -116,8 +117,8 @@ class BookingPage extends Component {
     })
     await myNewBooking.save();
 
-    console.log(myNewBooking);
-    console.log(myNewBooking.bookingId);
+    //console.log(myNewBooking);
+    //console.log(myNewBooking.bookingId);
 
      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})
     .populate('view')
@@ -125,10 +126,7 @@ class BookingPage extends Component {
     .exec()
     `); 
 
-    console.log(myNewBookingPopulated);   
-
-    //this.bookingConfirm.bookingId= myNewBooking.bookingId;
-    //this.bookingConfirm.loadBooking();
+    this.bookingConfirm.loadBooking(myNewBookingPopulated);
 
   }
 

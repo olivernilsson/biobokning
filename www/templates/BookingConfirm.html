@@ -1,6 +1,6 @@
-<section class="demo">
+${this.booking ? '' : `<section class="demo">
     <div class="col-md-24">
-        <h1 class="p-2 testo">Tack för att du boka!</h1>
+        <h1 class="p-2 testo">Tack för att du bokade!</h1>
       <div class="row">
         <div class="col-md-12 p-2">
           <h3>Dina sittplatser</h3>
@@ -12,7 +12,7 @@
         <div class="col-md-12 p-2">
             <h3>Pris</h3>
             <div class="font-test">
-                <p>Total summa : </p>  
+                <p>Total summa:</p>  
             </div>
           </div>
       </div>
@@ -36,6 +36,4 @@
     </div>
 
 
-    <button class="bookTicket">Boka !!!</button>
-
-  </section>
+  </section>`}
