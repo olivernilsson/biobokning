@@ -9,7 +9,8 @@ class BookingPage extends Component {
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
       'click .bookTicket': 'bookTicket',
-      'click #save-user-1': 'saveUser'
+      'click #save-user-1': 'saveUser',
+      'click #booking-btn': 'loggedInBooking'
 
     })
     this.view;
@@ -29,6 +30,8 @@ class BookingPage extends Component {
   async toggleRegPage() {
     if (!((await Login.find()).error)) {
       this.regPage = new Button();
+      this.loggedIn = true;
+
     } else {
       this.regPage = new RegPage();
     }
@@ -91,6 +94,11 @@ class BookingPage extends Component {
 
   }
 
+
+
+
+
+
   async bookTicket() {
     this.myNewBooking = await new Booking({
       adults: this.pricePage.adults,
@@ -101,7 +109,6 @@ class BookingPage extends Component {
     })
     await this.myNewBooking.save();
     this.regPage.newBooking.push(this.myNewBooking)
-
 
     // let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
     // .populate('view')
@@ -120,7 +127,7 @@ class BookingPage extends Component {
       this.bookingConfirm.date = myNewBooking.view.date;
       this.bookingConfirm.time = myNewBooking.view.time;
       this.bookingConfirm.salon = myNewBooking.view.auditorium;
-  
+   
       this.bookingConfirm.adults = myNewBooking.adults;
       this.bookingConfirm.kids = myNewBooking.kids;
       this.bookingConfirm.seniors = myNewBooking.seniors;
@@ -147,6 +154,7 @@ class BookingPage extends Component {
           }
       })`);
   }
+
 
 
 
