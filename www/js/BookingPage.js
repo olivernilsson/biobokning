@@ -10,7 +10,8 @@ class BookingPage extends Component {
       'click #mobback': 'countDown',
       'click .bookTicket': 'bookTicket',
       'click #save-user-1': 'saveUser',
-      'click #booking-btn': 'loggedInBooking'
+      'click #save-user-logged': 'loggedInBooking'
+
 
     })
     this.view;
@@ -24,6 +25,7 @@ class BookingPage extends Component {
     this.newUser;
     this.totalPersons;
     this.bookedSeats = [];
+    this.userLoggedIn = false;
   }
 
 
@@ -31,7 +33,7 @@ class BookingPage extends Component {
     if (!((await Login.find()).error)) {
       this.regPage = new Button();
       this.loggedIn = true;
-
+      this.userLoggedIn = true;
     } else {
       this.regPage = new RegPage();
     }
@@ -95,10 +97,6 @@ class BookingPage extends Component {
   }
 
 
-
-
-
-
   async bookTicket() {
     this.myNewBooking = await new Booking({
       adults: this.pricePage.adults,
@@ -156,6 +154,47 @@ class BookingPage extends Component {
   }
 
 
+  async loggedInBooking() {
+    this.userLoggedIn = true;
+    console.log('körs')
+    this.logg = await Login.find();
+    this.email = this.logg.email;
+
+    this.loggedIn = await User.find(`.find(
+   {email: '${this.email}'})`)
+
+    let getTheUser = await User.find(`.find({email:'${this.email}'})`);
+
+    let userBooking = await new Booking({
+      adults: this.pricePage.adults,
+      kids: this.pricePage.kids,
+      seniors: this.pricePage.seniors,
+      user: getTheUser[0]._id,
+      seats: this.bookedSeats,
+      view: this.view
+    })
+    await userBooking.save();
+
+    let loggedInUser = await User.find(`.findOneAndUpdate({email:'${this.email}' },
+      {  "$addToSet": {
+        "bookings": '${userBooking._id}'
+    }
+  },
+      function(err,result){
+          if (!err) {
+              console.log(result);
+          }
+      })`);
+
+    // let populatedBooking = await Booking.find(`.findOne({_id:'${userBooking._id}'})
+    // .populate('view')
+    // .populate('user')
+    // .exec()
+    // `);
+
+   
+
+  }
 
 
 }
