@@ -7,13 +7,15 @@ class PageContent extends Component {
     this.aboutPage = new AboutPage();
     this.missingPage = new MissingPage();
     this.regPage = new RegPage();
-    this.storePage = new StorePage(); 
-    this.rulesPage =  new RulesPage();
+    this.storePage = new StorePage();
+    this.rulesPage = new RulesPage();
     this.aboutSalons = new AboutSalons();
+    this.myBookings = new MyBookings();
     this.moviesAndTrailersPage = new MoviesAndTrailersPage();
     App.moviesAndTrailersPage = this.moviesAndTrailersPage;
     this.userRegistration = new UserRegistration();
     this.bookingPage = new BookingPage();
+
 
   }
 
