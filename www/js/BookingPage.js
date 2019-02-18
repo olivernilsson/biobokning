@@ -79,6 +79,9 @@ class BookingPage extends Component {
       console.log(this.bookedSeats);
       //$("#mobforward").addClass("bookTicket");
     }
+    if (this.stepCounter == 4) {
+      this.bookTicket();
+    }
     
   }
 
@@ -126,7 +129,7 @@ class BookingPage extends Component {
     .exec()
     `); 
 
-    this.bookingConfirm.loadBooking(myNewBookingPopulated);
+    this.bookingConfirm.showBooking(myNewBookingPopulated);
 
   }
 

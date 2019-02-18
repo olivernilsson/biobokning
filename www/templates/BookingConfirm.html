@@ -1,11 +1,11 @@
-${this.booking ? '' : `<section class="demo">
+<section class="demo">
     <div class="col-md-24">
         <h1 class="p-2 testo">Tack för att du bokade!</h1>
       <div class="row">
         <div class="col-md-12 p-2">
           <h3>Dina sittplatser</h3>
           <div class="font-test">
-              <p>du har sittplats:</p>
+              du har sittplats: ${this.seats.map((a) => `<h1>${a}</h1>`).join('')}
           </div>
         </div>
         
@@ -36,4 +36,4 @@ ${this.booking ? '' : `<section class="demo">
     </div>
 
 
-  </section>`}
+  </section>

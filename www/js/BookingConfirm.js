@@ -1,12 +1,24 @@
 class BookingConfirm extends Component {
 
-    async loadBooking(booking){
+    constructor(){
+
+        super();
+        this.seats=[];
+    }
+
+    async showBooking(booking){
+
         this.booking = booking;
+
+        let lengthOfSeats = this.booking.seats.length;  
+        for(let x=0; x<lengthOfSeats; x++){
+            
+            this.seats.push(this.booking.seats[x]);      
+        }
+        
+        
+
         this.render();
-        console.log(this.booking);
-        /*let theBooking = await Booking.find(`findOne({bookingId:${this.bookingId}})`);
-        console.log(theBooking);
-        console.log(theBooking.adults);*/
     }
 
   
