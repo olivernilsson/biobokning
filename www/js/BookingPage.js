@@ -9,62 +9,66 @@ class BookingPage extends Component {
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
       'click .bookTicket': 'bookTicket',
-      'click #save-user-1': 'saveUser',
-      'click #save-user-logged': 'loggedInBooking'
+      'click #mobin': 'loggedInBooking',
+      'click #mobout': 'saveUser',
+      'click #save-user-notloggedin': 'saveUser',
+      'click #save-user-loggedin': 'loggedInBooking'
 
 
     })
     this.view;
     this.myNewBooking;
     this.stepCounter = 1;
-    this.regPage = this.toggleRegPage();
+    this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     this.bookingConfirm = new BookingConfirm();
-    this.userLogin = new UserLogin();
-    this.newUser;
+    BookingPage.current = this;
+    //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
     this.userLoggedIn = false;
+    this.toggleRegPage();
+  }
+
+
+
+
+  change(selectedView) {
+    console.log(selectedView)
+    this.view = selectedView;
+    this.resetCount();
+    this.render()
   }
 
 
   async toggleRegPage() {
     if (!((await Login.find()).error)) {
-      this.regPage = new Button();
-      this.loggedIn = true;
       this.userLoggedIn = true;
-    } else {
-      this.regPage = new RegPage();
     }
-    this.render();
+
   }
 
+
+
   async saveUser() {
-    if ($('#save-user-1').hasClass('disabled')) {
+    if ($('#save-user-notloggedin').hasClass('disabled') || $('#mobout').hasClass('disabled')) {
       return;
     }
     await this.bookTicket();
     await this.regPage.saveUserToDb();
     await this.addUserToBooking()
-    if (this.regPage.userSubmited === true) {
-      this.countUp();
-    }
+   
 
   }
 
-  change(selectedView) {
-    console.log(selectedView)
-    this.view = selectedView;
-    this.render()
-  }
 
   async mount() {
     let id = this.routeParts[0];
     this.view = await View.find(id);
     Object.assign(this, this.view._props);
     this.render();
-
+    this.resetCount();
   }
 
   countUp() {
@@ -73,6 +77,7 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
   }
+
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1) {
@@ -80,7 +85,6 @@ class BookingPage extends Component {
       this.stepCounter = 1
     }
     this.render();
-
   }
 
   dataChanges() {
@@ -138,6 +142,28 @@ class BookingPage extends Component {
     // this.pricePage.seniors = 0;
   }
 
+  resetCount(){
+    this.stepCounter = 1;
+    this.totalPersons;
+    this.bookedSeats = [];
+    this.pricePage.adults = 0;
+    this.pricePage.kids = 0;
+    this.pricePage.seniors = 0;
+    this.render();
+  }
+
+  smoothLogIn() {
+    this.stepCounter = this.stepCounter;
+    this.render();
+  }
+
+  smoothLogOut() {
+    if (App.loggedIn) {
+      App.loggedIn = false;
+    }
+    this.resetCount();
+    this.render();
+  }
 
   async addUserToBooking() {
     let putUser = await Booking.find(`.findOneAndUpdate(
@@ -145,18 +171,19 @@ class BookingPage extends Component {
       {  "$set": {
         "user": '${this.regPage.userDone._id}'
     }
-  },
+    },
       function(err,result){
           if (!err) {
               console.log(result);
           }
       })`);
+
+      this.countUp();
   }
 
 
   async loggedInBooking() {
     this.userLoggedIn = true;
-    console.log('körs')
     this.logg = await Login.find();
     this.email = this.logg.email;
 
@@ -192,11 +219,10 @@ class BookingPage extends Component {
     // .exec()
     // `);
 
-   
+    this.countUp();
+
 
   }
 
 
 }
-
-

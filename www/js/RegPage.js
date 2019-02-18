@@ -8,11 +8,9 @@ class RegPage extends Component {
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
       'keyup #email': 'validateRegForm',
-      'click .reg-loginbtn': 'showModal',
-      'click #save-user': 'saveUserToDb'
+      'click .reg-loginbtn': 'showModal'
     })
     this.done = false;
-    this.userSubmited = false;
     this.emailValid = false;
     this.emaillow;
     this.newBooking = [];
@@ -125,12 +123,16 @@ class RegPage extends Component {
 
 
     if (this.done === true && styleCount === 3) {
-      $('#save-user-1').addClass('blinker');
-      $('#save-user-1').removeClass('disabled');
+      $('#save-user-notloggedin').addClass('blinker');
+      $('#mobout').addClass('blinker');
+      $('#save-user-notloggedin').removeClass('disabled');
+      $('#mobout').removeClass('disabled');
+      
     } else {
-
-      $('#save-user-1').removeClass('blinker');
-      $('#save-user-1').addClass('disabled');
+      $('#save-user-notloggedin').removeClass('blinker');
+      $('#save-user-notloggedin').addClass('disabled');
+      $('#mobout').removeClass('blinker');
+      $('#mobout').addClass('disabled');
     }
 
 
@@ -139,8 +141,12 @@ class RegPage extends Component {
 
 
 
+
+
   async saveUserToDb() {
-    if ($('#save-user-1').hasClass('disabled')) {
+
+    console.log('regpage')
+    if ($('#save-user-notloggedin').hasClass('disabled') || $('#mobout').hasClass('disabled')) {
 
 
       console.log('yey')
@@ -182,7 +188,6 @@ class RegPage extends Component {
       $("#userform").find("input[type=password], textarea").val("")
       this.done = false;
       this.emailValid = false;
-      this.userSubmited = true;
     }
   }
 

@@ -14,15 +14,12 @@ class UserLogin extends Component {
    
   async showModal(){
     if(this.loggedIn){
-      // log out
-      let a = new Login();
-      await a.delete();
+      //Log out
+      let user = new Login();
+      await user.delete();
       this.checkIfLoggedIn();
       NavBar.current.removeEmail();
-      //Hard reload
-      for(let i=0; i < 2; i++){
-        window.location.href = window.location.href;
-      }
+      BookingPage.current.smoothLogOut();
       return;
     }
     this.modalShown = true;
@@ -41,6 +38,7 @@ class UserLogin extends Component {
 
   async checkIfLoggedIn(){
     this.loggedIn = !((await Login.find()).error);
+    App.loggedIn = this.loggedIn;
     this.render();
   }
  
