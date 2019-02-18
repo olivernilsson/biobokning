@@ -9,10 +9,10 @@ class BookingPage extends Component {
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
       'click .bookTicket': 'bookTicket',
-      'click #mobin': 'loggedInBooking',
+      'click #save-user-loggedin': 'loggedInBooking',
+      'click #mobin' : 'loggedInBooking',
       'click #mobout': 'saveUser',
-      'click #save-user-notloggedin': 'saveUser',
-      'click #save-user-loggedin': 'loggedInBooking'
+      'click #save-user-notloggedin': 'saveUser'
 
 
     })
@@ -27,8 +27,7 @@ class BookingPage extends Component {
     //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
-    this.userLoggedIn = false;
-    this.toggleRegPage();
+ 
   }
 
 
@@ -42,12 +41,7 @@ class BookingPage extends Component {
   }
 
 
-  async toggleRegPage() {
-    if (!((await Login.find()).error)) {
-      this.userLoggedIn = true;
-    }
-
-  }
+  
 
 
 
@@ -183,7 +177,6 @@ class BookingPage extends Component {
 
 
   async loggedInBooking() {
-    this.userLoggedIn = true;
     this.logg = await Login.find();
     this.email = this.logg.email;
 

@@ -145,11 +145,8 @@ class RegPage extends Component {
 
   async saveUserToDb() {
 
-    console.log('regpage')
     if ($('#save-user-notloggedin').hasClass('disabled') || $('#mobout').hasClass('disabled')) {
 
-
-      console.log('yey')
       return;
     } else {
 
