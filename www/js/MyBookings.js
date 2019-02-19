@@ -1,23 +1,30 @@
 class MyBookings extends Component {
     constructor() {
         super();
-        this.addRoute('/mina-bookningar' - 'Bokningar')
+        this.addRoute('/mina-bookningar', 'Bokningar')
         //this.bokings = [];
         this.htmlresult = "";
         this.getBookingsHistory();
 
     }
 
-   async getBookingsHistory() {
+    async getBookingsHistory() {
+        this.logg = await Login.find();
+        this.email = this.logg.email;
+    
+       this.loggedIn = await User.find(`.find(
+       {email: '${this.email}'})`)
+    
+    //from Della
+        let getTheUser = await User.find(`.find({email:'${this.email}'})`);
+        console.log(getTheUser)
+       let usersBookings = await Booking.find();
+        //console.log(usersBookings);
 
-
-        let usersBookings = await Booking.find();
-        console.log(usersBookings);
-        //await usersBookings.save();
         for (let booking of usersBookings) {
-            console.log(booking.bookingId)
-            this.htmlresult =+ `<h1>${booking.bookingId}</h1>`;
-            
+
+            this.htmlresult += `<h1>${booking.bookingId}</h1>`;
+
         }
         this.render();
         console.log('dupjasiu');
