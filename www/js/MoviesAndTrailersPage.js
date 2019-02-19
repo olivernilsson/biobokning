@@ -9,8 +9,7 @@ class MoviesAndTrailersPage extends Component {
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click .view-select': 'viewSelect',
-      'click .play': 'showTrailer'
+      'click .view-select': 'viewSelect'
     })
 
     this.testlist = [];
@@ -90,11 +89,7 @@ class MoviesAndTrailersPage extends Component {
 
   showTrailer(){
   
-    /*this.trailer = this.movie.youtubeTrailers[0];
-    $(".play").hide();
-    this.render();
-    */
-
+    this.trailer = this.movie.youtubeTrailers[0];
     }    
   }
   
