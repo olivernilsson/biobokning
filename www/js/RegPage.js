@@ -8,22 +8,22 @@ class RegPage extends Component {
       'keyup #password': 'validateRegForm',
       'keyup #password-verify': 'validateRegForm',
       'keyup #email': 'validateRegForm',
-      'click #save-user': 'saveUserToDb',
-      'click .reg-loginbtn': 'showModal',
+      'click .reg-loginbtn': 'showModal'
     })
     this.done = false;
     this.emailValid = false;
-    
-    
+    this.emaillow;
+    this.newBooking = [];
+    this.userDone;
   }
 
- 
 
 
-  showModal(){
-    $('.full-modal').css("display","block")
-    $('#loginnamereg').css("border-bottom","1px solid white") 
-    $('#loginpasswordreg').css("border-bottom","1px solid white") 
+
+  showModal() {
+    $('.full-modal').css("display", "block")
+    $('#loginnamereg').css("border-bottom", "1px solid white")
+    $('#loginpasswordreg').css("border-bottom", "1px solid white")
   }
 
   validateRegForm() {
@@ -123,46 +123,68 @@ class RegPage extends Component {
 
 
     if (this.done === true && styleCount === 3) {
-
-      $('#save-user').removeClass('disabled');
+      $('#save-user-notloggedin').addClass('blinker');
+      $('#mobout').addClass('blinker');
+      $('#save-user-notloggedin').removeClass('disabled');
+      $('#mobout').removeClass('disabled');
+      
     } else {
-
-      $('#save-user').addClass('disabled');
+      $('#save-user-notloggedin').removeClass('blinker');
+      $('#save-user-notloggedin').addClass('disabled');
+      $('#mobout').removeClass('blinker');
+      $('#mobout').addClass('disabled');
     }
+
+
+    this.emaillow = $('#email').val()
   }
 
 
 
-  saveUserToDb(event) {
-    if ($('#save-user').hasClass('disabled')) {
-      event.preventDefault();
+
+
+  async saveUserToDb() {
+
+    if ($('#save-user-notloggedin').hasClass('disabled') || $('#mobout').hasClass('disabled')) {
 
       return;
     } else {
-      $("#userform").submit(async function (event) {
 
-        let firstName = $('#firstname').val();
-        let lastName = $('#lastname').val();
-        let verifyValue = $('#password-verify').val();
-        let emailInput = $('#email').val().toLowerCase();
+      let firstName = $('#firstname').val();
+      let lastName = $('#lastname').val();
+      let verifyValue = $('#password-verify').val();
+      let emailInput = $('#email').val().toLowerCase();
 
-        let addedUser = new User({
-          firstName: firstName,
-          lastName: lastName,
-          email: emailInput,
-          password: verifyValue
-        });
 
-        event.preventDefault();
-        await addedUser.save();
-
-        alert('added to db');
-        $("#userform").find("input[type=text], textarea").val("")
-        $("#userform").find("input[type=password], textarea").val("")
-        this.done = false;
-        this.emailValid = false;
+      let addedUser = new User({
+        firstName: firstName,
+        lastName: lastName,
+        email: emailInput,
+        password: verifyValue,
 
       });
+
+      await addedUser.save();
+
+      this.userDone = addedUser;
+
+      let regUser = await User.find(`.findOneAndUpdate(
+        {_id: '${addedUser._id}' },
+        {  "$set": {
+          "bookings": '${this.newBooking[0]._id}'
+      }
+    },
+        function(err,result){
+            if (!err) {
+                console.log(result);
+            }
+        })`);
+
+
+      $("#userform").find("input[type=text], textarea").val("")
+      $("#userform").find("input[type=password], textarea").val("")
+      this.done = false;
+      this.emailValid = false;
     }
   }
 
