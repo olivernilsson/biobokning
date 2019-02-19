@@ -11,11 +11,8 @@
     </div>
     <div class="mobile-buttons">
 
-
-
         <button id="mobback" type="button" class="align-self-center btn ">Bakåt</button>
-        ${this.stepCounter === 3 ? `<button id="${App.loggedIn ? 'mobin' : 'mobout' }"
-            type="submit" class="submit-forwardmobile align-self-center btn  
+        ${this.stepCounter === 3 ? `<button id="${App.loggedIn ? 'mobin' : 'mobout' }" type="submit" class="submit-forwardmobile align-self-center btn  
         ${App.loggedIn ? 'blinker': 'disabled'}">Slutför bokningen</button> ` : `<button id="mobforward" type="button"
             class="align-self-center btn btn-light">Framåt</button>`}
     </div>
@@ -39,12 +36,12 @@
         ` : this.regPage) : ''}
 
         ${this.stepCounter === 3 ? `<button id="${App.loggedIn? 'save-user-loggedin' : 'save-user-notloggedin' }"
-        type="submit" class="done-btn btn  btn-sm ${App.loggedIn ? 'blinker': 'disabled'}">Slutför
-        bokningen</button>  ` : `<button id="forward" type="button" class="btn btn-light">Framåt</button>`}
+            type="submit" class="done-btn btn  btn-sm ${App.loggedIn ? 'blinker': 'disabled'}">Slutför
+            bokningen</button> ` : `<button id="forward" type="button" class="btn btn-light">Framåt</button>`}
 
 
- 
-       
+
+
 
 
 

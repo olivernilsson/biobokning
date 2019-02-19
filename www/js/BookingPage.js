@@ -27,15 +27,15 @@ class BookingPage extends Component {
     //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
- 
   }
 
 
 
 
+
   change(selectedView) {
-    console.log(selectedView)
     this.view = selectedView;
+    this.pricePage.selectedView(selectedView)
     this.resetCount();
     this.render()
   }
@@ -106,12 +106,14 @@ class BookingPage extends Component {
     await this.myNewBooking.save();
     this.regPage.newBooking.push(this.myNewBooking)
 
-    // let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
-    // .populate('view')
-    // .populate('user')
-    // .exec()
-    // `);
+    let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
+    .populate('view')
+    .populate('user')
+    .exec()
+    `);
 
+
+    console.log(populatedBooking)
 
 
     //---- Nedan skickar vi data till confirm sidan ---//   
@@ -182,6 +184,7 @@ class BookingPage extends Component {
 
     this.loggedIn = await User.find(`.find(
    {email: '${this.email}'})`)
+
 
     let getTheUser = await User.find(`.find({email:'${this.email}'})`);
 
