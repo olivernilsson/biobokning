@@ -156,9 +156,25 @@ display: none;
   border-radius: 2%;
 }
 
+.submit-forwardmobile{
+  position: absolute;
+  right: 0;
+  height: 80px;
+  width: 40%;
+  color:#C5C6C7;
+  font-weight: 900;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
+  border-radius: 2%;
+}
 
 @media screen and (max-width: 950px) {
-  #backtext,#forward{
+  #backtext,#forward,#save-user-notloggedin,#save-user-loggedin{
    display: none;
  
   }
