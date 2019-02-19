@@ -77,6 +77,7 @@
     padding-left: 5%;
     padding-top: 74vh;
     border: none;
+    width: 50%;
     z-index: 500;
     position: relative;
    }
@@ -134,8 +135,28 @@
     z-index: 800;
     }
 
-    .myModal{
+    .viewings-table{
 
-      z-index: 1000;
+      table-layout: fixed; 
+      width: 80%;
     }
+
+    .act-view{
+
+      margin-left: 4.5%;
+    }
+    .view-select{
+
+      text-decoration: none;
+      color: gray;
+      font-size: 20px;
+      padding-bottom: 10px;
+    }
+
+    .view-select:hover{
+
+      text-decoration: none;
+      color: white;
+    }
+    
     
