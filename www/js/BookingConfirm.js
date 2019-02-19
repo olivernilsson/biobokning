@@ -2,8 +2,8 @@ class BookingConfirm extends Component {
 
     constructor(){
 
-        super();
-        this.seats=[];
+        super();  
+        this.seats=[];   
     }
 
     async showBooking(booking){
@@ -15,9 +15,10 @@ class BookingConfirm extends Component {
             
             this.seats.push(this.booking.seats[x]);      
         }
-        
-        
 
+        this.totalPrice= this.booking.adults*120+ this.booking.kids*75+ this.booking.seniors*90;
+        console.log(this.totalPrice);
+        
         this.render();
     }
 
