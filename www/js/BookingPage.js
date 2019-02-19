@@ -22,11 +22,15 @@ class BookingPage extends Component {
     this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
+    //this.bookingConfirm = new BookingConfirm({bookingPage: this});
     this.bookingConfirm = new BookingConfirm();
     BookingPage.current = this;
     //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
+
+    this.buttonBackText = 'Välj visning';
+    this.buttonForwardText = 'Välj plats/platser';
   }
 
 
@@ -70,6 +74,7 @@ class BookingPage extends Component {
     if (this.stepCounter > 4) { this.stepCounter = 4; }
     this.render();
     this.dataChanges();
+    this.wizardTextChanges();
   }
 
   countDown() {
@@ -79,19 +84,44 @@ class BookingPage extends Component {
       this.stepCounter = 1
     }
     this.render();
+    this.wizardTextChanges();
   }
 
   dataChanges() {
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      console.log(this.salonPage.nbrOfPickedSeats);
+      //console.log(this.salonPage.nbrOfPickedSeats);
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
       console.log(this.bookedSeats);
+      //$("#mobforward").addClass("bookTicket");
     }
+    if (this.stepCounter == 4) {
+     // this.bookTicket();
+    }
+    
+  }
 
+  wizardTextChanges(){
+    if (this.stepCounter == 1) {
+      this.buttonBackText = 'Välj visning';
+      this.buttonForwardText = 'Välj plats/platser';
+    }  
+    if (this.stepCounter == 2) {
+      this.buttonBackText = 'Välj antal personer';
+      this.buttonForwardText = 'Registrera dig för bokning';
+    }
+    if (this.stepCounter == 3) {
+      this.buttonBackText = 'Välj plats/platser';
+      this.buttonForwardText = 'Boka';
+    }  
+    if (this.stepCounter == 4) {
+      this.buttonBackText = '';
+      this.buttonForwardText = 'Tillbaks till startsidan';
+    }  
+    this.render();
   }
 
 
@@ -106,15 +136,19 @@ class BookingPage extends Component {
     await this.myNewBooking.save();
     this.regPage.newBooking.push(this.myNewBooking)
 
-    let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
+    // let populatedBooking = await Booking.find(`.findOne({bookingId:'hejhej'})
+    // .populate('view')
+    // .populate('user')
+    // .exec()
+    // `);
+
+     let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
     .populate('view')
     .populate('user')
     .exec()
-    `);
+    `); 
 
-
-    console.log(populatedBooking)
-
+    this.bookingConfirm.showBooking(myNewBookingPopulated);
 
     //---- Nedan skickar vi data till confirm sidan ---//   
     /*
@@ -209,11 +243,14 @@ class BookingPage extends Component {
           }
       })`);
 
-    // let populatedBooking = await Booking.find(`.findOne({_id:'${userBooking._id}'})
-    // .populate('view')
-    // .populate('user')
-    // .exec()
-    // `);
+
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${userBooking.bookingId}'})
+    .populate('view')
+    .populate('user')
+    .exec()
+    `); 
+
+    this.bookingConfirm.showBooking(myNewBookingPopulated);
 
     this.countUp();
 
