@@ -39,7 +39,6 @@ class BookingPage extends Component {
 
   change(selectedView) {
     this.view = selectedView;
-    this.pricePage.selectedView(selectedView)
     this.resetCount();
     this.render()
   }
