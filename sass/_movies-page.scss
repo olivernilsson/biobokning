@@ -139,23 +139,32 @@
 
       table-layout: fixed; 
       width: 80%;
+      
     }
 
     .act-view{
 
       margin-left: 4.5%;
     }
+
+    @keyframes fade {
+      from {color: grey;}
+      to {color: white;}
+    }
+
     .view-select{
 
       text-decoration: none;
       color: gray;
       font-size: 20px;
-      padding-bottom: 10px;
+      padding-bottom: 15px;
     }
 
     .view-select:hover{
 
       text-decoration: none;
+      animation-name: fade;
+      animation-duration: 0.3s;
       color: white;
     }
     
