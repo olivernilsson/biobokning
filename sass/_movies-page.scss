@@ -62,23 +62,22 @@
   .bg-image{
 
     margin: 0;
-    margin-top: -1.6%;
     padding: 0;
     position: absolute;
     left: 0;
     z-index: 0;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     border: none;
     overflow-y: hidden;
-    background-size: cover;
+    background-size: contain;
    }
 
    .page-info{
     padding-left: 5%;
-    padding-top: 71vh;
+    padding-top: 74vh;
     border: none;
-    z-index: 999;
+    z-index: 500;
     position: relative;
    }
 
@@ -90,6 +89,7 @@
   
    .viewings-list{
     padding-left: 6%;
+    overflow: hidden;
    }
   
    h2,h4{
@@ -111,8 +111,7 @@
    .movie-fade{
     position: absolute;
     left: 0;
-    padding-top: 97vh;
-    height: 10vh;
+    height: 100%;
     width: 100%;
     z-index: 7;
     background: linear-gradient(180deg, transparent, transparent 40%, #0B0C10);
@@ -124,7 +123,7 @@
     width: 120px;
     top: 47vh;
     left: calc(50% - 60px);
-    z-index: 800;
+    z-index: 900;
    }
 
    .trailer{
@@ -132,5 +131,11 @@
     border: none;
     top: 25vh;
     left: calc(50% - 225px);
-    z-index: 1000;
+    z-index: 800;
     }
+
+    .myModal{
+
+      z-index: 1000;
+    }
+    

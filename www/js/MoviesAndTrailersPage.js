@@ -1,5 +1,5 @@
 class MoviesAndTrailersPage extends Component {
-
+  
   constructor() {
     super();
     this.addRoute(/\/movie-details\/(.*)/)
@@ -89,11 +89,13 @@ class MoviesAndTrailersPage extends Component {
   }
 
   showTrailer(){
-
-    console.log(this.trailer);
-    this.trailer = this.movie.youtubeTrailers[0];
+  
+    /*this.trailer = this.movie.youtubeTrailers[0];
+    $(".play").hide();
     this.render();
-  }
+    */
 
-}
+    }    
+  }
+  
 

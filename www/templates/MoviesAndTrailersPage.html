@@ -7,10 +7,13 @@
         <img class="bg-image" src= ${this.movie ? `/images/${this.movie.images[0]}` : ''}>
         
         
+        <!---<iframe class="trailer" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe> -->
+
         <iframe class="trailer" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe>
 
-
+        
         <img class="play" src= ${this.movie ? `/images/play.png` : ''}>
+        
 
         <div class="page-info">
         <h2 class="movieh2">${this.movie ? this.movie.title : ''}</h2>
@@ -38,8 +41,8 @@
       </div>`}
 
       <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle type=" button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
+          <button class="btn btn-secondary dropdown-toggle" type=" button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent" >
     
             ${this.title ? this.title : 'Movies'}
           </button>
@@ -49,4 +52,5 @@
             ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
           </div>
         </div>
+        
 </section>
