@@ -27,6 +27,9 @@ class BookingPage extends Component {
     console.log(selectedView)
     this.view = selectedView;
     this.render()
+
+    Salon.current.chosenView = this.view._id;
+    Salon.current.auditorium = this.view.auditorium;
   }
 
   async toggleRegPage() {
@@ -60,13 +63,16 @@ class BookingPage extends Component {
       this.stepCounter = 1
     }
     this.render();
+    this.dataChanges();
   }
 
   dataChanges() {
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      console.log(this.salonPage.nbrOfPickedSeats);
+      console.log(this.salonPage.nbrOfPickedSeats);  
+      Salon.current.auditoriumSelector();  
+      Salon.current.pushOlderBookedSeatsToArray();  
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
