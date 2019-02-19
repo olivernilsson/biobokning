@@ -98,7 +98,7 @@ class BookingPage extends Component {
       //$("#mobforward").addClass("bookTicket");
     }
     if (this.stepCounter == 4) {
-      this.bookTicket();
+     // this.bookTicket();
     }
     
   }
@@ -138,7 +138,7 @@ class BookingPage extends Component {
     //console.log(myNewBooking);
     //console.log(myNewBooking.bookingId);
 
-     let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})
+     let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
     .populate('view')
     .populate('user')
     .exec()
@@ -146,6 +146,16 @@ class BookingPage extends Component {
 
     this.bookingConfirm.showBooking(myNewBookingPopulated);
 
+  }
+
+  resetCount(){
+    this.stepCounter = 1;
+    this.totalPersons;
+    this.bookedSeats = [];
+    this.pricePage.adults = 0;
+    this.pricePage.kids = 0;
+    this.pricePage.seniors = 0;
+    this.render();
   }
 
   smoothLogIn() {
@@ -208,11 +218,14 @@ class BookingPage extends Component {
           }
       })`);
 
-    // let populatedBooking = await Booking.find(`.findOne({_id:'${userBooking._id}'})
-    // .populate('view')
-    // .populate('user')
-    // .exec()
-    // `);
+
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${userBooking.bookingId}'})
+    .populate('view')
+    .populate('user')
+    .exec()
+    `); 
+
+    this.bookingConfirm.showBooking(myNewBookingPopulated);
 
     this.countUp();
 
