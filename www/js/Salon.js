@@ -3,16 +3,12 @@ class Salon extends Component {
   constructor(){
     super();
     this.addEvents({
-      'click .small-salon-btn' : 'showSmallSalon',
-      'click .medium-salon-btn' : 'showMediumSalon',
-      'click .large-salon-btn' : 'showLargeSalon',
       'click .seat' : 'toggleSeat'    
     });
+    Salon.current = this;
     this.bookedSeats = []; 
     this.salonSeats = [];
     this.alreadyBookedSeats = [];
-
-    this.nbrOfPickedSeats;
     
     this.row1 = [];
     this.row2 = [];
@@ -23,33 +19,40 @@ class Salon extends Component {
     this.row7 = [];
     this.row8 = [];
     
-    //This value('5c5839d578802e1b79b5e...') is hard coded at the moment. 
-    //It should come from previous stage in the wizard.
-    this.chosenView = '5c5839d878802e1b79b5ef7b'; 
-    this.pushOlderBookedSeatsToArray();
     this.seatHoverEffect();
-
   } 
+  
+  auditoriumSelector(){
+    if(this.auditorium === 'Lilla Salongen'){
+      this.showSmallSalon();
+    }
+    if(this.auditorium === 'Mellan Salongen'){
+      this.showMediumSalon();
+    }
+    if(this.auditorium === 'Stora Salongen'){
+      this.showLargeSalon();
+    }
+    return;
+  }
 
   seatHoverEffect(){
     setTimeout(function() {
-      let nbrOfPickedSeats = BookingPage.current.totalPersons;
+      let nbrSeats = BookingPage.current.totalPersons;
       $(document).ready(function(){
         $('.seat').hover(function() {
           let a = parseInt(this.id, 10);
-          for(let i = 0; i < nbrOfPickedSeats; i++){
+          for(let i = 0; i < nbrSeats; i++){
             $(`#${a+i}`).toggleClass("blink_me");
           }
         });
       });
-    }, 100);
+    }, 0);
   }
 
   //This method searches for the specific view in the DB and recognizes 
   //seats already booked by other users. These seats are then pushed
   //to the alreadyBookedSeats-array. 
   async pushOlderBookedSeatsToArray(){
-
     let fakeViewingIndexes = [];
     let takenSeats = await Booking.find();
 
@@ -105,7 +108,7 @@ class Salon extends Component {
         $(`#${j}`).css("background-color", "");
       }
       //Colors all already booked seats
-      for(let i = 0; i < this.salonSeats.length+1; i++){
+      for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
         $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
       }
       //Colors the newly picked seats
@@ -114,7 +117,7 @@ class Salon extends Component {
         $(`#${this.seatNr+i}`).css("background-color", "rgb(128, 247, 128)");
       }
     }
-
+    
     //If seat/seats is already picked, deselect it/them.
     if(seatIndex >= 0){
       for(let i = 0; i <= this.salonSeats.length+1; i++){
@@ -137,7 +140,7 @@ class Salon extends Component {
     let salons = await Salon.find();
     let smallRows = 6 // salons[2].seatsPerRow.length; //These values should come from the DB
     let seats = [6,8,9,10,10,12] // salons[2].seatsPerRow; // but because of lagg, it's 'hard-coded' for now
-
+    
     for(let row = 0; row < smallRows; row++){
       for(let seat = 0; seat < seats[row]; seat++){
         rows.push(new Seat(seatCounter));
@@ -165,12 +168,12 @@ class Salon extends Component {
       }
     }
     this.render();
-    this.discardAllSeats();
+    //this.discardAllSeats();
   }
 
   async showMediumSalon(){
     this.salonSeats.length = 0;
-    let rows = [];
+    let rows = []; 
     let seatCounter = 1;
     let i = 0;
     let salons = await Salon.find();
@@ -207,7 +210,7 @@ class Salon extends Component {
       }
     }
     this.render();
-    this.discardAllSeats();
+    //this.discardAllSeats();
   }
 
   async showLargeSalon(){
@@ -252,7 +255,7 @@ class Salon extends Component {
       }
     }
     this.render();
-    this.discardAllSeats();
+    //this.discardAllSeats();
   }
 
   discardAllSeats(){
