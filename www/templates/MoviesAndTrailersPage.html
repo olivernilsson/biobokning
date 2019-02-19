@@ -1,29 +1,29 @@
-<section>
+<section class="movie-section">
 
   
-  <div>
-
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle type=" button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
-
-        ${this.title ? this.title : 'Movies'}
-      </button>
-
-     
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
-      </div>
-      <div>
-        <br>
+  <div class="testdiv">
         ${this.title === undefined ? '' : `
-        <h2>${this.movie ? this.movie.title : ''}</h2>
-        <h4>${this.movie ? "År: " : ''}
+        <div class="movie-fade"></div>
+        <img class="bg-image" src= ${this.movie ? `/images/${this.movie.images[0]}` : ''}>
+        
+        
+        <!---<iframe class="trailer" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe> -->
+
+        <iframe class="trailer" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}></iframe>
+
+        
+        <img class="play" src= ${this.movie ? `/images/play.png` : ''}>
+        
+
+        <div class="page-info">
+        <h2 class="movieh2">${this.movie ? this.movie.title : ''}</h2>
+        <h4 class="movieh4">${this.movie ? "År: " : ''}
           ${this.movie ? this.movie.productionYear : ''}
           ${this.movie ? "| Minuter: " : ''}
           ${this.movie ? this.movie.length: ''}
           ${this.movie ? "| Genre: " : ''}
           ${this.movie ? this.movie.genre: ''} </h4>
+          <br>
         <p>${this.movie ? this.movie.description: ''} </p>
         <p>${this.movie ? "Director: " : ''}
           ${this.movie ? this.movie.director: ''} </p>
@@ -33,12 +33,25 @@
           ${this.movie ? this.movie.language: ''} </p>
         <br>
       </div>
-      <div>
+
+      <h2 class="act-view">Aktuella visningar: </h2>
+      <div class="viewings-list">
        <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
-  
       <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->
-       ${this.testlist.map((listitem) => `<a class="view-select" href="/view/${listitem._id}" data-view-id="${listitem._id}"><div class="row">| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</a></div>`).join('')}
+       ${this.testlist.map((listitem) => `<a class="view-select" href="/view/${listitem._id}" data-view-id="${listitem._id}"><div class="row"><table class="viewings-table"><tr><td> Film:  ${listitem.film} </td><td> Salong: ${listitem.auditorium} </td><td> Datum: ${listitem.date} </td> <td> Tid: ${listitem.time} </td></tr></table></a></div>`).join('')}
       </div>`}
-    </div>
-  </div>
+
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type=" button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent" >
+    
+            ${this.title ? this.title : 'Movies'}
+          </button>
+    
+         
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            ${this.movies.map((movie) => `<div data-movie-id="${movie._id}" class="dropdown-item">${movie.title}</div>`).join('')}
+          </div>
+        </div>
+        
 </section>
