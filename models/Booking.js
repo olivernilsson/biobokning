@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let bookingSchema = new Schema({
-   "adults": Number,
-   "kids": Number,
-   "seniors": Number,
-   "user": { type: Schema.Types.ObjectId, ref: 'User' },
-   "view": { type: Schema.Types.ObjectId, ref: 'View' },
-   "seats": Array,
-   "bookingId": { type: String, unique: true },
-   "name": String
+   adults: Number,
+   kids: Number,
+   seniors: Number,
+   user: {type: Schema.Types.ObjectId, ref: 'User'},
+   view: { type: Schema.Types.ObjectId, ref: 'View' },
+   seats: Array,
+   bookingId: { type: String, unique: true }
 });
 
 

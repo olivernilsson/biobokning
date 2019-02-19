@@ -10,10 +10,10 @@ class Salon extends Component {
     });
     this.bookedSeats = []; 
     this.salonSeats = [];
+    this.alreadyBookedSeats = [];
 
-    //This value (3) is at the moment hard coded. Should be an inargument instead.
     this.nbrOfPickedSeats;
-
+    
     this.row1 = [];
     this.row2 = [];
     this.row3 = [];
@@ -22,39 +22,115 @@ class Salon extends Component {
     this.row6 = [];
     this.row7 = [];
     this.row8 = [];
+    
+    //This value('5c5839d578802e1b79b5e...') is hard coded at the moment. 
+    //It should come from previous stage in the wizard.
+    this.chosenView = '5c5839d878802e1b79b5ef7b'; 
+    this.pushOlderBookedSeatsToArray();
+    this.seatHoverEffect();
+
   } 
 
+  seatHoverEffect(){
+    setTimeout(function() {
+      let nbrOfPickedSeats = BookingPage.current.totalPersons;
+      $(document).ready(function(){
+        $('.seat').hover(function() {
+          let a = parseInt(this.id, 10);
+          for(let i = 0; i < nbrOfPickedSeats; i++){
+            $(`#${a+i}`).toggleClass("blink_me");
+          }
+        });
+      });
+    }, 100);
+  }
+
+  //This method searches for the specific view in the DB and recognizes 
+  //seats already booked by other users. These seats are then pushed
+  //to the alreadyBookedSeats-array. 
+  async pushOlderBookedSeatsToArray(){
+
+    let fakeViewingIndexes = [];
+    let takenSeats = await Booking.find();
+
+    //Searches for the specific view in the DB.
+    for( let viewing = 0; viewing < takenSeats.length; viewing++ ){
+      if(takenSeats[viewing].view === this.chosenView){
+        fakeViewingIndexes.push(viewing);
+      }
+    }
+    //Pushes the already booked seats by other users to the alreadyBooked-array.
+    for( let viewIndex = 0; viewIndex < fakeViewingIndexes.length; viewIndex++){
+      let realViewingIndex = fakeViewingIndexes[viewIndex];
+      let arrayWithSeats = takenSeats[realViewingIndex].seats;
+      for (let seat = 0; seat < arrayWithSeats.length; seat++ ){
+        this.alreadyBookedSeats.push(arrayWithSeats[seat]);
+      }
+    }    
+    //Gives the alreadyBookedSeats a red color.
+    for(let i = 0; i < this.alreadyBookedSeats.length; i++){
+      $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+    }
+  }
+
+  checksIfChosenSeatsAreEmpty(){
+    this.lastSeatNbr = this.seatNr + this.nbrOfPickedSeats - 1;
+    for(let seat = this.seatNr; seat < this.lastSeatNbr; seat++){
+      if(this.alreadyBookedSeats.indexOf(seat) > 0){
+        return false;
+      }
+    }
+    return true;
+  }
+
   toggleSeat(e){
-    let seatNr = parseInt(e.target.id, 10);
+
+    this.seatNr = parseInt(e.target.id, 10);
     //Index of picked seat
-    let seatIndex = this.bookedSeats.indexOf(seatNr);
+    let seatIndex = this.bookedSeats.indexOf(this.seatNr);
     //Index of the last seat in the row 
-    let lastSeatIndex = this.bookedSeats.indexOf(seatNr + this.nbrOfPickedSeats - 1); 
+    this.lastSeatIndex = this.bookedSeats.indexOf(this.seatNr + this.nbrOfPickedSeats - 1); 
     //Index of seats outside of the salon
     let outOfSeatsIndex = this.salonSeats.length - this.nbrOfPickedSeats + 1; 
 
-    //Ensures the salon is empty, doesn't pick already picked seats, or pick seats outside of the salon.
-    if(seatIndex < 0 && lastSeatIndex < 0 && seatNr <= outOfSeatsIndex){
+    //Just indexes as above, but for this.alreadyBookedSeats-array
+    let alreadyIndex = this.alreadyBookedSeats.indexOf(this.seatNr);
+    let lastAlreadyIndex = this.alreadyBookedSeats.indexOf(this.seatNr + this.nbrOfPickedSeats - 1);
+
+    //Ensures the picked seat is empty, doesn't pick already picked seats, or pick seats outside of the salon.
+    if(seatIndex < 0 && this.lastSeatIndex < 0 && this.seatNr <= outOfSeatsIndex && alreadyIndex < 0 && lastAlreadyIndex < 0 && this.checksIfChosenSeatsAreEmpty()){
       this.bookedSeats.length = 0;
+      //Uncolors all seats in salon
       for(let j = 0; j < this.salonSeats.length+1; j++){
         $(`#${j}`).css("background-color", "");
       }
+      //Colors all already booked seats
+      for(let i = 0; i < this.salonSeats.length+1; i++){
+        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      }
+      //Colors the newly picked seats
       for(let i = 0; i < this.nbrOfPickedSeats; i++){
-        this.bookedSeats.push(seatNr+i);
-        $(`#${seatNr+i}`).css("background-color", "rgb(65,55,55)");
+        this.bookedSeats.push(this.seatNr+i);
+        $(`#${this.seatNr+i}`).css("background-color", "rgb(128, 247, 128)");
       }
     }
+
     //If seat/seats is already picked, deselect it/them.
     if(seatIndex >= 0){
       for(let i = 0; i <= this.salonSeats.length+1; i++){
         $(`#${i}`).css("background-color", "");
       }
+      //Colors all already booked seats
+      for(let i = 0; i < this.salonSeats.length+1; i++){
+        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      }
       this.bookedSeats.length = 0;
     }
     console.log(this.bookedSeats) //To see the booked seats.
-  }
+  } 
   
   async showSmallSalon(){
+    this.salonSeats.length = 0;
     let rows = [];
     let seatCounter = 1;
     let i = 0;
@@ -93,6 +169,7 @@ class Salon extends Component {
   }
 
   async showMediumSalon(){
+    this.salonSeats.length = 0;
     let rows = [];
     let seatCounter = 1;
     let i = 0;
@@ -134,6 +211,7 @@ class Salon extends Component {
   }
 
   async showLargeSalon(){
+    this.salonSeats.length = 0;
     let rows = [];
     let seatCounter = 1;
     let i = 0;

@@ -8,18 +8,24 @@ class BookingPage extends Component {
       'click #backtext': 'countDown',
       'click #mobforward': 'countUp',
       'click #mobback': 'countDown',
-      'click .bookTicket': 'bookTicket'
+      'click .bookTicket': 'bookTicket',
+      'click #save-user-loggedin': 'loggedInBooking',
+      'click #mobin' : 'loggedInBooking',
+      'click #mobout': 'saveUser',
+      'click #save-user-notloggedin': 'saveUser'
+
+
     })
-
     this.view;
-
+    this.myNewBooking;
     this.stepCounter = 1;
-    this.regPage = this.toggleRegPage();
+    this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
     //this.bookingConfirm = new BookingConfirm({bookingPage: this});
     this.bookingConfirm = new BookingConfirm();
-    this.userLogin = new UserLogin();
+    BookingPage.current = this;
+    //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
 
@@ -33,22 +39,33 @@ class BookingPage extends Component {
   change(selectedView) {
     console.log(selectedView)
     this.view = selectedView;
+    this.resetCount();
     this.render()
   }
-  async toggleRegPage() {
-    if (!((await Login.find()).error)) {
-      this.regPage = new Button();
-    } else {
-      this.regPage = new RegPage();
+
+
+  
+
+
+
+  async saveUser() {
+    if ($('#save-user-notloggedin').hasClass('disabled') || $('#mobout').hasClass('disabled')) {
+      return;
     }
-    this.render();
+    await this.bookTicket();
+    await this.regPage.saveUserToDb();
+    await this.addUserToBooking()
+   
+
   }
+
+
   async mount() {
     let id = this.routeParts[0];
     this.view = await View.find(id);
     Object.assign(this, this.view._props);
     this.render();
-
+    this.resetCount();
   }
 
   countUp() {
@@ -58,10 +75,11 @@ class BookingPage extends Component {
     this.dataChanges();
     this.wizardTextChanges();
   }
+
   countDown() {
     this.stepCounter--;
     if (this.stepCounter < 1) {
-      App.moviesAndTrailersPage.changeVal();
+      // App.moviesAndTrailersPage.changeVal();
       this.stepCounter = 1
     }
     this.render();
@@ -105,20 +123,17 @@ class BookingPage extends Component {
     this.render();
   }
 
+
   async bookTicket() {
-
-    let getTheUser = await User.find(`.findOne({firstName: 'vdsav'})`);
-    //console.log(getTheUser);
-
-    let myNewBooking = await new Booking({
+    this.myNewBooking = await new Booking({
       adults: this.pricePage.adults,
       kids: this.pricePage.kids,
       seniors: this.pricePage.seniors,
-      user: getTheUser._id,
-      seats: this.bookedSeats,
-      view: this.view
+      view: this.view,
+      seats: this.bookedSeats
     })
-    await myNewBooking.save();
+    await this.myNewBooking.save();
+    this.regPage.newBooking.push(this.myNewBooking)
 
     //console.log(myNewBooking);
     //console.log(myNewBooking.bookingId);
@@ -133,12 +148,76 @@ class BookingPage extends Component {
 
   }
 
+  smoothLogIn() {
+    this.stepCounter = this.stepCounter;
+    this.render();
+  }
+
+  smoothLogOut() {
+    if (App.loggedIn) {
+      App.loggedIn = false;
+    }
+    this.resetCount();
+    this.render();
+  }
+
+  async addUserToBooking() {
+    let putUser = await Booking.find(`.findOneAndUpdate(
+      {_id: '${this.myNewBooking._id}' },
+      {  "$set": {
+        "user": '${this.regPage.userDone._id}'
+    }
+    },
+      function(err,result){
+          if (!err) {
+              console.log(result);
+          }
+      })`);
+
+      this.countUp();
+  }
 
 
+  async loggedInBooking() {
+    this.logg = await Login.find();
+    this.email = this.logg.email;
+
+    this.loggedIn = await User.find(`.find(
+   {email: '${this.email}'})`)
+
+    let getTheUser = await User.find(`.find({email:'${this.email}'})`);
+
+    let userBooking = await new Booking({
+      adults: this.pricePage.adults,
+      kids: this.pricePage.kids,
+      seniors: this.pricePage.seniors,
+      user: getTheUser[0]._id,
+      seats: this.bookedSeats,
+      view: this.view
+    })
+    await userBooking.save();
+
+    let loggedInUser = await User.find(`.findOneAndUpdate({email:'${this.email}' },
+      {  "$addToSet": {
+        "bookings": '${userBooking._id}'
+    }
+  },
+      function(err,result){
+          if (!err) {
+              console.log(result);
+          }
+      })`);
+
+    // let populatedBooking = await Booking.find(`.findOne({_id:'${userBooking._id}'})
+    // .populate('view')
+    // .populate('user')
+    // .exec()
+    // `);
+
+    this.countUp();
 
 
+  }
 
 
 }
-
-

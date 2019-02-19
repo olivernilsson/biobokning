@@ -12,6 +12,14 @@
     <div class="mobile-buttons">
         <button id="mobback" type="button" class="align-self-center btn btn-light">${this.buttonBackText}</button>
         <button id="mobforward" type="button" class="align-self-center btn btn-light ">${this.buttonForwardText}</button>
+
+
+
+        <button id="mobback" type="button" class="align-self-center btn ">Bakåt</button>
+        ${this.stepCounter === 3 ? `<button id="${App.loggedIn ? 'mobin' : 'mobout' }"
+            type="submit" class="submit-forwardmobile align-self-center btn  
+        ${App.loggedIn ? 'blinker': 'disabled'}">Slutför bokningen</button> ` : `<button id="mobforward" type="button"
+            class="align-self-center btn btn-light">Framåt</button>`}
     </div>
 
     <div class="pagewrap ">
@@ -21,10 +29,25 @@
 
         ${this.stepCounter === 1 ? this.pricePage : ''}
         ${this.stepCounter === 2 ? this.salonPage : ''}
-        ${this.stepCounter === 3 ? this.regPage : ''}
         ${this.stepCounter === 4 ? this.bookingConfirm : ''}
+        ${this.stepCounter === 3 ? (App.loggedIn ? `
+        <div class="demo booking-btn">
+            <div class="booking-btn-card">
+                <h2 class="h2-booking-btn-topp">Kära kund,</h2><br>
+                <h2 class="h2-booking-btn-bottom">för att bekräfta din bokning </h2><br>
+                <h2 class="h2-booking-btn-bottom">vänligen klicka på boka.</h2>
+            </div>
+        </div>
+        ` : this.regPage) : ''}
 
-        <button id="forward" type="button" class="btn btn-light">Framåt</button>
+        ${this.stepCounter === 3 ? `<button id="${App.loggedIn? 'save-user-loggedin' : 'save-user-notloggedin' }"
+        type="submit" class="done-btn btn  btn-sm ${App.loggedIn ? 'blinker': 'disabled'}">Slutför
+        bokningen</button>  ` : `<button id="forward" type="button" class="btn btn-light">Framåt</button>`}
+
+
+ 
+       
+
 
 
     </div>
