@@ -1,22 +1,26 @@
 class BookingConfirm extends Component {
 
     constructor(){
-        super();    
+
+        super();  
+        this.seats=[];   
     }
-/*
-    renderThaShiaad(){
-        this.render();
-        console.log(this.bookingId);
+
+    async showBooking(booking){
+
+        this.booking = booking;
+
+        let lengthOfSeats = this.booking.seats.length;  
+        for(let x=0; x<lengthOfSeats; x++){
+            
+            this.seats.push(this.booking.seats[x]);      
+        }
+
+        this.totalPrice= this.booking.adults*120+ this.booking.kids*75+ this.booking.seniors*90;
         console.log(this.totalPrice);
-        console.log(this.seats);
-        console.log(this.film);
-        console.log(this.date);
-        console.log(this.time);
-        console.log(this.salon);
-        console.log(this.adults);
-        console.log(this.kids);
-        console.log(this.seniors);
         
-    }*/
+        this.render();
+    }
+
   
 }
