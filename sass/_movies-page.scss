@@ -90,6 +90,7 @@
   
    .viewings-list{
     padding-left: 6%;
+    padding-right: 6%;
     overflow: hidden;
    }
   
@@ -138,7 +139,7 @@
     .viewings-table{
 
       table-layout: fixed; 
-      width: 80%;
+      width: 100%;
       
     }
 
@@ -158,6 +159,9 @@
       color: gray;
       font-size: 20px;
       padding-bottom: 15px;
+      padding-top: 15px;
+      border-bottom: solid 1px;
+      width: 100%;
     }
 
     .view-select:hover{
