@@ -5,7 +5,7 @@ class MyBookings extends Component {
         //this.bokings = [];
         this.htmlresult = "";
         this.userBookings = []
-        this.getBookingsHistory();
+        this.getBookingsHistory(); 
 
     }
 
@@ -47,19 +47,18 @@ class MyBookings extends Component {
 
             }
             this.seatmod = this.seat.join('-');
-
             this.htmlresult += `
 
            <div class="card">
            <div class="card-header" id="${view._id}">
              
-               <button class="btn btn-link booking-button" data-toggle="collapse" data-target="#${view.bookingId}" aria-expanded="false" aria-controls="${view.bookingId}">
+               <button class="btn btn-link booking-button" data-toggle="collapse" data-target="#B${view.bookingId}" aria-expanded="false" aria-controls="B${view.bookingId}">
                 <h4 class="booking-title"> Bokning: ${view.bookingId} -  Datum : ${view.view.date}</h4>
                </button>
 
            </div>
        
-           <div id="${view.bookingId}" class="collapse" aria-labelledby="${view._id}" data-parent="#my-bookings">
+           <div id="B${view.bookingId}" class="collapse" aria-labelledby="${view._id}" data-parent="#my-bookings">
              <div class="card-body">
              <p class="booking-film">Film: ${view.view.film}</p>
               <p class="booking-salon"> Salong: ${view.view.auditorium}</p>

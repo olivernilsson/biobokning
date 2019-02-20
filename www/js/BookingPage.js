@@ -31,9 +31,9 @@ class BookingPage extends Component {
 
     this.buttonBackText = 'Till start';
     this.buttonForwardText = 'Välj plats/platser';
-    this.disabled = false;
-    this.gonext=false;
 
+    this.peopleCounter = 0;
+    this.disabledButtonPrice();
   }
 
 
@@ -75,21 +75,38 @@ class BookingPage extends Component {
     this.resetCount();
   }
 
-  countUp() {
+
+
+
+  disabledButtonPrice() {
     this.pricePage.checkCount();
+
     if (this.pricePage.total < 1) {
-      this.disabled = true;
-      return;
+      this.peopleCounter = 0;
+      console.log('1')
+     
     }
-    if (this.stepCounter > 5) { this.stepCounter = 5; }
-    if (this.stepCounter === 5) {
+
+    if (this.pricePage.total>0) {
+      console.log('2')
+      this.peopleCounter++;
+      
+    }
+    this.render();
+  }
+
+
+
+  countUp() {
+
+    if (this.stepCounter > 3) {   
       Router.goto('/')
-      this.resetCount();
-    }
-
-    this.gonext = true;
+    this.render()
+  this.resetCount();
+  this.resetPeople();
+}
+   
     this.stepCounter++;
-
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
@@ -98,8 +115,7 @@ class BookingPage extends Component {
   }
 
   countDown() {
-    this.pricePage.resetCount();
-    this.resetPeople();
+    this.peopleCounter=0;
     this.stepCounter--;
     if (this.stepCounter < 1) {
       Router.goto('/')
@@ -145,7 +161,7 @@ class BookingPage extends Component {
     }
     if (this.stepCounter == 4) {
       this.buttonBackText = '';
-      this.buttonForwardText = 'Tillbaks till <br>startsidan';
+      this.buttonForwardText = 'Tillbaka till <br>startsidan';
     }
     this.render();
   }
@@ -180,10 +196,12 @@ class BookingPage extends Component {
     this.pricePage.kids = 0;
     this.pricePage.seniors = 0;
     this.totalPersons;
-    this.bookedSeats = [];
+    this.bookedSeats.length=0;
+    this.bookingConfirm.seats.length=0;
   }
 
   resetCount() {
+    this.peopleCounter=0;
     this.stepCounter = 1;
     this.totalPersons;
     this.bookedSeats = [];

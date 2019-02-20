@@ -1,6 +1,6 @@
 class PricePage extends Component {
 
-    constructor(bookingPage) {
+    constructor() {
         super();
         this.addEvents({
             'click button': 'count'
@@ -9,20 +9,20 @@ class PricePage extends Component {
         this.kids = 0;
         this.seniors = 0;
         this.total = this.adults + this.kids + this.seniors;
-       this.bookingPage = bookingPage;
+        this.counter = false;
     }
 
-    resetCount(){
-        this.total=0;
-    }
-
-
-    checkCount(){
+    checkCount() {
         this.total;
+        console.log(this.total)
+    }
+
+
+    resetCount() {
+        this.total = 0;
     }
 
     count(event) {
-        
         let eventish = $(event.target).attr('class');
 
         if (eventish == 'AdultsUp') {
@@ -31,7 +31,7 @@ class PricePage extends Component {
         }
         else if (eventish == 'AdultsDown') {
             if (this.adults < 1) { return; }
-            this.total--
+            this.total--;
             this.adults--;
         }
         else if (eventish == 'KidsUp') {
@@ -52,7 +52,7 @@ class PricePage extends Component {
             this.seniors--;
             this.total--
         }
-
+        App.bookingPage.disabledButtonPrice();
         this.render();
     }
 
