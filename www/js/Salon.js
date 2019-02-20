@@ -12,19 +12,28 @@ class Salon extends Component {
     
     this.row1 = [];
     this.row2 = [];
-    this.row3 = [];
+    this.row3 = []; 
     this.row4 = [];
     this.row5 = [];
     this.row6 = [];
     this.row7 = [];
     this.row8 = [];
     
-    //this.seatHoverEffect();
+    this.seatHoverEffect();
   } 
   
   click(){
     $(document).ready(function(){
       $('.seat').trigger('click');
+      let nbrSeats = BookingPage.current.totalPersons;
+      $(document).ready(function(){
+        $('.seat').hover(function() {
+          let a = parseInt(this.id, 10);
+          for(let i = 0; i < nbrSeats; i++){
+            $(`#${a+i}`).toggleClass("blink_me");
+          } 
+        });
+      });
     });
   }
 
@@ -41,19 +50,19 @@ class Salon extends Component {
     return;
   }
 
-  // seatHoverEffect(){
-  //   setTimeout(function() {
-  //     let nbrSeats = BookingPage.current.totalPersons;
-  //     $(document).ready(function(){
-  //       $('.seat').hover(function() {
-  //         let a = parseInt(this.id, 10);
-  //         for(let i = 0; i < nbrSeats; i++){
-  //           $(`#${a+i}`).toggleClass("blink_me");
-  //         }
-  //       });
-  //     });
-  //   }, 0);
-  // }
+  seatHoverEffect(){
+    $(document).ready(function(){
+      let nbrSeats = BookingPage.current.totalPersons;
+      $(document).ready(function(){
+        $('.seat').hover(function() {
+          let a = parseInt(this.id, 10);
+          for(let i = 0; i < nbrSeats; i++){
+            $(`#${a+i}`).toggleClass("blink_me");
+          }
+        });
+      });
+    });
+  }
 
   //This method searches for the specific view in the DB and recognizes 
   //seats already booked by other users. These seats are then pushed
@@ -78,7 +87,8 @@ class Salon extends Component {
     }    
     //Gives the alreadyBookedSeats a red color.
     for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
-      $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      //$(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      $(`#${this.alreadyBookedSeats[i]}`).addClass("taken-seat");
     }
   }
 
@@ -120,7 +130,8 @@ class Salon extends Component {
       }
       //Colors all already booked seats
       for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
-        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        //$(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        $(`#${this.alreadyBookedSeats[i]}`).addClass("taken-seat");
       }
     }
     
@@ -131,7 +142,8 @@ class Salon extends Component {
       }
       //Colors all already booked seats
       for(let i = 0; i < this.salonSeats.length+1; i++){
-        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        //$(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        $(`#${this.alreadyBookedSeats[i]}`).addClass("taken-seat");
       }
       this.bookedSeats.length = 0;
     }
