@@ -5,7 +5,18 @@
     color: #297373;
     text-decoration: none;
 }
+.no-decoration:focus{
+    text-decoration: none;
+}
 
 .accordion{
     padding: 3.2rem;
+}
+
+.collapse-header{
+    text-align: center;
+}
+
+.card-header{
+    background-color: #033030;
 }
