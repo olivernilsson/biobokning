@@ -78,7 +78,8 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    Salon.current.pushOlderBookedSeatsToArray();   
+    Salon.current.click();   
+    Salon.current.pushOlderBookedSeatsToArray();
   }
 
   countDown() {
@@ -90,7 +91,8 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    Salon.current.pushOlderBookedSeatsToArray();   
+    Salon.current.click();   
+    Salon.current.pushOlderBookedSeatsToArray(); 
   }
 
   dataChanges() {
