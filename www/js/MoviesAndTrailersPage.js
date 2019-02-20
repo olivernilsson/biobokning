@@ -1,21 +1,24 @@
 class MoviesAndTrailersPage extends Component {
-
+  
   constructor() {
     super();
     this.addRoute(/\/movie-details\/(.*)/)
     this.movies = [];
     this.viewings = [];
+    this.youtube = "https://www.youtube.com/embed/";
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click #select-view': 'viewSelect'
+      'click .view-select': 'viewSelect'
     })
 
     this.testlist = [];
-    this.selectedView;
+    this.view;
     this.bookPage = new BookingPage();
     this.choosen = false;
+    this.moviePrint();
   }
+
 
 
 
@@ -30,7 +33,7 @@ class MoviesAndTrailersPage extends Component {
     this.testlist.length = 0;
     let id = this.routeParts[0];
     let movie = await Film.find(id);
-    Object.assign(this, movie._props);
+    await Object.assign(this, movie._props);
     document.title = 'Film:' + this.title;
     this.movie = movie;
     this.title = movie.title;
@@ -42,21 +45,9 @@ class MoviesAndTrailersPage extends Component {
       this.testlist.push(view);
     }
     this.render();
-
-  
     
     
   }
-
-
-
-
-  changeVal() {
-    this.choosen = false;
-    this.render();
-  }
-
-
 
 
   movieSelect(e) {
@@ -69,21 +60,15 @@ class MoviesAndTrailersPage extends Component {
     Router.goto(`/movie-details/${id}`)
     this.render();
     this.viewingsfind(this.movie)
-
   }
-
 
   viewSelect(e) {
     let id = $(e.currentTarget).attr('data-view-id');
     let view = this.viewings.filter(view => view._id === id)[0];
     this.view = view;
-    this.selectedView = view;
-    this.choosen = true;
-    console.log(this.choosen)
-    this.bookPage.change(view);
+    console.log('körs')
+    this.bookPage.change(this.view);
     this.render();
-
-
   }
 
   async viewingsfind(movie) {
@@ -102,6 +87,10 @@ class MoviesAndTrailersPage extends Component {
 
   }
 
-
-}
+  showTrailer(){
+  
+    this.trailer = this.movie.youtubeTrailers[0];
+    }    
+  }
+  
 

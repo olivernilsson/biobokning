@@ -1,8 +1,8 @@
 class PageContent extends Component {
 
-  constructor(){
+  constructor() {
     super();
-   
+
     this.startPage = new StartPage();
     this.aboutPage = new AboutPage();
     this.missingPage = new MissingPage();
@@ -13,9 +13,9 @@ class PageContent extends Component {
     this.moviesAndTrailersPage = new MoviesAndTrailersPage();
     App.moviesAndTrailersPage = this.moviesAndTrailersPage;
     this.userRegistration = new UserRegistration();
-  
+    this.bookingPage = new BookingPage();
 
   }
-  
-  
+
+
 }

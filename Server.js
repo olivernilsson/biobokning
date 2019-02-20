@@ -43,33 +43,26 @@ module.exports = class Server {
       db.once('open', () => resolve('Connected to DB'));
     });
   }
-
-  testConsole() {
-    var found = db.collection('movies').find();
-    found.each(function (err, doc) {
-      console.log(doc);
-    });
-  }  
  
-  async addFilms() { 
+  async addFilms() {
     let Film = require('./models/Film');
     let films = require('./www/json/movies.json');
 
-    for(let data of films) {
+    for (let data of films) {
       let film = new Film(data);
       await film.save();
     }
-  } 
+  }
 
   async addSalons() {
     let Salon = require('./models/Salon');
     let salons = require('./www/json/salons.json');
 
-    for(let data of salons) {
+    for (let data of salons) {
       let salon = new Salon(data);
       await salon.save();
     }
-  } 
+  }
 
   dropCollection() {
     db.collection('movies').drop();
@@ -95,7 +88,7 @@ module.exports = class Server {
       store: new MongoStore({
         mongooseConnection: db
       })
-    })); 
+    }));
 
     // Set keys to names of rest routes
     const models = {
@@ -105,7 +98,7 @@ module.exports = class Server {
       views: require('./models/View'),
       bookings: require('./models/Booking')
 
- 
+
     };
 
     app.get('/autoload-js-and-templates', (req, res) => {
@@ -141,6 +134,6 @@ module.exports = class Server {
       if (req.url === '/jsonflex.js' || req.url == '/json-save') { next(); return; }
       res.sendFile(path.join(__dirname, '/www/index.html'));
     });
-  } 
-   
+  }
+
 }    
