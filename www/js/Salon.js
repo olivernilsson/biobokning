@@ -71,8 +71,10 @@ class Salon extends Component {
       }
     }    
     //Gives the alreadyBookedSeats a red color.
-    for(let i = 0; i < this.alreadyBookedSeats.length; i++){
+    for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
       $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      console.log('hello')
+      console.log('najj')
     }
   }
 
@@ -107,14 +109,14 @@ class Salon extends Component {
       for(let j = 0; j < this.salonSeats.length+1; j++){
         $(`#${j}`).css("background-color", "");
       }
-      //Colors all already booked seats
-      for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
-        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
-      }
       //Colors the newly picked seats
       for(let i = 0; i < this.nbrOfPickedSeats; i++){
         this.bookedSeats.push(this.seatNr+i);
         $(`#${this.seatNr+i}`).css("background-color", "rgb(128, 247, 128)");
+      }
+      //Colors all already booked seats
+      for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
+        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
       }
     }
     
