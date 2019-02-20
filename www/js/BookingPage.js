@@ -101,8 +101,9 @@ class BookingPage extends Component {
 
     if (this.stepCounter > 3) {   
       Router.goto('/')
+   this.stepCounter=1;
     this.render()
-  this.resetCount();
+    this.resetCount();
   this.resetPeople();
 }
    
