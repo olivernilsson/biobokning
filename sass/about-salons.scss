@@ -2,6 +2,24 @@
     background-color: #1F2833;
 }
 .no-decoration:hover{
-    color: #297373;
     text-decoration: none;
+}
+.no-decoration:focus{
+    text-decoration: none;
+}
+
+.accordion{
+    padding: 3.2rem;
+}
+
+.collapse-header{
+    text-align: center;
+}
+
+.card-header{
+    background-color: #16574e;
+}
+
+.card-body{
+    color: #C5C6C7;
 }
