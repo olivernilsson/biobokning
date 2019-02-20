@@ -40,6 +40,7 @@ class BookingPage extends Component {
     console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
+
     this.render()
 
     Salon.current.chosenView = this.view._id;
@@ -77,6 +78,7 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
+    Salon.current.pushOlderBookedSeatsToArray();   
   }
 
   countDown() {
@@ -88,15 +90,16 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
+    Salon.current.pushOlderBookedSeatsToArray();   
   }
 
   dataChanges() {
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      console.log(this.salonPage.nbrOfPickedSeats);  
-      Salon.current.auditoriumSelector();  
-      Salon.current.pushOlderBookedSeatsToArray();  
+      console.log(this.salonPage.nbrOfPickedSeats);
+      Salon.current.auditoriumSelector(); 
+      Salon.current.pushOlderBookedSeatsToArray();   
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
@@ -217,7 +220,7 @@ class BookingPage extends Component {
       {  "$addToSet": {
         "bookings": '${userBooking._id}'
     }
-  },
+  }, 
       function(err,result){
           if (!err) {
               console.log(result);
