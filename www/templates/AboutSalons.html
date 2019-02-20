@@ -1,11 +1,69 @@
-<div>
-    <h2>Våran Salonger</h2>
-    
-    <h4>Lilla Salongen</h4>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, natus? Illum, veniam quo! Hic deserunt pariatur cumque eligendi rerum ipsam delectus, quod doloremque assumenda sint dolorem ratione aut neque ad.</p>
-    <h4>Stora Salongen</h4>
-    <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores quam ducimus odio excepturi magnam natus fugit maiores suscipit facilis mollitia repellat, nisi ab quidem vero delectus iste facere sapiente fugiat!</P>
-    <h4>Mellan Salongen</h4>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam commodi suscipit mollitia quam corrupti nulla, temporibus harum deleniti sint, reprehenderit error! Libero labore unde laudantium facere neque commodi saepe culpa!</p>
-
+<section>
+  <div class="col-md-24">
+    <div class="row p-2">
+        <h2 class="pb-2">Våran Salonger</h2>
+    </div>
   </div>
+   
+
+    <div class="accordion" id="accordion1">
+
+<div class="row p-2">
+  <div class=" col-md-8">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0 collapse-header">
+          <button class="btn btn-link no-decoration" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Stora Salongen 
+          </button>
+        </h2>
+      </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+      <div class="card-body">
+          <p>Här visar vi alla premiär filmer för att alla ska kunna få en bra upplevelse av alla filmer som släpps. Med det bästa surround ljudet och exclusiva sittplatser så kommer ni inte bli besvikna!</p>
+          <p>Total sittplatser (81)</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class=" col-md-8">
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0 collapse-header">
+        <button class="btn btn-link collapsed no-decoration" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Mellan Salongen
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion1">
+      <div class="card-body">
+        <p>Visar de senaste filmerna som folk vill se men kunde inte få premiär biljetter, med bra surround ljud och sittplatser med relativt många sittplatser!</p>
+        <p>Total sittplatser (71)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-8">
+     <div class="card">
+         <div class="card-header" id="headingThree">
+           <h2 class="mb-0 collapse-header">
+             <button class="btn btn-link collapsed no-decoration" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+               Lilla Salongen
+             </button>
+           </h2>
+         </div>
+         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion1">
+           <div class="card-body">
+             <p>Liten salong med få sittplatser än de andra salongerna vi har. används när folk har missat filmer som vi tyvärr inte kommer visa mer på våran salonger!</p>
+              <p>Total sittplatser (50)</p>
+            </div>
+         </div>
+       </div>
+ </div>
+</div>
+  
+</div>
+</section>

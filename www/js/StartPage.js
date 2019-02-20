@@ -19,7 +19,7 @@ class StartPage extends Component {
   }
 
 
-
+ 
   async getMovies() {
     this.movies = await Film.find();
  

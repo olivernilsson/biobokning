@@ -5,10 +5,12 @@ class MoviesAndTrailersPage extends Component {
     this.addRoute(/\/movie-details\/(.*)/)
     this.movies = [];
     this.viewings = [];
+    this.youtube = "https://www.youtube.com/embed/";
     this.moviePrint();
     this.addEvents({
       'click .dropdown-item': 'movieSelect',
-      'click .view-select': 'viewSelect'
+      'click .view-select': 'viewSelect',
+      'click .trailer-close': 'trailerClose'
     })
 
     this.testlist = [];
@@ -44,8 +46,8 @@ class MoviesAndTrailersPage extends Component {
       this.testlist.push(view);
     }
     this.render();
-    
-    
+
+
   }
 
 
@@ -86,6 +88,20 @@ class MoviesAndTrailersPage extends Component {
 
   }
 
+  showTrailer() {
 
+    this.trailer = this.movie.youtubeTrailers[0];
+  }
+
+  trailerClose() {
+    //Stop Video
+    console.log("pausing..")
+    $('#trailermodal').on('hidden.bs.modal', function (e) {
+      // do something...
+      console.log("pausing..again")
+      $('#trailermodal iframe').attr("src", $('#trailermodal iframe').attr("src"));
+
+    });
+  }
 }
 
