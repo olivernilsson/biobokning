@@ -24,6 +24,7 @@ class LoginModal extends Component{
     UserLogin.current.hideModal();
     NavBar.current.toggleRegisterButton();
     BookingPage.current.smoothLogIn();
+    Salon.current.click();
   }
   
   // Notifies the user if login attempts failed 
