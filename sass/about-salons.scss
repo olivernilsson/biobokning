@@ -2,7 +2,6 @@
     background-color: #1F2833;
 }
 .no-decoration:hover{
-    color: #297373;
     text-decoration: none;
 }
 .no-decoration:focus{
@@ -18,5 +17,9 @@
 }
 
 .card-header{
-    background-color: #033030;
+    background-color: #16574e;
+}
+
+.card-body{
+    color: #C5C6C7;
 }
