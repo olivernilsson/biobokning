@@ -33,6 +33,7 @@ class BookingPage extends Component {
     this.buttonForwardText = 'Välj plats/platser';
 
     this.peopleCounter = 0;
+    this.disableBackButton = 1;
     this.disabledButtonPrice();
   }
 
@@ -83,12 +84,10 @@ class BookingPage extends Component {
 
     if (this.pricePage.total < 1) {
       this.peopleCounter = 0;
-      console.log('1')
      
     }
 
     if (this.pricePage.total>0) {
-      console.log('2')
       this.peopleCounter++;
       
     }
@@ -98,7 +97,10 @@ class BookingPage extends Component {
 
 
   countUp() {
-
+    //Ifall vi vill blockera bakåt
+// if(this.stepCounter===2){
+// this.disableBackButton=0;
+// }
     if (this.stepCounter > 3) {   
       Router.goto('/')
    this.stepCounter=1;
@@ -116,7 +118,11 @@ class BookingPage extends Component {
   }
  
   countDown() {
-    this.peopleCounter=0;
+
+    //ifall vi vill blockera framåt när man väl har gått bakåt
+  // if(this.stepCounter>2){
+  //   this.peopleCounter=0;
+  // }
     this.stepCounter--;
     if (this.stepCounter < 1) {
       Router.goto('/')

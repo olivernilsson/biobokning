@@ -5,7 +5,7 @@ class MyBookings extends Component {
         //this.bokings = [];
         this.htmlresult = "";
         this.userBookings = []
-        this.getBookingsHistory(); 
+        this.getBookingsHistory();
 
     }
 

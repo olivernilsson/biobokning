@@ -14,12 +14,12 @@
         <button id="mobback" type="button" class="align-self-center btn ">${this.buttonBackText}</button>
         ${this.stepCounter === 3 ? `<button id="${App.loggedIn ? 'mobin' : 'mobout' }"
             type="submit" class="submit-forwardmobile align-self-center btn  
-        ${App.loggedIn ? 'blinker': 'disabled'}">Slutför bokningen</button> ` : `<button id="mobforward" type="button" ${this.peopleCounter === 0? ' disabled' : ' '} class="align-self-center btn btn-light">${this.buttonForwardText}</button>`}
+        ${App.loggedIn ? 'blinker': 'disabled'}">Slutför bokningen</button> ` : `<button id="mobforward" type="button" ${this.peopleCounter === 0 ? ' disabled' : ' '} class="align-self-center btn btn-light">${this.buttonForwardText}</button>`}
     </div>
 
     <div class="pagewrap ">
 
-       ${this.stepCounter === 4 ? '': `<button id="backtext" type="button" class="btn btn-light">${this.buttonBackText}</button>` } 
+       ${this.stepCounter === 4 ? '': `<button id="backtext" ${this.disableBackButton === 0 ? ' disabled' : ' '}  type="button" class="btn btn-light">${this.buttonBackText}</button>` } 
 
 
         ${this.stepCounter === 1 ? this.pricePage : ''}
