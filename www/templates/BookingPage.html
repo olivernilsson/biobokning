@@ -20,7 +20,7 @@
 
     <div class="pagewrap ">
 
-        <button id="backtext" type="button" class="btn btn-light">${this.buttonBackText}</button>
+       ${this.stepCounter === 4 ? '': `<button id="backtext" type="button" class="btn btn-light">${this.buttonBackText}</button>` } 
 
 
         ${this.stepCounter === 1 ? this.pricePage : ''}
@@ -38,7 +38,7 @@
 
         ${this.stepCounter === 3 ? `<button id="${App.loggedIn? 'save-user-loggedin' : 'save-user-notloggedin' }"
         type="submit" class="done-btn btn  btn-sm ${App.loggedIn ? 'blinker': 'disabled'}">Slutför
-        bokningen</button>  ` : `<button id="forward" type="button" class="btn btn-light">${this.buttonForwardText}</button>`}
+        bokningen</button>  ` : `<button id="forward" type="button" ${this.disabled ? ' disabled' : ' '}   class=" ${this.gonext? ' blinker' : ''} btn btn-light">${this.buttonForwardText}</button>`}
 
 
  
