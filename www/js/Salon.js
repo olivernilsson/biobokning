@@ -3,7 +3,7 @@ class Salon extends Component {
   constructor(){
     super();
     this.addEvents({
-      'click .seat' : 'toggleSeat'    
+      'click .seat' : 'toggleSeat'
     });
     Salon.current = this;
     this.bookedSeats = []; 
@@ -19,9 +19,15 @@ class Salon extends Component {
     this.row7 = [];
     this.row8 = [];
     
-    this.seatHoverEffect();
+    //this.seatHoverEffect();
   } 
   
+  click(){
+    $(document).ready(function(){
+      $('.seat').trigger('click');
+    });
+  }
+
   auditoriumSelector(){
     if(this.auditorium === 'Lilla Salongen'){
       this.showSmallSalon();
@@ -35,19 +41,19 @@ class Salon extends Component {
     return;
   }
 
-  seatHoverEffect(){
-    setTimeout(function() {
-      let nbrSeats = BookingPage.current.totalPersons;
-      $(document).ready(function(){
-        $('.seat').hover(function() {
-          let a = parseInt(this.id, 10);
-          for(let i = 0; i < nbrSeats; i++){
-            $(`#${a+i}`).toggleClass("blink_me");
-          }
-        });
-      });
-    }, 0);
-  }
+  // seatHoverEffect(){
+  //   setTimeout(function() {
+  //     let nbrSeats = BookingPage.current.totalPersons;
+  //     $(document).ready(function(){
+  //       $('.seat').hover(function() {
+  //         let a = parseInt(this.id, 10);
+  //         for(let i = 0; i < nbrSeats; i++){
+  //           $(`#${a+i}`).toggleClass("blink_me");
+  //         }
+  //       });
+  //     });
+  //   }, 0);
+  // }
 
   //This method searches for the specific view in the DB and recognizes 
   //seats already booked by other users. These seats are then pushed
@@ -129,7 +135,7 @@ class Salon extends Component {
       }
       this.bookedSeats.length = 0;
     }
-    console.log(this.bookedSeats) //To see the booked seats.
+    //console.log(this.bookedSeats) //To see the booked seats.
   } 
   
   async showSmallSalon(){
