@@ -73,8 +73,6 @@ class Salon extends Component {
     //Gives the alreadyBookedSeats a red color.
     for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
       $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
-      console.log('hello')
-      console.log('najj')
     }
   }
 
