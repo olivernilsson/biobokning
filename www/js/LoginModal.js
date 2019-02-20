@@ -19,18 +19,15 @@ class LoginModal extends Component{
 
     await login.save()
     
-    if( !login.loggedIn ) { return this.rewriteLogin(login)} 
- 
+    if( !login.loggedIn ) { return this.validatesLogin(login)} 
+    App.loggedIn = true;
     UserLogin.current.hideModal();
     NavBar.current.toggleRegisterButton();
-    // Hard reload
-    for(let i=0; i<2; i++){
-      window.location.reload();
-    }
+    BookingPage.current.smoothLogIn();
   }
   
   // Notifies the user if login attempts failed 
-  rewriteLogin(login) {
+  validatesLogin(login) {
     if( login.error === "No such user!") { this.baseEl.find('#wrong-email').show() }
       else { this.baseEl.find('#wrong-email').hide() }
     if( login.error === "The password does not match!") { this.baseEl.find('#wrong-password').show() }
