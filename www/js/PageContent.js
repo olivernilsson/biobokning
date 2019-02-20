@@ -15,6 +15,7 @@ class PageContent extends Component {
     App.moviesAndTrailersPage = this.moviesAndTrailersPage;
     this.userRegistration = new UserRegistration();
     this.bookingPage = new BookingPage();
+    App.bookingPage = this.bookingPage;
 
 
   }

@@ -14,13 +14,12 @@
         <button id="mobback" type="button" class="align-self-center btn ">${this.buttonBackText}</button>
         ${this.stepCounter === 3 ? `<button id="${App.loggedIn ? 'mobin' : 'mobout' }"
             type="submit" class="submit-forwardmobile align-self-center btn  
-        ${App.loggedIn ? 'blinker': 'disabled'}">Slutför bokningen</button> ` : `<button id="mobforward" type="button"
-            class="align-self-center btn btn-light">${this.buttonForwardText}</button>`}
+        ${App.loggedIn ? 'blinker': 'disabled'}">Slutför bokningen</button> ` : `<button id="mobforward" type="button" ${this.peopleCounter === 0 ? ' disabled' : ' '} class="align-self-center btn btn-light">${this.buttonForwardText}</button>`}
     </div>
 
     <div class="pagewrap ">
 
-        <button id="backtext" type="button" class="btn btn-light">${this.buttonBackText}</button>
+       ${this.stepCounter === 4 ? '': `<button id="backtext" ${this.disableBackButton === 0 ? ' disabled' : ' '}  type="button" class="btn btn-light">${this.buttonBackText}</button>` } 
 
 
         ${this.stepCounter === 1 ? this.pricePage : ''}
@@ -31,14 +30,14 @@
             <div class="booking-btn-card">
                 <h2 class="h2-booking-btn-topp">Kära kund,</h2><br>
                 <h2 class="h2-booking-btn-bottom">för att bekräfta din bokning </h2><br>
-                <h2 class="h2-booking-btn-bottom">vänligen klicka på boka.</h2>
+                <h2 class="h2-booking-btn-bottom">vänligen klicka på slutför bokning.</h2>
             </div>
         </div>
         ` : this.regPage) : ''}
 
         ${this.stepCounter === 3 ? `<button id="${App.loggedIn? 'save-user-loggedin' : 'save-user-notloggedin' }"
         type="submit" class="done-btn btn  btn-sm ${App.loggedIn ? 'blinker': 'disabled'}">Slutför
-        bokningen</button>  ` : `<button id="forward" type="button" class="btn btn-light">${this.buttonForwardText}</button>`}
+        bokningen</button>  ` : `<button id="forward" type="button" ${this.peopleCounter === 0? ' disabled' : ' '}   class="btn btn-light">${this.buttonForwardText}</button>`}
 
 
  
