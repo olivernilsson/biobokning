@@ -11,26 +11,35 @@
 
 .boxdesign{
   height: 100px;
-  width: 450px;
+  width: 400px;
 border: 1px solid white;
 border-radius: 10%;
 
 }
 
+.price-page-total{
+  font-style: italic;
+  font-family: 'Quicksand', sans-serif;
+}
+
 
 
 .price{
+  font-family: 'Quicksand', sans-serif;
   font-style: italic;
   font-size: 14px;
+  line-height: 5px;
 }
 
 .outer-box{
-  margin-bottom: 40px;
+  font-family: 'Titillium Web', sans-serif;
+  margin-bottom: 20px;
   min-width: 200px;
 
 }
 
 .inner-box{
+
   margin: 0 auto;
   align-items: center;
   max-width: 250px;
@@ -45,17 +54,19 @@ border-radius: 10%;
 }
 
 .count-num{
+  font-family: 'Quicksand', sans-serif;
   font-size: 20px;
 text-align: center;
-  border-radius: 70%;
+  border-radius: 20%;
   height: 100%;
-  background-color: white;
+  background-color: rgb(20, 49, 51);
   min-width: 10px;
   text-align: center;
-  color: black;
+  color: white;
 }
 
 .AdultsDown, .KidsDown, .SeniorsDown{
+  font-family: 'Quicksand', sans-serif;
   cursor: pointer;
   top:0;
   left:0;
@@ -66,11 +77,12 @@ border: none;
   width: 50px;
   height: 100%;
   background-color: rgb(59, 179, 179);
-  border-radius: 50%;
+
  color:white;
 }
 
 .AdultsUp,.KidsUp, .SeniorsUp{
+  font-family: 'Quicksand', sans-serif;
   cursor: pointer;
   top:0;
   right:0;
@@ -81,6 +93,6 @@ border: none;
   width: 50px;
   height: 50px;
   background-color: rgb(59, 179, 179);
-  border-radius: 50%;
+
  color:white;
 }

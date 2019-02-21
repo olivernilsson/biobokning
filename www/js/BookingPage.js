@@ -41,10 +41,9 @@ class BookingPage extends Component {
 
 
   change(selectedView) {
-    console.log(selectedView)
+    //console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
-
     this.render()
 
     Salon.current.chosenView = this.view._id;
@@ -103,6 +102,7 @@ class BookingPage extends Component {
 // }
     if (this.stepCounter > 3) {   
       Router.goto('/')
+      
    this.stepCounter=1;
     this.render()
     this.resetCount();
@@ -127,6 +127,7 @@ class BookingPage extends Component {
     if (this.stepCounter < 1) {
       Router.goto('/')
       this.stepCounter = 1
+      this.pricePage.total=0;
     }
 
     this.render();
@@ -140,13 +141,13 @@ class BookingPage extends Component {
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      console.log(this.salonPage.nbrOfPickedSeats);
+      //console.log(this.salonPage.nbrOfPickedSeats);
       Salon.current.auditoriumSelector();
       Salon.current.pushOlderBookedSeatsToArray();
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
-      console.log(this.bookedSeats);
+      //console.log(this.bookedSeats);
       //$("#mobforward").addClass("bookTicket");
     }
 
@@ -199,6 +200,7 @@ class BookingPage extends Component {
   }
 
   resetPeople() {
+    this.pricePage.total=0;
     this.pricePage.adults = 0;
     this.pricePage.kids = 0;
     this.pricePage.seniors = 0;
@@ -208,6 +210,7 @@ class BookingPage extends Component {
   }
 
   resetCount() {
+    this.pricePage.total=0;
     this.peopleCounter=0;
     this.stepCounter = 1;
     this.totalPersons;
