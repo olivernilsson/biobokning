@@ -1,5 +1,6 @@
-class Router {
 
+class Router {
+ 
   constructor(mainInstance){
     // The mainInstance is the object that should
     // be rerendered on route changes
@@ -7,8 +8,9 @@ class Router {
     this.listenToATagClicks();
     this.listenToBackForward();
     this.setPath(location.pathname);
+    Router.instance = this;
   }
-
+ 
   listenToATagClicks(){
     let that = this;
     $(document).on('click', 'a', function(e){
@@ -22,29 +24,45 @@ class Router {
       }
     });
   }
-
+ 
   listenToBackForward(){
     window.addEventListener("popstate", () => {
       this.setPath(location.pathname);
       this.mainInstance.render();
     });
   }
-
+ 
   setPath(path){
-    Router.path = Router.routes.includes(path) ? path : '404';
+    for(let route of Router.routes){
+      if(route && route.constructor === RegExp && route.test(path)){
+        Router.path  = route;
+        Router.parts = path.match(route).slice(1);
+      }
+      else if(path === route){
+        Router.path = route;
+      }
+    }
     setTimeout(() => this.setActiveLink(), 0);
   }
-
+ 
   setActiveLink(){
     $('a').removeClass('active');
     $(`a[href="${Router.path}"]`).addClass('active');
   }
-
+ 
+  static goto(path){
+    history.pushState(null, null, path);
+    this.instance.setPath(path);
+    this.instance.mainInstance.render();
+  }
+ 
   static registerRoute(route){
     Router.routes.push(route);
   }
-  
+ 
 }
-
+ 
 // static property
 Router.routes = [];
+ 
+ 

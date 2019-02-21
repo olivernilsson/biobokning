@@ -1,0 +1,82 @@
+.logo{
+    width: 50px;
+    height: 45px;
+}
+
+.nav-link{
+color: #85FFC7;
+border: 1px solid #0B0C10;
+transition: 0.3s;
+}
+
+.nav-link:hover{
+    color: #297373!important;
+    border-bottom: 1px solid #297373;
+}
+.nav-link:active{
+    border-bottom: 1px solid #297373;
+}
+
+.btn-primary:hover{
+    transition: 0.5s;
+    background-color: #297373;
+    border: 1px solid #297373;
+    color: #fff;
+}
+
+.navbar{
+    padding: 1rem;
+    background-color: #0B0C10 ;
+    border-bottom: 2px solid #0b3b32;
+}
+
+.navbar-toggle, .icon-bar {
+    border:1px solid red!important;
+    color: #85FFC7!important;
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: rgb(133,255,199);
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(133,255,199, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.email-btn {
+	position: absolute;
+	right: 120px;
+	border: 1px solid  rgb(133, 255, 199);
+	background-color: rgb(0, 0, 0);
+	color: rgb(133, 255, 199);
+	text-align: center;
+}
+
+@media screen and (max-width: 990px) {
+	.email-btn {
+		position: relative;
+		margin-top: 10px;
+		margin-left: 117px;
+	}
+} 
+
+.dd-menu{
+    color: rgb(133, 255, 199);
+    background-color: transparent;   
+    text-align: center;
+}
+
+.drop-bokning-box{
+    color: rgb(133, 255, 199);
+    background-color: rgb(46, 47, 48);
+}
+
+.drop-link{
+    color: rgb(133, 255, 199);
+}
+
+.drop-bokning{
+    color: #85FFC7;
+    background-color: rgb(46, 47, 48)!important;
+    transition: 0.5s;
+}

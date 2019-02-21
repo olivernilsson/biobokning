@@ -1,20 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let viewScheme = new Schema ({
+let viewSchema = new Schema ({
     "auditorium": String,
     "film": String,
-    "date": Number,
-    "time": Number
+    "date": String,
+    "time": String,
+    "seats": Array
 
 });
 
-
+ 
 //class in case it's needed
 
 class ViewClass {
 
 }
 
-viewScheme.loadClass(ViewClass);
+viewSchema.loadClass(ViewClass);
 module.exports = db.model('View',viewSchema);

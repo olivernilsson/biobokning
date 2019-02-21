@@ -1,19 +1,69 @@
-<form class="reg-form d-flex align-content-center flex-wrap">
-	<h4>Var god och skriv in dina uppgifter för att boka!</h4>
-	<div class="input-group group1">
+<form id="userform" action="/" class="reg-form d-flex align-content-center flex-wrap">
+	<div class="col-md-24">
+
+		<div class="row">
+			<h4 class="reg-text">Registrera dig för att boka!</h4>
+		</div>
+
+		
+
+
+
+		<div class="input-group group1 row">
+
+
 			<span class="blocking">
-		<input id="firstname" type="text" class="form-control form-style" name="first" placeholder=" "><span class="place-style">Förnamn</span>
-		</span>
-		<span class="blocking">
-		<input id="lastname" type="text" class="form-control form-style" name="last" placeholder=" "><span class="place-style">Efternamn</span>
-	</span>
-	</div>
+				<input id="firstname" type="text" class=" form-control form-style" name="firstName" placeholder=" "><span class="place-style">Förnamn</span>
+			</span>
+			<span class="blocking">
+				<input id="lastname" type="text" class="form-control form-style" name="lastName" placeholder=" "><span class="place-style">Efternamn</span>
+			</span>
+		</div>
 
-	<div class="input-group group2">
+		<div class="input-group group2 row">
 			<span class="blocking2">
-		<input id="email" type="text" class=" form-control form-style" name="email" placeholder=" "><span class="place-style">Email</span>
-	</span>
-	</div>
+				<input id="email" type="text" class=" form-control form-style" name="email" placeholder=" "><span class="place-style">Email</span>
+			</span>
+			<!-- <div class=" email-style d-flex align-items-end">
+			<small class="verify-email">Valid email adress</small>
+		</div> -->
 
+		</div>
+
+		<div class="input-group group3 row">
+			<span class="blocking">
+				<input id="password" type="password" class="form-control form-style" name="password" placeholder=" "><span class="place-style">Lösenord</span>
+			</span>
+			<span class="blocking">
+				<input id="password-verify" type="password" class="form-control form-style" name="passwordverify" placeholder=" "><span
+				 class="place-style">Repetera
+					lösenord</span>
+			</span>
+		</div>
+
+		<div class="validate-box flex-column row">
+
+
+			<div class="verify-tecken">
+				<p>Minst sju tecken</p>
+			</div>
+
+			<div class="verify-bokstav ">
+				<p>Minst en stor bokstav</p>
+			</div>
+
+			<div class="verify-number ">
+				<p>Minst en siffra</p>
+			</div>
+
+		</div>
+
+		<button id="save-user" type="submit" class=" done-btn btn  btn-sm disabled">boka regpage</button>
+		
+	</div>
 
 </form>
+
+
+
+

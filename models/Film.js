@@ -4,28 +4,30 @@ const Schema = mongoose.Schema;
 // 1. Create a schema for a film
 let filmSchema = new Schema(  {
     "title" :  String,
-    "productionCountries" : String,
+    "productionCountries" : [String],
     "productionYear" : Number,
     "length" : Number,
     "description" : String,
+    "genre" : String,
     "director" : String,
-    "actor" : String,
+    "actors" : [String], 
     "language" : String,
     "subtitle" : String,
     "premier" : Number,
     "trailer" : String,
-    "image" : String,
-    "review" : String
+    "images" : [String],
+    "youtubeTrailers": [String],
+    "review" : [String]
   });
   
 
-  class filmClass{
-    get age(){
-      let currentYear = new Date().getFullYear();
-      return currentYear - this.year;
-    }
-  }
-  //Create the model and export it
-  filmSchema.loadClass(filmClass);
+// 2. Create a class with methods/or getters/setters
+//    that every Film should have
+class FilmClass {
+
+}
+  
+  // 3. Create the model and export it
+  filmSchema.loadClass(FilmClass);
   module.exports = db.model('Film', filmSchema);
   
