@@ -210,6 +210,7 @@ class BookingPage extends Component {
   }
 
   resetCount() {
+    this.pricePage.total=0;
     this.peopleCounter=0;
     this.stepCounter = 1;
     this.totalPersons;
