@@ -20,6 +20,7 @@ class Salon extends Component {
     this.row8 = [];
     
     this.seatHoverEffect();
+    this.pleasePickView = false;
   } 
   
   click(){
@@ -34,20 +35,23 @@ class Salon extends Component {
           } 
         });
       });
+      console.log(this.alreadyBookedSeats)
     });
   }
 
   auditoriumSelector(){
     if(this.auditorium === 'Lilla Salongen'){
       this.showSmallSalon();
+      this.pleasePickView = true;
     }
     if(this.auditorium === 'Mellan Salongen'){
       this.showMediumSalon();
+      this.pleasePickView = true;
     }
     if(this.auditorium === 'Stora Salongen'){
       this.showLargeSalon();
+      this.pleasePickView = true;
     }
-    return;
   }
 
   seatHoverEffect(){

@@ -1,7 +1,15 @@
 <div class="demo salon">
   <div class="container">
 
-    <div class="screen"></div>
+
+      ${this.pleasePickView ? `
+        <div class="screen"></div>
+        ` : `
+        <h4 class="h4-salon">
+          För att välja sittplats måste du först välja en visning.
+        </h4>
+        <a class="navbar-brand" href="/"><img class="logo-fv" src="/images/Filmvisarna.PNG" alt="Logo"></a>
+        `}
 
     <div class="salon-rows">
       <div class="row row1">
