@@ -1,12 +1,24 @@
 <section class="booking-section">
-<h3 class="booking-section-title"> Här kan du se dina tidigare bokningar:</h3>
 
+    <div class="current-booking-box">
+        <h3 class="booking-section-title"> Mina aktuella bokningar:</h3>
+        <div class="accordion" id="current-booking">
+
+            ${this.currentHtmlResult}
+
+        </div>
+    </div>
+
+    <h3 class="booking-section-title"> Här kan du se dina tidigare bokningar:</h3>
+
+
+
+<div class="booking-history-box">
     <div class="accordion" id="my-bookings">
-
         ${this.htmlresult}
 
     </div>
-
+</div>
 
 
 </section>
