@@ -9,9 +9,14 @@
   }
 }
 
+.login-button {
+  width: 92px;
+}
+
+
 .login-modal {
   position: absolute;
-  z-index: 1;
+  z-index: 10000;
   margin-top: 70px;
   margin-left: auto;
   margin-right: auto;

@@ -30,6 +30,9 @@
  
 }
 
+#save-user{
+  display: none;
+}
 
 .group2{
   margin-bottom: 20px;
@@ -138,12 +141,32 @@ line-height: normal;
   margin-bottom: 20px;
   
 }
-.done-btn{
-  position: absolute;
-  height: 50px;
- bottom: 0;
- width: 50%;
 
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.blinker{
+  animation: blinker 1s linear infinite;
+}
+
+.done-btn{
+
+    color:#C5C6C7;
+    align-self: center;
+    height: 100%;
+    font-weight: 900;
+    width: 200px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
+    border-radius: 2%;
 
 }
 

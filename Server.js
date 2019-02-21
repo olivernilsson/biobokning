@@ -28,10 +28,9 @@ module.exports = class Server {
   async start() {
     await this.connectToDb();
     await this.startWebServer();
-    await this.testConsole();
+    //await this.testConsole();
     //await this.addFilms();
     //await this.addSalons();
-    //await this.addViewings();
     //await this.dropCollection(); 
   }
 
@@ -42,213 +41,30 @@ module.exports = class Server {
       global.db = mongoose.connection;
       db.on('error', () => reject('Could not connect to DB'));
       db.once('open', () => resolve('Connected to DB'));
-
     });
   }
-
-  testConsole() {
-    var found = db.collection('movies').find();
-    found.each(function (err, doc) {
-      //console.log(doc);
-    });
-  }  
  
-  async addFilms() { 
-
+  async addFilms() {
     let Film = require('./models/Film');
     let films = require('./www/json/movies.json');
 
-    for(let data of films) {
+    for (let data of films) {
       let film = new Film(data);
       await film.save();
     }
-  } 
+  }
 
   async addSalons() {
     let Salon = require('./models/Salon');
     let salons = require('./www/json/salons.json');
 
-    for(let data of salons) {
+    for (let data of salons) {
       let salon = new Salon(data);
       await salon.save();
     }
-  } 
-
-  addViewings() {  
-    db.collection('viewings').insertMany([
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-22",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-22",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-22",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-23",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-23",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-23",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-24",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-24",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-24",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-25",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-25",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-25",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-26",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-26",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-26",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-27",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-27",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-27",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-28",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-28",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-28",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-29",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-29",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-29",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-30",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Mellan Salongen",
-        "film": "",
-        "date": "2018-01-30",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Lilla Salongen",
-        "film": "",
-        "date": "2018-01-30",
-        "time": "18.40"
-      },
-      {
-        "auditorium": "Stora Salongen",
-        "film": "",
-        "date": "2018-01-31",
-        "time": "18.40"
-      }
-    ])
   }
 
   dropCollection() {
-
     db.collection('movies').drop();
   }
 
@@ -272,15 +88,16 @@ module.exports = class Server {
       store: new MongoStore({
         mongooseConnection: db
       })
-    })); 
+    }));
 
     // Set keys to names of rest routes
     const models = {
       films: require('./models/Film'),
-      salongs: require('./models/Salon'),
+      salons: require('./models/Salon'),
       users: require('./models/User'),
       views: require('./models/View'),
       bookings: require('./models/Booking')
+
 
     };
 
@@ -304,17 +121,8 @@ module.exports = class Server {
       res.send(html);
     });
 
-
-
-
-
-
-
-
     // create all necessary rest routes for the models
     new CreateRestRoutes(app, db, models);
-
-  
 
     // create special routes for login
     new LoginHandler(app, models.users);
@@ -322,11 +130,10 @@ module.exports = class Server {
     // Start the web server
     app.listen(3000, () => console.log('Listening on port 3000'));
 
-  
     app.use((req, res, next) => {
       if (req.url === '/jsonflex.js' || req.url == '/json-save') { next(); return; }
       res.sendFile(path.join(__dirname, '/www/index.html'));
     });
-  } 
-   
+  }
+
 }    

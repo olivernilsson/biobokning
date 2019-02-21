@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="/">Logo</a>
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="/"><img class="logo" src="/images/Filmvisarna.PNG" alt="Logo"></a>
   <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,9 +8,36 @@
     <ul class="navbar-nav mr-auto">
       ${this.navItems}
       ${this.userLogin}
+      ${this.userRegistration ? this.userRegistration : ''}
+      ${this.email ? 
+        `
+
+        <!-- <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown button
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div> -->
+
+
+        <div class="dropdown email-btn">
+          <button class=" btn dropdown-toggle dd-menu" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            ${this.email}
+            <i class="far fa-user"></i>
+          </button>
+            <div class="dropdown-menu drop-bokning-box" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item drop-bokning drop-link" href="/mina-bookningar">Bokningar</a>
+            </div>
+          
+        </div>
+        `
+      : ''} 
     </ul>
-    ${this.userRegistration ? this.userRegistration : ''}
   </div>
 
 </nav>
-  
+   
