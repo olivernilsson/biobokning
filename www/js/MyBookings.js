@@ -6,8 +6,16 @@ class MyBookings extends Component {
         this.currentHtmlResult = "";
         this.htmlresult = "";
         this.userBookings = []
-        this.getBookingsHistory();
+    
 
+    }
+
+
+    async mount(){
+        this.currentHtmlResult = "";
+        this.htmlresult = "";
+        await this.getBookingsHistory();
+        this.render();
     }
 
     async getBookingsHistory() {
@@ -117,7 +125,7 @@ class MyBookings extends Component {
 
         }
 
-        this.render();
+       
     }
 
 
