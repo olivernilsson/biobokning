@@ -6,11 +6,6 @@
     <div class="movie-fade"></div>
     <img class="bg-image" src=${this.movie ? `/images/${this.movie.images[0]}` : '' }>
 
-<!--
-    <embed class="trailer" allowfullscreen="true" width="450" height="315" src=${this.trailer ? `${this.youtube}${this.movie.youtubeTrailers[0]}` : ''}>
-
-    <iframe class="trailer" width="450" height="315" src=${this.trailer ?
-      `${this.youtube}${this.movie.youtubeTrailers[0]}` : '' }></iframe> -->
 
 
     <img class="play" data-toggle="modal" data-target="#trailermodal" src=${this.movie ? `/images/play.png` : '' }>
@@ -67,7 +62,7 @@
   </div>`}
 
   <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type=" button" id="dropdownMenuButton" data-toggle="dropdown"
+    <button class="btn btn-secondary dropdown-toggle movie-button" type=" button" id="dropdownMenuButton" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
 
       ${this.title ? this.title : 'Movies'}
