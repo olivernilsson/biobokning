@@ -96,10 +96,8 @@ class MoviesAndTrailersPage extends Component {
 
   trailerClose() {
     //Stop Video
-    console.log("pausing..")
     $('#trailermodal').on('hidden.bs.modal', function (e) {
       // do something...
-      console.log("pausing..again")
       $('#trailermodal iframe').attr("src", $('#trailermodal iframe').attr("src"));
 
     });

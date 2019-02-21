@@ -37,7 +37,7 @@ async function insertViewingsToDB() {
       viewingsArr.push(view)
     }
   }
-  console.log(viewingsArr);
+  //console.log(viewingsArr);
 
   for(let viewings of viewingsArr) {
     await viewings.save();
@@ -65,7 +65,7 @@ async function insertBookingsToDb(){
   .exec() 
  `);
 
-  console.log(populera);
+  //console.log(populera);
 
 }
 
