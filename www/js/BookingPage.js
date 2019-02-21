@@ -44,7 +44,6 @@ class BookingPage extends Component {
     console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
-
     this.render()
 
     Salon.current.chosenView = this.view._id;
@@ -103,6 +102,7 @@ class BookingPage extends Component {
 // }
     if (this.stepCounter > 3) {   
       Router.goto('/')
+      
    this.stepCounter=1;
     this.render()
     this.resetCount();
@@ -127,6 +127,7 @@ class BookingPage extends Component {
     if (this.stepCounter < 1) {
       Router.goto('/')
       this.stepCounter = 1
+      this.pricePage.total=0;
     }
 
     this.render();
@@ -199,6 +200,7 @@ class BookingPage extends Component {
   }
 
   resetPeople() {
+    this.pricePage.total=0;
     this.pricePage.adults = 0;
     this.pricePage.kids = 0;
     this.pricePage.seniors = 0;
