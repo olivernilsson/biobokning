@@ -7,7 +7,22 @@ justify-content: center;
   
 }
 
+.h2-booking-btn-top {
+  margin-top: 80px;
+  display: block;
+}
 
+.h2-booking-btn-bottom {
+  margin-top: 0px;
+  display: block;
+}
+
+.logo-fv {
+  display: block;
+  width: 150px;
+  height: 140px;
+  margin-top: 30px;
+}
 
 .progressbar li{
   justify-content: center;
@@ -18,8 +33,6 @@ justify-content: center;
     text-align: center;
     margin-right: 20px;
   }
-
-
 
   .progressbar{
     margin-top: 10px;
