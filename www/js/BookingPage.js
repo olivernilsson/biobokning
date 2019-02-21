@@ -41,7 +41,7 @@ class BookingPage extends Component {
 
 
   change(selectedView) {
-    console.log(selectedView)
+    //console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
     this.render()
@@ -141,13 +141,13 @@ class BookingPage extends Component {
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      console.log(this.salonPage.nbrOfPickedSeats);
+      //console.log(this.salonPage.nbrOfPickedSeats);
       Salon.current.auditoriumSelector();
       Salon.current.pushOlderBookedSeatsToArray();
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
-      console.log(this.bookedSeats);
+      //console.log(this.bookedSeats);
       //$("#mobforward").addClass("bookTicket");
     }
 
