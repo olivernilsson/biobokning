@@ -16,6 +16,7 @@ class MoviesAndTrailersPage extends Component {
     this.testlist = [];
     this.view;
     this.bookPage = new BookingPage();
+    this.pricePage = new PricePage();
     this.choosen = false;
     this.moviePrint();
   }
@@ -95,10 +96,8 @@ class MoviesAndTrailersPage extends Component {
 
   trailerClose() {
     //Stop Video
-    console.log("pausing..")
     $('#trailermodal').on('hidden.bs.modal', function (e) {
       // do something...
-      console.log("pausing..again")
       $('#trailermodal iframe').attr("src", $('#trailermodal iframe').attr("src"));
 
     });
