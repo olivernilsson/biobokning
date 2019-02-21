@@ -69,12 +69,12 @@ color: white
 
 
 .pagewrap{
-justify-content: center;
-padding: 10px;
+  justify-content: center;
+  padding: 10px;
   width: 100%;
   margin: 0 auto;
-height: 500px;
-display: flex;
+  height: 500px;
+  display: flex;
  
 }
 
@@ -187,6 +187,11 @@ display: none;
    display: none;
  
   }
+
+  .pagewrap{
+    height: 600px;
+  }
+  
 
  .mobile-buttons{
    display:block;
