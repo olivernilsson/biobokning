@@ -92,7 +92,6 @@ class MyBookings extends Component {
             }
             this.seatmod = this.seat.join('-');
 
-
             this.htmlresult += `
 
            <div class="card">

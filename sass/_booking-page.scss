@@ -7,7 +7,22 @@ justify-content: center;
   
 }
 
+.h2-booking-btn-top {
+  margin-top: 80px;
+  display: block;
+}
 
+.h2-booking-btn-bottom {
+  margin-top: 0px;
+  display: block;
+}
+
+.logo-fv {
+  display: block;
+  width: 150px;
+  height: 140px;
+  margin-top: 30px;
+}
 
 .progressbar li{
   justify-content: center;
@@ -19,9 +34,8 @@ justify-content: center;
     margin-right: 20px;
   }
 
-
-
   .progressbar{
+    margin-top: 10px;
     list-style-type: none;
   }
 
@@ -44,12 +58,7 @@ color: white
 }
 
 
-// .booking-page{
-//   height: 500px;
-//   width:80%;
-//   display: flex;
-//   justify-content: center;
-// }
+
 
 
 .seats-booking{
@@ -60,12 +69,12 @@ color: white
 
 
 .pagewrap{
-justify-content: center;
-
+  justify-content: center;
+  padding: 10px;
   width: 100%;
   margin: 0 auto;
-height: 500px;
-display: flex;
+  height: 500px;
+  display: flex;
  
 }
 
@@ -75,14 +84,14 @@ display: flex;
   align-self: center;
   height: 100%;
   font-weight: 900;
-  width: 150px;
+  width: 200px;
   background-color: Transparent;
   background-repeat:no-repeat;
   border: none;
   cursor:pointer;
   overflow: hidden;
   outline:none;
-  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(41, 115, 115));
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(59, 179, 179));
   border-radius: 2%;
 
 }
@@ -91,14 +100,14 @@ display: flex;
   align-self: center;
   height: 100%;
   font-weight: 900;
-  width: 150px;
+  width: 200px;
   background-color: Transparent;
   background-repeat:no-repeat;
   border: none;
   cursor:pointer;
   overflow: hidden;
   outline:none;
-  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(41, 115, 115));
+  background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(59, 179, 179));
   border-radius: 2%;
 }
 
@@ -178,6 +187,11 @@ display: none;
    display: none;
  
   }
+
+  .pagewrap{
+    height: 600px;
+  }
+  
 
  .mobile-buttons{
    display:block;

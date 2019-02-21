@@ -10,7 +10,7 @@ class BookingPage extends Component {
       'click #mobback': 'countDown',
       'click .bookTicket': 'bookTicket',
       'click #save-user-loggedin': 'loggedInBooking',
-      'click #mobin' : 'loggedInBooking',
+      'click #mobin': 'loggedInBooking',
       'click #mobout': 'saveUser',
       'click #save-user-notloggedin': 'saveUser'
 
@@ -29,8 +29,12 @@ class BookingPage extends Component {
     this.totalPersons;
     this.bookedSeats = [];
 
-    this.buttonBackText = 'Välj visning';
+    this.buttonBackText = 'Till start';
     this.buttonForwardText = 'Välj plats/platser';
+
+    this.peopleCounter = 0;
+    this.disableBackButton = 1;
+    this.disabledButtonPrice();
   }
 
 
@@ -40,7 +44,6 @@ class BookingPage extends Component {
     console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
-
     this.render()
 
     Salon.current.chosenView = this.view._id;
@@ -48,7 +51,7 @@ class BookingPage extends Component {
   }
 
 
-  
+
 
 
 
@@ -59,7 +62,7 @@ class BookingPage extends Component {
     await this.bookTicket();
     await this.regPage.saveUserToDb();
     await this.addUserToBooking()
-   
+
 
   }
 
@@ -72,27 +75,66 @@ class BookingPage extends Component {
     this.resetCount();
   }
 
-  countUp() {
-    this.stepCounter++;
-    if (this.stepCounter > 4) { this.stepCounter = 4; }
-    this.render();
-    this.dataChanges();
-    this.wizardTextChanges();
-    Salon.current.click();   
-    Salon.current.pushOlderBookedSeatsToArray();
-  }
 
-  countDown() {
-    this.stepCounter--;
-    if (this.stepCounter < 1) {
-      // App.moviesAndTrailersPage.changeVal();
-      this.stepCounter = 1
+
+
+  disabledButtonPrice() {
+    this.pricePage.checkCount();
+
+    if (this.pricePage.total < 1) {
+      this.peopleCounter = 0;
+     
+    }
+
+    if (this.pricePage.total>0) {
+      this.peopleCounter++;
+      
     }
     this.render();
+  }
+
+
+
+  countUp() {
+    //Ifall vi vill blockera bakåt
+// if(this.stepCounter===2){
+// this.disableBackButton=0;
+// }
+    if (this.stepCounter > 3) {   
+      Router.goto('/')
+      
+   this.stepCounter=1;
+    this.render()
+    this.resetCount();
+  this.resetPeople();
+}
+   
+    this.stepCounter++;
+    this.render();
     this.dataChanges();
     this.wizardTextChanges();
+    Salon.current.pushOlderBookedSeatsToArray();
     Salon.current.click();   
+  }
+ 
+  countDown() {
+
+    //ifall vi vill blockera framåt när man väl har gått bakåt
+  // if(this.stepCounter>2){
+  //   this.peopleCounter=0;
+  // }
+    this.stepCounter--;
+    if (this.stepCounter < 1) {
+      Router.goto('/')
+      this.stepCounter = 1
+      this.pricePage.total=0;
+    }
+
+    this.render();
+    this.dataChanges();
+    this.wizardTextChanges();
     Salon.current.pushOlderBookedSeatsToArray(); 
+    Salon.current.click();   
   }
 
   dataChanges() {
@@ -100,37 +142,35 @@ class BookingPage extends Component {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
       console.log(this.salonPage.nbrOfPickedSeats);
-      Salon.current.auditoriumSelector(); 
-      Salon.current.pushOlderBookedSeatsToArray();   
+      Salon.current.auditoriumSelector();
+      Salon.current.pushOlderBookedSeatsToArray();
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
       console.log(this.bookedSeats);
       //$("#mobforward").addClass("bookTicket");
     }
-    if (this.stepCounter == 4) {
-     // this.bookTicket();
-    }
-    
+
+
   }
 
-  wizardTextChanges(){
+  wizardTextChanges() {
     if (this.stepCounter == 1) {
-      this.buttonBackText = 'Välj visning';
+      this.buttonBackText = 'Till start';
       this.buttonForwardText = 'Välj plats/platser';
-    }  
+    }
     if (this.stepCounter == 2) {
-      this.buttonBackText = 'Välj antal personer';
-      this.buttonForwardText = 'Registrera dig för bokning';
+      this.buttonBackText = 'Välj antal <br> personer';
+      this.buttonForwardText = 'Framåt';
     }
     if (this.stepCounter == 3) {
-      this.buttonBackText = 'Välj plats/platser';
+      this.buttonBackText = 'Välj <br> plats/platser';
       this.buttonForwardText = 'Boka';
-    }  
+    }
     if (this.stepCounter == 4) {
       this.buttonBackText = '';
-      this.buttonForwardText = 'Tillbaks till startsidan';
-    }  
+      this.buttonForwardText = 'Tillbaka till <br>startsidan';
+    }
     this.render();
   }
 
@@ -149,17 +189,29 @@ class BookingPage extends Component {
     //console.log(myNewBooking);
     //console.log(myNewBooking.bookingId);
 
-     let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
     .populate('view')
     .populate('user')
     .exec()
-    `); 
+    `);
 
     this.bookingConfirm.showBooking(myNewBookingPopulated);
 
   }
 
-  resetCount(){
+  resetPeople() {
+    this.pricePage.total=0;
+    this.pricePage.adults = 0;
+    this.pricePage.kids = 0;
+    this.pricePage.seniors = 0;
+    this.totalPersons;
+    this.bookedSeats.length=0;
+    this.bookingConfirm.seats.length=0;
+  }
+
+  resetCount() {
+    this.pricePage.total=0;
+    this.peopleCounter=0;
     this.stepCounter = 1;
     this.totalPersons;
     this.bookedSeats = [];
@@ -195,7 +247,7 @@ class BookingPage extends Component {
           }
       })`);
 
-      this.countUp();
+    this.countUp();
   }
 
 
@@ -234,7 +286,7 @@ class BookingPage extends Component {
     .populate('view')
     .populate('user')
     .exec()
-    `); 
+    `);
 
     this.bookingConfirm.showBooking(myNewBookingPopulated);
 

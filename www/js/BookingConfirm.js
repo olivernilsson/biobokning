@@ -20,6 +20,7 @@ class BookingConfirm extends Component {
         console.log(this.totalPrice);
         
         this.render();
+        
     }
 
   
