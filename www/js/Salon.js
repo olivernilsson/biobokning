@@ -35,7 +35,7 @@ class Salon extends Component {
           } 
         });
       });
-      console.log(this.alreadyBookedSeats)
+      //console.log(this.alreadyBookedSeats)
     });
   }
 

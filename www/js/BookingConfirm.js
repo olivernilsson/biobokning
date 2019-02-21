@@ -17,7 +17,7 @@ class BookingConfirm extends Component {
         }
 
         this.totalPrice= this.booking.adults*120+ this.booking.kids*75+ this.booking.seniors*90;
-        console.log(this.totalPrice);
+        //console.log(this.totalPrice);
         
         this.render();
         

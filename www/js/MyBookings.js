@@ -34,7 +34,7 @@ class MyBookings extends Component {
             .populate('view')
             .exec()
             `);
-        console.log(populateCurrent[0].bookingId);
+        //console.log(populateCurrent[0].bookingId);
 
         let currentSeats = populateCurrent[0].seats
         this.currentSeat = []
