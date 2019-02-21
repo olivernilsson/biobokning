@@ -50,13 +50,13 @@ class MyBookings extends Component {
            <div class="card">
            <div class="card-header" id="${populateCurrent[0]._id}">
  
-               <button class="btn btn-link booking-button" data-toggle="collapse" data-target="#${populateCurrent[0].bookingId}" aria-expanded="false" aria-controls="${populateCurrent[0].bookingId}">
+               <button class="btn btn-link booking-button" data-toggle="collapse" data-target="#G${populateCurrent[0].bookingId}" aria-expanded="false" aria-controls="G${populateCurrent[0].bookingId}">
                 <h4 class="booking-title"> Bokning: ${populateCurrent[0].bookingId} -  Datum : ${populateCurrent[0].view.date}</h4>
                </button>
  
            </div>
  
-           <div id="${populateCurrent[0].bookingId}" class="collapse" aria-labelledby="${populateCurrent[0]._id}" data-parent="#current-booking">
+           <div id="G${populateCurrent[0].bookingId}" class="collapse" aria-labelledby="${populateCurrent[0]._id}" data-parent="#current-booking">
              <div class="card-body">
              <p class="booking-film">Film: ${populateCurrent[0].view.film}</p>
               <p class="booking-salon"> Salong: ${populateCurrent[0].view.auditorium}</p>
