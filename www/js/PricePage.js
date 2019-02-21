@@ -10,11 +10,12 @@ class PricePage extends Component {
         this.seniors = 0;
         this.total = this.adults + this.kids + this.seniors;
         this.counter = false;
+        this.view;
     }
 
     checkCount() {
         this.total;
-        console.log(this.total)
+
     }
 
 
@@ -22,10 +23,12 @@ class PricePage extends Component {
         this.total = 0;
     }
 
+
     count(event) {
         let eventish = $(event.target).attr('class');
 
         if (eventish == 'AdultsUp') {
+            if (this.total>7) { return; }
             this.adults++;
             this.total++
         }
@@ -35,6 +38,7 @@ class PricePage extends Component {
             this.adults--;
         }
         else if (eventish == 'KidsUp') {
+            if (this.total>7) { return; }
             this.kids++;
             this.total++
         }
@@ -44,14 +48,17 @@ class PricePage extends Component {
             this.total--
         }
         else if (eventish == 'SeniorsUp') {
+            if (this.total>7) { return; }
             this.seniors++;
             this.total++
         }
         else if (eventish == 'SeniorsDown') {
-            if (this.seniors < 1) { return; }
+            if (this.seniors < 1 ) { return; }
             this.seniors--;
             this.total--
         }
+
+    
         App.bookingPage.disabledButtonPrice();
         this.render();
     }

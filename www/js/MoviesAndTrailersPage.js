@@ -16,6 +16,7 @@ class MoviesAndTrailersPage extends Component {
     this.testlist = [];
     this.view;
     this.bookPage = new BookingPage();
+    this.pricePage = new PricePage();
     this.choosen = false;
     this.moviePrint();
   }
