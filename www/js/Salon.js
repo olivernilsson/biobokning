@@ -5,6 +5,7 @@ class Salon extends Component {
     this.alreadyBookedSeats = [];
     Salon.current = this;
     this.chosenView = ''; 
+    this.pleasePickView = false;
 
     this.addEvents({
       'click .seat': 'toggleSeat'
