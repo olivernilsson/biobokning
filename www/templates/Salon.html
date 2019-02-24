@@ -1,41 +1,10 @@
 <div class="demo salon">
   <div class="container">
 
+    <div class="screen"></div>
 
-      ${this.pleasePickView ? `
-        <div class="screen"></div>
-        ` : `
-        <h4 class="h4-salon">
-          För att välja sittplats måste du först välja en visning.
-        </h4>
-        <span><img class="logo-fv" src="/images/Filmvisarna.PNG" alt="Logo"></span>
-        `}
-
-    <div class="salon-rows">
-      <div class="row row1">
-        ${this.row1}
-      </div>
-      <div class="row">
-        ${this.row2}
-      </div>
-      <div class="row">
-        ${this.row3}
-      </div>
-      <div class="row">
-        ${this.row4}
-      </div>
-      <div class="row">
-        ${this.row5}
-      </div>
-      <div class="row">
-        ${this.row6}
-      </div>
-      <div class="row">
-        ${this.row7}
-      </div>
-      <div class="row">
-        ${this.row8}
-      </div>
+    <div class="row1">
+      ${this.seats.map(rowOfSeats => `<div>${rowOfSeats}</div>`).join('')}
     </div>
 
   </div>

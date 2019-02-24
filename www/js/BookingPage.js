@@ -37,20 +37,13 @@ class BookingPage extends Component {
     this.disabledButtonPrice();
   }
 
-
-
-
   change(selectedView) {
     //console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
+    Salon.current.seatHoverEffect();
     this.render()
-
-    Salon.current.chosenView = this.view._id;
-    Salon.current.auditorium = this.view.auditorium;
   }
-
-
 
 
 
@@ -113,12 +106,10 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    Salon.current.pushOlderBookedSeatsToArray();
-    Salon.current.click();   
+    //Salon.current.click();   
   }
  
   countDown() {
-
     //ifall vi vill blockera framåt när man väl har gått bakåt
   // if(this.stepCounter>2){
   //   this.peopleCounter=0;
@@ -133,17 +124,16 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    Salon.current.pushOlderBookedSeatsToArray(); 
-    Salon.current.click();   
+    //Salon.current.click();   
   }
 
   dataChanges() {
+    Salon.current.pushOlderBookedSeatsToArray();
+    Salon.current.seatHoverEffect();
+
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      //console.log(this.salonPage.nbrOfPickedSeats);
-      Salon.current.auditoriumSelector();
-      Salon.current.pushOlderBookedSeatsToArray();
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
