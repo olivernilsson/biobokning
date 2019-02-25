@@ -7,8 +7,7 @@ class NavBar extends Component {
       new NavItem('Om oss', '/about'),
       new NavItem('Salonger', '/salons'),
       new NavItem('Butik', '/store'),
-      new NavItem('Regler', '/rules'),
-      new NavItem('Filmer & trailers', '/movie-details/')
+      new NavItem('Regler', '/rules')
     ];
     // this.addEvents({
     //   'click .nav-link': 'changeVal',
