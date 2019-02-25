@@ -8,12 +8,12 @@ class Salon extends Component {
     this.pleasePickView = false;
 
     this.addEvents({
-      'click .seat': 'toggleSeat'
+      'click .seat': 'toggleSeat',
+      'mousemove .seat': 'seatHoverEffect'
     });
 
-    //this.seatHoverEffect();
   } 
-
+  
   auditoriumSelector(){
     if(this.auditorium === 'Lilla Salongen'){
       this.seatsPerRow = [6,8,9,10,10,12];
@@ -49,26 +49,25 @@ class Salon extends Component {
       row++;
     }
     this.totalSeats = seatNum;
+
   }
 
+  
+  seatHoverEffect(e){
+    //Deselect seats
+    for(let i = 1; i < this.totalSeats; i++){
+      let seat = this.seatsBySeatNumber[i];
+      seat.blinkMe = false;
+    }
 
-  seatHoverEffect(){
-  //   let a = this.seatsBySeatNumber;
-    
-  //   //$(document).ready(function(){
-  //     setTimeout(function(){
-  //      $('.seat').hover(function(e) {
-          
-  //         console.log(a[1])
-  //         console.log(a[1].blinkMe = true)
-
-  //         let seats = $('.seat');
-  //         let myIndex = seats.index(e.currentTarget);
-  //         console.log(myIndex)
-  //         a[myIndex].blinkMe = true;
-  //       });
-  //     }, 500);
-  //   //});
+    //Selects seats
+    let a = parseInt(e.target.id);
+    for(let i = 0; i < this.nbrOfPickedSeats; i++){
+      let b = this.seatsBySeatNumber[a + i];
+      if (this.alreadyBookedSeats.includes(b.seatNum)) { continue; }
+      b.blinkMe = true;
+    }
+    this.render();
   }
 
 

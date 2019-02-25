@@ -41,7 +41,6 @@ class BookingPage extends Component {
     //console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
-    Salon.current.seatHoverEffect();
     this.render()
   }
 
@@ -129,8 +128,7 @@ class BookingPage extends Component {
 
   dataChanges() {
     Salon.current.pushOlderBookedSeatsToArray();
-    Salon.current.seatHoverEffect();
-
+    
     if (this.stepCounter == 2) {
       this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
