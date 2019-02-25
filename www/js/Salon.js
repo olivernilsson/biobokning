@@ -3,7 +3,7 @@ class Salon extends Component {
   constructor(){
     super();
     this.addEvents({
-      'click .seat' : 'toggleSeat'    
+      'click .seat' : 'toggleSeat'
     });
     Salon.current = this;
     this.bookedSeats = []; 
@@ -12,7 +12,7 @@ class Salon extends Component {
     
     this.row1 = [];
     this.row2 = [];
-    this.row3 = [];
+    this.row3 = []; 
     this.row4 = [];
     this.row5 = [];
     this.row6 = [];
@@ -20,23 +20,42 @@ class Salon extends Component {
     this.row8 = [];
     
     this.seatHoverEffect();
+    this.pleasePickView = false;
   } 
   
+  click(){
+    $(document).ready(function(){
+      $('.seat').trigger('click');
+      let nbrSeats = BookingPage.current.totalPersons;
+      $(document).ready(function(){
+        $('.seat').hover(function() {
+          let a = parseInt(this.id, 10);
+          for(let i = 0; i < nbrSeats; i++){
+            $(`#${a+i}`).toggleClass("blink_me");
+          } 
+        });
+      });
+      //console.log(this.alreadyBookedSeats)
+    });
+  }
+
   auditoriumSelector(){
     if(this.auditorium === 'Lilla Salongen'){
       this.showSmallSalon();
+      this.pleasePickView = true;
     }
     if(this.auditorium === 'Mellan Salongen'){
       this.showMediumSalon();
+      this.pleasePickView = true;
     }
     if(this.auditorium === 'Stora Salongen'){
       this.showLargeSalon();
+      this.pleasePickView = true;
     }
-    return;
   }
 
   seatHoverEffect(){
-    setTimeout(function() {
+    $(document).ready(function(){
       let nbrSeats = BookingPage.current.totalPersons;
       $(document).ready(function(){
         $('.seat').hover(function() {
@@ -46,7 +65,7 @@ class Salon extends Component {
           }
         });
       });
-    }, 0);
+    });
   }
 
   //This method searches for the specific view in the DB and recognizes 
@@ -72,7 +91,8 @@ class Salon extends Component {
     }    
     //Gives the alreadyBookedSeats a red color.
     for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
-      $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      //$(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+      $(`#${this.alreadyBookedSeats[i]}`).addClass("taken-seat");
     }
   }
 
@@ -114,7 +134,8 @@ class Salon extends Component {
       }
       //Colors all already booked seats
       for(let i = 0; i < this.alreadyBookedSeats.length+1; i++){
-        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        //$(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        $(`#${this.alreadyBookedSeats[i]}`).addClass("taken-seat");
       }
     }
     
@@ -125,11 +146,12 @@ class Salon extends Component {
       }
       //Colors all already booked seats
       for(let i = 0; i < this.salonSeats.length+1; i++){
-        $(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        //$(`#${this.alreadyBookedSeats[i]}`).css("background-color", "rgb(165, 55, 55)");
+        $(`#${this.alreadyBookedSeats[i]}`).addClass("taken-seat");
       }
       this.bookedSeats.length = 0;
     }
-    console.log(this.bookedSeats) //To see the booked seats.
+    //console.log(this.bookedSeats) //To see the booked seats.
   } 
   
   async showSmallSalon(){

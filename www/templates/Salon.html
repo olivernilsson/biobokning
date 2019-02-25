@@ -1,7 +1,15 @@
 <div class="demo salon">
   <div class="container">
-    <div class="screen">
-    </div> 
+
+
+      ${this.pleasePickView ? `
+        <div class="screen"></div>
+        ` : `
+        <h4 class="h4-salon">
+          För att välja sittplats måste du först välja en visning.
+        </h4>
+        <span><img class="logo-fv" src="/images/Filmvisarna.PNG" alt="Logo"></span>
+        `}
 
     <div class="salon-rows">
       <div class="row row1">
@@ -20,16 +28,15 @@
         ${this.row5}
       </div>
       <div class="row">
-        ${this.row6}         
+        ${this.row6}
       </div>
       <div class="row">
         ${this.row7}
       </div>
       <div class="row">
-        ${this.row8}         
+        ${this.row8}
       </div>
     </div>
 
   </div>
-  <button class="hej"></button>
 </div> 
