@@ -54,18 +54,20 @@ class Salon extends Component {
 
   
   seatHoverEffect(e){
-    //Deselect seats
+    //Deselect hovered seats
     for(let i = 1; i < this.totalSeats; i++){
       let seat = this.seatsBySeatNumber[i];
       seat.blinkMe = false;
     }
 
-    //Selects seats
+    //Hover selected seats
     let a = parseInt(e.target.id);
+    if(a+this.nbrOfPickedSeats < this.totalSeats+1){
     for(let i = 0; i < this.nbrOfPickedSeats; i++){
       let b = this.seatsBySeatNumber[a + i];
       if (this.alreadyBookedSeats.includes(b.seatNum)) { continue; }
       b.blinkMe = true;
+    }
     }
     this.render();
   }
@@ -92,7 +94,9 @@ class Salon extends Component {
     //Index of picked seat
     let seatIndex = this.bookedSeats.indexOf(this.mySeatNbr);
     //Index of the last seat in the row 
-    this.lastSeatIndex = this.bookedSeats.indexOf(this.mySeatNbr + this.nbrOfPickedSeats - 1); 
+    this.lastSeatIndex = this.bookedSeats.indexOf(this.mySeatNbr + this.nbrOfPickedSeats - 1);
+    //Seatnbr of the last seat in the row
+    this.lastSeatNbr = this.mySeatNbr + this.nbrOfPickedSeats - 1;
     //Index of seats outside of the salon
     let outOfSeatsIndex = this.totalSeats; 
 
@@ -100,9 +104,8 @@ class Salon extends Component {
     let alreadyIndex = this.alreadyBookedSeats.indexOf(this.mySeatNbr);
     let lastAlreadyIndex = this.alreadyBookedSeats.indexOf(this.mySeatNbr + this.nbrOfPickedSeats - 1);
 
-
     //Ensures the picked seat is empty, doesn't pick already picked seats, or pick seats outside of the salon.
-    if(seatIndex < 0 && this.lastSeatIndex < 0 && this.mySeatNbr <= outOfSeatsIndex && alreadyIndex < 0 && lastAlreadyIndex < 0 && this.checksIfChosenSeatsAreEmpty()){
+    if(seatIndex < 0 && this.lastSeatIndex < 0 && this.lastSeatNbr < this.totalSeats && this.mySeatNbr <= outOfSeatsIndex && alreadyIndex < 0 && lastAlreadyIndex < 0 && this.checksIfChosenSeatsAreEmpty()){
       this.bookedSeats.length = 0;
 
       //Uncolors all seats in salon
@@ -121,6 +124,14 @@ class Salon extends Component {
       this.render();
       
       console.log(this.bookedSeats);
+    }
+
+    //Prevents picking seats outside of salon
+    if(this.bookedSeats.length < 1) {
+      for(let j = 0; j < outOfSeatsIndex-1; j++){
+        let seat = this.seatsBySeatNumber[seats.eq(j).attr('data-seat')];
+        seat.toBeBooked = false;
+      }
     }
 
   }

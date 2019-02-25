@@ -105,7 +105,6 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    //Salon.current.click();   
   }
  
   countDown() {
@@ -123,7 +122,6 @@ class BookingPage extends Component {
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    //Salon.current.click();   
   }
 
   dataChanges() {
