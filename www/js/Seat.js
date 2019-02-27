@@ -1,10 +1,10 @@
 class Seat extends Component {
-
-  constructor(seatId){
+  constructor(props) {
     super();
-
-    this.seatId = seatId;
-
+    this.row = props.row;
+    this.seatNum = props.seatNum
+    this.booked = false;
+    this.toBeBooked = false;
+    this.blinkMe = false;
   }
-
-} 
+}

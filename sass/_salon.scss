@@ -20,6 +20,22 @@
   border-bottom-right-radius:50%;
 }
 
+.blue {
+  display: inline-block;
+  background-color: rgb(53, 187, 218);
+  margin: 3px 1px 1px 1px;
+  width: 45px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px 2px 2px 2px;
+  border-color: rgb(0, 106, 0) rgb(0, 255, 136) rgb(255, 255, 0) rgb(0, 255, 136);
+
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
 .taken-seat{
   display: inline-block;
   background-color: rgb(181, 21, 21);
@@ -37,7 +53,7 @@
 }
 
 .row1 {
-  margin-top: 130px;
+  margin-top: 80px;
 }
 
 .h4-salon {
@@ -55,7 +71,7 @@
   border-radius: 5px 5px 0 0;
 }
 
-.blink_me {
+.blink-me {
   animation: blinker 1.2s linear infinite;
 }
 
@@ -67,8 +83,8 @@
 
 @media screen and (max-width: 700px) {
   .seat {
-    width: 25px;
-    height: 15px;
+    width: 22px;
+    height: 12px;
   }
   .screen {
     width: 200px;

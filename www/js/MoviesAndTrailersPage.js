@@ -22,7 +22,6 @@ class MoviesAndTrailersPage extends Component {
 
   async moviePrint() {
     this.movies = await Film.find();
-    //console.log(this.movies);
     this.render();
   }
 
@@ -60,8 +59,11 @@ class MoviesAndTrailersPage extends Component {
     let id = $(e.currentTarget).attr("data-view-id");
     let view = this.viewings.filter(view => view._id === id)[0];
     this.view = view;
-    console.log("körs");
     this.bookPage.change(this.view);
+
+    Salon.current.chosenView = this.view._id;
+    Salon.current.auditorium = this.view.auditorium;
+    Salon.current.auditoriumSelector();
     this.render();
   }
 
@@ -78,7 +80,8 @@ class MoviesAndTrailersPage extends Component {
     }
     //console.log(this.viewings);
     this.render();
-  }
+
+  } 
 
   showTrailer() {
     this.trailer = this.movie.youtubeTrailers[0];
