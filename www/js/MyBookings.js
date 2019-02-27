@@ -33,11 +33,17 @@ class MyBookings extends Component {
         `);
 
     let bookings = popuUser[0].bookings;
-    let currDate = Date.now().toString();
+    let currDate = Date.now();
     console.log(currDate);
     for (let view of bookings) {
-      if (view.view.date < currDate) {
-        console.log("k");
+      let movieDate = new Date(view.view.date);
+      console.log(movieDate.getTime());
+      if (movieDate.getTime() > currDate) {
+        this.activeBooking.push(view);
+        console.log(this.activeBooking);
+      } else {
+        this.historyBooking.push(view.view);
+        console.log(view.view);
       }
     }
 
