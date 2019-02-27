@@ -1,60 +1,59 @@
 <section class="demo">
-    <div class="col-md-24">
-        <h1 class="p-2 testo">Tack för att du bokade!</h1>
+  ${this.confirmationFail ? `
+  <h3 class="p-4">
+    Tyvärr så blev platsen/platserna bokade. Prova gärna att boka nya platser
+  </h3>
+  ` : `
+  <div class="col-md-24">
+    <h1 class="p-2 testo">Tack för att du bokade!</h1>
 
-      <div class="row">
-
-        <div class="col-md-12 p-2">
-          <h3>Film</h3>
-          <div class="font-test">
-            ${this.booking.view.film}
-          </div>
+    <div class="row">
+      <div class="col-md-12 p-2">
+        <h3>Film</h3>
+        <div class="font-test">
+          ${this.booking.view.film}
         </div>
-
-        <div class="col-md-12 p-2">
-          <h3>Salong</h3>
-          <div class="font-test">
-            ${this.booking.view.auditorium}   
-          </div>
-        </div>
-
       </div>
 
-      <div class="row">
-
-        <div class="col-md-12 p-2">
-          <h3>Datum</h3>
-          <div class="font-test">
-            ${this.booking.view.date}   
-          </div>
+      <div class="col-md-12 p-2">
+        <h3>Salong</h3>
+        <div class="font-test">
+          ${this.booking.view.auditorium}
         </div>
+      </div>
+    </div>
 
-        <div class="col-md-12 p-2">
-          <h3>Tid</h3>
-          <div class="font-test">
-            ${this.booking.view.time}   
-          </div>
+    <div class="row">
+      <div class="col-md-12 p-2">
+        <h3>Datum</h3>
+        <div class="font-test">
+          ${this.booking.view.date}
         </div>
-          
       </div>
 
-      <div class="row">
-
-        <div class="col-md-12 p-2">
-          <h3>Dina sittplatser</h3>
-          <div class="font-test">           
-            du har sittplats: ${this.seats.map((a) => `${a}`).join(', ')}          
-          </div>
+      <div class="col-md-12 p-2">
+        <h3>Tid</h3>
+        <div class="font-test">
+          ${this.booking.view.time}
         </div>
-        
-        <div class="col-md-12 p-2">
-          <h3>Pris</h3>
-          <div class="font-test">
-            <p>Total summa: ${this.totalPrice}</p>  
-          </div>
-        </div>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-md-12 p-2">
+        <h3>Dina sittplatser</h3>
+        <div class="font-test">
+          du har sittplats: ${this.seats.map((a) => `${a}`).join(', ')}
+        </div>
       </div>
 
+      <div class="col-md-12 p-2">
+        <h3>Pris</h3>
+        <div class="font-test">
+          <p>Total summa: ${this.totalPrice}</p>
+        </div>
+      </div>
+    </div>
   </div>
+  `}
 </section>
