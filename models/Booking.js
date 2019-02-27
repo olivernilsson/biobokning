@@ -25,4 +25,22 @@ bookingSchema.pre('save', function () {
    this.bookingId = bookingId;
 });
 
+bookingSchema.pre('validate',async function (next,done) {
+   let takenSeats=[];
+   let bookingz= await this.constructor.find({view:this.view});
+
+   for(let booking of bookingz){
+   takenSeats= takenSeats.concat(booking.seats);
+   }
+
+   for(let seat of this.seats){
+      if(takenSeats.includes(seat)){
+         next(new Error('this seat is taken'));
+         return
+      }      
+   }
+   next();
+
+});
+
 module.exports = db.model('Booking', bookingSchema);

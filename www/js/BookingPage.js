@@ -183,19 +183,28 @@ class BookingPage extends Component {
       view: this.view,
       seats: this.bookedSeats
     })
-    await this.myNewBooking.save();
-    this.regPage.newBooking.push(this.myNewBooking)
+    console.log('booking to save',this.myNewBooking);
+    let result= await this.myNewBooking.save();
+    console.log('result', result);
+    if(result && result.view && result.view== this.view){
+      
+      this.regPage.newBooking.push(this.myNewBooking)
 
-    //console.log(myNewBooking);
-    //console.log(myNewBooking.bookingId);
+      //console.log(myNewBooking);
+      //console.log(myNewBooking.bookingId);
 
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
-    .populate('view')
-    .populate('user')
-    .exec()
-    `);
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
+      .populate('view')
+      .populate('user')
+      .exec()
+      `);
 
-    this.bookingConfirm.showBooking(myNewBookingPopulated);
+      this.bookingConfirm.showBooking(myNewBookingPopulated);
+    }
+    else{
+
+      alert('BIG ERROR');
+    }
 
   }
 
@@ -268,6 +277,9 @@ class BookingPage extends Component {
       seats: this.bookedSeats,
       view: this.view
     })
+
+    
+
     await userBooking.save();
 
     let loggedInUser = await User.find(`.findOneAndUpdate({email:'${this.email}' },
