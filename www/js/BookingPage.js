@@ -19,10 +19,8 @@ class BookingPage extends Component {
     this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
-    //this.bookingConfirm = new BookingConfirm({bookingPage: this});
     this.bookingConfirm = new BookingConfirm();
     BookingPage.current = this;
-    //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
 

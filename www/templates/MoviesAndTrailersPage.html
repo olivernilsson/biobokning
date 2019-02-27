@@ -51,6 +51,7 @@
        
     <h2 class="act-view">Aktuella visningar: </h2>
     <table class="table table-dark  table-hover">
+      
         <thead>
             <tr>
               <th scope="col">Film</th>
@@ -64,15 +65,13 @@
             <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
       <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->
       ${this.testlist.map((listitem) => `
-       
-      
 
             <tr>
  
-              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.film}</a></td>
-              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.auditorium}</a> </td>
-              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.date}</a></td>
-              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.time}</a></td> 
+              <td><a href="/view/${listitem._id}" class="view-select" data-view-id="${listitem._id}">${listitem.film}</a></td>
+              <td><a href="/view/${listitem._id}" class="view-select" data-view-id="${listitem._id}">${listitem.auditorium}</a> </td>
+              <td><a href="/view/${listitem._id}" class="view-select" data-view-id="${listitem._id}">${listitem.date}</a></td>
+              <td><a href="/view/${listitem._id}" class="view-select" data-view-id="${listitem._id}">${listitem.time}</a></td> 
             </tr>
 
 
