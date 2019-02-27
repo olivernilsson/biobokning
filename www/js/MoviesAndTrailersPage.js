@@ -26,9 +26,7 @@ class MoviesAndTrailersPage extends Component {
 
   async moviePrint() {
     this.movies = await Film.find();
-    //console.log(this.movies);
     this.render();
-
   }
 
   async mount() {
@@ -90,7 +88,7 @@ class MoviesAndTrailersPage extends Component {
     //console.log(this.viewings);
     this.render();
 
-  }
+  } 
 
   showTrailer() {
 
