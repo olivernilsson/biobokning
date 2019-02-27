@@ -1,71 +1,55 @@
 class BookingPage extends Component {
-
   constructor() {
     super();
-    this.addRoute(/\/view\/(.*)/)
+    this.addRoute(/\/view\/(.*)/);
     this.addEvents({
-      'click #forward': 'countUp',
-      'click #backtext': 'countDown',
-      'click #mobforward': 'countUp',
-      'click #mobback': 'countDown',
-      'click .bookTicket': 'bookTicket',
-      'click #save-user-loggedin': 'loggedInBooking',
-      'click #mobin': 'loggedInBooking',
-      'click #mobout': 'saveUser',
-      'click #save-user-notloggedin': 'saveUser'
-
-
-    })
+      "click #forward": "countUp",
+      "click #backtext": "countDown",
+      "click #mobforward": "countUp",
+      "click #mobback": "countDown",
+      "click .bookTicket": "bookTicket",
+      "click #save-user-loggedin": "loggedInBooking",
+      "click #mobin": "loggedInBooking",
+      "click #mobout": "saveUser",
+      "click #save-user-notloggedin": "saveUser"
+    });
     this.view;
     this.myNewBooking;
     this.stepCounter = 1;
     this.regPage = new RegPage();
     this.salonPage = new Salon();
     this.pricePage = new PricePage();
-    //this.bookingConfirm = new BookingConfirm({bookingPage: this});
     this.bookingConfirm = new BookingConfirm();
     BookingPage.current = this;
-    //this.userLogin = new UserLogin(); //Används denna rad? Den orsakar koas med Login-funktionen :(
     this.totalPersons;
     this.bookedSeats = [];
 
-    this.buttonBackText = 'Till start';
-    this.buttonForwardText = 'Välj plats/platser';
+    this.buttonBackText = "Till start";
+    this.buttonForwardText = "Välj plats/platser";
 
     this.peopleCounter = 0;
     this.disableBackButton = 1;
     this.disabledButtonPrice();
   }
 
-
-
-
   change(selectedView) {
     //console.log(selectedView)
     this.view = selectedView;
     this.resetCount();
-    this.render()
-
-    Salon.current.chosenView = this.view._id;
-    Salon.current.auditorium = this.view.auditorium;
+    this.render();
   }
 
-
-
-
-
-
   async saveUser() {
-    if ($('#save-user-notloggedin').hasClass('disabled') || $('#mobout').hasClass('disabled')) {
+    if (
+      $("#save-user-notloggedin").hasClass("disabled") ||
+      $("#mobout").hasClass("disabled")
+    ) {
       return;
     }
     await this.bookTicket();
     await this.regPage.saveUserToDb();
-    await this.addUserToBooking()
-
-
+    await this.addUserToBooking();
   }
-
 
   async mount() {
     let id = this.routeParts[0];
@@ -75,105 +59,90 @@ class BookingPage extends Component {
     this.resetCount();
   }
 
-
-
-
   disabledButtonPrice() {
     this.pricePage.checkCount();
 
     if (this.pricePage.total < 1) {
       this.peopleCounter = 0;
-     
     }
 
-    if (this.pricePage.total>0) {
+    if (this.pricePage.total > 0) {
       this.peopleCounter++;
-      
     }
     this.render();
   }
 
-
-
   countUp() {
     //Ifall vi vill blockera bakåt
-// if(this.stepCounter===2){
-// this.disableBackButton=0;
-// }
-    if (this.stepCounter > 3) {   
-      Router.goto('/')
-      
-   this.stepCounter=1;
-    this.render()
-    this.resetCount();
-  this.resetPeople();
-}
-   
+    // if(this.stepCounter===2){
+    // this.disableBackButton=0;
+    // }
+    if (this.stepCounter > 3) {
+      Router.goto("/");
+
+      this.stepCounter = 1;
+      this.render();
+      this.resetCount();
+      this.resetPeople();
+    }
+
     this.stepCounter++;
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    Salon.current.pushOlderBookedSeatsToArray();
-    Salon.current.click();   
   }
- 
-  countDown() {
 
+  countDown() {
     //ifall vi vill blockera framåt när man väl har gått bakåt
-  // if(this.stepCounter>2){
-  //   this.peopleCounter=0;
-  // }
+    // if(this.stepCounter>2){
+    //   this.peopleCounter=0;
+    // }
     this.stepCounter--;
     if (this.stepCounter < 1) {
-      Router.goto('/')
-      this.stepCounter = 1
-      this.pricePage.total=0;
+      Router.goto("/");
+      this.stepCounter = 1;
+      this.pricePage.total = 0;
     }
 
     this.render();
     this.dataChanges();
     this.wizardTextChanges();
-    Salon.current.pushOlderBookedSeatsToArray(); 
-    Salon.current.click();   
   }
 
   dataChanges() {
+    Salon.current.pushOlderBookedSeatsToArray();
+
     if (this.stepCounter == 2) {
-      this.totalPersons = this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
+      this.totalPersons =
+        this.pricePage.adults + this.pricePage.kids + this.pricePage.seniors;
       this.salonPage.nbrOfPickedSeats = this.totalPersons;
-      //console.log(this.salonPage.nbrOfPickedSeats);
-      Salon.current.auditoriumSelector();
-      Salon.current.pushOlderBookedSeatsToArray();
     }
     if (this.stepCounter == 3) {
       this.bookedSeats = this.salonPage.bookedSeats;
       //console.log(this.bookedSeats);
       //$("#mobforward").addClass("bookTicket");
     }
-
-
   }
 
   wizardTextChanges() {
     if (this.stepCounter == 1) {
-      this.buttonBackText = 'Till start';
-      this.buttonForwardText = 'Välj plats/platser';
+      this.buttonBackText = "Till start";
+      this.buttonForwardText = "Välj plats/platser";
     }
     if (this.stepCounter == 2) {
-      this.buttonBackText = 'Välj antal <br> personer';
-      this.buttonForwardText = 'Framåt';
+      this.buttonBackText = "Välj antal <br> personer";
+      this.buttonForwardText = "Framåt";
     }
     if (this.stepCounter == 3) {
-      this.buttonBackText = 'Välj <br> plats/platser';
-      this.buttonForwardText = 'Boka';
+      this.buttonBackText = "Välj <br> plats/platser";
+      this.buttonForwardText = "Boka";
     }
     if (this.stepCounter == 4) {
-      this.buttonBackText = '';
-      this.buttonForwardText = 'Tillbaka till <br>startsidan';
+      this.buttonBackText = "";
+      this.buttonForwardText = "Tillbaka till <br>startsidan";
     }
     this.render();
   }
-
 
   async bookTicket() {
     this.myNewBooking = await new Booking({
@@ -182,36 +151,38 @@ class BookingPage extends Component {
       seniors: this.pricePage.seniors,
       view: this.view,
       seats: this.bookedSeats
-    })
+    });
     await this.myNewBooking.save();
-    this.regPage.newBooking.push(this.myNewBooking)
-
-    //console.log(myNewBooking);
-    //console.log(myNewBooking.bookingId);
-
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${this.myNewBooking.bookingId}'})
+    this.regPage.newBooking.push(this.myNewBooking);
+    if (!(await this.myNewBooking.hasOwnProperty(`bookingId`))) {
+      this.bookingConfirm.confirmationFail = true;
+      this.countUp();
+    } else {
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        this.myNewBooking.bookingId
+      }'})
     .populate('view')
     .populate('user')
     .exec()
     `);
-
-    this.bookingConfirm.showBooking(myNewBookingPopulated);
-
+      this.bookingConfirm.confirmationFail = false;
+      this.bookingConfirm.showBooking(myNewBookingPopulated);
+    }
   }
 
   resetPeople() {
-    this.pricePage.total=0;
+    this.pricePage.total = 0;
     this.pricePage.adults = 0;
     this.pricePage.kids = 0;
     this.pricePage.seniors = 0;
     this.totalPersons;
-    this.bookedSeats.length=0;
-    this.bookingConfirm.seats.length=0;
+    this.bookedSeats.length = 0;
+    this.bookingConfirm.seats.length = 0;
   }
 
   resetCount() {
-    this.pricePage.total=0;
-    this.peopleCounter=0;
+    this.pricePage.total = 0;
+    this.peopleCounter = 0;
     this.stepCounter = 1;
     this.totalPersons;
     this.bookedSeats = [];
@@ -250,13 +221,12 @@ class BookingPage extends Component {
     this.countUp();
   }
 
-
   async loggedInBooking() {
     this.logg = await Login.find();
     this.email = this.logg.email;
 
     this.loggedIn = await User.find(`.find(
-   {email: '${this.email}'})`)
+   {email: '${this.email}'})`);
 
     let getTheUser = await User.find(`.find({email:'${this.email}'})`);
 
@@ -267,10 +237,17 @@ class BookingPage extends Component {
       user: getTheUser[0]._id,
       seats: this.bookedSeats,
       view: this.view
-    })
+    });
+
     await userBooking.save();
 
-    let loggedInUser = await User.find(`.findOneAndUpdate({email:'${this.email}' },
+    if (!(await userBooking.hasOwnProperty(`bookingId`))) {
+      this.bookingConfirm.confirmationFail = true;
+      this.countUp();
+    } else {
+      let loggedInUser = await User.find(`.findOneAndUpdate({email:'${
+        this.email
+      }' },
       {  "$addToSet": {
         "bookings": '${userBooking._id}'
     }
@@ -281,19 +258,16 @@ class BookingPage extends Component {
           }
       })`);
 
-
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${userBooking.bookingId}'})
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        userBooking.bookingId
+      }'})
     .populate('view')
     .populate('user')
     .exec()
     `);
-
-    this.bookingConfirm.showBooking(myNewBookingPopulated);
-
-    this.countUp();
-
-
+      this.bookingConfirm.confirmationFail = false;
+      this.bookingConfirm.showBooking(myNewBookingPopulated);
+      this.countUp();
+    }
   }
-
-
 }
