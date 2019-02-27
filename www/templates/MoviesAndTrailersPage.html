@@ -25,6 +25,7 @@
       </div>
     </div>
 
+
     <div class="page-info">
       <h2 class="movieh2">${this.movie ? this.movie.title : ''}</h2>
       <h4 class="movieh4">${this.movie ? "År: " : ''}
@@ -46,23 +47,38 @@
       <br>
     </div>
 
+   
+       
     <h2 class="act-view">Aktuella visningar: </h2>
-    <div class="viewings-list">
-      <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
-      <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->
-      ${this.testlist.map((listitem) => `<a class="view-select" href="/view/${listitem._id}" data-view-id="${listitem._id}">
-        <div class="row">
-          <table class="viewings-table">
+    <table class="table table-dark  table-hover">
+        <thead>
             <tr>
-              <td> Film: ${listitem.film} </td>
-              <td> Salong: ${listitem.auditorium} </td>
-              <td> Datum: ${listitem.date} </td>
-              <td> Tid: ${listitem.time} </td>
+              <th scope="col">Film</th>
+              <th scope="col">Salong</th>
+              <th scope="col">Datum</th>
+              <th scope="col">Tid</th>
             </tr>
-          </table>
-      </a></div>`).join('')}
-  </div>`}
+          </thead>
+          <tbody>
 
+            <!--- ${this.list ? JSON.stringify(this.list) : ''}-->
+      <!--- ${this.testlist.map((listitem) => `<div class="row"><p>| Film:  ${listitem.film} | Salong: ${listitem.auditorium}  | Datum: ${listitem.date} | Tid: ${listitem.time} |</p> <button id="select-view" data-view-id="${listitem._id}" type="button" class="btn btn-light">Boka</button></div>`).join('')}-->
+      ${this.testlist.map((listitem) => `
+       
+      
+
+            <tr>
+ 
+              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.film}</a></td>
+              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.auditorium}</a> </td>
+              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.date}</a></td>
+              <td><a href="/view/${listitem._id}" data-view-id="${listitem._id}">${listitem.time}</a></td> 
+            </tr>
+
+
+      `).join('')}`}
+
+</tbody>
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle movie-button" type=" button" id="dropdownMenuButton" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false" data-boundary="scrollParent">
