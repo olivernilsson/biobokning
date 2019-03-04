@@ -1,0 +1,10 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "_bootstrap-variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.App {
+  .navbar-toggler {
+    color: white !important;
+  }
+  /* here you could have specific styling for app */
+}
