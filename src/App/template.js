@@ -19,6 +19,7 @@ export default function() {
           <Route path="/aboutsalons" component={AboutSalons} />
           <Route path="/bookingpage" component={BookingPage} />
         </main>
+
         <Footer />
       </div>
     </Router>
