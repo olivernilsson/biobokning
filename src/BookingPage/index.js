@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./style.scss";
 import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
+import RegPage from "../RegPage/index";
+import BookingConfirm from "../BookingConfirm/index";
 
 class BookingPage extends Component {
   constructor(props) {
@@ -16,7 +18,6 @@ class BookingPage extends Component {
 
   countDown() {
     if (this.state.stepCounter < 2) {
-      console.log("mindre");
       return;
     }
 
@@ -86,6 +87,8 @@ class BookingPage extends Component {
           </button>
           {this.state.stepCounter === 1 ? <PricePage /> : ""}
           {this.state.stepCounter === 2 ? <SalonPage /> : ""}
+          {this.state.stepCounter === 3 ? <RegPage /> : ""}
+          {this.state.stepCounter === 4 ? <BookingConfirm /> : ""}
           <button
             onClick={this.countUp}
             id="forward"

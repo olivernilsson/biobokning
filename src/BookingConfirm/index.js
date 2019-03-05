@@ -7,9 +7,9 @@ class BookingConfirm extends Component {
   }
   render() {
     return (
-      <div>
-        <p>BookingConfirm</p>
-      </div>
+      <section className="wizard-container ">
+        <p> BookingConfirm PAGEEE</p>
+      </section>
     );
   }
 }
