@@ -20,13 +20,13 @@ export default function() {
             <Route exact path="/" component={StartPage} />
             <Route path="/rulespage" component={RulesPage} />
             <Route path="/salonpage" component={SalonPage} />
+            <Route path="/bookingpage" component={BookingPage} />
             <Route
               path="/moviesandtrailerspage"
               component={MoviesAndTrailersPage}
             />
             <Route component={MissingPage} />
           </Switch>
-          <Route path="/bookingpage" component={BookingPage} />
         </main>
         <Footer />
       </div>
