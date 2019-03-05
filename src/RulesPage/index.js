@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-
+import {
+  Container
+} from "reactstrap";
 class RulesPage extends Component {
   constructor(props) {
     super(props);
@@ -7,7 +9,7 @@ class RulesPage extends Component {
   }
   render() {
     return (
-      <section>
+      <Container>
       <div class="col-md-24">
           <div class="row p-3">
               <div class="col-md-24">
@@ -36,7 +38,7 @@ class RulesPage extends Component {
     </div> 
     </div>
   </div>
-  </section>
+  </Container>
     );
   }
 }
