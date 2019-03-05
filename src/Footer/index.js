@@ -14,7 +14,6 @@ class Footer extends Component {
           <i className="fab fa-twitter" />
           <i className="fab fa-instagram" />
         </section>
-        <p>Hej</p>
         <div className="footer-copy text-center" />
       </footer>
     );
