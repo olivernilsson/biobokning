@@ -2,9 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "../Navbar/index";
 import RulesPage from "../RulesPage/index";
-import SalonPage from "../SalonPage/index";
+import AboutSalons from "../AboutSalons/index";
 import StartPage from "../StartPage/index";
 import Footer from "../Footer/index";
+import BookingPage from "../BookingPage/index";
 //import "bootstrap/dist/css/bootstrap.css";
 
 export default function() {
@@ -15,7 +16,8 @@ export default function() {
         <main className="mt-5">
           <Route exact path="/" component={StartPage} />
           <Route path="/rulespage" component={RulesPage} />
-          <Route path="/salonpage" component={SalonPage} />
+          <Route path="/aboutsalons" component={AboutSalons} />
+          <Route path="/bookingpage" component={BookingPage} />
         </main>
         <Footer />
       </div>
