@@ -19,7 +19,7 @@ export default function() {
           <Switch>
             <Route exact path="/" component={StartPage} />
             <Route path="/rulespage" component={RulesPage} />
-            <Route path="/salonpage" component={SalonPage} />
+            <Route path="/aboutsalons" component={AboutSalons} />
             <Route path="/bookingpage" component={BookingPage} />
             <Route
               path="/moviesandtrailerspage"
