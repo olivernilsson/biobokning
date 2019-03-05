@@ -75,6 +75,15 @@ class NavbarApp extends Component {
                   BookingPage demo
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink
+                  className="nav-link"
+                  to="/moviesandtrailerspage"
+                  activeClassName="active"
+                >
+                  Movies
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
