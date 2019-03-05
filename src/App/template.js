@@ -14,7 +14,7 @@ export default function() {
     <Router>
       <div className="App">
         <Navbar />
-        <main className="mt-5">
+        <main>
           <Switch>
             <Route exact path="/" component={StartPage} />
             <Route path="/rulespage" component={RulesPage} />
