@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style.scss";
 
 class SalonPage extends Component {
   constructor(props) {
@@ -7,9 +8,9 @@ class SalonPage extends Component {
   }
   render() {
     return (
-      <div>
-        <p>SalonPage hellu</p>
-      </div>
+      <section className="wizard-container ">
+        <p>Salon Page HElluuu!</p>
+      </section>
     );
   }
 }

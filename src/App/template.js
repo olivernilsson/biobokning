@@ -28,6 +28,7 @@ export default function() {
             <Route component={MissingPage} />
           </Switch>
         </main>
+
         <Footer />
       </div>
     </Router>
