@@ -11,9 +11,9 @@ import BookingPage from "../BookingPage/index";
 export default function() {
   return (
     <Router>
-      <div className="App">
+      <div className="App body">
         <Navbar />
-        <main className="mt-5">
+        <main className="main mt-5">
           <Route exact path="/" component={StartPage} />
           <Route path="/rulespage" component={RulesPage} />
           <Route path="/aboutsalons" component={AboutSalons} />
