@@ -66,6 +66,15 @@ class NavbarApp extends Component {
                   SalonPage
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink
+                  className="nav-link"
+                  to="/moviesandtrailerspage"
+                  activeClassName="active"
+                >
+                  Movies
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
