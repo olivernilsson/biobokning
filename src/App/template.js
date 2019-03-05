@@ -2,17 +2,18 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "../Navbar/index";
 import RulesPage from "../RulesPage/index";
-import SalonPage from "../SalonPage/index";
+import AboutSalons from "../AboutSalons/index";
 import StartPage from "../StartPage/index";
 import MoviesAndTrailersPage from "../MoviesAndTrailersPage/index";
 import MissingPage from "../MissingPage/index";
 import Footer from "../Footer/index";
+import BookingPage from "../BookingPage/index";
 //import "bootstrap/dist/css/bootstrap.css";
 
 export default function() {
   return (
     <Router>
-      <div className="App">
+      <div className="App body">
         <Navbar />
         <main>
           <Switch>
@@ -25,6 +26,7 @@ export default function() {
             />
             <Route component={MissingPage} />
           </Switch>
+          <Route path="/bookingpage" component={BookingPage} />
         </main>
         <Footer />
       </div>

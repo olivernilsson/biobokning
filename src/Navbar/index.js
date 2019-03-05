@@ -60,10 +60,19 @@ class NavbarApp extends Component {
               <NavItem>
                 <NavLink
                   className="nav-link"
-                  to="/salonpage"
+                  to="/aboutsalons"
                   activeClassName="active"
                 >
-                  SalonPage
+                  About Salon
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className="nav-link"
+                  to="/bookingpage"
+                  activeClassName="active"
+                >
+                  BookingPage demo
                 </NavLink>
               </NavItem>
               <NavItem>
