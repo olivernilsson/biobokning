@@ -34,22 +34,18 @@ class RegPage extends Component {
       [e.target.name]: e.target.value
     });
 
+    let { firstName, lastName, password, verifyPassword } = this.state;
+
     let dot = ".";
-    let firstName = this.state.firstName;
-    let lastName = this.state.lastName;
     let email = this.state.email;
-    let passwordValue = this.state.password;
     let indexOfAtSign = this.state.email.indexOf("@");
     let indexOfLastDot = this.state.email.lastIndexOf(dot);
-    let bigLetter = /[A-Z]+/.test(passwordValue);
-    let oneNumber = /[0-9]+/.test(passwordValue);
-    let verifiedPassword = this.state.verifyPassword;
+    let bigLetter = /[A-Z]+/.test(password);
+    let oneNumber = /[0-9]+/.test(password);
 
-    if (passwordValue.length > 7 && bigLetter && oneNumber) {
-      this.setState({ passwordStyle: true });
-    } else {
-      this.setState({ passwordStyle: false });
-    }
+    this.setState({
+      passwordStyle: password.length > 7 && bigLetter && oneNumber
+    });
 
     if (email.length > 9 && indexOfAtSign > 3 && indexOfLastDot > 3) {
       this.setState({ emailStyle: true });
@@ -57,23 +53,12 @@ class RegPage extends Component {
       this.setState({ emailStyle: false });
     }
 
-    if (firstName.length > 2) {
-      this.setState({ firstNameStyle: true });
-    } else {
-      this.setState({ firstNameStyle: false });
-    }
+    this.setState({ firstNameStyle: firstName.length > 2 });
+    this.setState({ lastNameStyle: lastName.length > 2 });
+    this.setState({
+      verifyPasswordStyle: password === verifyPassword && password.length > 7
+    });
 
-    if (lastName.length > 2) {
-      this.setState({ lastNameStyle: true });
-    } else {
-      this.setState({ lastNameStyle: false });
-    }
-
-    if (passwordValue === verifiedPassword && passwordValue.length > 7) {
-      this.setState({ verifyPasswordStyle: true });
-    } else {
-      this.setState({ verifyPasswordStyle: false });
-    }
     // console.log(lastName);
   }
 
@@ -81,6 +66,7 @@ class RegPage extends Component {
     return (
       <section className="reg-form d-flex align-content-center ">
         <Form>
+          <h5>Registrera dig för att slutföra din bokning</h5>
           <FormGroup>
             <div className="group1">
               <span className="blocking">
@@ -109,18 +95,17 @@ class RegPage extends Component {
                 <span className="place-style">Efternamn</span>
               </span>
             </div>
-            <div className="group2">
-              <span className="blocking">
-                <Input
-                  className={this.state.emailStyle === true ? " validated" : ""}
-                  name="email"
-                  onChange={e => this.validationForm(e)}
-                  value={this.state.email}
-                  placeholder=""
-                />
-                <span className="place-style">Email</span>
-              </span>
-            </div>
+
+            <span className="blocking">
+              <Input
+                className={this.state.emailStyle === true ? " validated" : ""}
+                name="email"
+                onChange={e => this.validationForm(e)}
+                value={this.state.email}
+                placeholder=""
+              />
+              <span className="place-style">Email</span>
+            </span>
           </FormGroup>
 
           <FormGroup>

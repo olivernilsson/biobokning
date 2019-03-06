@@ -1,3 +1,12 @@
+form {
+  margin: 0 auto;
+  width: 60%;
+}
+
+form-group {
+  margin-bottom: -30px;
+}
+
 .reg-form {
   margin: 0 auto;
   // max-width: 550px;
@@ -18,7 +27,6 @@
 
 .blocking {
   position: relative;
-  margin-right: 20px;
 }
 
 .place-style {
@@ -46,6 +54,7 @@ textarea {
 }
 
 input[type="text"] {
+  margin-top: 30px;
   background-color: transparent !important;
   outline: none;
   box-shadow: none;
