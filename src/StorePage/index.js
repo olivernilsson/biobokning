@@ -24,7 +24,7 @@ class StorePage extends Component {
             <p>Den klassiska saltade varianten har funnits på våra biografer sedan 1987. För att popcornen ska få sin speciella karaktär poppar vi våra popcorn i ren kokosnötsolja och saltar med ett extra finkornigt gourmetsalt Popcorn är 100% fullkorn och innehåller ca 15% kostfibrer, dessutom är popcorn rikt på antioxidanter.</p>
         </div>
         <div class="col-md-12">
-                <img class="b-image" src="/images/popcorn-bio.jpg" alt="Popcorn"></img>
+        <img class="b-image" src={require('./popcorn-bio.jpg')} alt="Popcorn" />
             </div>
     </div>
     <div class="row p-3">
@@ -36,7 +36,7 @@ class StorePage extends Component {
                 <p>I våra läsktorn har vi storsäljarna Coca Cola, Fanta och Sprite.</p>
             </div>
             <div class="col-md-24">
-                    <img class="b-image" src="/images/dryck-bio.jpg" alt="Dryck"></img>
+            <img class="b-image" src={require('./dryck-bio.jpg')} alt="Dryck" />
                 </div>
            
         </div>
@@ -46,7 +46,7 @@ class StorePage extends Component {
                     <p>Vi har utökat vårt sortiment inom chipsfamiljen och idag kan du hitta allt från Pringles populära rörchips till Estrellas storfavoriter Sourcream, Grill och salta potatischips. Eller varför inte testa uppstickarna Hummus, Lins eller Quinoa chips? </p>
                 </div>
                 <div class="col-md-12">
-                        <img class="b-image" src="/images/chips-bio.jpg" alt="Chips"></img>
+                <img class="b-image" src={require('./chips-bio.jpg')} alt="Chips" />
                     </div>
             </div>
 
