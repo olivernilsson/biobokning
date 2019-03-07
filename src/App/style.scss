@@ -1,6 +1,6 @@
-@import "node_modules/bootstrap/scss/functions";
-@import "_bootstrap-variables";
-@import "node_modules/bootstrap/scss/bootstrap";
+//@import "node_modules/bootstrap/scss/functions";
+//@import "_bootstrap-variables";
+//@import "node_modules/bootstrap/scss/bootstrap";
 
 .App {
   .navbar-toggler {
@@ -10,12 +10,10 @@
   background-color: black !important;
 
   /* here you could have specific styling for app */
-
-
 }
 
 .body {
-  background-color: #0B0C10;
+  background-color: #0b0c10;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -25,4 +23,3 @@
 main {
   flex: 1;
 }
-
