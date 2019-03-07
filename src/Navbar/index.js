@@ -13,6 +13,8 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import UserLogin from "../UserLogin/index";
+
 
 class NavbarApp extends Component {
   constructor(props) {
@@ -75,6 +77,7 @@ class NavbarApp extends Component {
                   BookingPage demo
                 </NavLink>
               </NavItem>
+              <UserLogin />
             </Nav>
           </Collapse>
         </Navbar>
