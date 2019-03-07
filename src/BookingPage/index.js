@@ -9,7 +9,10 @@ class BookingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stepCounter: 1
+      stepCounter: 1,
+      adultschosen: 0,
+      kidschosen: 0,
+      seniorschosen: 0
     };
 
     this.countUp = this.countUp.bind(this);
@@ -34,6 +37,13 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter + 1
       };
     });
+    this.dataChanges()
+  }
+
+  dataChanges(){
+    if(this.state.stepCounter==1){
+      alert('hej');
+    }
   }
 
   render() {

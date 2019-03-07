@@ -4,20 +4,52 @@ import "./style.scss";
 class PricePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      adults:0,
+      kids:0,
+      seniors:0,
+      maximum:8
+    };
   }
+
+  personCounter(event){
+    if(event.target.className=='AdultsDown'){
+      this.setState({adults: this.state.adults-1});
+      this.setState({maximum: this.state.maximum+1});
+    }
+    else if(event.target.className=='AdultsUp'){
+      this.setState({adults: this.state.adults+1});
+      this.setState({maximum: this.state.maximum-1});
+    }
+    else if(event.target.className=='KidsDown'){
+      this.setState({kids: this.state.kids-1});
+    }
+    else if(event.target.className=='KidsUp'){
+      this.setState({kids: this.state.kids+1});
+    }
+    else if(event.target.className=='SeniorsDown'){
+      this.setState({seniors: this.state.seniors-1});
+    }
+    else if(event.target.className=='SeniorsUp'){
+      this.setState({seniors: this.state.seniors+1});
+    }
+    //console.log(event.target.className);
+  }
+
+  
+
   render() {
     return (
       <section className="wizard-container ">
         <div className="wrapit">
-          <p className="price-page-total"> av 8 platser </p>
+          <p className="price-page-total">Utav {this.state.maximum} möjliga </p>
           <div className="outer-box">
             <h2>Vuxna </h2>
             <h5 className="price">120 SEK</h5>
             <div className="inner-box">
-              <button className="AdultsDown">-</button>
-              <p className="count-num">adults</p>
-              <button className="AdultsUp">+</button>
+              <button className="AdultsDown" onClick={this.personCounter.bind(this)}>-</button>
+              <p className="count-num">{this.state.adults}</p>
+              <button className="AdultsUp" onClick={this.personCounter.bind(this)}>+</button>
             </div>
           </div>
 
@@ -25,9 +57,9 @@ class PricePage extends Component {
             <h2>Barn</h2>
             <h5 className="price">75 SEK</h5>
             <div className="inner-box">
-              <button className="KidsDown">-</button>
-              <p className="count-num">kids</p>
-              <button className="KidsUp">+</button>
+              <button className="KidsDown" onClick={this.personCounter.bind(this)}>-</button>
+              <p className="count-num">{this.state.kids}</p>
+              <button className="KidsUp" onClick={this.personCounter.bind(this)}>+</button>
             </div>
           </div>
 
@@ -35,9 +67,9 @@ class PricePage extends Component {
             <h2>Pensionärer</h2>
             <h5 className="price">90 SEK</h5>
             <div className="inner-box">
-              <button className="SeniorsDown">-</button>
-              <p className="count-num">senior</p>
-              <button className="SeniorsUp">+</button>
+              <button className="SeniorsDown" onClick={this.personCounter.bind(this)}>-</button>
+              <p className="count-num">{this.state.seniors}</p>
+              <button className="SeniorsUp" onClick={this.personCounter.bind(this)}>+</button>
             </div>
           </div>
         </div>
