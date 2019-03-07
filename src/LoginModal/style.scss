@@ -1,8 +1,24 @@
+.login-field {
+  position: absolute;
+  right: 20px;
 
-.login-button {
-  width: 92px;
+  p {
+    padding: 5px;
+    text-align: center;
+    color: black;
+  }
 }
 
+@media screen and (max-width: 767px) {
+  .login-field {
+    position: relative;
+    margin: 10px 0 0 16px;
+  }
+}
+
+.login-button {
+  width: 100px;
+}
 
 .login-modal {
   position: absolute;
@@ -15,7 +31,6 @@
   width: 300px;
 }
 
-
 #login-email{
 border-bottom: 1px solid white;
 }
@@ -23,7 +38,6 @@ border-bottom: 1px solid white;
 #login-password{
   border-bottom: 1px solid white;
 }
-
 
 .my-modal-header {
   color: whitesmoke;

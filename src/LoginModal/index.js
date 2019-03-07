@@ -1,50 +1,66 @@
 import React from "react"
 import "./style.scss"
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import REST from "../REST.js"
+import App from "../App/index.js"
 
-class Login extends REST{
+class Login extends REST {
   static get baseRoute() {
     return 'login';
   }
- 
   async delete() {
     this._id = 1;
     // we set an id here, because the REST class
     // will complain if we try to call delete on an object without _id
     // - and we use delete to logout (see test.js)
- 
     return super.delete();
   }
 }
 
+
 class LoginModal extends React.Component {
   constructor(props) {
-    // this.addEvents({
-    //   'click .confirm-login-btn': 'logIn'
-    // });
     super(props);
 
     this.state = {
-      isActive: false,
+      modalVisible: false,
       email: '',
-      password: ''
+      password: '',
+      correctEmail: true,
+      correctPassword: true,
+      loggedIn: false
     };
+
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
     this.handleLoginValues = this.handleLoginValues.bind(this);
     this.logIn = this.logIn.bind(this);
-
+    this.closeLoginModal = this.closeLoginModal.bind(this);
   }
 
-
   toggleLoginModal() {
-    this.setState(prevState => ({
-      isActive : !prevState.isActive,
+    this.setState(() => ({
       email: '',
       password: ''
     }));
+
+    if(App.loggedIn){
+      this.setState({
+        loggedIn: false,
+        modalVisible: false
+      }); 
+      App.loggedIn = false;
+    } 
+    else {
+      this.setState({
+        modalVisible: true,
+      });
+    }
   }
 
+  closeLoginModal(){
+    this.setState({
+      modalVisible: false,
+    });
+  }
 
   handleLoginValues(event) {
     this.setState({
@@ -52,38 +68,42 @@ class LoginModal extends React.Component {
     });
   }
 
-
   // Saves login information to DB and allows the user to log in. 
   async logIn() {
     let email = this.state.email;
     let password = this.state.password;
-    console.log(email + password)
 
     let login = new Login({ 
       email : email,
       password : password
     })
-    console.log('pre', login)
-    await login.save()
 
-    console.log('after', login)
+    this.login = login;
+    await this.login.save()
 
-    //  if( !login.loggedIn ) { return this.validatesLogin(login)} 
-    //   App.loggedIn = true;
-    //   UserLogin.current.hideModal();
-    //   NavBar.current.toggleRegisterButton();
-    //   BookingPage.current.smoothLogIn();
-    //   Salon.current.click();
+    if( !this.login.loggedIn ) { return this.validatesLogin(login)} 
+    App.loggedIn = true;
+    this.setState(() => ({
+      modalVisible : false,
+      loggedIn: true
+    }));
   }
 
-  // // Notifies the user if login attempts failed 
-  // validatesLogin(login) {
-  //   if( login.error === "No such user!") { this.baseEl.find('#wrong-email').show() }
-  //     else { this.baseEl.find('#wrong-email').hide() }
-  //   if( login.error === "The password does not match!") { this.baseEl.find('#wrong-password').show() }
-  //     else { this.baseEl.find('#wrong-password').hide() }
-  // }
-
+  // Notifies the user if login attempts failed 
+  validatesLogin(login) {
+    if( login.error === "No such user!") {
+      this.setState(() => ({
+        correctEmail : false
+      }));
+    }
+     
+    if( login.error === "The password does not match!") {
+      this.setState(() => ({
+        correctEmail : true,
+        correctPassword : false
+      }));  
+    }
+  }
 
   render() {
     return (
@@ -95,12 +115,12 @@ class LoginModal extends React.Component {
           </button>
         </div>
 
-        {this.state.isActive ?
+        {this.state.modalVisible ?
           <div className="login-modal">
 
             <div className="modal-header bg-dark my-modal-header">
               <p className="modal-title">Logga In</p>
-              <button type="button" onClick={this.toggleLoginModal} className="close close-btn" data-dismiss="modal">&times;</button>
+              <button type="button" onClick={this.closeLoginModal} className="close close-btn" data-dismiss="modal">&times;</button>
             </div>
 
             <div className="modal-body bg-dark my-modal-body">
@@ -116,7 +136,7 @@ class LoginModal extends React.Component {
                     placeholder="Email">
                   </input>
                   <span className="place-style"></span>
-                  <p id="wrong-email">Felaktigt email!</p>
+                  {this.state.correctEmail ? '' : <p id="wrong-email">Felaktigt email!</p>}
                 </span>
                 <span className="blockinglogin">
                   <input
@@ -128,7 +148,7 @@ class LoginModal extends React.Component {
                     placeholder="Lösenord">
                   </input>
                   <span className="place-style"></span>
-                  <p id="wrong-password">Felaktigt lösenord!</p>
+                  {this.state.correctPassword ? '' : <p id="wrong-password">Felaktigt lösenord!</p>}
                 </span>
               </div>
             </div>
