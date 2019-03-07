@@ -1,8 +1,22 @@
 import React from "react"
 import "./style.scss"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
-//import Login from "../modelClasses/Login"
+import REST from "../REST.js"
 
+class Login extends REST{
+  static get baseRoute() {
+    return 'login';
+  }
+ 
+  async delete() {
+    this._id = 1;
+    // we set an id here, because the REST class
+    // will complain if we try to call delete on an object without _id
+    // - and we use delete to logout (see test.js)
+ 
+    return super.delete();
+  }
+}
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -45,14 +59,16 @@ class LoginModal extends React.Component {
     let password = this.state.password;
     console.log(email + password)
 
-    // let login = new Login({ 
-    //   email : email,
-    //   password : password
-    // })
+    let login = new Login({ 
+      email : email,
+      password : password
+    })
+    console.log('pre', login)
+    await login.save()
 
-    //await login.save()
+    console.log('after', login)
 
-    //   if( !login.loggedIn ) { return this.validatesLogin(login)} 
+    //  if( !login.loggedIn ) { return this.validatesLogin(login)} 
     //   App.loggedIn = true;
     //   UserLogin.current.hideModal();
     //   NavBar.current.toggleRegisterButton();
