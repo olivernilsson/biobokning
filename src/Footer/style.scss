@@ -7,6 +7,7 @@ footer {
 .footer-copy {
   color: #fff;
 }
+
 .social-icons {
   color: #85ffc7;
   font-size: 32px;
@@ -17,6 +18,8 @@ footer {
     transform: scale(1.1);
   }
   .fab {
+    margin-left: 5px;
+    margin-right: 5px;
     padding: 0.5rem;
     transition: 0.8s;
     border: solid 3px #297373;
