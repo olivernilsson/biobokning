@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./style.scss";
 import {
-  Collapse,
   Button,
   CardBody,
   Card,
   Col,
   Row,
-  Container,
   UncontrolledCollapse,
   CardHeader
 } from "reactstrap";
