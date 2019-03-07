@@ -11,35 +11,47 @@ import {
 } from "reactstrap";
 import "./style.scss";
 
-class RegPage extends Component {
+export class RegPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "" || "",
-      lastName: "" || "",
+      firstName: null || "",
+      lastName: null || "",
       email: null || "",
       password: null || "",
       verifyPassword: null || "",
       firstNameStyle: false,
       lastNameStyle: false,
       passwordStyle: false,
-      verifyPasswordStyle: false
+      verifyPasswordStyle: false,
+      registrationDone: false
     };
 
     this.validationForm = this.validationForm.bind(this);
   }
 
+  handleData = () => {
+    let { firstName, lastName, email, password } = this.state;
+    this.props.myData(firstName, lastName, email, password);
+  };
+
   async validationForm(e) {
     await this.setState({
       [e.target.name]: e.target.value
     });
-
-    let { firstName, lastName, password, verifyPassword } = this.state;
+    this.handleData();
+    let {
+      firstName,
+      lastName,
+      password,
+      verifyPassword,
+      email,
+      registrationDone
+    } = this.state;
 
     let dot = ".";
-    let email = this.state.email;
-    let indexOfAtSign = this.state.email.indexOf("@");
-    let indexOfLastDot = this.state.email.lastIndexOf(dot);
+    let indexOfAtSign = email.indexOf("@");
+    let indexOfLastDot = email.lastIndexOf(dot);
     let bigLetter = /[A-Z]+/.test(password);
     let oneNumber = /[0-9]+/.test(password);
 
@@ -47,19 +59,33 @@ class RegPage extends Component {
       passwordStyle: password.length > 7 && bigLetter && oneNumber
     });
 
-    if (email.length > 9 && indexOfAtSign > 3 && indexOfLastDot > 3) {
-      this.setState({ emailStyle: true });
-    } else {
-      this.setState({ emailStyle: false });
-    }
+    this.setState({
+      emailStyle: email.length > 9 && indexOfAtSign > 3 && indexOfLastDot > 3
+    });
 
-    this.setState({ firstNameStyle: firstName.length > 2 });
-    this.setState({ lastNameStyle: lastName.length > 2 });
+    this.setState({
+      firstNameStyle: firstName.length > 2
+    });
+    this.setState({
+      lastNameStyle: lastName.length > 2
+    });
     this.setState({
       verifyPasswordStyle: password === verifyPassword && password.length > 7
     });
 
-    // console.log(lastName);
+    this.setState(
+      {
+        registrationDone:
+          firstName.length > 2 &&
+          lastName.length > 2 &&
+          password.length > 7 &&
+          email.length > 9 &&
+          password === verifyPassword
+      },
+      function() {
+        console.log(this.state.registrationDone);
+      }
+    );
   }
 
   render() {
@@ -144,5 +170,3 @@ class RegPage extends Component {
     );
   }
 }
-
-export default RegPage;

@@ -2,19 +2,42 @@ import React, { Component } from "react";
 import "./style.scss";
 import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
-import RegPage from "../RegPage/index";
+import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
 
 class BookingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stepCounter: 1
+      stepCounter: 1,
+      dataFirst: null,
+      dataLast: null,
+      dataEmail: null,
+      dataPassword: null
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
   }
+
+  handleData = (firstName, lastName, email, password) => {
+    this.setState({
+      dataFirst: firstName,
+      dataLast: lastName,
+      dataEmail: email,
+      dataPassword: password
+    });
+
+    console.log(
+      this.state.dataFirst +
+        ` ` +
+        this.state.dataLast +
+        ` ` +
+        this.state.dataEmail +
+        ` ` +
+        this.state.dataPassword
+    );
+  };
 
   countDown() {
     if (this.state.stepCounter < 2) {
@@ -87,16 +110,32 @@ class BookingPage extends Component {
           </button>
           {this.state.stepCounter === 1 ? <PricePage /> : ""}
           {this.state.stepCounter === 2 ? <SalonPage /> : ""}
-          {this.state.stepCounter === 3 ? <RegPage /> : ""}
+          {this.state.stepCounter === 3 ? (
+            <RegPage myData={this.handleData} />
+          ) : (
+            ""
+          )}
           {this.state.stepCounter === 4 ? <BookingConfirm /> : ""}
-          <button
-            onClick={this.countUp}
-            id="forward"
-            type="button"
-            className="btn btn-light"
-          >
-            Framåt
-          </button>
+
+          {this.state.stepCounter === 3 ? (
+            <button
+              onClick={this.handleClick}
+              id="forward"
+              type="button"
+              className="done-btn btn  btn-sm "
+            >
+              Slutför bokningen
+            </button>
+          ) : (
+            <button
+              onClick={this.countUp}
+              id="forward"
+              type="button"
+              className="btn btn-light"
+            >
+              Framåt
+            </button>
+          )}
         </div>
       </section>
     );
