@@ -81,7 +81,7 @@ class BookingPage extends Component {
             onClick={this.countDown}
             id="backtext"
             type="button"
-            class="btn btn-light"
+            className="btn btn-light"
           >
             Bakåt
           </button>
