@@ -1,7 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "../Navbar/index";
 import RulesPage from "../RulesPage/index";
+import AboutPage from "../AboutPage/index";
+import StorePage from "../StorePage/index";
 import AboutSalons from "../AboutSalons/index";
 import StartPage from "../StartPage/index";
 import MoviesAndTrailersPage from "../MoviesAndTrailersPage/index";
@@ -20,7 +23,9 @@ export default function() {
             <Route exact path="/" component={StartPage} />
             <Route path="/rulespage" component={RulesPage} />
             <Route path="/aboutsalons" component={AboutSalons} />
+            <Route path="/aboutpage" component={AboutPage} />
             <Route path="/bookingpage" component={BookingPage} />
+            <Route path="/storepage" component={StorePage} />
             <Route
               path="/moviesandtrailerspage"
               component={MoviesAndTrailersPage}
@@ -28,6 +33,7 @@ export default function() {
             <Route component={MissingPage} />
           </Switch>
         </main>
+
         <Footer />
       </div>
     </Router>
