@@ -163,6 +163,7 @@ class MoviesAndTrailersPage extends Component {
             </a>
           ))}
         </div>
+        <br />
       </section>
     );
   }
