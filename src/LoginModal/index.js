@@ -36,7 +36,7 @@ class LoginModal extends React.Component {
     this.closeLoginModal = this.closeLoginModal.bind(this);
   }
 
-  toggleLoginModal() {
+  async toggleLoginModal() {
     this.setState(() => ({
       email: '',
       password: ''
@@ -48,6 +48,7 @@ class LoginModal extends React.Component {
         modalVisible: false
       }); 
       App.loggedIn = false;
+      await this.login.delete();
     } 
     else {
       this.setState({
@@ -66,6 +67,7 @@ class LoginModal extends React.Component {
     this.setState({
       [event.target.type]: event.target.value
     });
+    console.log(event.target.value)
   }
 
   // Saves login information to DB and allows the user to log in. 
