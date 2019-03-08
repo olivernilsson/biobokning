@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Row
+} from "reactstrap";
 import "./movies.scss";
 import REST from "./REST.js";
 
 class Film extends REST {}
+
+class View extends REST {}
 
 class MoviesAndTrailersPage extends Component {
   constructor(props) {
@@ -11,19 +20,42 @@ class MoviesAndTrailersPage extends Component {
     this.state = {
       mIndex: 4,
       modal: false,
-      movies: []
+      movies: [],
+      views: []
     };
     this.youtube = "https://www.youtube.com/embed/";
     this.toggle = this.toggle.bind(this);
     this.movies = [];
     this.movie = [];
-    this.film();
+    this.testlist = [];
+    this.viewings = [];
+    this.start();
+  }
+
+  async start() {
+    await this.film();
+    await this.viewingsfind(this.state.movies[this.state.mIndex]);
   }
 
   async film() {
     this.movie = await Film.find();
     //console.log(this.movie[0].title);
     this.setState({ movies: this.movie });
+  }
+
+  async viewingsfind(movie) {
+    //console.log(movie.title);
+    this.list = [];
+    //console.log(`${movie.title}`);
+    this.test = JSON.stringify(movie.title);
+    this.viewings = await View.find(`.find({film:${this.test}})`);
+
+    //console.log(this.viewings);
+
+    for (let view of this.viewings) {
+      this.testlist.push(view);
+    }
+    this.setState({ views: this.testlist });
   }
 
   returnFilm() {
@@ -48,13 +80,11 @@ class MoviesAndTrailersPage extends Component {
           className="bg-image"
           src={require("./" + this.state.movies[this.state.mIndex].images[0])}
         />
-
         <img
           className="play"
           onClick={this.toggle}
           src={require("./play.png")}
         />
-
         <div>
           <Modal
             isOpen={this.state.modal}
@@ -75,7 +105,6 @@ class MoviesAndTrailersPage extends Component {
             </ModalBody>
           </Modal>
         </div>
-
         <div className="page-info">
           <h2 className="movieh2">
             {this.state.movies[this.state.mIndex].title}
@@ -100,7 +129,12 @@ class MoviesAndTrailersPage extends Component {
           <p>{"Språk: " + this.state.movies[this.state.mIndex].language}</p>
           <br />
         </div>
+
         <h2 className="act-view">Aktuella visningar: </h2>
+        <div className="viewings-list">
+          {console.log(this.testlist)}
+          {this.state.views.map(listitem => `${listitem.film}`).join("")}
+        </div>
       </section>
     );
   }
