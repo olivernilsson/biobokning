@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Row
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./movies.scss";
 import REST from "./REST.js";
 
@@ -132,8 +125,43 @@ class MoviesAndTrailersPage extends Component {
 
         <h2 className="act-view">Aktuella visningar: </h2>
         <div className="viewings-list">
+          <div className="row-top">
+            <table className="viewings-table">
+              <tbody>
+                <tr>
+                  <td>Film </td>
+                  <td>Salong </td>
+                  <td>Datum</td>
+                  <td>Tid </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="viewings-list">
           {console.log(this.testlist)}
-          {this.state.views.map(listitem => `${listitem.film}`).join("")}
+          {this.testlist.map(listitem => (
+            <a
+              className="view-select"
+              href="/view/${
+                listitem._id
+              }"
+              data-view-id="${listitem._id}"
+            >
+              <div className="row">
+                <table className="viewings-table">
+                  <tbody>
+                    <tr>
+                      <td>{listitem.film} </td>
+                      <td>{listitem.auditorium} </td>
+                      <td>{listitem.date} </td>
+                      <td>{listitem.time} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </a>
+          ))}
         </div>
       </section>
     );

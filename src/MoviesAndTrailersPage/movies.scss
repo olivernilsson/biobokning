@@ -60,6 +60,33 @@
   padding: 0;
 }
 
+.row {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: solid 1px;
+  color: gray;
+}
+
+.row-top {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: solid 1px;
+  color: white;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.row:hover {
+  text-decoration: none;
+  animation-name: fade;
+  animation-duration: 0.3s;
+  color: white;
+}
+
+td {
+  font-size: 20px;
+}
+
 .bg-image {
   margin: 0;
   padding: 0;
