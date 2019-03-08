@@ -11,7 +11,7 @@ class MoviesAndTrailersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mIndex: 0,
+      mIndex: 4,
       modal: false,
       movies: [],
       views: []
