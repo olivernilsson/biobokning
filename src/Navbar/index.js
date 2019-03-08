@@ -8,11 +8,13 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  // UncontrolledDropdown,
+  // DropdownToggle,
+  // DropdownMenu,
+  // DropdownItem
 } from "reactstrap";
+import UserLogin from "../UserLogin/index";
+
 
 class NavbarApp extends Component {
   constructor(props) {
@@ -69,6 +71,15 @@ class NavbarApp extends Component {
               <NavItem>
                 <NavLink
                   className="nav-link"
+                  to="/storepage"
+                  activeClassName="active"
+                >
+                  StorePage
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className="nav-link"
                   to="/aboutsalons"
                   activeClassName="active"
                 >
@@ -93,6 +104,7 @@ class NavbarApp extends Component {
                   Movies
                 </NavLink>
               </NavItem>
+              <UserLogin />
             </Nav>
           </Collapse>
         </Navbar>
