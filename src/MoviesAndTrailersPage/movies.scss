@@ -60,7 +60,7 @@
   padding: 0;
 }
 
-.row {
+.row-view {
   padding-bottom: 15px;
   padding-top: 15px;
   border-bottom: solid 1px;
@@ -76,7 +76,7 @@
   margin-left: -15px;
 }
 
-.row:hover {
+.row-view:hover {
   text-decoration: none;
   animation-name: fade;
   animation-duration: 0.3s;

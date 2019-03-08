@@ -148,7 +148,7 @@ class MoviesAndTrailersPage extends Component {
               }"
               data-view-id="${listitem._id}"
             >
-              <div className="row">
+              <div className="row-view">
                 <table className="viewings-table">
                   <tbody>
                     <tr>
