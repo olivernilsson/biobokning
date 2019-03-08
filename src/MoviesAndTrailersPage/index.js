@@ -64,7 +64,7 @@ class MoviesAndTrailersPage extends Component {
             <ModalHeader toggle={this.toggle} />
             <ModalBody>
               <iframe
-                allowfullscreen="true"
+                allowFullScreen={true}
                 width="465"
                 height="340"
                 src={
@@ -72,8 +72,7 @@ class MoviesAndTrailersPage extends Component {
                   this.state.movies[this.state.mIndex].youtubeTrailers[0]
                 }
               />
-            </ModalBody>{" "}
-            />
+            </ModalBody>
           </Modal>
         </div>
 
