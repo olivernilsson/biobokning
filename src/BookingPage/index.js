@@ -99,6 +99,36 @@ class BookingPage extends Component {
           </ul>
         </div>
 
+        <div className="mobile-buttons">
+          <button
+            id="mobback"
+            onClick={this.countDown}
+            type="button"
+            className="align-self-center btn "
+          >
+            Bakåt
+          </button>
+
+          {this.stepCounter === 3 ? (
+            <button
+              id="mobout"
+              type="submit"
+              className="submit-forwardmobile align-self-center btn"
+            >
+              Slutför bokningen
+            </button>
+          ) : (
+            <button
+              onClick={this.countUp}
+              id="mobforward"
+              type="button"
+              className="align-self-center btn btn-light"
+            >
+              Framåt
+            </button>
+          )}
+        </div>
+
         <div className=" pagewrap ">
           <button
             onClick={this.countDown}

@@ -1,6 +1,6 @@
 form {
   margin: 0 auto;
-  width: 60%;
+  width: 80%;
 }
 
 form-group {
@@ -15,7 +15,7 @@ form-group {
   padding: 10px;
   border-radius: 10%;
   position: relative;
-  width: 50%;
+  width: 100%;
 }
 
 .form-style {
@@ -30,6 +30,7 @@ form-group {
 }
 
 .place-style {
+  width: 150px;
   font-size: 13px;
   font-style: italic;
   position: absolute;
@@ -60,6 +61,7 @@ input[type="text"] {
   box-shadow: none;
   border: none;
   border-bottom: 1px solid lightcoral;
+  width: 50%;
 }
 
 input[type="text"]:focus,
@@ -78,15 +80,26 @@ textarea:focus {
 .validated {
   border-bottom: 1px solid lightgreen !important;
 }
+input:focus + span,
+input:not(:placeholder-shown) + span {
+  width: 150px;
+  font-size: 16px;
+  opacity: 1;
+  transform: scale(0.75) translateY(-100%) translateX(-30px);
+  top: -40px;
+  left: 15px;
+  color: rgba(180, 240, 225, 0.712);
+}
 
 input[type="password"],
 textarea {
   background-color: transparent;
   padding: 3px 0px 3px 3px;
-  margin: 5px 5px 3px 0px;
+  margin: 30px 5px 3px 0px;
   border: none;
   border-bottom: 1px solid lightcoral;
   color: whitesmoke;
+  width: 50%;
 }
 
 input[type="password"]:focus,
@@ -100,4 +113,22 @@ textarea:focus {
   box-shadow: none;
   outline: none;
   border-bottom: 1px solid lightcoral;
+}
+
+.not-validated {
+  color: lightcoral !important;
+  font-size: 12px;
+}
+
+.validated-text {
+  color: lightgreen !important;
+  font-size: 12px;
+}
+
+.validate-box {
+  margin: 33px 0px;
+  line-height: normal;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
 }

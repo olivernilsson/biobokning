@@ -24,7 +24,10 @@ export class RegPage extends React.Component {
       lastNameStyle: false,
       passwordStyle: false,
       verifyPasswordStyle: false,
-      registrationDone: false
+      registrationDone: false,
+      minLetter: false,
+      bigLetterVal: false,
+      oneNumberVal: false
     };
 
     this.validationForm = this.validationForm.bind(this);
@@ -40,14 +43,7 @@ export class RegPage extends React.Component {
       [e.target.name]: e.target.value
     });
     this.handleData();
-    let {
-      firstName,
-      lastName,
-      password,
-      verifyPassword,
-      email,
-      registrationDone
-    } = this.state;
+    let { firstName, lastName, password, verifyPassword, email } = this.state;
 
     let dot = ".";
     let indexOfAtSign = email.indexOf("@");
@@ -58,6 +54,10 @@ export class RegPage extends React.Component {
     this.setState({
       passwordStyle: password.length > 7 && bigLetter && oneNumber
     });
+
+    this.setState({ minLetter: password.length > 7 });
+    this.setState({ bigLetterVal: bigLetter });
+    this.setState({ oneNumberVal: oneNumber });
 
     this.setState({
       emailStyle: email.length > 9 && indexOfAtSign > 3 && indexOfLastDot > 3
@@ -104,7 +104,7 @@ export class RegPage extends React.Component {
                   name="firstName"
                   onChange={e => this.validationForm(e)}
                   value={this.state.firstName}
-                  placeholder=""
+                  placeholder=" "
                 />
                 <span className="place-style">Förnamn</span>
               </span>
@@ -116,7 +116,7 @@ export class RegPage extends React.Component {
                   name="lastName"
                   onChange={e => this.validationForm(e)}
                   value={this.state.lastName}
-                  placeholder=""
+                  placeholder=" "
                 />
                 <span className="place-style">Efternamn</span>
               </span>
@@ -128,7 +128,7 @@ export class RegPage extends React.Component {
                 name="email"
                 onChange={e => this.validationForm(e)}
                 value={this.state.email}
-                placeholder=""
+                placeholder=" "
               />
               <span className="place-style">Email</span>
             </span>
@@ -138,6 +138,8 @@ export class RegPage extends React.Component {
             <div>
               <span className="blocking">
                 <Input
+                  required
+                  type="text"
                   type="password"
                   className={
                     this.state.passwordStyle === true ? " validated" : ""
@@ -145,7 +147,7 @@ export class RegPage extends React.Component {
                   name="password"
                   onChange={e => this.validationForm(e)}
                   value={this.state.password}
-                  placeholder=""
+                  placeholder=" "
                 />
                 <span className="place-style">Lösenord</span>
               </span>
@@ -159,10 +161,41 @@ export class RegPage extends React.Component {
                   name="verifyPassword"
                   onChange={e => this.validationForm(e)}
                   value={this.state.verifyPassword}
-                  placeholder=""
+                  placeholder=" "
                 />
                 <span className="place-style">Repetera lösenord</span>
               </span>
+            </div>
+            <div className="validate-box flex-column row">
+              <p
+                className={
+                  this.state.minLetter === true
+                    ? " validated-text"
+                    : "not-validated"
+                }
+              >
+                Minst sju tecken
+              </p>
+
+              <p
+                className={
+                  this.state.bigLetterVal === true
+                    ? " validated-text"
+                    : "not-validated"
+                }
+              >
+                Minst en stor bokstav
+              </p>
+
+              <p
+                className={
+                  this.state.oneNumberVal === true
+                    ? " validated-text"
+                    : "not-validated"
+                }
+              >
+                Minst en siffra
+              </p>
             </div>
           </FormGroup>
         </Form>
