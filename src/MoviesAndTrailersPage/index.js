@@ -11,7 +11,7 @@ class MoviesAndTrailersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mIndex: 4,
+      mIndex: 0,
       modal: false,
       movies: [],
       views: []
@@ -143,10 +143,8 @@ class MoviesAndTrailersPage extends Component {
           {this.testlist.map(listitem => (
             <a
               className="view-select"
-              href="/view/${
-                listitem._id
-              }"
-              data-view-id="${listitem._id}"
+              href={"/view/" + listitem._id}
+              data-view-id={listitem._id}
             >
               <div className="row-view">
                 <table className="viewings-table">
