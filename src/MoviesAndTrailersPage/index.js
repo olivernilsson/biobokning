@@ -13,6 +13,7 @@ class MoviesAndTrailersPage extends Component {
       modal: false,
       movies: []
     };
+    this.youtube = "https://www.youtube.com/embed/";
     this.toggle = this.toggle.bind(this);
     this.movies = [];
     this.movie = [];
@@ -60,24 +61,19 @@ class MoviesAndTrailersPage extends Component {
             toggle={this.toggle}
             className={this.props.className}
           >
-            <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+            <ModalHeader toggle={this.toggle} />
             <ModalBody>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={this.toggle}>
-                Do Something
-              </Button>{" "}
-              <Button color="secondary" onClick={this.toggle}>
-                Cancel
-              </Button>
-            </ModalFooter>
+              <iframe
+                allowfullscreen="true"
+                width="465"
+                height="340"
+                src={
+                  this.youtube +
+                  this.state.movies[this.state.mIndex].youtubeTrailers[0]
+                }
+              />
+            </ModalBody>{" "}
+            />
           </Modal>
         </div>
 
@@ -103,7 +99,9 @@ class MoviesAndTrailersPage extends Component {
                 .join(", ")}{" "}
           </p>
           <p>{"Språk: " + this.state.movies[this.state.mIndex].language}</p>
+          <br />
         </div>
+        <h2 className="act-view">Aktuella visningar: </h2>
       </section>
     );
   }
