@@ -1,0 +1,103 @@
+form {
+  margin: 0 auto;
+  width: 60%;
+}
+
+form-group {
+  margin-bottom: -30px;
+}
+
+.reg-form {
+  margin: 0 auto;
+  // max-width: 550px;
+  // height: 400px;
+  // background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 10%;
+  position: relative;
+  width: 50%;
+}
+
+.form-style {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid white;
+}
+
+.blocking {
+  position: relative;
+}
+
+.place-style {
+  font-size: 13px;
+  font-style: italic;
+  position: absolute;
+  pointer-events: none;
+  left: 4px;
+  transition: 0.2s ease all;
+  color: rgba(180, 240, 225, 0.712);
+}
+
+.group1 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+input[type="text"],
+textarea {
+  padding: 3px 0px 3px 3px;
+  margin: 5px 5px 3px 0px;
+  border: none;
+  border-bottom: 1px solid lightcoral;
+  color: whitesmoke;
+}
+
+input[type="text"] {
+  margin-top: 30px;
+  background-color: transparent !important;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid lightcoral;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  color: whitesmoke;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid lightcoral;
+}
+
+.validated {
+  border-bottom: 1px solid lightgreen !important;
+}
+
+input[type="password"],
+textarea {
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 5px 3px 0px;
+  border: none;
+  border-bottom: 1px solid lightcoral;
+  color: whitesmoke;
+}
+
+input[type="password"]:focus,
+textarea:focus {
+  background-color: transparent;
+  padding: 3px 0px 3px 3px;
+  color: whitesmoke;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  border-bottom: 1px solid lightcoral;
+}
