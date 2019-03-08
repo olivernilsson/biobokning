@@ -4,6 +4,9 @@ import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
 import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
+import REST from "../REST";
+
+class User extends REST {}
 
 class BookingPage extends Component {
   constructor(props) {
@@ -52,11 +55,28 @@ class BookingPage extends Component {
   }
 
   countUp() {
+    if (this.state.stepCounter === 3) {
+      this.saveUserToDb();
+    }
+
     this.setState(prevState => {
       return {
         stepCounter: prevState.stepCounter + 1
       };
     });
+  }
+
+  async saveUserToDb() {
+    let { dataFirst, dataEmail, dataLast, dataPassword } = this.state;
+    let addUser = new User({
+      firstName: dataFirst,
+      lastName: dataLast,
+      email: dataEmail,
+      password: dataPassword
+    });
+
+    await addUser.save();
+    console.log(addUser);
   }
 
   render() {
@@ -149,7 +169,7 @@ class BookingPage extends Component {
 
           {this.state.stepCounter === 3 ? (
             <button
-              onClick={this.handleClick}
+              onClick={this.countUp}
               id="forward"
               type="button"
               className="done-btn btn  btn-sm "
