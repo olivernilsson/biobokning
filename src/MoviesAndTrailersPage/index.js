@@ -112,7 +112,7 @@ class MoviesAndTrailersPage extends Component {
           </h4>
           <br />
           <p>{this.state.movies[this.state.mIndex].description}</p>
-          <p>{"Director: " + this.state.movies[this.state.mIndex].director}</p>
+          <p>{"Regissör: " + this.state.movies[this.state.mIndex].director}</p>
           <p>
             {"Skådespelare: " +
               this.state.movies[this.state.mIndex].actors
