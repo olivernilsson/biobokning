@@ -11,7 +11,7 @@ class MoviesAndTrailersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mIndex: 4,
+      mIndex: this.props.location.index || 0,
       modal: false,
       movies: [],
       views: []
@@ -22,7 +22,18 @@ class MoviesAndTrailersPage extends Component {
     this.movie = [];
     this.testlist = [];
     this.viewings = [];
+    //this.setMovie();
     this.start();
+    console.log(this.props.location.index);
+    console.log(this.state.mIndex);
+  }
+
+  setMovie() {
+    if (this.props.location.index !== undefined) {
+      console.log(this.props.location.index);
+      this.setState({ mIndex: this.props.location.index });
+    }
+    console.log(this.state.mIndex);
   }
 
   async start() {

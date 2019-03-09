@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./startpage.scss";
+import { Link } from "react-router-dom";
 import REST from "./REST.js";
 
 class Film extends REST {}
@@ -22,7 +23,12 @@ class StartPage extends Component {
     }
     return (
       <section>
-        <a href="/moviesandtrailerspage">
+        <Link
+          to={{
+            pathname: "/moviesandtrailerspage/",
+            index: 4 // your data array of objects
+          }}
+        >
           <div className="head-movie" data-movie-id="${this.singleMovieId}">
             <div className="headoverlay">
               <img
@@ -33,7 +39,38 @@ class StartPage extends Component {
             </div>
             <div className="headoverlay-title">Hunter Killer - Biljetter</div>
           </div>
-        </a>
+        </Link>
+
+        <div className="start-box d-inline-flex  justify-content-around flex-wrap ">
+          {this.state.movies.slice(0, 4).map((movie, index) => (
+            <Link
+              to={{
+                pathname: "/moviesandtrailerspage/",
+                index: index // your data array of objects
+              }}
+            >
+              <div
+                className="col-md-12 start-picture"
+                data-movie-id={movie._id}
+              >
+                <img
+                  className="movie-image"
+                  src={require("./" + movie.images[0])}
+                />
+                <div className="overlay-title">{movie.title}</div>
+                <div className="overlay-year">{movie.productionYear}</div>
+                <div
+                  className="overlay select-movie"
+                  data-movie-id="${movie._id}"
+                >
+                  <p className="overlay-text">
+                    {movie.description.slice(0, 150)}.....
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
     );
   }
