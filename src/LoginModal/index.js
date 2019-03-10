@@ -42,6 +42,7 @@ class LoginModal extends React.Component {
       password: ''
     }));
 
+    //Logout
     if(App.loggedIn){
       this.setState({
         loggedIn: false,
@@ -67,7 +68,6 @@ class LoginModal extends React.Component {
     this.setState({
       [event.target.type]: event.target.value
     });
-    console.log(event.target.value)
   }
 
   // Saves login information to DB and allows the user to log in. 
@@ -82,6 +82,7 @@ class LoginModal extends React.Component {
 
     this.login = login;
     await this.login.save()
+
 
     if( !this.login.loggedIn ) { return this.validatesLogin(login)} 
     App.loggedIn = true;
