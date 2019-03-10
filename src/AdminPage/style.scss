@@ -1,0 +1,64 @@
+.adminpage-holder {
+  padding: 50px;
+}
+
+.addmovie-desc,
+textarea {
+  border-bottom: none;
+  outline: 1px solid #85ffc7;
+  width: 40% !important;
+}
+
+.addmovie-desc,
+textarea:focus {
+  border-bottom: none;
+  outline: 1px solid #85ffc7;
+}
+
+.addmovie-title[type="text"],
+.addmovie-length[type="text"],
+.addmovie-director[type="text"],
+.addmovie-actors[type="text"],
+.addmovie-genre[type="text"] {
+  border-bottom: 1px solid #85ffc7 !important;
+  background-color: transparent;
+  width: 40% !important;
+}
+
+.title-addon {
+  float: right;
+  position: absolute;
+  height: 30px;
+  bottom: 0;
+}
+.addmovie-holder {
+  margin: 0 auto;
+  align-items: center;
+  flex-direction: column;
+  float: right;
+  margin-bottom: 50px;
+}
+
+.addimage-holder {
+  height: 100px;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.addImageId {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.addimage-label {
+  padding: 15px;
+  border: 1px solid rgba(197, 194, 194, 0.5);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.input-group > .form-control:not(:first-child) {
+  width: 40% !important;
+}
