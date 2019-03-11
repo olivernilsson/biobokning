@@ -57,7 +57,10 @@ class MoviesAndTrailersPage extends Component {
     //console.log(this.viewings);
 
     for (let view of this.viewings) {
-      this.testlist.push(view);
+      let viewDate = new Date(view.date);
+      if (viewDate > Date.now()) {
+        this.testlist.push(view);
+      }
     }
     this.setState({ views: this.testlist });
   }
