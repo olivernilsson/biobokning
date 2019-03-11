@@ -32,9 +32,9 @@ class UserRegistration extends Component {
     render() {
         return (
 
-            <div>
+            <section>
 
-<div class="registration-field">
+                <div class="registration-field">
                     <button type="button" class="register-button btn btn-primary" onClick={this.toggleModal}>
                     {this.props.buttonLabel}Registrering
                     </button>
@@ -110,7 +110,7 @@ class UserRegistration extends Component {
                                 </Form>
                             </ModalBody>
                 </Modal>
-      </div>
+      </section>
         );
     }
 }
