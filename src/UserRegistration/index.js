@@ -12,7 +12,21 @@ import {
 class UserRegistration extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+        firstName: null || "",
+      lastName: null || "",
+      email: null || "",
+      password: null || "",
+      verifyPassword: null || "",
+      firstNameStyle: false,
+      lastNameStyle: false,
+      passwordStyle: false,
+      verifyPasswordStyle: false,
+      registrationDone: false,
+      minLetter: false,
+      bigLetterVal: false,
+      oneNumberVal: false
+    };
 
   }
 
@@ -107,4 +121,4 @@ class UserRegistration extends Component {
   }
 }
 
-export default withRouter(UserRegistration);
+export default (UserRegistration);

@@ -14,6 +14,7 @@ import {
   // DropdownItem
 } from "reactstrap";
 import UserLogin from "../UserLogin/index";
+import UserRegistration from "../UserRegistration/index";
 
 
 class NavbarApp extends Component {
@@ -104,6 +105,7 @@ class NavbarApp extends Component {
                   Movies
                 </NavLink>
               </NavItem>
+              <UserRegistration />
               <UserLogin />
             </Nav>
           </Collapse>
