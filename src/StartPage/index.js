@@ -31,9 +31,10 @@ class StartPage extends Component {
             key: 0 // your data array of objects
           }}
         >
-          <div className="head-movie" data-movie-id="{this.singleMovieId}">
+          <div className="head-movie" data-movie-id={this.singleMovieId}>
             <div className="headoverlay">
               <img
+                alt=" "
                 className="head-image"
                 alt="header"
                 src={require("./" +
@@ -58,6 +59,7 @@ class StartPage extends Component {
                 data-movie-id={movie._id}
               >
                 <img
+                  alt=" "
                   className="movie-image"
                   alt="movie-imgs"
                   src={require("./" + movie.images[0])}

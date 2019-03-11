@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./movies.scss";
 import REST from "./REST.js";
@@ -24,8 +25,6 @@ class MoviesAndTrailersPage extends Component {
     this.viewings = [];
     //this.setMovie();
     this.start();
-    //console.log(this.props.location.index);
-    //console.log(this.state.mIndex);
   }
 
   setMovie() {
@@ -84,11 +83,13 @@ class MoviesAndTrailersPage extends Component {
       <section className="movie-section">
         <div className="movie-fade" />
         <img
+          alt=" "
           className="bg-image"
           alt="bg"
           src={require("./" + this.state.movies[this.state.mIndex].images[0])}
         />
         <img
+          alt=" "
           className="play"
           alt="play-button"
           onClick={this.toggle}
@@ -103,6 +104,7 @@ class MoviesAndTrailersPage extends Component {
             <ModalHeader toggle={this.toggle} />
             <ModalBody>
               <iframe
+                title="trailer"
                 allowFullScreen={true}
                 width="465"
                 height="340"
@@ -157,9 +159,10 @@ class MoviesAndTrailersPage extends Component {
         </div>
         <div className="viewings-list">
           {this.testlist.map(listitem => (
-            <a
+            <Link
+              key={listitem._id}
               className="view-select"
-              href={"/view/" + listitem._id}
+              to={"/bookingpage/" + listitem._id}
               data-view-id={listitem._id}
               key={listitem._id}
             >
@@ -175,7 +178,7 @@ class MoviesAndTrailersPage extends Component {
                   </tbody>
                 </table>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
         <br />
