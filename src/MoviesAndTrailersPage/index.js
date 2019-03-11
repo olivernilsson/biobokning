@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./movies.scss";
 import REST from "./REST.js";
@@ -152,9 +153,10 @@ class MoviesAndTrailersPage extends Component {
         <div className="viewings-list">
           {console.log(this.testlist)}
           {this.testlist.map(listitem => (
-            <a
+            <Link
+              key={listitem._id}
               className="view-select"
-              href={"/view/" + listitem._id}
+              to={"/bookingpage/" + listitem._id}
               data-view-id={listitem._id}
             >
               <div className="row-view">
@@ -169,7 +171,7 @@ class MoviesAndTrailersPage extends Component {
                   </tbody>
                 </table>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
         <br />

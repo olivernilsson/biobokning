@@ -44,6 +44,7 @@ class StartPage extends Component {
         <div className="start-box d-inline-flex  justify-content-around flex-wrap ">
           {this.state.movies.slice(0, 4).map((movie, index) => (
             <Link
+              key={movie._id}
               to={{
                 pathname: "/moviesandtrailerspage/",
                 index: index // your data array of objects

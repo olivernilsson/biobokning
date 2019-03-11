@@ -7,6 +7,7 @@ import BookingConfirm from "../BookingConfirm/index";
 import REST from "../REST";
 
 class User extends REST {}
+class View extends REST {}
 
 class BookingPage extends Component {
   constructor(props) {
@@ -16,11 +17,27 @@ class BookingPage extends Component {
       dataFirst: null,
       dataLast: null,
       dataEmail: null,
-      dataPassword: null
+      dataPassword: null,
+      selectedMovieTitle: null,
+      selectedMovieTime: null,
+      selectedMovieSalon: null,
+      selecedMovieDate: null
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
+  }
+
+  async componentDidMount() {
+    let route = window.location.href.split("/").pop();
+    this.view = await View.find(`.find({_id:"${route}"})`);
+    //console.log(this.movie[0].title);
+    this.setState({
+      selectedMovieTitle: this.view[0].film,
+      selectedMovieSalon: this.view[0].auditorium,
+      selectedMovieTime: this.view[0].time,
+      selecedMovieDate: this.view[0].date
+    });
   }
 
   handleData = (firstName, lastName, email, password) => {
@@ -80,6 +97,13 @@ class BookingPage extends Component {
   }
 
   render() {
+    let {
+      selectedMovieTitle,
+      selecedMovieDate,
+      selectedMovieSalon,
+      selectedMovieTime
+    } = this.state;
+
     return (
       <section>
         <div className="wrapper progress-wrap ">
@@ -118,7 +142,12 @@ class BookingPage extends Component {
             </li>
           </ul>
         </div>
-
+        <div className="selected-movie-box">
+          <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
+          <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
+          <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
+          <p className="selected-movie-date"> Datum :{selecedMovieDate} </p>
+        </div>
         <div className="mobile-buttons">
           <button
             id="mobback"

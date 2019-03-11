@@ -7,14 +7,13 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
+  NavItem
   // UncontrolledDropdown,
   // DropdownToggle,
   // DropdownMenu,
   // DropdownItem
 } from "reactstrap";
 import UserLogin from "../UserLogin/index";
-
 
 class NavbarApp extends Component {
   constructor(props) {
