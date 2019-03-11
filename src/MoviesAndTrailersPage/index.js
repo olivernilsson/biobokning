@@ -77,7 +77,7 @@ class MoviesAndTrailersPage extends Component {
 
   render() {
     if (this.state.movies.length === 0) {
-      return <h1>Connecting to DB</h1>;
+      return <div />;
     }
 
     return (
