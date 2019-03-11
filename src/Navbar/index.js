@@ -88,15 +88,6 @@ class NavbarApp extends Component {
               <NavItem>
                 <NavLink
                   className="nav-link"
-                  to="/bookingpage"
-                  activeClassName="active"
-                >
-                  BookingPage demo
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link"
                   to="/moviesandtrailerspage"
                   activeClassName="active"
                 >
