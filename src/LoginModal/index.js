@@ -5,10 +5,10 @@ import App from "../App/index.js"
 
 class Login extends REST {
   static get baseRoute() {
-    return 'login';
+    return 'login/';
   }
   async delete() {
-    this._id = 1;
+    this._id = 'uselesstoken';
     // we set an id here, because the REST class
     // will complain if we try to call delete on an object without _id
     // - and we use delete to logout (see test.js)
@@ -27,27 +27,42 @@ class LoginModal extends React.Component {
       password: '',
       correctEmail: true,
       correctPassword: true,
-      loggedIn: false
+      loggedIn: App.loggedIn
     };
 
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
     this.handleLoginValues = this.handleLoginValues.bind(this);
     this.logIn = this.logIn.bind(this);
     this.closeLoginModal = this.closeLoginModal.bind(this);
+
+    this.checkIfLoggedIn()
   }
 
-  toggleLoginModal() {
+
+  async checkIfLoggedIn(){
+    App.loggedIn = !((await Login.find()).error);
+
+    this.setState({
+      loggedIn: App.loggedIn
+    })
+  }
+
+  async toggleLoginModal(event) {
+    event.preventDefault()
     this.setState(() => ({
       email: '',
       password: ''
     }));
 
+    //Logout
     if(App.loggedIn){
+      App.loggedIn = false;
+      let user = new Login();
+      await user.delete();
       this.setState({
-        loggedIn: false,
+        loggedIn: App.loggedIn,
         modalVisible: false
       }); 
-      App.loggedIn = false;
     } 
     else {
       this.setState({
@@ -77,7 +92,6 @@ class LoginModal extends React.Component {
       email : email,
       password : password
     })
-
     this.login = login;
     await this.login.save()
 
@@ -85,7 +99,7 @@ class LoginModal extends React.Component {
     App.loggedIn = true;
     this.setState(() => ({
       modalVisible : false,
-      loggedIn: true
+      loggedIn: App.loggedIn
     }));
   }
 
