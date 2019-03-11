@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./movies.scss";
 import REST from "./REST.js";
@@ -24,16 +25,14 @@ class MoviesAndTrailersPage extends Component {
     this.viewings = [];
     //this.setMovie();
     this.start();
-    console.log(this.props.location.index);
-    console.log(this.state.mIndex);
   }
 
   setMovie() {
     if (this.props.location.index !== undefined) {
-      console.log(this.props.location.index);
+      //console.log(this.props.location.index);
       this.setState({ mIndex: this.props.location.index });
     }
-    console.log(this.state.mIndex);
+    //console.log(this.state.mIndex);
   }
 
   async start() {
@@ -57,7 +56,10 @@ class MoviesAndTrailersPage extends Component {
     //console.log(this.viewings);
 
     for (let view of this.viewings) {
-      this.testlist.push(view);
+      let viewDate = new Date(view.date);
+      if (viewDate > Date.now()) {
+        this.testlist.push(view);
+      }
     }
     this.setState({ views: this.testlist });
   }
@@ -74,18 +76,22 @@ class MoviesAndTrailersPage extends Component {
 
   render() {
     if (this.state.movies.length === 0) {
-      return <h1>Connecting to DB</h1>;
+      return <div />;
     }
 
     return (
       <section className="movie-section">
         <div className="movie-fade" />
         <img
+          alt=" "
           className="bg-image"
+          alt="bg"
           src={require("./" + this.state.movies[this.state.mIndex].images[0])}
         />
         <img
+          alt=" "
           className="play"
+          alt="play-button"
           onClick={this.toggle}
           src={require("./play.png")}
         />
@@ -98,9 +104,11 @@ class MoviesAndTrailersPage extends Component {
             <ModalHeader toggle={this.toggle} />
             <ModalBody>
               <iframe
+                title="trailer"
                 allowFullScreen={true}
                 width="465"
                 height="340"
+                title="trailer"
                 src={
                   this.youtube +
                   this.state.movies[this.state.mIndex].youtubeTrailers[0]
@@ -150,12 +158,13 @@ class MoviesAndTrailersPage extends Component {
           </div>
         </div>
         <div className="viewings-list">
-          {console.log(this.testlist)}
           {this.testlist.map(listitem => (
-            <a
+            <Link
+              key={listitem._id}
               className="view-select"
-              href={"/view/" + listitem._id}
+              to={"/bookingpage/" + listitem._id}
               data-view-id={listitem._id}
+              key={listitem._id}
             >
               <div className="row-view">
                 <table className="viewings-table">
@@ -169,7 +178,7 @@ class MoviesAndTrailersPage extends Component {
                   </tbody>
                 </table>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
         <br />

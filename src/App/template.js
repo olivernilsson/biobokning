@@ -24,7 +24,7 @@ export default function() {
             <Route path="/rulespage" component={RulesPage} />
             <Route path="/aboutsalons" component={AboutSalons} />
             <Route path="/aboutpage" component={AboutPage} />
-            <Route path="/bookingpage" component={BookingPage} />
+            <Route path="/bookingpage/:movieId" component={BookingPage} />
             <Route path="/storepage" component={StorePage} />
             <Route
               path="/moviesandtrailerspage"

@@ -35,7 +35,7 @@ class MoviesAndTrailersPage extends Component {
     this.title = movie.title;
     this.list = [];
     this.test = JSON.stringify(movie.title);
-    console.log(this.test);
+
     this.viewings = await View.find(`.find({film:${this.test}})`);
 
     for (let view of this.viewings) {
@@ -70,7 +70,6 @@ class MoviesAndTrailersPage extends Component {
   async viewingsfind(movie) {
     this.list = [];
     this.test = JSON.stringify(movie.title);
-    console.log(this.test);
     //this.viewings = await View.find(`.find({film:${this.test}})`);
     //this.viewings = await View.find();
 

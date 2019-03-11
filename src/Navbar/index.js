@@ -7,7 +7,7 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
+  NavItem
   // UncontrolledDropdown,
   // DropdownToggle,
   // DropdownMenu,
@@ -15,7 +15,6 @@ import {
 } from "reactstrap";
 import UserLogin from "../UserLogin/index";
 import UserRegistration from "../UserRegistration/index";
-
 
 class NavbarApp extends Component {
   constructor(props) {
@@ -85,15 +84,6 @@ class NavbarApp extends Component {
                   activeClassName="active"
                 >
                   About Salon
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link"
-                  to="/bookingpage"
-                  activeClassName="active"
-                >
-                  BookingPage demo
                 </NavLink>
               </NavItem>
               <NavItem>

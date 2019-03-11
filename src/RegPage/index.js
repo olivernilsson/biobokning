@@ -1,14 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import "./style.scss";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  InputGroup
-} from "reactstrap";
+import { Form, FormGroup, Input } from "reactstrap";
 import "./style.scss";
 
 export class RegPage extends React.Component {
@@ -138,8 +130,6 @@ export class RegPage extends React.Component {
             <div>
               <span className="blocking">
                 <Input
-                  required
-                  type="text"
                   type="password"
                   className={
                     this.state.passwordStyle === true ? " validated" : ""
