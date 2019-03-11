@@ -25,8 +25,6 @@ class MoviesAndTrailersPage extends Component {
     this.viewings = [];
     //this.setMovie();
     this.start();
-    console.log(this.props.location.index);
-    console.log(this.state.mIndex);
   }
 
   setMovie() {
@@ -82,10 +80,12 @@ class MoviesAndTrailersPage extends Component {
       <section className="movie-section">
         <div className="movie-fade" />
         <img
+          alt=" "
           className="bg-image"
           src={require("./" + this.state.movies[this.state.mIndex].images[0])}
         />
         <img
+          alt=" "
           className="play"
           onClick={this.toggle}
           src={require("./play.png")}
@@ -99,6 +99,7 @@ class MoviesAndTrailersPage extends Component {
             <ModalHeader toggle={this.toggle} />
             <ModalBody>
               <iframe
+                title="trailer"
                 allowFullScreen={true}
                 width="465"
                 height="340"

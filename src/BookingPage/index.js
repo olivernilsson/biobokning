@@ -31,7 +31,6 @@ class BookingPage extends Component {
   async componentDidMount() {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
-    //console.log(this.movie[0].title);
     this.setState({
       selectedMovieTitle: this.view[0].film,
       selectedMovieSalon: this.view[0].auditorium,
@@ -146,7 +145,7 @@ class BookingPage extends Component {
           <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
           <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
           <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
-          <p className="selected-movie-date"> Datum :{selecedMovieDate} </p>
+          <p className="selected-movie-date"> Datum:{selecedMovieDate} </p>
         </div>
         <div className="mobile-buttons">
           <button

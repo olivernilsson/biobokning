@@ -132,8 +132,14 @@
   border-radius: 2%;
 }
 
-.selected-movie-title {
-  content: " ";
+.selected-movie-box {
+  text-align: center;
+  line-height: 15px;
+  color: #85ffc7 !important;
+}
+
+.selected-movie-box > p {
+  color: #85ffc7 !important;
 }
 
 @media screen and (max-width: 950px) {
