@@ -19,14 +19,16 @@ class StartPage extends Component {
 
   render() {
     if (this.state.movies.length === 0) {
-      return <h1>Connecting to DB</h1>;
+      return <div />;
     }
+
     return (
       <section>
         <Link
           to={{
             pathname: "/moviesandtrailerspage/",
-            index: 4 // your data array of objects
+            index: 4,
+            key: 0 // your data array of objects
           }}
         >
           <div className="head-movie" data-movie-id={this.singleMovieId}>
@@ -34,6 +36,7 @@ class StartPage extends Component {
               <img
                 alt=" "
                 className="head-image"
+                alt="header"
                 src={require("./" +
                   this.state.movies[this.state.mIndex].images[0])}
               />
@@ -45,7 +48,7 @@ class StartPage extends Component {
         <div className="start-box d-inline-flex  justify-content-around flex-wrap ">
           {this.state.movies.slice(0, 4).map((movie, index) => (
             <Link
-              key={movie._id}
+              key={index}
               to={{
                 pathname: "/moviesandtrailerspage/",
                 index: index // your data array of objects
@@ -58,6 +61,7 @@ class StartPage extends Component {
                 <img
                   alt=" "
                   className="movie-image"
+                  alt="movie-imgs"
                   src={require("./" + movie.images[0])}
                 />
                 <div className="overlay-title">{movie.title}</div>
