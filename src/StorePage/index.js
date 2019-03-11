@@ -11,9 +11,9 @@ class StorePage extends Component {
   render() {
     return (
       <Container>
-          <div className="col-md-24">
+          <div className="col-md-12">
     <div className="row p-3">
-        <div className="col-md-24">
+        <div className="col-md-12">
                 <h2>Butik</h2>
         </div>
             
@@ -29,14 +29,14 @@ class StorePage extends Component {
             </div>
     </div>
     <div className="row p-3">
-            <div className="col-md-24">
+            <div className="col-md-12">
                 <h4>Dryck</h4>
                 
                 <p>För barn har vi flera olika smaker från MER alternativt Smakis. Vill du ha vatten kan du välja mellan kolsyrat eller naturellt både från Bonaqua och från Glacéau Smartwater. Det finns Vitaminvatten Well och Aloe Vera dryck i olika smaker, med eller utan socker. Vill man ha något som piggar upp en har vi energidryckerna Red Bull,Monster och Nocco.</p>
 
                 <p>I våra läsktorn har vi storsäljarna Coca Cola, Fanta och Sprite.</p>
             </div>
-            <div className="col-md-24">
+            <div className="col-md-12">
             <img className="b-image" src={require('./dryck-bio.jpg')} alt="Dryck" />
                 </div>
            
