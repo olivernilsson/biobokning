@@ -24,16 +24,16 @@ class MoviesAndTrailersPage extends Component {
     this.viewings = [];
     //this.setMovie();
     this.start();
-    console.log(this.props.location.index);
-    console.log(this.state.mIndex);
+    //console.log(this.props.location.index);
+    //console.log(this.state.mIndex);
   }
 
   setMovie() {
     if (this.props.location.index !== undefined) {
-      console.log(this.props.location.index);
+      //console.log(this.props.location.index);
       this.setState({ mIndex: this.props.location.index });
     }
-    console.log(this.state.mIndex);
+    //console.log(this.state.mIndex);
   }
 
   async start() {
@@ -85,10 +85,12 @@ class MoviesAndTrailersPage extends Component {
         <div className="movie-fade" />
         <img
           className="bg-image"
+          alt="bg"
           src={require("./" + this.state.movies[this.state.mIndex].images[0])}
         />
         <img
           className="play"
+          alt="play-button"
           onClick={this.toggle}
           src={require("./play.png")}
         />
@@ -104,6 +106,7 @@ class MoviesAndTrailersPage extends Component {
                 allowFullScreen={true}
                 width="465"
                 height="340"
+                title="trailer"
                 src={
                   this.youtube +
                   this.state.movies[this.state.mIndex].youtubeTrailers[0]
@@ -153,12 +156,12 @@ class MoviesAndTrailersPage extends Component {
           </div>
         </div>
         <div className="viewings-list">
-          {console.log(this.testlist)}
           {this.testlist.map(listitem => (
             <a
               className="view-select"
               href={"/view/" + listitem._id}
               data-view-id={listitem._id}
+              key={listitem._id}
             >
               <div className="row-view">
                 <table className="viewings-table">

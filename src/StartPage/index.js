@@ -26,13 +26,15 @@ class StartPage extends Component {
         <Link
           to={{
             pathname: "/moviesandtrailerspage/",
-            index: 4 // your data array of objects
+            index: 4,
+            key: 0 // your data array of objects
           }}
         >
-          <div className="head-movie" data-movie-id="${this.singleMovieId}">
+          <div className="head-movie" data-movie-id="{this.singleMovieId}">
             <div className="headoverlay">
               <img
                 className="head-image"
+                alt="header"
                 src={require("./" +
                   this.state.movies[this.state.mIndex].images[0])}
               />
@@ -44,6 +46,7 @@ class StartPage extends Component {
         <div className="start-box d-inline-flex  justify-content-around flex-wrap ">
           {this.state.movies.slice(0, 4).map((movie, index) => (
             <Link
+              key={index}
               to={{
                 pathname: "/moviesandtrailerspage/",
                 index: index // your data array of objects
@@ -55,13 +58,14 @@ class StartPage extends Component {
               >
                 <img
                   className="movie-image"
+                  alt="movie-imgs"
                   src={require("./" + movie.images[0])}
                 />
                 <div className="overlay-title">{movie.title}</div>
                 <div className="overlay-year">{movie.productionYear}</div>
                 <div
                   className="overlay select-movie"
-                  data-movie-id="${movie._id}"
+                  data-movie-id="{movie._id}"
                 >
                   <p className="overlay-text">
                     {movie.description.slice(0, 150)}.....
