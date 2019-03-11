@@ -83,13 +83,11 @@ class MoviesAndTrailersPage extends Component {
       <section className="movie-section">
         <div className="movie-fade" />
         <img
-          alt=" "
           className="bg-image"
           alt="bg"
           src={require("./" + this.state.movies[this.state.mIndex].images[0])}
         />
         <img
-          alt=" "
           className="play"
           alt="play-button"
           onClick={this.toggle}
@@ -104,7 +102,6 @@ class MoviesAndTrailersPage extends Component {
             <ModalHeader toggle={this.toggle} />
             <ModalBody>
               <iframe
-                title="trailer"
                 allowFullScreen={true}
                 width="465"
                 height="340"
@@ -160,7 +157,6 @@ class MoviesAndTrailersPage extends Component {
         <div className="viewings-list">
           {this.testlist.map(listitem => (
             <Link
-              key={listitem._id}
               className="view-select"
               to={"/bookingpage/" + listitem._id}
               data-view-id={listitem._id}
