@@ -10,13 +10,39 @@ class BookingPage extends Component {
     super(props);
     this.state = {
       stepCounter: 1,
-      adultschosen: 0,
-      kidschosen: 0,
-      seniorschosen: 0
+      adultish:99
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
+  }
+
+  pricepageAddingPersons(event){
+
+    if(event.target.className=='AdultsDown'){
+      this.setState({adults: this.state.adults-1});
+      this.setState({maximum: this.state.maximum+1});
+    }
+    else if(event.target.className=='AdultsUp'){
+      this.setState({adults: this.state.adults+1});
+      this.setState({maximum: this.state.maximum-1});
+    }
+    else if(event.target.className=='KidsDown'){
+      this.setState({kids: this.state.kids-1});
+      this.setState({maximum: this.state.maximum+1});
+    }
+    else if(event.target.className=='KidsUp'){
+      this.setState({kids: this.state.kids+1});
+      this.setState({maximum: this.state.maximum-1});
+    }
+    else if(event.target.className=='SeniorsDown'){
+      this.setState({seniors: this.state.seniors-1});
+      this.setState({maximum: this.state.maximum+1});
+    }
+    else if(event.target.className=='SeniorsUp'){
+      this.setState({seniors: this.state.seniors+1});
+      this.setState({maximum: this.state.maximum-1});
+    }
   }
 
   countDown() {
@@ -43,6 +69,7 @@ class BookingPage extends Component {
   dataChanges(){
     if(this.state.stepCounter==1){
       alert('hej');
+      console.log(this.props);
     }
   }
 
@@ -95,7 +122,7 @@ class BookingPage extends Component {
           >
             Bakåt
           </button>
-          {this.state.stepCounter === 1 ? <PricePage /> : ""}
+          {this.state.stepCounter === 1 ? <PricePage addPerson={this.pricepageAddingPersons} adultish={this.state.adultish}/> : ""}
           {this.state.stepCounter === 2 ? <SalonPage /> : ""}
           {this.state.stepCounter === 3 ? <RegPage /> : ""}
           {this.state.stepCounter === 4 ? <BookingConfirm /> : ""}
