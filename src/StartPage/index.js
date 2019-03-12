@@ -26,7 +26,9 @@ class StartPage extends Component {
       <section>
         <Link
           to={{
-            pathname: "/moviesandtrailerspage/",
+            pathname:
+              "/moviesandtrailerspage/" +
+              this.state.movies[this.state.mIndex].title.replace(/\s/g, "-"),
             index: 4,
             key: 0 // your data array of objects
           }}
@@ -49,7 +51,8 @@ class StartPage extends Component {
             <Link
               key={index}
               to={{
-                pathname: "/moviesandtrailerspage/",
+                pathname:
+                  "/moviesandtrailerspage/" + movie.title.replace(/\s/g, "-"),
                 index: index // your data array of objects
               }}
             >
