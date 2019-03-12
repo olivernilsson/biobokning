@@ -26,36 +26,42 @@ class BookingPage extends Component {
     if(event.target.className==='AdultsDown'){
       if(this.state.adults>0 ){
       this.setState({adults: this.state.adults -1});
+      this.setState({totalPersons: this.state.totalPersons -1});
       this.setState({maximum: this.state.maximum+1});
       }
     }
     else if(event.target.className==='AdultsUp'){
       if(this.state.maximum>0){
       this.setState({adults: this.state.adults+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
       this.setState({maximum: this.state.maximum-1});
       }
     }
     else if(event.target.className==='KidsDown'){
       if(this.state.kids>0){
       this.setState({kids: this.state.kids-1});
+      this.setState({totalPersons: this.state.totalPersons -1});
       this.setState({maximum: this.state.maximum+1});
       }
     }
     else if(event.target.className==='KidsUp'){
       if(this.state.maximum>0){
       this.setState({kids: this.state.kids+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
       this.setState({maximum: this.state.maximum-1});
       }
     }
     else if(event.target.className==='SeniorsDown'){
       if(this.state.seniors>0){
       this.setState({seniors: this.state.seniors-1});
+      this.setState({totalPersons: this.state.totalPersons -1});
       this.setState({maximum: this.state.maximum+1});
       }
     }
     else if(event.target.className==='SeniorsUp'){
       if(this.state.maximum>0){
       this.setState({seniors: this.state.seniors+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
       this.setState({maximum: this.state.maximum-1});
       }
     }
@@ -79,16 +85,6 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter + 1
       };
     });
-    this.dataChanges()
-  }
-
-  dataChanges(){
-    if(this.state.stepCounter==1){
-      //let totalPersons = this.state.adults+this.state.kids+this.state.seniors;
-      //alert(totalPersons+' persons wants a seat');  
-      this.setState({totalPersons:99});   
-      alert(this.state.totalPersons);
-    }
   }
 
   render() {
@@ -149,7 +145,11 @@ class BookingPage extends Component {
               addPerson={this.pricepageAddPerson.bind(this)}
              /> 
           : ""}
-          {this.state.stepCounter === 2 ? <SalonPage /> : ""}
+          {this.state.stepCounter === 2 ? 
+            <SalonPage 
+              personsWantSeat={this.state.totalPersons}
+            /> 
+          : ""}
           {this.state.stepCounter === 3 ? <RegPage /> : ""}
           {this.state.stepCounter === 4 ? <BookingConfirm /> : ""}
           <button
