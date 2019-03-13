@@ -23,9 +23,11 @@
   align-items: center;
   justify-content: space-around;
   display: flex;
-  border: 1px solid white;
 }
 .view-delete {
+  border: none;
+  outline: none;
+  background-color: transparent;
   cursor: pointer;
   font-size: 30px;
   color: rgb(168, 168, 168);
@@ -33,7 +35,19 @@
 }
 
 .view-modify {
-  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: 1;
   font-size: 30px;
   color: rgb(243, 207, 2);
+}
+
+.delete-modal {
+  background-color: white !important;
+  color: black;
+}
+
+.deletedView-text {
+  color: black;
 }
