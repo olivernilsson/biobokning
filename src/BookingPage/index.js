@@ -22,11 +22,63 @@ class BookingPage extends Component {
       selectedMovieTime: null,
       selectedMovieSalon: null,
       selecedMovieDate: null
+      stepCounter: 1,
+      adults:0,
+      kids:0,
+      seniors:0,
+      maximum:8,
+      totalPersons:0
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
   }
+
+  pricepageAddPerson(event){
+ 
+    if(event.target.className==='AdultsDown'){
+      if(this.state.adults>0 ){
+      this.setState({adults: this.state.adults -1});
+      this.setState({totalPersons: this.state.totalPersons -1});
+      this.setState({maximum: this.state.maximum+1});
+      }
+    }
+    else if(event.target.className==='AdultsUp'){
+      if(this.state.maximum>0){
+      this.setState({adults: this.state.adults+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
+      this.setState({maximum: this.state.maximum-1});
+      }
+    }
+    else if(event.target.className==='KidsDown'){
+      if(this.state.kids>0){
+      this.setState({kids: this.state.kids-1});
+      this.setState({totalPersons: this.state.totalPersons -1});
+      this.setState({maximum: this.state.maximum+1});
+      }
+    }
+    else if(event.target.className==='KidsUp'){
+      if(this.state.maximum>0){
+      this.setState({kids: this.state.kids+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
+      this.setState({maximum: this.state.maximum-1});
+      }
+    }
+    else if(event.target.className==='SeniorsDown'){
+      if(this.state.seniors>0){
+      this.setState({seniors: this.state.seniors-1});
+      this.setState({totalPersons: this.state.totalPersons -1});
+      this.setState({maximum: this.state.maximum+1});
+      }
+    }
+    else if(event.target.className==='SeniorsUp'){
+      if(this.state.maximum>0){
+      this.setState({seniors: this.state.seniors+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
+      this.setState({maximum: this.state.maximum-1});
+      }
+    }
+}
 
   async componentDidMount() {
     let route = window.location.href.split("/").pop();
@@ -186,6 +238,21 @@ class BookingPage extends Component {
           >
             Bakåt
           </button>
+          {this.state.stepCounter === 1 ? 
+            <PricePage 
+              adults={this.state.adults} 
+              kids={this.state.kids}
+              seniors={this.state.seniors}
+              maximum={this.state.maximum}
+              addPerson={this.pricepageAddPerson.bind(this)}
+             /> 
+          : ""}
+          {this.state.stepCounter === 2 ? 
+            <SalonPage 
+              personsWantSeat={this.state.totalPersons}
+            /> 
+          : ""}
+          {this.state.stepCounter === 3 ? <RegPage /> : ""}
           {this.state.stepCounter === 1 ? <PricePage /> : ""}
           {this.state.stepCounter === 2 ? <SalonPage /> : ""}
           {this.state.stepCounter === 3 ? (
