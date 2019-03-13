@@ -111,6 +111,7 @@ class StartPage extends Component {
               </Link>
             ))}
           </div>
+          <br />
         </div>
       </section>
     );
