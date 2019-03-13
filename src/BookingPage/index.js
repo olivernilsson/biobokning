@@ -21,7 +21,7 @@ class BookingPage extends Component {
       selectedMovieTitle: null,
       selectedMovieTime: null,
       selectedMovieSalon: null,
-      selecedMovieDate: null
+      selecedMovieDate: null,
       stepCounter: 1,
       adults:0,
       kids:0,
@@ -252,9 +252,6 @@ class BookingPage extends Component {
               personsWantSeat={this.state.totalPersons}
             /> 
           : ""}
-          {this.state.stepCounter === 3 ? <RegPage /> : ""}
-          {this.state.stepCounter === 1 ? <PricePage /> : ""}
-          {this.state.stepCounter === 2 ? <SalonPage /> : ""}
           {this.state.stepCounter === 3 ? (
             <RegPage myData={this.handleData} />
           ) : (
