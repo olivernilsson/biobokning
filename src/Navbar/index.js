@@ -14,6 +14,7 @@ import {
   // DropdownItem
 } from "reactstrap";
 import UserLogin from "../UserLogin/index";
+import UserRegistration from "../UserRegistration/index";
 
 class NavbarApp extends Component {
   constructor(props) {
@@ -85,33 +86,8 @@ class NavbarApp extends Component {
                   About Salon
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link"
-                  to="/bookingpage"
-                  activeClassName="active"
-                >
-                  BookingPage demo
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link"
-                  to="/moviesandtrailerspage"
-                  activeClassName="active"
-                >
-                  Movies
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link"
-                  to="/adminpage"
-                  activeClassName="active"
-                >
-                  adminpage demo
-                </NavLink>
-              </NavItem>
+
+              <UserRegistration />
               <UserLogin />
             </Nav>
           </Collapse>
