@@ -90,7 +90,7 @@ class StartPage extends Component {
             </div>
           </div>
           <div className="toplist top-list">
-            {this.state.movies.map((movie, index) => (
+            {this.state.movies.reverse().map((movie, index) => (
               <Link
                 key={index}
                 to={{
