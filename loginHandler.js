@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
- 
-module.exports = class LoginHandler {
+
+module.exports = class LoginHandler{
  
   constructor(app, User){
     this.app = app;

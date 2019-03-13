@@ -10,18 +10,18 @@ class AboutPage extends Component {
   render() {
     return (
       <Container>
-        <div class="col-md-24">
-    <div class="row p-3"> 
-      <div class="col-md-24">
-           <h2>Om Oss</h2>
+    <div className="col-md-12">
+      <div className="row p-3"> 
+        <div className="col-md-12">
+            <h2>Om Oss</h2>
         </div>
-    </div>
-    <div class="row p-3">
-      <div class="col-md-12">
-          <p>Företaget Filmvisarna AB är en liten biografkedja som precis har startat och vill kunna bli de bästa biografen i Sverige! Just ni är vi placerade runt om i Skåne men vi vill expandera mera i framtiden och hoppas ni blir en del av det!</p>
+      </div>
+      <div className="row p-3">
+        <div className="col-md-8">
+            <p>Filmvisarna AB är en liten biografkedja som precis har startat och vill kunna bli de bästa biografen i Sverige! Just ni är vi placerade runt om i Skåne men vi vill expandera mera i framtiden,Vi hoppas ni kan bli en del av det!</p>
+        </div>
       </div>
     </div>
-  </div>
   </Container>
     );
   }

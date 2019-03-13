@@ -1,0 +1,81 @@
+
+.registration-field{
+  position: absolute;
+  right: 130px;
+
+  p {
+    padding: 5px;
+    text-align: center;
+    color: black;
+  }
+}
+
+
+.reg-modal-header{
+  color: whitesmoke;
+}
+
+.reg-modal-body{
+  height: 150px;
+}
+
+.register-modal{
+  display: none;
+  
+}
+
+.blocking-registration{
+  margin-top: 20px;
+  position: relative;
+  margin-right: 40px;
+}
+
+.close-button{
+  color: white;
+}
+
+
+.mymodal-style{
+  height: 500px;
+}
+
+.mob-btn{
+  position: absolute;
+  height: 50px;
+ bottom: 0;
+ width: 100%;
+ left: 0px;
+}
+
+
+.mverify-tecken,.mverify-bokstav,.mverify-number,.mverify-email{
+  color: lightcoral;
+  font-size: 12px;
+   
+  }
+
+@media screen and (max-width:  767px) {
+  .registration-field{
+    position: relative;
+    margin: 10px 0 0 126px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  #modalsave-user,.done-btn{
+    position: absolute;
+    height: 50px;
+   bottom: 0;
+   width: 100%;
+   left: 0px;
+  
+  }
+
+
+
+  .reg-form {
+    width: 100%;
+  }
+
+
+}
