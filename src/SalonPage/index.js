@@ -5,10 +5,11 @@ import Seat from "../Seat/index.js"
 class SalonPage extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       arrayWithRowsAndSeats: []
     };
+    
     this.toggleSeat = this.toggleSeat.bind(this)
   }
 
@@ -20,61 +21,85 @@ class SalonPage extends Component {
 
     let row = 1;
     let seatNum = 1;
-    //this.seatsBySeatNumber = {};
+    this.seatsBySeatNumber = {};
     let arrayWithRowsAndSeats = [];
     
     for (let numberOfSeatsInTheRow of this.seatsPerRow) {
       let aRowWithSeats = [];
       while (aRowWithSeats.length < numberOfSeatsInTheRow) {
-        let seat = <Seat 
-          className='seat'
-          key={seatNum}
-          row={row}
-          seatNum={seatNum} 
-          toggleSeat={this.toggleSeat}
-        />
+        let seat = {
+          key: seatNum,
+          seatNum,
+          row,
+          className: 'seat'
+        }
         aRowWithSeats.push(seat);
-        //this.seatsBySeatNumber[seatNum] = seat;
+        this.seatsBySeatNumber[seatNum] = seat;
         seatNum++;
       }
-      
       arrayWithRowsAndSeats.push(aRowWithSeats);
       row++;
-      
-      this.setState(() => {
-        return {
-          arrayWithRowsAndSeats: arrayWithRowsAndSeats,
-        }
-      })
     }
     this.totalSeats = seatNum;
+    this.arrayWithObjectSeats = arrayWithRowsAndSeats
 
+    this.insertSeatComponents(arrayWithRowsAndSeats)
   }
 
   toggleSeat(id){
-    console.log('seat', id)
-    
-    let updatedArray = this.state.arrayWithRowsAndSeats.map(row => {
-      for(let i = 0; i < row.length; i++){
-        if(id === parseInt(row[i].key), 10){
-          console.log(id === parseInt(row[i].key), 10)
-          row[i] = <Seat 
-            className='taken-seat' 
-            key={id}
-          />
+
+    console.log('seatNr', id)
+    //console.log(this.arrayWithObjectSeats)
+
+
+    let updatedArray = []
+  
+    for(let i = 0; i < this.arrayWithObjectSeats.length; i++){
+      let newRow = this.arrayWithObjectSeats[i]
+      for(let i = 0; i < newRow.length; i++){
+        let newSeat = newRow[i]
+        if(newSeat.seatNum === id){
+          newRow[i] = {
+            key: newRow[i].seatNum,
+            seatNum: newRow[i].seatNum,
+            row: newRow[i].row,
+            className: 'taken-seat'
+          }
         }
       }
-      return row
-    })
-    this.setState({
-      arrayWithRowsAndSeats: updatedArray
-    })
-    console.log(this.state.arrayWithRowsAndSeats)
+      updatedArray.push(newRow)
+    }
+    this.insertSeatComponents(updatedArray)
   }
+
+  insertSeatComponents(arrayWithRowsAndSeats){    
+    let updatedArray = []
+    for(let i = 0; i < arrayWithRowsAndSeats.length; i++){
+      let newRow = arrayWithRowsAndSeats[i].map(seat => 
+        <Seat 
+          key={seat.seatNum} 
+          className={seat.className}
+          row={seat.row}
+          seatNum={seat.seatNum}
+          toggleSeat={this.toggleSeat} 
+        />)
+
+      updatedArray.push(newRow)
+    }
+
+    this.setState(() => {
+      return {
+        arrayWithRowsAndSeats: updatedArray,
+      }
+    })
+  }
+
   
   render() {
-    let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => <div key={row[0].key}> {row} </div>)
 
+    //console.log(this.state.arrayWithRowsAndSeats)
+    let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => <div key={row[0].key}> {row} </div>)
+ 
     return (
       <section className="wizard-container ">
         <div className="demo salon">

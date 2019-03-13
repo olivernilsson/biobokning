@@ -2,7 +2,6 @@ import React from "react";
 import "./style.scss";
 
 function Seat(props) {
-    console.log(props.className)
     return (
       <div 
         className={props.className} 
