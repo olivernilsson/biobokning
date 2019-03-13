@@ -1,0 +1,102 @@
+.wizard-container {
+  width: 100%;
+  text-align: center;
+}
+
+.wrapit {
+  text-align: center;
+  padding: 1.25rem 0.9375rem 7.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.boxdesign {
+  height: 100px;
+  width: 400px;
+  border: 1px solid white;
+  border-radius: 10%;
+}
+
+.price-page-total {
+  font-style: italic;
+  font-family: "Quicksand", sans-serif;
+}
+
+.price {
+  font-family: "Quicksand", sans-serif;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 5px;
+}
+
+.outer-box {
+  font-family: "Titillium Web", sans-serif;
+  margin-bottom: 20px;
+  min-width: 200px;
+  color: white !important;
+}
+
+.inner-box {
+  margin: 0 auto;
+  align-items: center;
+  max-width: 250px;
+  position: relative;
+  background-color: black;
+  overflow: hidden;
+  border-radius: 10%;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+}
+
+.count-num {
+  font-family: "Quicksand", sans-serif;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 20%;
+  height: 100%;
+  background-color: rgb(20, 49, 51);
+  min-width: 10px;
+  text-align: center;
+  color: white;
+}
+
+.AdultsDown,
+.KidsDown,
+.SeniorsDown {
+  font-family: "Quicksand", sans-serif;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  position: absolute;
+  font-size: 30px;
+  border: none;
+  vertical-align: middle;
+  width: 50px;
+  height: 100%;
+  background-color: rgb(59, 179, 179);
+
+  color: white;
+}
+
+.AdultsUp,
+.KidsUp,
+.SeniorsUp {
+  font-family: "Quicksand", sans-serif;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  position: absolute;
+  font-size: 30px;
+  border: none;
+
+  width: 50px;
+  height: 50px;
+  background-color: rgb(59, 179, 179);
+
+  color: white;
+}

@@ -1,0 +1,264 @@
+.testing {
+  color: white;
+  background-color: black;
+  text-decoration: none;
+}
+
+.p-actor {
+  display: inline;
+}
+
+.testing:hover {
+  text-decoration: none;
+}
+
+.testing:hover {
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+.fade-in {
+  animation: fadeIn ease 3.5s;
+  -webkit-animation: fadeIn ease 3.5s;
+  -moz-animation: fadeIn ease 3.5s;
+  -o-animation: fadeIn ease 3.5s;
+  -ms-animation: fadeIn ease 3.5s;
+}
+
+.movie-section {
+  margin: 0;
+  padding: 0;
+}
+
+.row-view {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: solid 1px;
+  color: gray;
+}
+
+.row-top {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: solid 1px;
+  color: white;
+}
+
+.row-view:hover {
+  text-decoration: none;
+  animation-name: fade;
+  animation-duration: 0.3s;
+  color: white;
+}
+
+td {
+  font-size: 20px;
+}
+
+.bg-image {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  border: none;
+  overflow-y: hidden;
+  background-size: contain;
+}
+
+.page-info {
+  padding-left: 5%;
+  padding-top: 74vh;
+  border: none;
+  width: 50%;
+  z-index: 500;
+  position: relative;
+}
+
+.movie-button {
+  display: none;
+}
+
+.testdiv {
+  margin: 0;
+  padding: 0;
+}
+
+.viewings-list {
+  padding-left: 5%;
+  padding-right: 5%;
+  overflow: hidden;
+}
+
+h2,
+h4 {
+  -webkit-text-stroke: 0.5px;
+  -webkit-text-stroke-color: black;
+}
+
+.movieh2 {
+  font-size: 50px;
+}
+
+.movieh4 {
+  font-size: 26px;
+}
+
+.movie-fade {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 7;
+  background: linear-gradient(180deg, transparent, transparent 40%, black);
+}
+
+.play {
+  position: absolute;
+  height: 120px;
+  width: 120px;
+  top: 47vh;
+  left: calc(50% - 60px);
+  z-index: 900;
+}
+
+.trailer {
+  position: absolute;
+  border: none;
+  top: 25vh;
+  left: calc(50% - 225px);
+  z-index: 800;
+}
+
+.viewings-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.act-view {
+  margin-left: 5%;
+  z-index: 10000000000000000000;
+}
+
+@keyframes fade {
+  from {
+    color: grey;
+  }
+  to {
+    color: white;
+  }
+}
+
+.view-select {
+  text-decoration: none;
+  font-size: 20px;
+  padding-bottom: 15px;
+}
+
+.view-select:hover {
+  text-decoration: none;
+  animation-name: fade;
+  animation-duration: 0.3s;
+  color: white;
+}
+
+.modal {
+  z-index: 2000;
+  border: none;
+}
+
+.modal-body,
+.modal-header,
+.modal-content {
+  background-color: #0b0c10;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+
+.modal-header {
+  padding-top: 5px;
+  padding-bottom: 0;
+}
+
+.close {
+  color: white;
+}
+
+.close:hover {
+  color: white;
+}
+
+.close:not(:disabled):not(.disabled):hover {
+  color: white;
+}
+
+iframe {
+  width: 100%;
+  border: none;
+}
+
+@media screen and (max-width: 680px) {
+  .bg-image {
+    height: auto;
+  }
+
+  .play {
+    top: 15vh;
+  }
+
+  .page-info {
+    width: 100%;
+    padding-top: 50vh;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .bg-image {
+    height: auto;
+  }
+
+  .play {
+    position: relative;
+    top: 10vh;
+  }
+
+  .page-info {
+    padding: 15px;
+    padding-top: 20vh;
+    position: relative;
+  }
+}

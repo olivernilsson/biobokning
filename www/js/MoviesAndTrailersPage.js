@@ -35,6 +35,7 @@ class MoviesAndTrailersPage extends Component {
     this.title = movie.title;
     this.list = [];
     this.test = JSON.stringify(movie.title);
+
     this.viewings = await View.find(`.find({film:${this.test}})`);
 
     for (let view of this.viewings) {
@@ -52,7 +53,7 @@ class MoviesAndTrailersPage extends Component {
     this.title = movie.title;
     Router.goto(`/movie-details/${id}`);
     this.render();
-    this.viewingsfind(this.movie);
+    //this.viewingsfind(this.movie);
   }
 
   viewSelect(e) {
@@ -69,7 +70,7 @@ class MoviesAndTrailersPage extends Component {
   async viewingsfind(movie) {
     this.list = [];
     this.test = JSON.stringify(movie.title);
-    this.viewings = await View.find(`.find({film:${this.test}})`);
+    //this.viewings = await View.find(`.find({film:${this.test}})`);
     //this.viewings = await View.find();
 
     for (let view of this.viewings) {

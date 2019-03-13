@@ -1,0 +1,23 @@
+.navbar {
+  padding: 1rem;
+  background-color: #0b0c10 !important;
+  border-bottom: 2px solid #0b3b32;
+}
+.brand {
+  color: #85ffc7 !important;
+}
+
+.nav-link {
+  color: #85ffc7 !important;
+  border: 1px solid #0b0c10;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: #297373 !important;
+  border-bottom: 1px solid #297373;
+}
+
+.nav-link:active {
+  border-bottom: 1px solid #297373;
+}

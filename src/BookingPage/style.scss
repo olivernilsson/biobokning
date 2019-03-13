@@ -1,0 +1,162 @@
+.progress-wrap {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  margin: 0 auto;
+}
+
+.progressbar li {
+  justify-content: center;
+  vertical-align: middle;
+  float: left;
+  width: 100px;
+  position: relative;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.progressbar {
+  margin-top: 10px;
+  list-style-type: none;
+}
+
+.active-page {
+  background: #399e9e !important;
+  color: white;
+}
+
+.step-style {
+  height: 30px;
+  border: 2px solid #000000;
+  display: block;
+  margin: 0 auto 10px auto;
+  line-height: 27px;
+  background: whitesmoke;
+  color: #b1aeae;
+  text-align: center;
+  font-weight: bold;
+}
+
+.pagewrap {
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+  margin: 0 auto;
+  height: 550px;
+  display: flex;
+}
+
+#forward {
+  color: #c5c6c7;
+  align-self: center;
+  height: 100%;
+  font-weight: 900;
+  width: 200px;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0),
+    rgb(59, 179, 179)
+  );
+  border-radius: 2%;
+}
+#backtext {
+  color: #c5c6c7;
+  align-self: center;
+  height: 100%;
+  font-weight: 900;
+  width: 200px;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-image: linear-gradient(
+    to left,
+    rgba(255, 0, 0, 0),
+    rgb(59, 179, 179)
+  );
+  border-radius: 2%;
+}
+
+.mobile-buttons {
+  margin: 0 auto;
+  display: none;
+}
+
+#mobback {
+  position: absolute;
+  left: 0;
+  height: 80px;
+  width: 40%;
+  color: #c5c6c7;
+  font-weight: 900;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-image: linear-gradient(
+    to left,
+    rgba(255, 0, 0, 0),
+    rgb(41, 115, 115)
+  );
+  border-radius: 2%;
+}
+
+#mobforward {
+  position: absolute;
+  right: 0;
+  height: 80px;
+  width: 40%;
+  color: #c5c6c7;
+  font-weight: 900;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0),
+    rgb(41, 115, 115)
+  );
+  border-radius: 2%;
+}
+
+.selected-movie-box {
+  text-align: center;
+  line-height: 15px;
+  color: #85ffc7 !important;
+}
+
+.selected-movie-box > p {
+  color: #85ffc7 !important;
+}
+
+@media screen and (max-width: 950px) {
+  #backtext,
+  #forward,
+  #save-user-notloggedin,
+  #save-user-loggedin {
+    display: none;
+  }
+
+  .pagewrap {
+    height: 600px;
+  }
+
+  .mobile-buttons {
+    display: block;
+    margin-bottom: 20px;
+    height: 100px;
+  }
+}
