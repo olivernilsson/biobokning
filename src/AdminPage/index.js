@@ -24,10 +24,11 @@ class AdminPage extends Component {
       movies: [],
       views: [],
       selectedMovie: false,
-      isOpen: false
+      isOpen: false,
+      value: ""
     };
     this.toggle = this.toggle.bind(this);
-    this.movieSelect = this.movieSelect.bind(this);
+    this.choseMovie = this.choseMovie.bind(this);
     this.viewings = [];
     this.movie = [];
   }
@@ -40,12 +41,15 @@ class AdminPage extends Component {
     await this.render();
   }
 
-  movieSelect() {
+  choseMovie() {
     this.setState({ selectedMovie: true });
+  }
+
+  movieSelect() {
     if (this.state.selectedMovie === true) {
       return (
         <div>
-          <p>hej</p>
+          <p />
         </div>
       );
     }
@@ -69,7 +73,7 @@ class AdminPage extends Component {
           <DropdownMenu>
             {this.state.movies.map(movie => (
               <DropdownItem
-                onClick={this.movieSelect}
+                onClick={this.choseMovie}
                 key={movie._id}
                 className="dropdown-item"
               >
