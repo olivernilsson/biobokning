@@ -137,6 +137,43 @@
   height: auto;
 }
 
+.row-view {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom: solid 1px;
+  color: gray;
+}
+
+.row-view:hover {
+  text-decoration: none;
+  animation-name: fade;
+  animation-duration: 0.3s;
+  color: white;
+}
+
+.view-select {
+  text-decoration: none;
+  font-size: 20px;
+  padding-bottom: 15px;
+}
+
+.view-select:hover {
+  text-decoration: none;
+  animation-name: fade;
+  animation-duration: 0.3s;
+  color: white;
+}
+
+.toplist > a {
+  text-decoration: none;
+}
+
+.top-list {
+  padding-left: 30%;
+  padding-right: 30%;
+  overflow: hidden;
+}
+
 // @media screen and (max-width: 800px) {
 //   .overlay-title{
 //     font-size: 1rem;

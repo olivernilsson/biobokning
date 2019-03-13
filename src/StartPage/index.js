@@ -26,7 +26,9 @@ class StartPage extends Component {
       <section>
         <Link
           to={{
-            pathname: "/moviesandtrailerspage/",
+            pathname:
+              "/moviesandtrailerspage/" +
+              this.state.movies[this.state.mIndex].title.replace(/\s/g, "-"),
             index: 4,
             key: 0 // your data array of objects
           }}
@@ -49,7 +51,8 @@ class StartPage extends Component {
             <Link
               key={index}
               to={{
-                pathname: "/moviesandtrailerspage/",
+                pathname:
+                  "/moviesandtrailerspage/" + movie.title.replace(/\s/g, "-"),
                 index: index // your data array of objects
               }}
             >
@@ -75,6 +78,40 @@ class StartPage extends Component {
               </div>
             </Link>
           ))}
+          <div className="top-list">
+            <div className="row-top">
+              <table className="viewings-table">
+                <tbody>
+                  <tr>
+                    <td>Topplista</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="toplist top-list">
+            {this.state.movies.reverse().map((movie, index) => (
+              <Link
+                key={index}
+                to={{
+                  pathname:
+                    "/moviesandtrailerspage/" + movie.title.replace(/\s/g, "-"),
+                  index: index // your data array of objects
+                }}
+              >
+                <div className="row-view">
+                  <table className="viewings-table">
+                    <tbody>
+                      <tr>
+                        <td>{index + 1 + ": " + movie.title} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <br />
         </div>
       </section>
     );
