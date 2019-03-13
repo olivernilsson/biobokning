@@ -1,0 +1,39 @@
+.adminpage-holder {
+  padding: 20px;
+  text-align: center;
+}
+
+.dropbutton-style {
+  width: 30%;
+  display: flex;
+  margin: 0 auto;
+}
+.adminviewings-table {
+  margin-bottom: 10px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.admin-box {
+  height: auto;
+  margin: 20px 0px 20px 0px;
+  background-color: transparent;
+  width: 15%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  border: 1px solid white;
+}
+.view-delete {
+  cursor: pointer;
+  font-size: 30px;
+  color: rgb(168, 168, 168);
+  max-width: 50%;
+}
+
+.view-modify {
+  cursor: pointer;
+  font-size: 30px;
+  color: rgb(243, 207, 2);
+}

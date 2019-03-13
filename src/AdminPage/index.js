@@ -42,28 +42,52 @@ class AdminPage extends Component {
   }
 
   choseMovie = async event => {
+    this.viewings.length = 0;
     await this.setState({
       selectedValue: event.target.value,
-      title: event.target.value
+      title: event.target.value,
+      selectedMovie: false
     });
 
     this.movieView = await View.find(`.find({film:"${this.state.title}"})`);
 
     await this.movieSelect(this.movieView);
-    this.setState({ selectedMovie: true });
   };
+
+  deleteView() {
+    console.log("deleteing");
+  }
+
+  modifyView() {}
 
   movieSelect(movie) {
     this.viewings.push(movie);
+
     if (this.state.selectedMovie === true) {
       return (
         <div className="viewings-list">
+          <p>Lägg till</p>
           {this.viewings[0].map(listitem => (
             <React.Fragment key={listitem._id}>
               <div className="view-select" />
-
               <div className="row-view">
-                <table className="viewings-table">
+                <div className="admin-box">
+                  <span
+                    onClick={this.deleteView}
+                    role="img"
+                    className="view-delete"
+                  >
+                    ❌
+                  </span>
+                  <span
+                    onClick={this.modifyView}
+                    role="img"
+                    className="view-modify"
+                  >
+                    ✎
+                  </span>
+                </div>
+                <table className="adminviewings-table">
                   <tbody>
                     <tr>
                       <td>{listitem.film} </td>
@@ -79,6 +103,7 @@ class AdminPage extends Component {
         </div>
       );
     }
+    this.setState({ selectedMovie: true });
   }
 
   toggle() {
@@ -90,11 +115,15 @@ class AdminPage extends Component {
   render() {
     return (
       <section className="adminpage-holder flex-container">
-        <h1> Välj film</h1>
+        <h1> Välj film för att redigera visningar</h1>
 
-        <ButtonDropdown isOpen={this.state.isOpen} toggle={this.toggle}>
+        <ButtonDropdown
+          className="dropbutton-style"
+          isOpen={this.state.isOpen}
+          toggle={this.toggle}
+        >
           <DropdownToggle caret size="lg">
-            {this.state.title ? this.state.selectedValue : "Movies"}
+            {this.state.title ? this.state.selectedValue : "Välj film"}
           </DropdownToggle>
           <DropdownMenu>
             {this.state.movies.map(movie => (
@@ -109,7 +138,7 @@ class AdminPage extends Component {
             ))}
           </DropdownMenu>
         </ButtonDropdown>
-        {this.state.selectedMovie === false ? <p>hwj</p> : this.movieSelect()}
+        {this.state.selectedMovie === false ? " " : this.movieSelect()}
       </section>
     );
   }
