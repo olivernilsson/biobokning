@@ -14,8 +14,7 @@ class SalonPage extends Component {
   }
 
   componentDidMount() {
-    // Here we should get the chosen auditorium from the url.
-
+    // 1. We should get the chosen auditorium from the url here.
     // if (this.auditorium === "Lilla Salongen") {
     this.seatsPerRow = [6, 8, 9, 10, 10, 12,12,12];
 
@@ -43,37 +42,68 @@ class SalonPage extends Component {
     this.totalSeats = seatNum;
     this.arrayWithObjectSeats = arrayWithRowsAndSeats
 
-    this.insertSeatComponents(arrayWithRowsAndSeats)
+    this.insertSeatComponentsToRenderMethod(arrayWithRowsAndSeats)
+  }
+
+  uncolorAllSeats(){
+    for(let i = 1; i < this.totalSeats; i++){
+      this.seatsBySeatNumber[i] = {
+        key: this.seatsBySeatNumber[i].key,
+        seatNum: this.seatsBySeatNumber[i].seatNum,
+        row: this.seatsBySeatNumber[i].row,
+        className: 'seat'
+      }
+    }
+    return this.seatsBySeatNumber
   }
 
   toggleSeat(id){
-
-    console.log('seatNr', id)
-    //console.log(this.arrayWithObjectSeats)
-
-
-    let updatedArray = []
-  
-    for(let i = 0; i < this.arrayWithObjectSeats.length; i++){
-      let newRow = this.arrayWithObjectSeats[i]
-      for(let i = 0; i < newRow.length; i++){
-        let newSeat = newRow[i]
-        if(newSeat.seatNum === id){
-          newRow[i] = {
-            key: newRow[i].seatNum,
-            seatNum: newRow[i].seatNum,
-            row: newRow[i].row,
-            className: 'taken-seat'
-          }
-        }
+    // 2. nbrOfPickedSeats should come from pricePage 
+    let nbrOfPickedSeats = 3
+    this.bookedSeats = []
+    
+    this.uncolorAllSeats()
+    // 3. Should insert/color booked seats from database here
+    // 4. Should be an if-statement here to prevent from
+    // picking booked seats
+    for(let i = 0; i < nbrOfPickedSeats; i++){
+      this.seatsBySeatNumber[id+i] = {
+        key: this.seatsBySeatNumber[id+i].key,
+        seatNum: this.seatsBySeatNumber[id+i].seatNum,
+        row: this.seatsBySeatNumber[id+i].row,
+        className: 'taken-seat'
       }
-      updatedArray.push(newRow)
+      this.bookedSeats.push(id+i)
     }
-    this.insertSeatComponents(updatedArray)
+    console.log(this.bookedSeats)
+
+    let a = this.turnObjectOfSeatobjectsToArrayinArray(this.seatsBySeatNumber)
+    this.insertSeatComponentsToRenderMethod(a)
   }
 
-  insertSeatComponents(arrayWithRowsAndSeats){    
+  // This method turns object of seat objects into array of
+  // arrays of seats. It works as an transition/adapter:
+  // In -> Obejct of objects. Return -> Array of arrays
+  turnObjectOfSeatobjectsToArrayinArray(seatsBySeatNumber){
+    let seatNum = 1;
+    let arrayWithRowsAndSeats = [];
+
+    for (let numberOfSeatsInTheRow of this.seatsPerRow) {
+      let aRowWithSeats = [];
+      while (aRowWithSeats.length < numberOfSeatsInTheRow) {
+        aRowWithSeats.push(seatsBySeatNumber[seatNum]);
+        seatNum++;
+      }
+      arrayWithRowsAndSeats.push(aRowWithSeats);
+    }
+    return arrayWithRowsAndSeats
+  }
+
+  // This method turns seat objects into seat components before
+  // entering the render method. (Argument should be Array of Arrays)
+  insertSeatComponentsToRenderMethod(arrayWithRowsAndSeats){    
     let updatedArray = []
+
     for(let i = 0; i < arrayWithRowsAndSeats.length; i++){
       let newRow = arrayWithRowsAndSeats[i].map(seat => 
         <Seat 
@@ -83,7 +113,6 @@ class SalonPage extends Component {
           seatNum={seat.seatNum}
           toggleSeat={this.toggleSeat} 
         />)
-
       updatedArray.push(newRow)
     }
 
@@ -94,10 +123,7 @@ class SalonPage extends Component {
     })
   }
 
-  
   render() {
-
-    //console.log(this.state.arrayWithRowsAndSeats)
     let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => <div key={row[0].key}> {row} </div>)
  
     return (
