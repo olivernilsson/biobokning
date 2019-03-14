@@ -5,17 +5,48 @@ import REST from "./REST.js";
 
 class Film extends REST {}
 
+class Booking extends REST {}
+
+class View extends REST {}
+
+class User extends REST {}
+
 class StartPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { mIndex: 4, movies: [] };
+    this.state = { mIndex: 4, movies: [], popuUsers: [] };
+    this.savedUser = [];
     this.film();
-    console.log(this.state.mIndex);
+    this.bookedCount();
   }
 
   async film() {
     this.movie = await Film.find();
+    this.views = await View.find();
+    this.booking = await Booking.find();
     this.setState({ movies: this.movie });
+  }
+
+  async bookedCount() {
+    let popuUser = await User.find(`.find()
+        .populate({path: 'bookings',
+        populate: { path: 'view' }
+    });
+        `);
+    this.setState({ popuUsers: popuUser });
+    console.log(this.state.popuUsers);
+    this.state.popuUsers.map((User, index) =>
+      User.bookings.length ? this.savedUser.push(User) : ""
+    );
+    for (let i = 0; i < 5; i++) {
+      this.savedUser.map((User, index) =>
+        User.bookings.map((Booking, index) =>
+          Booking.view.film === this.movie[i].title
+            ? console.log(Booking.view.film)
+            : ""
+        )
+      );
+    }
   }
 
   render() {
