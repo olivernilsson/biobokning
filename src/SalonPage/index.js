@@ -12,7 +12,6 @@ class SalonPage extends Component {
     
     this.state = {
       arrayWithRowsAndSeats: [],
-      selectedAuditorium: ''
     };
     
     this.toggleSeat = this.toggleSeat.bind(this)
@@ -22,11 +21,8 @@ class SalonPage extends Component {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
 
-    this.setState({
-      selectedAuditorium: this.view[0].auditorium,
-    });
-
-    this.selectAuditorium()
+    let selectedAuditorium= this.view[0].auditorium
+    this.selectAuditorium(selectedAuditorium)
 
     let row = 1;
     let seatNum = 1;
@@ -50,19 +46,21 @@ class SalonPage extends Component {
       row++;
     }
     this.totalSeats = seatNum;
-    this.arrayWithObjectSeats = arrayWithRowsAndSeats
 
-    this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
+    // this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
+    let rePick = this.rePickPickedSeatsInWizard()
+    let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(rePick)
+    this.insertSeatsAsComponentsToRenderMethod(turnObj)
   }
 
-  selectAuditorium(){
-    if (this.state.selectedAuditorium === "Lilla Salongen") {
+  selectAuditorium(selectedAuditorium){
+    if (selectedAuditorium === "Lilla Salongen") {
       return this.seatsPerRow = [6, 8, 9, 10, 10, 12];
     }
-    if (this.state.selectedAuditorium === "Mellan Salongen") {
+    if (selectedAuditorium === "Mellan Salongen") {
       return this.seatsPerRow = [8, 9, 10, 10, 10, 12, 12];
     }
-    if (this.state.selectedAuditorium === "Stora Salongen") {
+    if (selectedAuditorium === "Stora Salongen") {
       return this.seatsPerRow = [8, 9, 10, 10, 10, 10, 12, 12];
     }
   }
@@ -79,9 +77,24 @@ class SalonPage extends Component {
     return this.seatsBySeatNumber
   }
 
+  rePickPickedSeatsInWizard(){
+    if(this.props.mySeats){
+      for(let i = 0; i < this.props.mySeats.length; i++){
+        let propIndex = this.props.mySeats[i]
+        this.seatsBySeatNumber[propIndex] = {
+          key: this.seatsBySeatNumber[propIndex].key,
+          seatNum: this.seatsBySeatNumber[propIndex].seatNum,
+          row: this.seatsBySeatNumber[propIndex].row,
+          className: 'taken-seat'
+        }
+      }
+      this.mySeats=this.props.mySeats
+    }
+    return this.seatsBySeatNumber
+  }
+
   toggleSeat(id){
-    // 2. nbrOfPickedSeats should come from pricePage 
-    let nbrOfPickedSeats = 3
+    let nbrOfPickedSeats = this.props.personsWantSeat;
     this.mySeats = []
     
     this.uncolorAllSeats()
@@ -97,10 +110,11 @@ class SalonPage extends Component {
         this.mySeats.push(id+i)
       }
     }  
-    console.log('mySeats ', this.mySeats)
+    console.log('SalonPage: ', this.mySeats)
 
-    let a = this.turnObjectOfSeatobjectsToArrayinArray(this.seatsBySeatNumber)
-    this.insertSeatsAsComponentsToRenderMethod(a)
+
+    let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(this.seatsBySeatNumber)
+    this.insertSeatsAsComponentsToRenderMethod(turnObj)
   }
 
   checkIfSeatsArePickable(id, nbrOfPickedSeats){
@@ -158,7 +172,7 @@ class SalonPage extends Component {
  
     return (
       <section className="wizard-container ">
-        <div className="demo salon">
+        <div className="demo salon" onClick={this.props.storeMySeats(this.mySeats)}>
           <div className="container">
 
           <div className="screen"></div>
