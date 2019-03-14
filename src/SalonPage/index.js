@@ -11,26 +11,22 @@ class SalonPage extends Component {
     super(props);
     
     this.state = {
-      arrayWithRowsAndSeats: []
+      arrayWithRowsAndSeats: [],
+      selectedAuditorium: ''
     };
     
     this.toggleSeat = this.toggleSeat.bind(this)
   }
 
   async componentDidMount() {
-      let route = window.location.href.split("/").pop();
-      this.view = await View.find(`.find({_id:"${route}"})`);
-      //console.log(this.movie[0].title);
-      // this.setState({
-      //   selectedMovieTitle: this.view[0].film,
-      //   selectedMovieSalon: this.view[0].auditorium,
-      //   selectedMovieTime: this.view[0].time,
-      //   selecedMovieDate: this.view[0].date
-      // });
+    let route = window.location.href.split("/").pop();
+    this.view = await View.find(`.find({_id:"${route}"})`);
 
-      console.log(route)
-    
-    this.seatsPerRow = [6, 8, 9, 10, 10, 12,12,12];
+    this.setState({
+      selectedAuditorium: this.view[0].auditorium,
+    });
+
+    this.selectAuditorium()
 
     let row = 1;
     let seatNum = 1;
@@ -59,6 +55,18 @@ class SalonPage extends Component {
     this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
   }
 
+  selectAuditorium(){
+    if (this.state.selectedAuditorium === "Lilla Salongen") {
+      return this.seatsPerRow = [6, 8, 9, 10, 10, 12];
+    }
+    if (this.state.selectedAuditorium === "Mellan Salongen") {
+      return this.seatsPerRow = [8, 9, 10, 10, 10, 12, 12];
+    }
+    if (this.state.selectedAuditorium === "Stora Salongen") {
+      return this.seatsPerRow = [8, 9, 10, 10, 10, 10, 12, 12];
+    }
+  }
+
   uncolorAllSeats(){
     for(let i = 1; i < this.totalSeats; i++){
       this.seatsBySeatNumber[i] = {
@@ -78,8 +86,6 @@ class SalonPage extends Component {
     
     this.uncolorAllSeats()
     // 3. Should insert/color booked seats from database here
-    // 4. Should be an if-statement here to prevent from
-    // picking booked seats
     if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
       for(let i = 0; i < nbrOfPickedSeats; i++){
         this.seatsBySeatNumber[id+i] = {
