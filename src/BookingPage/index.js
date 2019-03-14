@@ -150,11 +150,11 @@ class BookingPage extends Component {
       adults: this.state.adults,
       kids: this.state.kids,
       seniors: this.state.seniors,
-      bookingId: 'yooo'
+      bookingId: 'lolilol'
     });
     await myNewBooking.save();
 
-    let finder = await Booking.find(`.findOne({bookingId:'yooo'})`);
+    let finder = await Booking.find(`.findOne({bookingId:'lolilol'})`);
     
     console.log(finder);
     this.state.booking = finder;
