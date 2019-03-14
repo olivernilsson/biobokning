@@ -127,6 +127,7 @@ class BookingPage extends Component {
   countUp() {
     if (this.state.stepCounter === 3) {
       this.saveUserToDb();
+
     }
 
     this.setState(prevState => {
@@ -146,16 +147,16 @@ class BookingPage extends Component {
   async testBooking(){
     console.log('zup');
     let myNewBooking = await new Booking({
-      adults: 5,
-      kids: 5,
-      seniors: 5,
+      adults: this.state.adults,
+      kids: this.state.kids,
+      seniors: this.state.seniors,
       bookingId: 'yooo'
     });
     await myNewBooking.save();
 
     let finder = await Booking.find(`.findOne({bookingId:'yooo'})`);
     
-    //console.log(finder.adults);
+    console.log(finder);
     this.state.booking = finder;
     
   }
