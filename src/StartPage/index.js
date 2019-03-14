@@ -10,6 +10,7 @@ class StartPage extends Component {
     super(props);
     this.state = { mIndex: 4, movies: [] };
     this.film();
+    console.log(this.state.mIndex);
   }
 
   async film() {
@@ -90,7 +91,7 @@ class StartPage extends Component {
             </div>
           </div>
           <div className="toplist top-list">
-            {this.state.movies.reverse().map((movie, index) => (
+            {this.state.movies.map((movie, index) => (
               <Link
                 key={index}
                 to={{
