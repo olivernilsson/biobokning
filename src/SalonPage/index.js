@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import "./style.scss";
 import Seat from "../Seat/index.js"
+import REST from "../REST.js"
+
+
+class View extends REST{}
 
 class SalonPage extends Component {
   constructor(props) {
@@ -13,9 +17,19 @@ class SalonPage extends Component {
     this.toggleSeat = this.toggleSeat.bind(this)
   }
 
-  componentDidMount() {
-    // 1. We should get the chosen auditorium from the url here.
-    // if (this.auditorium === "Lilla Salongen") {
+  async componentDidMount() {
+      let route = window.location.href.split("/").pop();
+      this.view = await View.find(`.find({_id:"${route}"})`);
+      //console.log(this.movie[0].title);
+      // this.setState({
+      //   selectedMovieTitle: this.view[0].film,
+      //   selectedMovieSalon: this.view[0].auditorium,
+      //   selectedMovieTime: this.view[0].time,
+      //   selecedMovieDate: this.view[0].date
+      // });
+
+      console.log(route)
+    
     this.seatsPerRow = [6, 8, 9, 10, 10, 12,12,12];
 
     let row = 1;
@@ -42,7 +56,7 @@ class SalonPage extends Component {
     this.totalSeats = seatNum;
     this.arrayWithObjectSeats = arrayWithRowsAndSeats
 
-    this.insertSeatComponentsToRenderMethod(arrayWithRowsAndSeats)
+    this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
   }
 
   uncolorAllSeats(){
@@ -60,25 +74,35 @@ class SalonPage extends Component {
   toggleSeat(id){
     // 2. nbrOfPickedSeats should come from pricePage 
     let nbrOfPickedSeats = 3
-    this.bookedSeats = []
+    this.mySeats = []
     
     this.uncolorAllSeats()
     // 3. Should insert/color booked seats from database here
     // 4. Should be an if-statement here to prevent from
     // picking booked seats
-    for(let i = 0; i < nbrOfPickedSeats; i++){
-      this.seatsBySeatNumber[id+i] = {
-        key: this.seatsBySeatNumber[id+i].key,
-        seatNum: this.seatsBySeatNumber[id+i].seatNum,
-        row: this.seatsBySeatNumber[id+i].row,
-        className: 'taken-seat'
+    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
+      for(let i = 0; i < nbrOfPickedSeats; i++){
+        this.seatsBySeatNumber[id+i] = {
+          key: this.seatsBySeatNumber[id+i].key,
+          seatNum: this.seatsBySeatNumber[id+i].seatNum,
+          row: this.seatsBySeatNumber[id+i].row,
+          className: 'taken-seat'
+        }
+        this.mySeats.push(id+i)
       }
-      this.bookedSeats.push(id+i)
-    }
-    console.log(this.bookedSeats)
+    }  
+    console.log('mySeats ', this.mySeats)
 
     let a = this.turnObjectOfSeatobjectsToArrayinArray(this.seatsBySeatNumber)
-    this.insertSeatComponentsToRenderMethod(a)
+    this.insertSeatsAsComponentsToRenderMethod(a)
+  }
+
+  checkIfSeatsArePickable(id, nbrOfPickedSeats){
+    let seats = id + nbrOfPickedSeats;
+    if(seats > this.totalSeats){
+      return false
+    }
+    return true
   }
 
   // This method turns object of seat objects into array of
@@ -101,7 +125,7 @@ class SalonPage extends Component {
 
   // This method turns seat objects into seat components before
   // entering the render method. (Argument should be Array of Arrays)
-  insertSeatComponentsToRenderMethod(arrayWithRowsAndSeats){    
+  insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats){    
     let updatedArray = []
 
     for(let i = 0; i < arrayWithRowsAndSeats.length; i++){
