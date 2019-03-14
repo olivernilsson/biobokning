@@ -29,7 +29,7 @@ class BookingPage extends Component {
       seniors:0,
       maximum:8,
       totalPersons:0,
-      mySeats:[]
+      mySeats:[],
       booking: {}
     };
 
