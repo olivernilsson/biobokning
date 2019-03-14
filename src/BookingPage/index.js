@@ -8,6 +8,7 @@ import REST from "../REST";
 
 class User extends REST {}
 class View extends REST {}
+class Booking extends REST {}
 
 class BookingPage extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class BookingPage extends Component {
       kids:0,
       seniors:0,
       maximum:8,
-      totalPersons:0
+      totalPersons:0,
+      booking: {}
     };
 
     this.countUp = this.countUp.bind(this);
@@ -132,6 +134,30 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter + 1
       };
     });
+    
+
+    if(this.state.stepCounter === 1){
+      this.testBooking();
+    }
+
+
+  }
+
+  async testBooking(){
+    console.log('zup');
+    let myNewBooking = await new Booking({
+      adults: 5,
+      kids: 5,
+      seniors: 5,
+      bookingId: 'yooo'
+    });
+    await myNewBooking.save();
+
+    let finder = await Booking.find(`.findOne({bookingId:'yooo'})`);
+    
+    console.log(finder.adults);
+    this.state.booking = finder;
+    
   }
 
   async saveUserToDb() {
@@ -257,7 +283,9 @@ class BookingPage extends Component {
           ) : (
             ""
           )}
-          {this.state.stepCounter === 4 ? <BookingConfirm /> : ""}
+          {this.state.stepCounter === 4 ? 
+            <BookingConfirm confirmData={this.state.booking} />
+          : ""}
 
           {this.state.stepCounter === 3 ? (
             <button
