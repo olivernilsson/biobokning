@@ -27,11 +27,13 @@ class BookingPage extends Component {
       kids:0,
       seniors:0,
       maximum:8,
-      totalPersons:0
+      totalPersons:0,
+      mySeats:[]
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.storeMySeats = this.storeMySeats.bind(this);
   }
 
   pricepageAddPerson(event){
@@ -78,7 +80,7 @@ class BookingPage extends Component {
       this.setState({maximum: this.state.maximum-1});
       }
     }
-}
+  }
 
   async componentDidMount() {
     let route = window.location.href.split("/").pop();
@@ -111,6 +113,7 @@ class BookingPage extends Component {
   };
 
   countDown() {
+    this.preStoreMySeats()
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -123,6 +126,7 @@ class BookingPage extends Component {
   }
 
   countUp() {
+    this.preStoreMySeats()
     if (this.state.stepCounter === 3) {
       this.saveUserToDb();
     }
@@ -147,6 +151,16 @@ class BookingPage extends Component {
     console.log(addUser);
   }
 
+  preStoreMySeats(){
+    this.setState({
+      mySeats: this.mySeats
+    });
+  }
+  
+  storeMySeats(storeMySeatsX){
+    this.mySeats = storeMySeatsX
+  }
+
   render() {
     let {
       selectedMovieTitle,
@@ -157,7 +171,7 @@ class BookingPage extends Component {
 
     return (
       <section>
-        <div className="wrapper progress-wrap ">
+        <div className="wrapper progress-wrap " >
           <ul className="progressbar">
             <li
               className={
@@ -250,6 +264,8 @@ class BookingPage extends Component {
           {this.state.stepCounter === 2 ? 
             <SalonPage 
               personsWantSeat={this.state.totalPersons}
+              storeMySeats = {this.storeMySeats}
+              mySeats = {this.state.mySeats}
             /> 
           : ""}
           {this.state.stepCounter === 3 ? (
