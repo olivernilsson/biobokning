@@ -33,16 +33,30 @@ class AdminPage extends Component {
       title: "",
       modal: false,
       inputModal: false,
-      saveView: []
+      addModal: false,
+      salong: "",
+      time: "",
+      date: "",
+      showEdited: false,
+      salongAdd: "",
+      dateAdd: "",
+      timeAdd: ""
     };
     this.toggle = this.toggle.bind(this);
     this.toggleInput = this.toggleInput.bind(this);
+    this.toggleAddViewModal = this.toggleAddViewModal.bind(this);
+    this.saveEditedView = this.saveEditedView.bind(this);
     this.modifyView = this.modifyView.bind(this);
     this.choseMovie = this.choseMovie.bind(this);
     this.deleteView = this.deleteView.bind(this);
+    this.addingNewView = this.addingNewView.bind(this);
+    this.addNewView = this.addNewView.bind(this);
+    this.saveNewView = this.saveNewView.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
+    this.editingView = this.editingView.bind(this);
     this.viewings = [];
     this.movie = [];
+    this.saveView = [];
   }
 
   async componentDidMount() {
@@ -62,12 +76,11 @@ class AdminPage extends Component {
     });
 
     this.movieView = await View.find(`.find({film:"${this.state.title}"})`);
-
     await this.movieSelect(this.movieView);
   };
 
   onDismiss() {
-    this.setState({ modal: false, inputModal: false });
+    this.setState({ modal: false, inputModal: false, addModal: false });
   }
 
   async deleteView(event) {
@@ -88,37 +101,101 @@ class AdminPage extends Component {
   async modifyView(event) {
     let editView = event.currentTarget.value;
     this.editThisView = await View.find(`.find({_id:"${editView}"})`);
+    let viewId = this.editThisView;
     this.editTitle = this.editThisView[0].film;
     this.editDate = this.editThisView[0].date;
     this.editAudit = this.editThisView[0].auditorium;
     this.editTime = this.editThisView[0].time;
 
     this.setState({ inputModal: true });
+    this.saveView.push(viewId);
   }
 
-  //HÄR ÄR DU, TA VÄRDE FRÅN INPUT OCH SAVE... HITTA ID OCH SAVE
-  saveEditedView() {
-    //      let saveThisView = await View.find(`.findOneAndUpdate({_id:'${editView}' },
-    //     {  "$addToSet": {
-    //       "date": '${userBooking._id}',
-    //       "auditorium": ,
-    //       "time": ,
-    //   }
-    // },
-    //     function(err,result){
-    //         if (!err) {
-    //             console.log(result);
-    //         }
-    //     })`);
+  async editingView(e) {
+    await this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  async saveEditedView() {
+    let { salong, time, date } = this.state;
+    let viewId = this.saveView[0][0]._id;
+    let viewTitle = this.saveView[0][0].film;
+
+    let saveThisView = await View.find(`.findOneAndReplace({_id:'${viewId}' },
+        {  "$set": {
+          "date": '${date}',
+          "auditorium": '${salong}',
+          "time":'${time}' ,
+      }
+    },
+        function(err,result){
+            if (!err) {
+                console.log(result);
+            }
+        })`);
+
+    await this.setState({
+      inputModal: false
+    });
+
+    this.getNewData(viewTitle);
+  }
+
+  async addingNewView(e) {
+    await this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  async addNewView() {
+    this.setState({ addModal: true });
+  }
+
+  async saveNewView() {
+    let { title, timeAdd, salongAdd, dateAdd } = this.state;
+    let toBeAdded = await View.find(`.find({film:"${title}"})`);
+
+    let newAddedView = await new View({
+      film: title,
+      auditorium: salongAdd,
+      time: timeAdd,
+      date: dateAdd
+    });
+
+    await newAddedView.save();
+
+    this.setState({
+      addModal: false
+    });
+
+    this.getNewData(title);
+    console.log(newAddedView);
+  }
+
+  async getNewData(viewTitle) {
+    this.viewings.length = 0;
+    let newTitle = viewTitle;
+    this.newData = await View.find(`.find({film:"${newTitle}"})`);
+    console.log(this.newData);
+    await this.movieSelect(this.newData);
+    this.viewings.push(this.newData);
+    this.setState({
+      selectedMovie: true
+    });
   }
 
   movieSelect(movie) {
-    this.viewings.push(movie);
+    if (this.viewings.length < 1) {
+      this.viewings.push(movie);
+    }
 
     if (this.state.selectedMovie === true) {
       return (
         <div className="viewings-list">
-          <p>Lägg till</p>
+          <button onClick={this.addNewView} role="img" className="view-add">
+            Lägg till en visning
+          </button>
           {this.viewings[0].map(listitem => (
             <React.Fragment key={listitem._id}>
               <div className="view-select" />
@@ -160,6 +237,12 @@ class AdminPage extends Component {
     this.setState({ selectedMovie: true });
   }
 
+  toggleAddViewModal() {
+    this.setState({
+      addModal: !this.state.addModal
+    });
+  }
+
   toggleInput() {
     this.setState({
       inputModal: !this.state.inputModal
@@ -185,6 +268,7 @@ class AdminPage extends Component {
           <DropdownToggle caret size="lg">
             {this.state.title ? this.state.selectedValue : "Välj film"}
           </DropdownToggle>
+
           <DropdownMenu>
             {this.state.movies.map(movie => (
               <DropdownItem
@@ -199,6 +283,77 @@ class AdminPage extends Component {
           </DropdownMenu>
         </ButtonDropdown>
         {this.state.selectedMovie === false ? " " : this.movieSelect()}
+
+        <div>
+          <Modal
+            className="inputmodalstyle"
+            isOpen={this.state.addModal}
+            toggle={this.toggleAddViewModal}
+          >
+            <ModalHeader
+              className="inputmodalstyle"
+              toggle={this.toggleAddViewModal}
+            >
+              Lägg till visning
+            </ModalHeader>
+            <ModalBody className="inputmodalstyle">
+              <div>
+                <p className="title-style-modal">
+                  Lägg till en visning för filmen
+                  <br /> {this.state.selectedValue}
+                </p>
+                <InputGroup className="input-box">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText className="input-styling">
+                      Salong
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    onChange={this.addingNewView}
+                    name="salongAdd"
+                    className="underline-styling"
+                    placeholder="T.ex Stora Salongen"
+                  />
+                </InputGroup>
+                <InputGroup className="input-box">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText className="input-styling">
+                      Tid
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    onChange={this.addingNewView}
+                    name="timeAdd"
+                    className="underline-styling"
+                    placeholder="13:00"
+                  />
+                </InputGroup>
+                <InputGroup className="input-box">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText className="input-styling">
+                      Datum
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    onChange={this.addingNewView}
+                    name="dateAdd"
+                    className="underline-styling"
+                    placeholder="2019-01-01"
+                  />
+                </InputGroup>
+              </div>
+            </ModalBody>
+            <ModalFooter className="inputmodalstyle">
+              <Button color="primary" onClick={this.saveNewView}>
+                Spara
+              </Button>{" "}
+              <Button color="secondary" onClick={this.onDismiss}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
@@ -230,19 +385,10 @@ class AdminPage extends Component {
             </ModalHeader>
             <ModalBody className="inputmodalstyle">
               <div>
-                <InputGroup className="input-box">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText className="input-styling">
-                      Film
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    readOnly
-                    value={this.editTitle}
-                    className="underline-styling"
-                    placeholder={this.editTitle}
-                  />
-                </InputGroup>
+                <p className="title-style-modal">
+                  Redigera visning för filmen
+                  <br /> {this.editTitle}
+                </p>
                 <InputGroup className="input-box">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText className="input-styling">
@@ -250,6 +396,8 @@ class AdminPage extends Component {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    onChange={this.editingView}
+                    name="salong"
                     className="underline-styling"
                     placeholder={this.editAudit}
                   />
@@ -261,6 +409,8 @@ class AdminPage extends Component {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    onChange={this.editingView}
+                    name="time"
                     className="underline-styling"
                     placeholder={this.editTime}
                   />
@@ -272,6 +422,8 @@ class AdminPage extends Component {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    onChange={this.editingView}
+                    name="date"
                     className="underline-styling"
                     placeholder={this.editDate}
                   />
