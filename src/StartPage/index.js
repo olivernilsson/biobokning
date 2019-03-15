@@ -16,18 +16,25 @@ class StartPage extends Component {
     super(props);
     this.state = { mIndex: 4, movies: [], popuUsers: [] };
     this.savedUser = [];
+    this.movieCount = [
+      { count: 0, index: 0 },
+      { count: 0, index: 1 },
+      { count: 0, index: 2 },
+      { count: 0, index: 3 },
+      { count: 0, index: 4 }
+    ];
     this.film();
-    this.bookedCount();
   }
 
   async film() {
-    this.movie = await Film.find();
+    let movies = await Film.find();
     this.views = await View.find();
     this.booking = await Booking.find();
-    this.setState({ movies: this.movie });
+    await this.bookedCount(movies);
+    this.setState({ movies: movies });
   }
 
-  async bookedCount() {
+  async bookedCount(movies) {
     let popuUser = await User.find(`.find()
         .populate({path: 'bookings',
         populate: { path: 'view' }
@@ -35,18 +42,26 @@ class StartPage extends Component {
         `);
     this.setState({ popuUsers: popuUser });
     console.log(this.state.popuUsers);
-    this.state.popuUsers.map((User, index) =>
+    this.state.popuUsers.map(User =>
       User.bookings.length ? this.savedUser.push(User) : ""
     );
+    console.log(this.savedUser);
+
     for (let i = 0; i < 5; i++) {
-      this.savedUser.map((User, index) =>
-        User.bookings.map((Booking, index) =>
-          Booking.view.film === this.movie[i].title
-            ? console.log(Booking.view.film)
+      this.savedUser.map(User =>
+        User.bookings.map(Booking =>
+          Booking.view
+            ? Booking.view.film === movies[this.movieCount[i].index].title
+              ? (this.movieCount[i].count = this.movieCount[i].count + 1)
+              : ""
             : ""
         )
       );
     }
+
+    this.movieCount.sort(function(a, b) {
+      return b.count - a.count;
+    });
   }
 
   render() {
@@ -122,26 +137,31 @@ class StartPage extends Component {
             </div>
           </div>
           <div className="toplist top-list">
-            {this.state.movies.map((movie, index) => (
-              <Link
-                key={index}
-                to={{
-                  pathname:
-                    "/moviesandtrailerspage/" + movie.title.replace(/\s/g, "-"),
-                  index: index // your data array of objects
-                }}
-              >
-                <div className="row-view">
-                  <table className="viewings-table">
-                    <tbody>
-                      <tr>
-                        <td>{index + 1 + ": " + movie.title} </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </Link>
-            ))}
+            {this.movieCount.map((movieC, index) => {
+              let movie = this.state.movies[movieC.index];
+              return (
+                <Link
+                  key={index}
+                  to={{
+                    pathname:
+                      "/moviesandtrailerspage/" +
+                      movie.title.replace(/\s/g, "-"),
+                    index: index // your data array of objects
+                  }}
+                >
+                  <div className="row-view">
+                    <table className="viewings-table">
+                      <tbody>
+                        <tr>
+                          <td>{index + 1 + ": " + movie.title} </td>
+                          <td className="floatRight">{movieC.count} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
           <br />
         </div>
