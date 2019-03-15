@@ -154,6 +154,8 @@ class BookingPage extends Component {
 
 
   async saveUserToDb() {
+    
+    
     let { dataFirst, dataEmail, dataLast, dataPassword } = this.state;
     let addUser = new User({
       firstName: dataFirst,
@@ -163,11 +165,12 @@ class BookingPage extends Component {
     });
 
     await addUser.save();
-    //console.log(addUser);
+    console.log(addUser);
     this.setState({
       user: addUser
     });
-    console.log(this.state.user + 'the user');
+    console.log(this.state.user)
+  
   }
 
   async testBooking(){
@@ -180,14 +183,15 @@ class BookingPage extends Component {
       kids: this.state.kids,
       seniors: this.state.seniors,
       user: this.state.user,
-      view: this.state.view
+      view: this.state.view,
+      seats: this.state.mySeats
     });
     
       await myNewBooking.save();
 
       let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
     
-      console.log(finder);
+      console.log(finder); 
    // this.state.booking = finder; 
     
   }
