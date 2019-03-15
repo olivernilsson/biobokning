@@ -14,7 +14,7 @@ class User extends REST {}
 class StartPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { mIndex: 4, movies: [], popuUsers: [] };
+    this.state = { mIndex: 4, movies: [], populateUsers: [] };
     this.savedUser = [];
     this.movieCount = [
       { count: 0, index: 0 },
@@ -35,14 +35,14 @@ class StartPage extends Component {
   }
 
   async bookedCount(movies) {
-    let popuUser = await User.find(`.find()
+    let populateUser = await User.find(`.find()
         .populate({path: 'bookings',
         populate: { path: 'view' }
     });
         `);
-    this.setState({ popuUsers: popuUser });
-    console.log(this.state.popuUsers);
-    this.state.popuUsers.map(User =>
+    this.setState({ populateUsers: populateUser });
+    console.log(this.state.populateUsers);
+    this.state.populateUsers.map(User =>
       User.bookings.length ? this.savedUser.push(User) : ""
     );
     console.log(this.savedUser);
@@ -52,7 +52,8 @@ class StartPage extends Component {
         User.bookings.map(Booking =>
           Booking.view
             ? Booking.view.film === movies[this.movieCount[i].index].title
-              ? (this.movieCount[i].count = this.movieCount[i].count + 1)
+              ? (this.movieCount[i].count =
+                  this.movieCount[i].count + Booking.seats.length)
               : ""
             : ""
         )
