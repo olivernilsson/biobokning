@@ -12,48 +12,36 @@ class MoviesAndTrailersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mIndex: this.props.location.index || 0,
       modal: false,
       movies: [],
-      views: []
+      views: [],
+      selectedMovie: []
     };
     this.youtube = "https://www.youtube.com/embed/";
     this.toggle = this.toggle.bind(this);
-    this.movies = [];
-    this.movie = [];
+
     this.testlist = [];
     this.viewings = [];
     //this.setMovie();
-    this.start();
   }
 
-  setMovie() {
-    if (this.props.location.index !== undefined) {
-      //console.log(this.props.location.index);
-      this.setState({ mIndex: this.props.location.index });
-    }
-    //console.log(this.state.mIndex);
-  }
+  async componentDidMount() {
+    let movieroute = window.location.href.split("/").pop();
+    let movieUrl = movieroute.replace(/\-/g, " ");
+    console.log(movieUrl);
+    this.chosenMovie = await Film.find(`.find({title:"${movieUrl}"})`);
 
-  async start() {
-    await this.film();
-    await this.viewingsfind(this.state.movies[this.state.mIndex]);
-  }
+    this.setState({
+      selectedMovie: this.chosenMovie
+    });
 
-  async film() {
-    this.movie = await Film.find();
-    //console.log(this.movie[0].title);
-    this.setState({ movies: this.movie });
+    await this.viewingsfind(this.state.selectedMovie);
   }
 
   async viewingsfind(movie) {
-    //console.log(movie.title);
     this.list = [];
-    //console.log(`${movie.title}`);
-    this.test = JSON.stringify(movie.title);
-    this.viewings = await View.find(`.find({film:${this.test}})`);
-
-    //console.log(this.viewings);
+    this.viewname = JSON.stringify(movie[0].title);
+    this.viewings = await View.find(`.find({film:${this.viewname}})`);
 
     for (let view of this.viewings) {
       let viewDate = new Date(view.date);
@@ -64,10 +52,6 @@ class MoviesAndTrailersPage extends Component {
     this.setState({ views: this.testlist });
   }
 
-  returnFilm() {
-    return this.movie[0].title;
-  }
-
   toggle() {
     this.setState(prevState => ({
       modal: !prevState.modal
@@ -75,113 +59,104 @@ class MoviesAndTrailersPage extends Component {
   }
 
   render() {
-    if (this.state.movies.length === 0) {
-      return <div />;
-    }
-
     return (
       <section className="movie-section">
-        <div className="movie-fade" />
-        <img
-          alt=" "
-          className="bg-image"
-          alt="bg"
-          src={require("./" + this.state.movies[this.state.mIndex].images[0])}
-        />
-        <img
-          alt=" "
-          className="play"
-          alt="play-button"
-          onClick={this.toggle}
-          src={require("./play.png")}
-        />
-        <div>
-          <Modal
-            isOpen={this.state.modal}
-            toggle={this.toggle}
-            className={this.props.className}
-          >
-            <ModalHeader toggle={this.toggle} />
-            <ModalBody>
-              <iframe
-                title="trailer"
-                allowFullScreen={true}
-                width="465"
-                height="340"
-                title="trailer"
-                src={
-                  this.youtube +
-                  this.state.movies[this.state.mIndex].youtubeTrailers[0]
-                }
-              />
-            </ModalBody>
-          </Modal>
-        </div>
-        <div className="page-info">
-          <h2 className="movieh2">
-            {this.state.movies[this.state.mIndex].title}
-          </h2>
-          <h4 className="movieh4">
-            {"År: " +
-              this.state.movies[this.state.mIndex].productionYear +
-              " | Minuter: " +
-              this.state.movies[this.state.mIndex].length +
-              " | Genre: " +
-              this.state.movies[this.state.mIndex].genre}
-          </h4>
-          <br />
-          <p>{this.state.movies[this.state.mIndex].description}</p>
-          <p>{"Regissör: " + this.state.movies[this.state.mIndex].director}</p>
-          <p>
-            {"Skådespelare: " +
-              this.state.movies[this.state.mIndex].actors
-                .map(actor => `${actor}`)
-                .join(", ")}{" "}
-          </p>
-          <p>{"Språk: " + this.state.movies[this.state.mIndex].language}</p>
-          <br />
-        </div>
+        {this.state.selectedMovie.map(movie => (
+          <React.Fragment key={movie._id}>
+            <div className="movie-fade" />
+            <img
+              className="bg-image"
+              alt="bg"
+              src={require("./" + movie.images[0])}
+            />
 
-        <h2 className="act-view">Aktuella visningar: </h2>
-        <div className="viewings-list">
-          <div className="row-top">
-            <table className="viewings-table">
-              <tbody>
-                <tr>
-                  <td>Film </td>
-                  <td>Salong </td>
-                  <td>Datum</td>
-                  <td>Tid </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="viewings-list">
-          {this.testlist.map(listitem => (
-            <Link
-              key={listitem._id}
-              className="view-select"
-              to={"/bookingpage/" + listitem._id}
-              data-view-id={listitem._id}
-              key={listitem._id}
-            >
-              <div className="row-view">
+            <img
+              className="play"
+              alt="play-button"
+              onClick={this.toggle}
+              src={require("./play.png")}
+            />
+
+            <div>
+              <Modal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                className={this.props.className}
+              >
+                <ModalHeader toggle={this.toggle} />
+                <ModalBody>
+                  <iframe
+                    allowFullScreen={true}
+                    width="465"
+                    height="340"
+                    title="trailer"
+                    src={this.youtube + movie.youtubeTrailers[0]}
+                  />
+                </ModalBody>
+              </Modal>
+            </div>
+            <div className="page-info">
+              <h2 className="movieh2">{movie.title}</h2>
+              <h4 className="movieh4">
+                {"År: " +
+                  movie.productionYear +
+                  " | Minuter: " +
+                  movie.length +
+                  " | Genre: " +
+                  movie.genre}
+              </h4>
+              <br />
+              <p>{movie.description}</p>
+              <p>{"Regissör: " + movie.director}</p>
+              <p>
+                {"Skådespelare: " +
+                  movie.actors.map(actor => `${actor}`).join(", ")}{" "}
+              </p>
+              <p>{"Språk: " + movie.language}</p>
+              <br />
+            </div>
+
+            <h2 className="act-view">Aktuella visningar: </h2>
+            <div className="viewings-list">
+              <div className="row-top">
                 <table className="viewings-table">
                   <tbody>
                     <tr>
-                      <td>{listitem.film} </td>
-                      <td>{listitem.auditorium} </td>
-                      <td>{listitem.date} </td>
-                      <td>{listitem.time} </td>
+                      <td>Film </td>
+                      <td>Salong </td>
+                      <td>Datum</td>
+                      <td>Tid </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </Link>
-          ))}
-        </div>
-        <br />
+            </div>
+            <div className="viewings-list">
+              {this.testlist.map(listitem => (
+                <Link
+                  className="view-select"
+                  to={"/bookingpage/" + listitem._id}
+                  data-view-id={listitem._id}
+                  key={listitem._id}
+                >
+                  <div className="row-view">
+                    <table className="viewings-table">
+                      <tbody>
+                        <tr>
+                          <td>{listitem.film} </td>
+                          <td>{listitem.auditorium} </td>
+                          <td>{listitem.date} </td>
+                          <td>{listitem.time} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <br />
+          </React.Fragment>
+        ))}
       </section>
     );
   }

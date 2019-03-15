@@ -86,15 +86,7 @@ class NavbarApp extends Component {
                   About Salon
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link"
-                  to="/moviesandtrailerspage"
-                  activeClassName="active"
-                >
-                  Movies
-                </NavLink>
-              </NavItem>
+
               <UserRegistration />
               <UserLogin />
             </Nav>

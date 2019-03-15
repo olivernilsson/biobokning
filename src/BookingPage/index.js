@@ -8,6 +8,7 @@ import REST from "../REST";
 
 class User extends REST {}
 class View extends REST {}
+class Booking extends REST {}
 
 class BookingPage extends Component {
   constructor(props) {
@@ -21,11 +22,66 @@ class BookingPage extends Component {
       selectedMovieTitle: null,
       selectedMovieTime: null,
       selectedMovieSalon: null,
-      selecedMovieDate: null
+      selecedMovieDate: null,
+      stepCounter: 1,
+      adults:0,
+      kids:0,
+      seniors:0,
+      maximum:8,
+      totalPersons:0,
+      mySeats:[],
+      booking: {}
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.storeMySeats = this.storeMySeats.bind(this);
+  }
+
+  pricepageAddPerson(event){
+ 
+    if(event.target.className==='AdultsDown'){
+      if(this.state.adults>0 ){
+      this.setState({adults: this.state.adults -1});
+      this.setState({totalPersons: this.state.totalPersons -1});
+      this.setState({maximum: this.state.maximum+1});
+      }
+    }
+    else if(event.target.className==='AdultsUp'){
+      if(this.state.maximum>0){
+      this.setState({adults: this.state.adults+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
+      this.setState({maximum: this.state.maximum-1});
+      }
+    }
+    else if(event.target.className==='KidsDown'){
+      if(this.state.kids>0){
+      this.setState({kids: this.state.kids-1});
+      this.setState({totalPersons: this.state.totalPersons -1});
+      this.setState({maximum: this.state.maximum+1});
+      }
+    }
+    else if(event.target.className==='KidsUp'){
+      if(this.state.maximum>0){
+      this.setState({kids: this.state.kids+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
+      this.setState({maximum: this.state.maximum-1});
+      }
+    }
+    else if(event.target.className==='SeniorsDown'){
+      if(this.state.seniors>0){
+      this.setState({seniors: this.state.seniors-1});
+      this.setState({totalPersons: this.state.totalPersons -1});
+      this.setState({maximum: this.state.maximum+1});
+      }
+    }
+    else if(event.target.className==='SeniorsUp'){
+      if(this.state.maximum>0){
+      this.setState({seniors: this.state.seniors+1});
+      this.setState({totalPersons: this.state.totalPersons +1});
+      this.setState({maximum: this.state.maximum-1});
+      }
+    }
   }
 
   async componentDidMount() {
@@ -59,6 +115,7 @@ class BookingPage extends Component {
   };
 
   countDown() {
+    this.preStoreMySeats()
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -71,6 +128,7 @@ class BookingPage extends Component {
   }
 
   countUp() {
+    this.preStoreMySeats()
     if (this.state.stepCounter === 3) {
       this.saveUserToDb();
     }
@@ -80,6 +138,30 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter + 1
       };
     });
+    
+
+    if(this.state.stepCounter === 1){
+      this.testBooking();
+    }
+
+
+  }
+
+  async testBooking(){
+    console.log('zup');
+    let myNewBooking = await new Booking({
+      adults: 5,
+      kids: 5,
+      seniors: 5,
+      bookingId: 'yooo'
+    });
+    await myNewBooking.save();
+
+    let finder = await Booking.find(`.findOne({bookingId:'yooo'})`);
+    
+    //console.log(finder.adults);
+    this.state.booking = finder;
+    
   }
 
   async saveUserToDb() {
@@ -95,6 +177,16 @@ class BookingPage extends Component {
     console.log(addUser);
   }
 
+  preStoreMySeats(){
+    this.setState({
+      mySeats: this.mySeats
+    });
+  }
+  
+  storeMySeats(storeMySeatsX){
+    this.mySeats = storeMySeatsX
+  }
+
   render() {
     let {
       selectedMovieTitle,
@@ -105,7 +197,7 @@ class BookingPage extends Component {
 
     return (
       <section>
-        <div className="wrapper progress-wrap ">
+        <div className="wrapper progress-wrap " >
           <ul className="progressbar">
             <li
               className={
@@ -186,14 +278,30 @@ class BookingPage extends Component {
           >
             Bakåt
           </button>
-          {this.state.stepCounter === 1 ? <PricePage /> : ""}
-          {this.state.stepCounter === 2 ? <SalonPage /> : ""}
+          {this.state.stepCounter === 1 ? 
+            <PricePage 
+              adults={this.state.adults} 
+              kids={this.state.kids}
+              seniors={this.state.seniors}
+              maximum={this.state.maximum}
+              addPerson={this.pricepageAddPerson.bind(this)}
+             /> 
+          : ""}
+          {this.state.stepCounter === 2 ? 
+            <SalonPage 
+              personsWantSeat={this.state.totalPersons}
+              storeMySeats = {this.storeMySeats}
+              mySeats = {this.state.mySeats}
+            /> 
+          : ""}
           {this.state.stepCounter === 3 ? (
             <RegPage myData={this.handleData} />
           ) : (
             ""
           )}
-          {this.state.stepCounter === 4 ? <BookingConfirm /> : ""}
+          {this.state.stepCounter === 4 ? 
+            <BookingConfirm confirmData={this.state.booking} />
+          : ""}
 
           {this.state.stepCounter === 3 ? (
             <button
