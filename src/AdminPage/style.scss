@@ -7,11 +7,26 @@
   width: 30%;
   display: flex;
   margin: 0 auto;
+  justify-content: center;
 }
 .adminviewings-table {
   margin-bottom: 10px;
   table-layout: fixed;
   width: 100%;
+}
+
+.admin-movie-holder {
+  border: 1px solid white;
+  display: flex;
+}
+
+.modify-modal-header {
+  background-color: #262d34;
+  height: 50px;
+}
+.modify-modal-bottom {
+  border: none;
+  background-color: #262d34;
 }
 
 .admin-box {
@@ -48,6 +63,16 @@
   color: black;
 }
 
+.del-header {
+  color: white;
+  background-color: #a90918 !important;
+  height: 50px;
+}
+.delete-modal-bottom {
+  background-color: #a90918 !important;
+  height: 50px;
+}
+
 .deletedView-text {
   color: black;
 }
@@ -57,9 +82,34 @@
   margin: 0;
 }
 
+.add-modal-header {
+  background-color: rgb(29, 104, 29) !important;
+  height: 50px;
+}
+
+.add-modal-bottom {
+  background-color: rgb(29, 104, 29) !important;
+  height: 50px;
+}
+
 .view-add {
   border: none;
   background-color: lightgreen;
   margin: 50px 0px 40px 0px;
   font-size: 30px;
+}
+
+@media screen and (max-width: 700px) {
+  .mobile-view-td {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .admin-box {
+    width: 30%;
+  }
+
+  .view-modify {
+    margin-right: 10px;
+  }
 }

@@ -90,12 +90,11 @@ class AdminPage extends Component {
     this.delViewTitle = this.infoView[0].film;
     this.delViewDate = this.infoView[0].date;
     this.delViewTime = this.infoView[0].time;
-
-    // this.deletedView = await View.find(
-    //   `.findOneAndDelete({_id:"${deleteView}"})`
-    // );
+    this.delViewAudit = this.infoView[0].auditorium;
+    this.deletedView = await View.find(`.findOneAndDelete({_id:"${delView}"})`);
 
     this.setState({ modal: true });
+    this.getNewData(this.delViewTitle);
   }
 
   async modifyView(event) {
@@ -170,14 +169,12 @@ class AdminPage extends Component {
     });
 
     this.getNewData(title);
-    console.log(newAddedView);
   }
 
   async getNewData(viewTitle) {
     this.viewings.length = 0;
     let newTitle = viewTitle;
     this.newData = await View.find(`.find({film:"${newTitle}"})`);
-    console.log(this.newData);
     await this.movieSelect(this.newData);
     this.viewings.push(this.newData);
     this.setState({
@@ -199,14 +196,14 @@ class AdminPage extends Component {
           {this.viewings[0].map(listitem => (
             <React.Fragment key={listitem._id}>
               <div className="view-select" />
-              <div className="row-view">
+              <div className="row-view admin-movie-holder">
                 <table className="adminviewings-table">
                   <tbody>
                     <tr>
-                      <td>{listitem.film} </td>
-                      <td>{listitem.auditorium} </td>
-                      <td>{listitem.date} </td>
-                      <td>{listitem.time} </td>
+                      <td className="mobile-view-td">{listitem.film} </td>
+                      <td className="mobile-view-td">{listitem.auditorium} </td>
+                      <td className="mobile-view-td">{listitem.date} </td>
+                      <td className="mobile-view-td">{listitem.time} </td>
                     </tr>
                   </tbody>
                 </table>
@@ -291,14 +288,14 @@ class AdminPage extends Component {
             toggle={this.toggleAddViewModal}
           >
             <ModalHeader
-              className="inputmodalstyle"
+              className="inputmodalstyle add-modal-header"
               toggle={this.toggleAddViewModal}
             >
               Lägg till visning
             </ModalHeader>
             <ModalBody className="inputmodalstyle">
               <div>
-                <p className="title-style-modal">
+                <p className="title-style-modal ">
                   Lägg till en visning för filmen
                   <br /> {this.state.selectedValue}
                 </p>
@@ -343,8 +340,8 @@ class AdminPage extends Component {
                 </InputGroup>
               </div>
             </ModalBody>
-            <ModalFooter className="inputmodalstyle">
-              <Button color="primary" onClick={this.saveNewView}>
+            <ModalFooter className="inputmodalstyle  add-modal-bottom">
+              <Button color="info" onClick={this.saveNewView}>
                 Spara
               </Button>{" "}
               <Button color="secondary" onClick={this.onDismiss}>
@@ -359,15 +356,19 @@ class AdminPage extends Component {
           toggle={this.toggle}
           className="delete-modal"
         >
-          <ModalHeader className="delete-modal" toggle={this.toggle}>
+          <ModalHeader
+            className="delete-modal del-header"
+            toggle={this.onDismiss}
+          >
             Raderad visning
           </ModalHeader>
           <ModalBody className="delete-modal">
             <p className="deletedView-text"> Titel: {this.delViewTitle}</p>
+            <p className="deletedView-text"> Salong: {this.delViewAudit}</p>
             <p className="deletedView-text"> Datum: {this.delViewDate}</p>
             <p className="deletedView-text"> Tid: {this.delViewTime}</p>
           </ModalBody>
-          <ModalFooter className="delete-modal">
+          <ModalFooter className=" delete-modal-bottom">
             <Button color="primary" onClick={this.onDismiss}>
               Stäng
             </Button>
@@ -380,7 +381,10 @@ class AdminPage extends Component {
             isOpen={this.state.inputModal}
             toggle={this.toggleInput}
           >
-            <ModalHeader className="inputmodalstyle" toggle={this.toggleInput}>
+            <ModalHeader
+              className="inputmodalstyle modify-modal-header"
+              toggle={this.toggleInput}
+            >
               Redigera visning
             </ModalHeader>
             <ModalBody className="inputmodalstyle">
@@ -430,8 +434,8 @@ class AdminPage extends Component {
                 </InputGroup>
               </div>
             </ModalBody>
-            <ModalFooter className="inputmodalstyle">
-              <Button color="primary" onClick={this.saveEditedView}>
+            <ModalFooter className="inputmodalstyle modify-modal-bottom">
+              <Button color="success" onClick={this.saveEditedView}>
                 Spara
               </Button>{" "}
               <Button color="secondary" onClick={this.onDismiss}>
