@@ -19,6 +19,8 @@ class BookingPage extends Component {
       dataLast: null,
       dataEmail: null,
       dataPassword: null,
+      view: null,
+      user: null,
       selectedMovieTitle: null,
       selectedMovieTime: null,
       selectedMovieSalon: null,
@@ -87,7 +89,9 @@ class BookingPage extends Component {
   async componentDidMount() {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
+    
     this.setState({
+      view: this.view[0],
       selectedMovieTitle: this.view[0].film,
       selectedMovieSalon: this.view[0].auditorium,
       selectedMovieTime: this.view[0].time,
@@ -131,6 +135,7 @@ class BookingPage extends Component {
     this.preStoreMySeats()
     if (this.state.stepCounter === 3) {
       this.saveUserToDb();
+      this.testBooking();
     }
 
     this.setState(prevState => {
@@ -141,28 +146,12 @@ class BookingPage extends Component {
     
 
     if(this.state.stepCounter === 1){
-      this.testBooking();
+     
     }
 
 
   }
 
-  async testBooking(){
-    console.log('zup');
-    let myNewBooking = await new Booking({
-      adults: 5,
-      kids: 5,
-      seniors: 5,
-      bookingId: 'yooo'
-    });
-    await myNewBooking.save();
-
-    let finder = await Booking.find(`.findOne({bookingId:'yooo'})`);
-    
-    //console.log(finder.adults);
-    this.state.booking = finder;
-    
-  }
 
   async saveUserToDb() {
     let { dataFirst, dataEmail, dataLast, dataPassword } = this.state;
@@ -174,8 +163,36 @@ class BookingPage extends Component {
     });
 
     await addUser.save();
-    console.log(addUser);
+    //console.log(addUser);
+    this.setState({
+      user: addUser
+    });
+    console.log(this.state.user + 'the user');
   }
+
+  async testBooking(){
+
+    //console.log(this.state.selectedMovieTitle);
+   //console.log(this.state.user);
+   
+      let myNewBooking = await new Booking({
+      adults: this.state.adults,
+      kids: this.state.kids,
+      seniors: this.state.seniors,
+      user: this.state.user,
+      view: this.state.view
+    });
+    
+      await myNewBooking.save();
+
+      let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
+    
+      console.log(finder);
+   // this.state.booking = finder; 
+    
+  }
+
+  
 
   preStoreMySeats(){
     this.setState({
