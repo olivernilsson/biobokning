@@ -1,0 +1,115 @@
+.adminpage-holder {
+  padding: 20px;
+  text-align: center;
+}
+
+.dropbutton-style {
+  width: 30%;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+.adminviewings-table {
+  margin-bottom: 10px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.admin-movie-holder {
+  border: 1px solid white;
+  display: flex;
+}
+
+.modify-modal-header {
+  background-color: #262d34;
+  height: 50px;
+}
+.modify-modal-bottom {
+  border: none;
+  background-color: #262d34;
+}
+
+.admin-box {
+  height: auto;
+  margin: 20px 0px 20px 0px;
+  background-color: transparent;
+  width: 15%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+}
+.view-delete {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 30px;
+  color: rgb(168, 168, 168);
+  max-width: 50%;
+}
+
+.view-modify {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: 1;
+  font-size: 30px;
+  color: rgb(243, 207, 2);
+}
+
+.delete-modal {
+  background-color: white !important;
+  color: black;
+}
+
+.del-header {
+  color: white;
+  background-color: #a90918 !important;
+  height: 50px;
+}
+.delete-modal-bottom {
+  background-color: #a90918 !important;
+  height: 50px;
+}
+
+.deletedView-text {
+  color: black;
+}
+.title-style-modal {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.add-modal-header {
+  background-color: rgb(29, 104, 29) !important;
+  height: 50px;
+}
+
+.add-modal-bottom {
+  background-color: rgb(29, 104, 29) !important;
+  height: 50px;
+}
+
+.view-add {
+  border: none;
+  background-color: lightgreen;
+  margin: 50px 0px 40px 0px;
+  font-size: 30px;
+}
+
+@media screen and (max-width: 700px) {
+  .mobile-view-td {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .admin-box {
+    width: 30%;
+  }
+
+  .view-modify {
+    margin-right: 10px;
+  }
+}
