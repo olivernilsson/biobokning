@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import "./style.scss";
 import Seat from "../Seat/index.js"
-import REST from "../REST.js"
 
-
-class View extends REST{}
 
 class SalonPage extends Component {
   constructor(props) {
@@ -18,11 +15,42 @@ class SalonPage extends Component {
   }
 
   async componentDidMount() {
-    let route = window.location.href.split("/").pop();
-    this.view = await View.find(`.find({_id:"${route}"})`);
+    this.view = this.props.salonView
+    let bookings = this.props.salonBookings
 
-    let selectedAuditorium= this.view[0].auditorium
-    this.selectAuditorium(selectedAuditorium)
+    this.selectAuditorium(this.view[0].auditorium)
+
+    this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(this.view[0]._id, bookings)
+
+    // this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
+    let rePick = this.colorMySeatsAndTakenSeats(this.takenSeatsArray)
+    let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(rePick)
+    this.insertSeatsAsComponentsToRenderMethod(turnObj)
+  }
+
+  returnsTakenSeatsForThisViewing(thisView, bookings){
+
+    let test = '5c5839d678802e1b79b5ef73' // 'test' = should be 'thisView'
+    let takenSeats = []
+    for(let booking of bookings){
+      if(booking.view === test){
+        takenSeats = takenSeats.concat(booking.seats)
+      }
+    }
+    this.takenSeats = takenSeats.sort(function(a, b){return a - b})
+    return this.takenSeats
+  }
+
+  selectAuditorium(selectedAuditorium){
+    if (selectedAuditorium === "Lilla Salongen") {
+      this.seatsPerRow = [6, 8, 9, 10, 10, 12];
+    }
+    if (selectedAuditorium === "Mellan Salongen") {
+      this.seatsPerRow = [8, 9, 10, 10, 10, 12, 12];
+    }
+    if (selectedAuditorium === "Stora Salongen") {
+      this.seatsPerRow = [8, 9, 10, 10, 10, 10, 12, 12];
+    }
 
     let row = 1;
     let seatNum = 1;
@@ -47,45 +75,39 @@ class SalonPage extends Component {
     }
     this.totalSeats = seatNum;
 
-    // this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
-    let rePick = this.rePickPickedSeatsInWizard()
-    let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(rePick)
-    this.insertSeatsAsComponentsToRenderMethod(turnObj)
-  }
-
-  selectAuditorium(selectedAuditorium){
-    if (selectedAuditorium === "Lilla Salongen") {
-      return this.seatsPerRow = [6, 8, 9, 10, 10, 12];
-    }
-    if (selectedAuditorium === "Mellan Salongen") {
-      return this.seatsPerRow = [8, 9, 10, 10, 10, 12, 12];
-    }
-    if (selectedAuditorium === "Stora Salongen") {
-      return this.seatsPerRow = [8, 9, 10, 10, 10, 10, 12, 12];
-    }
+    return this.seatsBySeatNumber
   }
 
   uncolorAllSeats(){
     for(let i = 1; i < this.totalSeats; i++){
-      this.seatsBySeatNumber[i] = {
-        key: this.seatsBySeatNumber[i].key,
-        seatNum: this.seatsBySeatNumber[i].seatNum,
-        row: this.seatsBySeatNumber[i].row,
-        className: 'seat'
+      if(!this.takenSeatsArray.includes(i)){
+        this.seatsBySeatNumber[i] = {
+          key: this.seatsBySeatNumber[i].key,
+          seatNum: this.seatsBySeatNumber[i].seatNum,
+          row: this.seatsBySeatNumber[i].row,
+          className: 'seat'
+        }
       }
     }
     return this.seatsBySeatNumber
   }
 
-  rePickPickedSeatsInWizard(){
+  colorMySeatsAndTakenSeats(takenSeats){   
+    for(let takenSeat of takenSeats){
+      this.seatsBySeatNumber[takenSeat] = {
+        key: this.seatsBySeatNumber[takenSeat].key,
+        seatNum: this.seatsBySeatNumber[takenSeat].seatNum,
+        row: this.seatsBySeatNumber[takenSeat].row,
+        className: 'taken-seat'
+      }
+    }
     if(this.props.mySeats){
-      for(let i = 0; i < this.props.mySeats.length; i++){
-        let propIndex = this.props.mySeats[i]
+      for(let propIndex of this.props.mySeats){
         this.seatsBySeatNumber[propIndex] = {
           key: this.seatsBySeatNumber[propIndex].key,
           seatNum: this.seatsBySeatNumber[propIndex].seatNum,
           row: this.seatsBySeatNumber[propIndex].row,
-          className: 'taken-seat'
+          className: 'blue'
         }
       }
       this.mySeats=this.props.mySeats
@@ -98,20 +120,18 @@ class SalonPage extends Component {
     this.mySeats = []
     
     this.uncolorAllSeats()
-    // 3. Should insert/color booked seats from database here
     if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
       for(let i = 0; i < nbrOfPickedSeats; i++){
         this.seatsBySeatNumber[id+i] = {
           key: this.seatsBySeatNumber[id+i].key,
           seatNum: this.seatsBySeatNumber[id+i].seatNum,
           row: this.seatsBySeatNumber[id+i].row,
-          className: 'taken-seat'
+          className: 'blue'
         }
         this.mySeats.push(id+i)
       }
     }  
     console.log('SalonPage: ', this.mySeats)
-
 
     let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(this.seatsBySeatNumber)
     this.insertSeatsAsComponentsToRenderMethod(turnObj)
