@@ -44,7 +44,6 @@ class BookingPage extends Component {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
     let bookings = await Booking.find()
-    console.log(this.view)
 
     this.setState({
       selectedMovieTitle: this.view[0].film,

@@ -29,11 +29,9 @@ class SalonPage extends Component {
   }
 
   returnsTakenSeatsForThisViewing(thisView, bookings){
-
-    let test = '5c5839d678802e1b79b5ef73' // 'test' = should be 'thisView'
     let takenSeats = []
     for(let booking of bookings){
-      if(booking.view === test){
+      if(booking.view === thisView){
         takenSeats = takenSeats.concat(booking.seats)
       }
     }
@@ -139,8 +137,17 @@ class SalonPage extends Component {
 
   checkIfSeatsArePickable(id, nbrOfPickedSeats){
     let seats = id + nbrOfPickedSeats;
+    let myTemporarySeats = []
+    for(let i = 0; i < nbrOfPickedSeats; i++){
+      myTemporarySeats.push(id+i)
+    }
     if(seats > this.totalSeats){
       return false
+    }
+    for(let seat of myTemporarySeats){
+      if(this.takenSeatsArray.includes(seat)){
+        return false
+      }
     }
     return true
   }
@@ -195,7 +202,6 @@ class SalonPage extends Component {
         <div className="demo salon" onClick={this.props.storeMySeats(this.mySeats)}>
           <div className="container">
 
-          <div className="screen"></div>
           <div className="row1"></div>
 
           {arrayWithRowsAndSeats}
