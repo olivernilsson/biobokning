@@ -63,6 +63,7 @@ class LoginModal extends React.Component {
         loggedIn: App.loggedIn,
         modalVisible: false
       }); 
+      App.loggedIn = false;
     } 
     else {
       this.setState({
@@ -94,6 +95,7 @@ class LoginModal extends React.Component {
     })
     this.login = login;
     await this.login.save()
+
 
     if( !this.login.loggedIn ) { return this.validatesLogin(login)} 
     App.loggedIn = true;
