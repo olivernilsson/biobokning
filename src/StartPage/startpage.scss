@@ -13,6 +13,10 @@
   padding: 0;
 }
 
+.floatRight {
+  float: right;
+}
+
 @media screen and (max-width: 800px) {
   .headoverlay-title {
     font-size: 15px !important;
