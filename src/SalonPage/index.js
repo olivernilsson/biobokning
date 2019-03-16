@@ -6,26 +6,24 @@ import Seat from "../Seat/index.js"
 class SalonPage extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       arrayWithRowsAndSeats: [],
-    };
-    
+    };  
+
     this.toggleSeat = this.toggleSeat.bind(this)
   }
 
   async componentDidMount() {
-    this.view = this.props.salonView
+    let view = this.props.salonView
     let bookings = this.props.salonBookings
 
-    this.selectAuditorium(this.view[0].auditorium)
+    this.selectAuditorium(view[0].auditorium)
 
-    this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(this.view[0]._id, bookings)
+    this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(view[0]._id, bookings)
 
-    // this.insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats)
-    let rePick = this.colorMySeatsAndTakenSeats(this.takenSeatsArray)
-    let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(rePick)
-    this.insertSeatsAsComponentsToRenderMethod(turnObj)
+    let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(this.takenSeatsArray)
+
+    this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats)
   }
 
   returnsTakenSeatsForThisViewing(thisView, bookings){
@@ -35,8 +33,8 @@ class SalonPage extends Component {
         takenSeats = takenSeats.concat(booking.seats)
       }
     }
-    this.takenSeats = takenSeats.sort(function(a, b){return a - b})
-    return this.takenSeats
+    takenSeats = takenSeats.sort(function(a, b){return a - b})
+    return takenSeats
   }
 
   selectAuditorium(selectedAuditorium){
@@ -76,7 +74,7 @@ class SalonPage extends Component {
     return this.seatsBySeatNumber
   }
 
-  uncolorAllSeats(){
+  uncolorMyLatestPickedSeats(){
     for(let i = 1; i < this.totalSeats; i++){
       if(!this.takenSeatsArray.includes(i)){
         this.seatsBySeatNumber[i] = {
@@ -117,7 +115,7 @@ class SalonPage extends Component {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     this.mySeats = []
     
-    this.uncolorAllSeats()
+    this.uncolorMyLatestPickedSeats()
     if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
       for(let i = 0; i < nbrOfPickedSeats; i++){
         this.seatsBySeatNumber[id+i] = {
@@ -130,9 +128,7 @@ class SalonPage extends Component {
       }
     }  
     console.log('SalonPage: ', this.mySeats)
-
-    let turnObj = this.turnObjectOfSeatobjectsToArrayinArray(this.seatsBySeatNumber)
-    this.insertSeatsAsComponentsToRenderMethod(turnObj)
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
   }
 
   checkIfSeatsArePickable(id, nbrOfPickedSeats){
@@ -152,10 +148,7 @@ class SalonPage extends Component {
     return true
   }
 
-  // This method turns object of seat objects into array of
-  // arrays of seats. It works as an transition/adapter:
-  // In -> Obejct of objects. Return -> Array of arrays
-  turnObjectOfSeatobjectsToArrayinArray(seatsBySeatNumber){
+  convertSeatObjectsToComponentsBeforeRendering(seatsBySeatNumber){
     let seatNum = 1;
     let arrayWithRowsAndSeats = [];
 
@@ -165,16 +158,12 @@ class SalonPage extends Component {
         aRowWithSeats.push(seatsBySeatNumber[seatNum]);
         seatNum++;
       }
+      //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?
       arrayWithRowsAndSeats.push(aRowWithSeats);
     }
-    return arrayWithRowsAndSeats
-  }
-
-  // This method turns seat objects into seat components before
-  // entering the render method. (Argument should be Array of Arrays)
-  insertSeatsAsComponentsToRenderMethod(arrayWithRowsAndSeats){    
+   
+    // Converting seat objects to seat components
     let updatedArray = []
-
     for(let i = 0; i < arrayWithRowsAndSeats.length; i++){
       let newRow = arrayWithRowsAndSeats[i].map(seat => 
         <Seat 
