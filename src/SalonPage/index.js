@@ -11,9 +11,11 @@ class SalonPage extends Component {
     };  
 
     this.toggleSeat = this.toggleSeat.bind(this)
+    this.hoverMySeats = this.hoverMySeats.bind(this)
+    this.deselectMyHoverSeats = this.deselectMyHoverSeats.bind(this)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let view = this.props.salonView
     let bookings = this.props.salonBookings
 
@@ -77,12 +79,7 @@ class SalonPage extends Component {
   uncolorMyLatestPickedSeats(){
     for(let i = 1; i < this.totalSeats; i++){
       if(!this.takenSeatsArray.includes(i)){
-        this.seatsBySeatNumber[i] = {
-          key: this.seatsBySeatNumber[i].key,
-          seatNum: this.seatsBySeatNumber[i].seatNum,
-          row: this.seatsBySeatNumber[i].row,
-          className: 'seat'
-        }
+        this.seatsBySeatNumber[i].className = 'seat'
       }
     }
     return this.seatsBySeatNumber
@@ -90,25 +87,41 @@ class SalonPage extends Component {
 
   colorMySeatsAndTakenSeats(takenSeats){   
     for(let takenSeat of takenSeats){
-      this.seatsBySeatNumber[takenSeat] = {
-        key: this.seatsBySeatNumber[takenSeat].key,
-        seatNum: this.seatsBySeatNumber[takenSeat].seatNum,
-        row: this.seatsBySeatNumber[takenSeat].row,
-        className: 'taken-seat'
-      }
+      this.seatsBySeatNumber[takenSeat].className = 'taken-seat'
     }
     if(this.props.mySeats){
       for(let propIndex of this.props.mySeats){
-        this.seatsBySeatNumber[propIndex] = {
-          key: this.seatsBySeatNumber[propIndex].key,
-          seatNum: this.seatsBySeatNumber[propIndex].seatNum,
-          row: this.seatsBySeatNumber[propIndex].row,
-          className: 'blue'
-        }
+        this.seatsBySeatNumber[propIndex].className = 'blue'
       }
       this.mySeats=this.props.mySeats
     }
     return this.seatsBySeatNumber
+  }
+
+  deselectMyHoverSeats(id){
+    let nbrOfPickedSeats = this.props.personsWantSeat;
+    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
+      for(let i = 0; i < nbrOfPickedSeats; i++){
+        if(this.seatsBySeatNumber[id+i].className === 'blue') {continue}
+        this.seatsBySeatNumber[id+i].className = 'seat'
+        if(this.mySeats){
+          if(this.mySeats.includes(id+i)){
+            this.seatsBySeatNumber[id+i].className = 'blue'
+          }
+        }
+      }
+    }  
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+  }
+
+  hoverMySeats(id){
+    let nbrOfPickedSeats = this.props.personsWantSeat;
+    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
+      for(let i = 0; i < nbrOfPickedSeats; i++){
+        this.seatsBySeatNumber[id+i].className = 'blink-me'
+      }
+    }  
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
   }
 
   toggleSeat(id){
@@ -118,12 +131,7 @@ class SalonPage extends Component {
     this.uncolorMyLatestPickedSeats()
     if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
       for(let i = 0; i < nbrOfPickedSeats; i++){
-        this.seatsBySeatNumber[id+i] = {
-          key: this.seatsBySeatNumber[id+i].key,
-          seatNum: this.seatsBySeatNumber[id+i].seatNum,
-          row: this.seatsBySeatNumber[id+i].row,
-          className: 'blue'
-        }
+        this.seatsBySeatNumber[id+i].className = 'blue'
         this.mySeats.push(id+i)
       }
     }  
@@ -171,7 +179,9 @@ class SalonPage extends Component {
           className={seat.className}
           row={seat.row}
           seatNum={seat.seatNum}
-          toggleSeat={this.toggleSeat} 
+          toggleSeat={this.toggleSeat}
+          hoverMySeats={this.hoverMySeats}
+          deselectMyHoverSeats={this.deselectMyHoverSeats} 
         />)
       updatedArray.push(newRow)
     }
