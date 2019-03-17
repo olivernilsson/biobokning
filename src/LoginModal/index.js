@@ -16,6 +16,7 @@ class Login extends REST {
     return super.delete();
   }
 }
+class User extends REST {}
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -105,7 +106,11 @@ class LoginModal extends React.Component {
       loggedIn: App.loggedIn
     }));
     //HITTA ADMIN I DB OCH GÖR EN IF SATS
-    this.props.history.push("/adminpage");
+    let adminuser = await User.find(`.find({email:"${email}"})`);
+
+    if (adminuser[0].admin === true) {
+      this.props.history.push("/adminpage");
+    }
   }
 
   // Notifies the user if login attempts failed
