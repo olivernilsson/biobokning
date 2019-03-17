@@ -20,6 +20,7 @@ import REST from "../REST.js";
 
 class Film extends REST {}
 class View extends REST {}
+class User extends REST {}
 
 class AdminPage extends Component {
   constructor(props) {
@@ -58,6 +59,19 @@ class AdminPage extends Component {
     this.movie = [];
     this.saveView = [];
   }
+
+  // async saveAdminToDb() {
+  //   let addUser = new User({
+  //     firstName: "admin",
+  //     lastName: "admin",
+  //     email: "admin@grupp4.com",
+  //     password: "admin",
+  //     admin: true
+  //   });
+
+  //   await addUser.save();
+  //   console.log(addUser);
+  // }
 
   async componentDidMount() {
     this.movie = await Film.find();
