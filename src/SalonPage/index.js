@@ -1,45 +1,57 @@
 import React, { Component } from "react";
 import "./style.scss";
-import Seat from "../Seat/index.js"
-
+import Seat from "../Seat/index.js";
+import openSocket from "socket.io-client";
+const socket = openSocket("http://localhost:3001");
 
 class SalonPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrayWithRowsAndSeats: [],
-    };  
+      arrayWithRowsAndSeats: []
+    };
 
-    this.toggleSeat = this.toggleSeat.bind(this)
-    this.hoverMySeats = this.hoverMySeats.bind(this)
-    this.deselectMyHoverSeats = this.deselectMyHoverSeats.bind(this)
+    this.mySeats = [];
+    this.socketseat = [];
+    this.toggleSeat = this.toggleSeat.bind(this);
+    this.hoverMySeats = this.hoverMySeats.bind(this);
+    this.deselectMyHoverSeats = this.deselectMyHoverSeats.bind(this);
+
+    this.listenForClick();
   }
 
   componentDidMount() {
-    let view = this.props.salonView
-    let bookings = this.props.salonBookings
+    let view = this.props.salonView;
+    let bookings = this.props.salonBookings;
 
-    this.selectAuditorium(view[0].auditorium)
+    this.selectAuditorium(view[0].auditorium);
 
-    this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(view[0]._id, bookings)
+    this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
+      view[0]._id,
+      bookings
+    );
 
-    let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(this.takenSeatsArray)
+    let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
+      this.takenSeatsArray
+    );
 
-    this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats)
+    this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
   }
 
-  returnsTakenSeatsForThisViewing(thisView, bookings){
-    let takenSeats = []
-    for(let booking of bookings){
-      if(booking.view === thisView){
-        takenSeats = takenSeats.concat(booking.seats)
+  returnsTakenSeatsForThisViewing(thisView, bookings) {
+    let takenSeats = [];
+    for (let booking of bookings) {
+      if (booking.view === thisView) {
+        takenSeats = takenSeats.concat(booking.seats);
       }
     }
-    takenSeats = takenSeats.sort(function(a, b){return a - b})
-    return takenSeats
+    takenSeats = takenSeats.sort(function(a, b) {
+      return a - b;
+    });
+    return takenSeats;
   }
 
-  selectAuditorium(selectedAuditorium){
+  selectAuditorium(selectedAuditorium) {
     if (selectedAuditorium === "Lilla Salongen") {
       this.seatsPerRow = [6, 8, 9, 10, 10, 12];
     }
@@ -54,7 +66,7 @@ class SalonPage extends Component {
     let seatNum = 1;
     this.seatsBySeatNumber = {};
     let arrayWithRowsAndSeats = [];
-    
+
     for (let numberOfSeatsInTheRow of this.seatsPerRow) {
       let aRowWithSeats = [];
       while (aRowWithSeats.length < numberOfSeatsInTheRow) {
@@ -62,8 +74,8 @@ class SalonPage extends Component {
           key: seatNum,
           seatNum,
           row,
-          className: 'seat'
-        }
+          className: "seat"
+        };
         aRowWithSeats.push(seat);
         this.seatsBySeatNumber[seatNum] = seat;
         seatNum++;
@@ -73,90 +85,97 @@ class SalonPage extends Component {
     }
     this.totalSeats = seatNum;
 
-    return this.seatsBySeatNumber
+    return this.seatsBySeatNumber;
   }
 
-  uncolorMyLatestPickedSeats(){
-    for(let i = 1; i < this.totalSeats; i++){
-      if(!this.takenSeatsArray.includes(i)){
-        this.seatsBySeatNumber[i].className = 'seat'
+  uncolorMyLatestPickedSeats() {
+    for (let i = 1; i < this.totalSeats; i++) {
+      if (!this.takenSeatsArray.includes(i)) {
+        this.seatsBySeatNumber[i].className = "seat";
       }
     }
-    return this.seatsBySeatNumber
+    return this.seatsBySeatNumber;
   }
 
-  colorMySeatsAndTakenSeats(takenSeats){   
-    for(let takenSeat of takenSeats){
-      this.seatsBySeatNumber[takenSeat].className = 'taken-seat'
+  colorMySeatsAndTakenSeats(takenSeats) {
+    for (let takenSeat of takenSeats) {
+      this.seatsBySeatNumber[takenSeat].className = "taken-seat";
     }
-    if(this.props.mySeats){
-      for(let propIndex of this.props.mySeats){
-        this.seatsBySeatNumber[propIndex].className = 'blue'
+    if (this.props.mySeats) {
+      for (let propIndex of this.props.mySeats) {
+        this.seatsBySeatNumber[propIndex].className = "blue";
       }
-      this.mySeats=this.props.mySeats
+      this.mySeats = this.props.mySeats;
     }
-    return this.seatsBySeatNumber
+    return this.seatsBySeatNumber;
   }
 
-  deselectMyHoverSeats(id){
+  deselectMyHoverSeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
-    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
-      for(let i = 0; i < nbrOfPickedSeats; i++){
-        if(this.seatsBySeatNumber[id+i].className === 'blue') {continue}
-        this.seatsBySeatNumber[id+i].className = 'seat'
-        if(this.mySeats){
-          if(this.mySeats.includes(id+i)){
-            this.seatsBySeatNumber[id+i].className = 'blue'
+    if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
+      for (let i = 0; i < nbrOfPickedSeats; i++) {
+        if (this.seatsBySeatNumber[id + i].className === "blue") {
+          continue;
+        }
+        this.seatsBySeatNumber[id + i].className = "seat";
+        if (this.mySeats) {
+          if (this.mySeats.includes(id + i)) {
+            this.seatsBySeatNumber[id + i].className = "blue";
           }
         }
       }
-    }  
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+    }
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
-  hoverMySeats(id){
+  hoverMySeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
-    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
-      for(let i = 0; i < nbrOfPickedSeats; i++){
-        this.seatsBySeatNumber[id+i].className = 'blink-me'
+    if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
+      for (let i = 0; i < nbrOfPickedSeats; i++) {
+        this.seatsBySeatNumber[id + i].className = "blink-me";
       }
-    }  
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+    }
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
-  toggleSeat(id){
+  toggleSeat(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
-    this.mySeats = []
-    
-    this.uncolorMyLatestPickedSeats()
-    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
-      for(let i = 0; i < nbrOfPickedSeats; i++){
-        this.seatsBySeatNumber[id+i].className = 'blue'
-        this.mySeats.push(id+i)
+    this.uncolorMyLatestPickedSeats();
+    if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
+      for (let i = 0; i < nbrOfPickedSeats; i++) {
+        this.seatsBySeatNumber[id + i].className = "blue";
+        this.mySeats.push(id + i);
       }
-    }  
-    console.log('SalonPage: ', this.mySeats)
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+    }
+    console.log("SalonPage: ", this.mySeats);
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
+
+    socket.emit("seat pick", {
+      socketseats: this.mySeats,
+      viewID: this.props.salonView[0]
+    });
   }
 
-  checkIfSeatsArePickable(id, nbrOfPickedSeats){
+  //SLUTADE HÄR! FÅ IN ID OCH NR FRÅN TOGGLESEATS
+
+  checkIfSeatsArePickable(id, nbrOfPickedSeats) {
     let seats = id + nbrOfPickedSeats;
-    let myTemporarySeats = []
-    for(let i = 0; i < nbrOfPickedSeats; i++){
-      myTemporarySeats.push(id+i)
+    let myTemporarySeats = [];
+    for (let i = 0; i < nbrOfPickedSeats; i++) {
+      myTemporarySeats.push(id + i);
     }
-    if(seats > this.totalSeats){
-      return false
+    if (seats > this.totalSeats) {
+      return false;
     }
-    for(let seat of myTemporarySeats){
-      if(this.takenSeatsArray.includes(seat)){
-        return false
+    for (let seat of myTemporarySeats) {
+      if (this.takenSeatsArray.includes(seat)) {
+        return false;
       }
     }
-    return true
+    return true;
   }
 
-  convertSeatObjectsToComponentsBeforeRendering(seatsBySeatNumber){
+  convertSeatObjectsToComponentsBeforeRendering(seatsBySeatNumber) {
     let seatNum = 1;
     let arrayWithRowsAndSeats = [];
 
@@ -169,44 +188,92 @@ class SalonPage extends Component {
       //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?
       arrayWithRowsAndSeats.push(aRowWithSeats);
     }
-   
+
     // Converting seat objects to seat components
-    let updatedArray = []
-    for(let i = 0; i < arrayWithRowsAndSeats.length; i++){
-      let newRow = arrayWithRowsAndSeats[i].map(seat => 
-        <Seat 
-          key={seat.seatNum} 
+    this.arr = [];
+    let updatedArray = [];
+    for (let i = 0; i < arrayWithRowsAndSeats.length; i++) {
+      let newRow = arrayWithRowsAndSeats[i].map(seat => (
+        <Seat
+          key={seat.seatNum}
           className={seat.className}
           row={seat.row}
           seatNum={seat.seatNum}
           toggleSeat={this.toggleSeat}
           hoverMySeats={this.hoverMySeats}
-          deselectMyHoverSeats={this.deselectMyHoverSeats} 
-        />)
-      updatedArray.push(newRow)
+          deselectMyHoverSeats={this.deselectMyHoverSeats}
+        />
+      ));
+      updatedArray.push(newRow);
+      this.arr.push(newRow);
     }
 
     this.setState(() => {
       return {
-        arrayWithRowsAndSeats: updatedArray,
+        arrayWithRowsAndSeats: updatedArray
+      };
+    });
+  }
+
+  listenForClick(seatsBySeatNumber) {
+    socket.on("seat pick", message => {
+      let seatNum = 1;
+      let arrayWithRowsAndSeats = [];
+
+      for (let numberOfSeatsInTheRow of this.seatsPerRow) {
+        let aRowWithSeats = [];
+        while (aRowWithSeats.length < numberOfSeatsInTheRow) {
+          aRowWithSeats.push(seatsBySeatNumber[seatNum]);
+          seatNum++;
+        }
+        //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?
+        arrayWithRowsAndSeats.push(aRowWithSeats);
       }
-    })
+
+      // Converting seat objects to seat components
+      this.arr = [];
+      let updatedArray = [];
+      for (let i = 0; i < arrayWithRowsAndSeats.length; i++) {
+        let newRow = arrayWithRowsAndSeats[i].map(seat => (
+          <Seat
+            key={seat.seatNum}
+            className={seat.className}
+            row={seat.row}
+            seatNum={seat.seatNum}
+            toggleSeat={this.toggleSeat}
+            hoverMySeats={this.hoverMySeats}
+            deselectMyHoverSeats={this.deselectMyHoverSeats}
+          />
+        ));
+        updatedArray.push(newRow);
+        this.arr.push(newRow);
+      }
+
+      this.setState(() => {
+        return {
+          arrayWithRowsAndSeats: updatedArray
+        };
+      });
+    });
   }
 
   render() {
-    let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => <div key={row[0].key}> {row} </div>)
- 
+    let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => (
+      <div key={row[0].key}> {row} </div>
+    ));
+
     return (
       <section className="wizard-container ">
-        <div className="demo salon" onClick={this.props.storeMySeats(this.mySeats)}>
+        <div
+          className="demo salon"
+          onClick={this.props.storeMySeats(this.mySeats)}
+        >
           <div className="container">
+            <div className="row1" />
 
-          <div className="row1"></div>
-
-          {arrayWithRowsAndSeats}
-
+            {arrayWithRowsAndSeats}
           </div>
-        </div>       
+        </div>
       </section>
     );
   }

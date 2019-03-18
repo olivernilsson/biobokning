@@ -3,5 +3,22 @@ let socketIo = require("socket.io");
 module.exports = class SocketIoController {
   constructor(server) {
     this.io = socketIo(server);
+    this.listenToSocketConnections();
+  }
+
+  listenToSocketConnections() {
+    // listener for new connections
+    this.io.on("connection", socket => {
+      // socket is the connection to ONE client
+      console.log("a new client connected");
+
+      // let the socket listen to custom events
+      socket.on("seat pick", msg => {
+        console.log("hey", msg);
+        // send the incoming message back to ALL
+        // clients (all connected sockets)
+        this.io.emit("seat pick", msg);
+      });
+    });
   }
 };
