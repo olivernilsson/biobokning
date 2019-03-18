@@ -32,12 +32,29 @@ class BookingPage extends Component {
       maximum:8,
       totalPersons:0,
       mySeats:[],
-      booking: {}
+      booking: {},
+      salonBookings:[],
+      salonView:[]
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
     this.storeMySeats = this.storeMySeats.bind(this);
+  }
+
+  async componentDidMount() {
+    let route = window.location.href.split("/").pop();
+    this.view = await View.find(`.find({_id:"${route}"})`);
+    let bookings = await Booking.find()
+
+    this.setState({
+      selectedMovieTitle: this.view[0].film,
+      selectedMovieSalon: this.view[0].auditorium,
+      selectedMovieTime: this.view[0].time,
+      selecedMovieDate: this.view[0].date,
+      salonBookings: bookings,
+      salonView: this.view
+    });
   }
 
   pricepageAddPerson(event){
@@ -319,6 +336,8 @@ class BookingPage extends Component {
               personsWantSeat={this.state.totalPersons}
               storeMySeats = {this.storeMySeats}
               mySeats = {this.state.mySeats}
+              salonBookings = {this.state.salonBookings}
+              salonView = {this.state.salonView}
             /> 
           : ""}
           {this.state.stepCounter === 3 ? (
