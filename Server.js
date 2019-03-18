@@ -17,7 +17,8 @@ const LoginHandler = require("./LoginHandler");
 const settings = require("./settings.json");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-
+const http = require("http");
+const SocketIoController = require("./SocketIoController");
 module.exports = class Server {
   constructor() {
     this.start();
@@ -138,7 +139,11 @@ module.exports = class Server {
     new LoginHandler(app, models.users);
 
     // Start the web server
-    app.listen(3001, () => console.log("Listening on port 3001"));
+    const server = http.Server(app);
+    server.listen(3001, () => console.log("Listening on port 3001"));
+
+    // Add Socket.io
+    new SocketIoController(server);
 
     app.use((req, res, next) => {
       if (req.url === "/jsonflex.js" || req.url == "/json-save") {
