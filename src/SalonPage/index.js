@@ -53,7 +53,7 @@ class SalonPage extends Component {
     let row = 1;
     let seatNum = 1;
     this.seatsBySeatNumber = {};
-    let arrayWithRowsAndSeats = [];
+    this.arrayWithRowsAndSeats = [];
     
     for (let numberOfSeatsInTheRow of this.seatsPerRow) {
       let aRowWithSeats = [];
@@ -68,11 +68,10 @@ class SalonPage extends Component {
         this.seatsBySeatNumber[seatNum] = seat;
         seatNum++;
       }
-      arrayWithRowsAndSeats.push(aRowWithSeats);
+      this.arrayWithRowsAndSeats.push(aRowWithSeats);
       row++;
     }
     this.totalSeats = seatNum;
-
     return this.seatsBySeatNumber
   }
 
@@ -85,10 +84,13 @@ class SalonPage extends Component {
     return this.seatsBySeatNumber
   }
 
-  colorMySeatsAndTakenSeats(takenSeats){   
+  colorMySeatsAndTakenSeats(takenSeats){
+    this.mySeats = []
+   
     for(let takenSeat of takenSeats){
       this.seatsBySeatNumber[takenSeat].className = 'taken-seat'
     }
+    this.prePickBestSeats()
     if(this.props.mySeats){
       for(let propIndex of this.props.mySeats){
         this.seatsBySeatNumber[propIndex].className = 'blue'
@@ -96,6 +98,62 @@ class SalonPage extends Component {
       this.mySeats=this.props.mySeats
     }
     return this.seatsBySeatNumber
+  }
+
+  prePickBestSeats(){
+
+    if(!this.props.mySeats){
+
+      console.log(this.arrayWithRowsAndSeats[3])
+      for(let row = 3; row < this.arrayWithRowsAndSeats.length; row++){
+        for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
+
+          if(this.arrayWithRowsAndSeats[row][seat].row === 4){
+
+            let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
+            //console.log(middleSeat)
+            
+            let count = 0
+            for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
+              
+              console.log(this.arrayWithRowsAndSeats[row][seat])
+              if(seat < middleSeat){
+                this.arrayWithRowsAndSeats[row][seat].rank = 2 + count
+                //console.log(seat)
+                count += 2
+              }
+              if(seat > this.arrayWithRowsAndSeats[row].lenth){
+                
+              }
+              
+              
+            }
+
+          }
+         
+
+        }
+
+
+        if(this.arrayWithRowsAndSeats[row].row === '5'){
+          for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
+            if(this.arrayWithRowsAndSeats[row][seat].className === 'seat'){ 
+              console.log('row 6', seat)
+              seat++
+            }
+          }
+        }
+
+        
+        
+      }
+
+
+      this.seatsBySeatNumber[20].className = 'blue'
+      this.mySeats.push(this.seatsBySeatNumber[20].seatNum)
+
+      console.log(this.mySeats)      
+    }
   }
 
   deselectMyHoverSeats(id){
@@ -126,7 +184,7 @@ class SalonPage extends Component {
 
   toggleSeat(id){
     let nbrOfPickedSeats = this.props.personsWantSeat;
-    this.mySeats = []
+    this.mySeats.length = 0
     
     this.uncolorMyLatestPickedSeats()
     if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){

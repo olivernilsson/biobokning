@@ -308,7 +308,9 @@ class BookingPage extends Component {
             ""
           )}
           {this.state.stepCounter === 4 ? 
-            <BookingConfirm confirmData={this.state.booking} />
+            <BookingConfirm 
+            confirmData={this.state.booking} 
+            mySeats={this.state.mySeats}/>
           : ""}
 
           {this.state.stepCounter === 3 ? (
