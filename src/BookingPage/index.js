@@ -195,8 +195,11 @@ class BookingPage extends Component {
       .exec()
       `);
 
-      console.log(myNewBookingPopulated);
-      // this.state.booking = finder; 
+      //console.log(myNewBookingPopulated);
+      this.setState({
+        booking: myNewBookingPopulated
+      });
+      //console.log(this.state.booking);
   }
 
   
