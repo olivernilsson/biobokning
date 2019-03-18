@@ -122,8 +122,9 @@ class SalonPage extends Component {
                 //console.log(seat)
                 count += 2
               }
+              let count2 = count
               if(seat > this.arrayWithRowsAndSeats[row].lenth){
-                
+                this.arrayWithRowsAndSeats[row][seat].rank = count2 - 1
               }
               
               
