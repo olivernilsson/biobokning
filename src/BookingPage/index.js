@@ -103,19 +103,6 @@ class BookingPage extends Component {
     }
   }
 
-  async componentDidMount() {
-    let route = window.location.href.split("/").pop();
-    this.view = await View.find(`.find({_id:"${route}"})`);
-    
-    this.setState({
-      view: this.view[0],
-      selectedMovieTitle: this.view[0].film,
-      selectedMovieSalon: this.view[0].auditorium,
-      selectedMovieTime: this.view[0].time,
-      selecedMovieDate: this.view[0].date
-    });
-  }
-
   handleData = (firstName, lastName, email, password) => {
     this.setState({
       dataFirst: firstName,
