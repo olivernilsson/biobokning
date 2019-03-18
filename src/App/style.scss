@@ -23,3 +23,15 @@
 main {
   flex: 1;
 }
+
+//Global styling..
+.btn-primary{
+  background-color: #85ffc7!important;
+  border: 1px solid #297373!important;
+}
+
+.btn-primary:hover{
+  transition: 0.5s;
+  background-color: #297373!important;
+  border: 1px solid #297373!important;
+}
