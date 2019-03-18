@@ -85,6 +85,25 @@ class UserRegistration extends Component {
     );
   }
 
+  handleData = (firstName, lastName, email, password) => {
+    this.setState({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    });
+
+    console.log(
+      this.state.firstName +
+        ` ` +
+        this.state.lastName +
+        ` ` +
+        this.state.email +
+        ` ` +
+        this.state.password
+    );
+  };
+
   async saveUserToDb() {
     let { firstName, email, lastName, password } = this.state;
     let addUser = new User({
@@ -93,7 +112,7 @@ class UserRegistration extends Component {
       email: email,
       password: password
     });
-
+    
     await addUser.save();
     console.log(addUser);
   }
@@ -242,7 +261,7 @@ class UserRegistration extends Component {
                 <div>
                   <button
                     className="mob-btn btn btn-primary btn-sm"
-                    type="submit" onClick={this.state.saveUserToDb}>Klicka för att registrera dig
+                    type="submit" onClick={this.handleData}>Klicka för att registrera dig
                   </button>
                 </div>
               </FormGroup>
