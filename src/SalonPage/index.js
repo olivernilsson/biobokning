@@ -101,59 +101,50 @@ class SalonPage extends Component {
   }
 
   prePickBestSeats(){
+    let nbrOfPickedSeats = this.props.personsWantSeat
 
     if(!this.props.mySeats){
-
-      console.log(this.arrayWithRowsAndSeats[3])
       for(let row = 3; row < this.arrayWithRowsAndSeats.length; row++){
         for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
+          let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
 
-          if(this.arrayWithRowsAndSeats[row][seat].row === 4){
-
-            let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
-            //console.log(middleSeat)
-            
-            let count = 0
-            for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
-              
-              console.log(this.arrayWithRowsAndSeats[row][seat])
-              if(seat < middleSeat){
-                this.arrayWithRowsAndSeats[row][seat].rank = 2 + count
-                //console.log(seat)
-                count += 2
-              }
-              let count2 = count
-              if(seat > this.arrayWithRowsAndSeats[row].lenth){
-                this.arrayWithRowsAndSeats[row][seat].rank = count2 - 1
-              }
-              
-              
-            }
-
-          }
-         
-
-        }
-
-
-        if(this.arrayWithRowsAndSeats[row].row === '5'){
+          let count = 0
+          this.rankArr = []
           for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
-            if(this.arrayWithRowsAndSeats[row][seat].className === 'seat'){ 
-              console.log('row 6', seat)
-              seat++
+            if(seat < middleSeat){
+              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count
+              count += 2
             }
+            if(seat === middleSeat){
+              this.arrayWithRowsAndSeats[row][seat].rank = count - 1
+              count = count - 1
+            }
+            if(seat > middleSeat){
+              this.arrayWithRowsAndSeats[row][seat].rank = count -2
+              count -= 2
+            }
+            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat])
+          }
+          this.rankArr.sort(function(a, b){return b.rank - a.rank})
+
+          let seatsUntilTakenSeat = 0
+          for(let seatRank of this.rankArr){
+            if(seatRank.className === 'taken-seat') {break}
+            seatsUntilTakenSeat++
+          }
+
+          if(nbrOfPickedSeats <= seatsUntilTakenSeat){
+            for(let pickedSeats = 0; pickedSeats < nbrOfPickedSeats; pickedSeats++){
+              let rankArrIndex = this.rankArr[pickedSeats].seatNum
+              this.seatsBySeatNumber[rankArrIndex].className = 'blue'
+
+              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum)
+              this.mySeats = this.mySeats.sort(function(a, b){return a - b})
+            }
+            return
           }
         }
-
-        
-        
       }
-
-
-      this.seatsBySeatNumber[20].className = 'blue'
-      this.mySeats.push(this.seatsBySeatNumber[20].seatNum)
-
-      console.log(this.mySeats)      
     }
   }
 
