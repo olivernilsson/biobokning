@@ -150,7 +150,13 @@ class BookingPage extends Component {
     
 
     if(this.state.stepCounter === 1){
-     
+      //console.log(this.state.totalPersons);
+      if(this.state.totalPersons==0){
+        console.log(this.state.totalPersons);
+        this.setState({
+          stepCounter:1
+        });
+      }
     }
 
 
