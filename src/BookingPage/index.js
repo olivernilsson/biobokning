@@ -131,10 +131,10 @@ class BookingPage extends Component {
     });
   }
 
-  countUp() {
+  async countUp() {
     this.preStoreMySeats()
     if (this.state.stepCounter === 3) {
-      this.saveUserToDb();
+      await this.saveUserToDb();
       this.testBooking();
     }
 
@@ -174,9 +174,6 @@ class BookingPage extends Component {
   }
 
   async testBooking(){
-
-    //console.log(this.state.selectedMovieTitle);
-   //console.log(this.state.user);
    
       let myNewBooking = await new Booking({
       adults: this.state.adults,
@@ -187,13 +184,19 @@ class BookingPage extends Component {
       seats: this.state.mySeats
     });
     
-      await myNewBooking.save();
+      let result = await myNewBooking.save();
+      //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
+    
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        myNewBooking.bookingId
+      }'})
+      .populate('view')
+      .populate('user')
+      .exec()
+      `);
 
-      let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
-    
-      console.log(finder); 
-   // this.state.booking = finder; 
-    
+      console.log(myNewBookingPopulated);
+      // this.state.booking = finder; 
   }
 
   
