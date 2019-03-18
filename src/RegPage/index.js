@@ -1,25 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import "./style.scss";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  InputGroup
-} from "reactstrap";
+import { Form, FormGroup, Input } from "reactstrap";
 import "./style.scss";
 
 export class RegPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: null || "",
-      lastName: null || "",
-      email: null || "",
-      password: null || "",
-      verifyPassword: null || "",
+      firstName: "Test",
+      lastName: "Test",
+      email: "test@test.com",
+      password: "Abc12345",
+      verifyPassword: "Abc12345",
       firstNameStyle: false,
       lastNameStyle: false,
       passwordStyle: false,
@@ -138,8 +130,6 @@ export class RegPage extends React.Component {
             <div>
               <span className="blocking">
                 <Input
-                  required
-                  type="text"
                   type="password"
                   className={
                     this.state.passwordStyle === true ? " validated" : ""

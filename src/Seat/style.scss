@@ -1,0 +1,97 @@
+.seat {
+  display: inline-block;
+  background-image:
+    linear-gradient(
+      to top,
+      rgb(7, 68, 5),
+      rgb(57, 177, 63) 40%
+    );
+  margin: 3px 1px 1px 1px;
+  width: 45px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
+.taken-seat {
+  display: inline-block;
+  background-image:
+    linear-gradient(
+      to top,
+      rgb(97, 6, 6),
+      rgb(233, 85, 27) 40%
+    );
+  margin: 3px 1px 1px 1px;
+  width: 45px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
+.blue {
+  display: inline-block;
+  background-image:
+    linear-gradient(
+      to top,
+      rgb(255, 255, 255),
+      rgb(145, 191, 235) 60%
+    );
+  //border-bottom: solid 2px white;
+  margin: 3px 1px 1px 1px;
+  width: 45px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
+.blink-me {
+  display: inline-block;
+  background-image:
+    linear-gradient(
+      to top,
+      rgb(255, 255, 255),
+      rgb(145, 191, 235) 60%
+    );
+  //border-bottom: solid 2px white;
+  margin: 3px 1px 1px 1px;
+  width: 45px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .seat, .blue, .taken-seat {
+    width: 32px;
+    height: 22px;
+  }
+  .screen {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 725px) {
+  .seat, .blue, .taken-seat {
+    width: 22px;
+    height: 12px;
+  }
+}

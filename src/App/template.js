@@ -11,6 +11,7 @@ import MoviesAndTrailersPage from "../MoviesAndTrailersPage/index";
 import MissingPage from "../MissingPage/index";
 import Footer from "../Footer/index";
 import BookingPage from "../BookingPage/index";
+import AdminPage from "../AdminPage/index";
 //import "bootstrap/dist/css/bootstrap.css";
 
 export default function() {
@@ -24,8 +25,9 @@ export default function() {
             <Route path="/rulespage" component={RulesPage} />
             <Route path="/aboutsalons" component={AboutSalons} />
             <Route path="/aboutpage" component={AboutPage} />
-            <Route path="/bookingpage" component={BookingPage} />
+            <Route path="/bookingpage/:movieId" component={BookingPage} />
             <Route path="/storepage" component={StorePage} />
+            <Route path="/adminpage" component={AdminPage} />
             <Route
               path="/moviesandtrailerspage"
               component={MoviesAndTrailersPage}

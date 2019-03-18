@@ -1,21 +1,22 @@
-import React from "react"
-import "./style.scss"
-import REST from "../REST.js"
-import App from "../App/index.js"
+import React from "react";
+import "./style.scss";
+import REST from "../REST.js";
+import App from "../App/index.js";
+import { withRouter } from "react-router";
 
 class Login extends REST {
   static get baseRoute() {
-    return 'login';
+    return "login/";
   }
   async delete() {
-    this._id = 1;
+    this._id = "uselesstoken";
     // we set an id here, because the REST class
     // will complain if we try to call delete on an object without _id
     // - and we use delete to logout (see test.js)
     return super.delete();
   }
 }
-
+class User extends REST {}
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -23,42 +24,57 @@ class LoginModal extends React.Component {
 
     this.state = {
       modalVisible: false,
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       correctEmail: true,
       correctPassword: true,
-      loggedIn: false
+      loggedIn: App.loggedIn,
+      admin: false
     };
 
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
     this.handleLoginValues = this.handleLoginValues.bind(this);
     this.logIn = this.logIn.bind(this);
     this.closeLoginModal = this.closeLoginModal.bind(this);
+
+    this.checkIfLoggedIn();
   }
 
-  toggleLoginModal() {
+  async checkIfLoggedIn() {
+    App.loggedIn = !(await Login.find()).error;
+
+    this.setState({
+      loggedIn: App.loggedIn
+    });
+  }
+
+  async toggleLoginModal(event) {
+    event.preventDefault();
     this.setState(() => ({
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     }));
 
-    if(App.loggedIn){
-      this.setState({
-        loggedIn: false,
-        modalVisible: false
-      }); 
+    //Logout
+    if (App.loggedIn) {
       App.loggedIn = false;
-    } 
-    else {
+      let user = new Login();
+      await user.delete();
       this.setState({
-        modalVisible: true,
+        loggedIn: App.loggedIn,
+        modalVisible: false
+      });
+      App.loggedIn = false;
+    } else {
+      this.setState({
+        modalVisible: true
       });
     }
   }
 
-  closeLoginModal(){
+  closeLoginModal() {
     this.setState({
-      modalVisible: false,
+      modalVisible: false
     });
   }
 
@@ -68,59 +84,78 @@ class LoginModal extends React.Component {
     });
   }
 
-  // Saves login information to DB and allows the user to log in. 
+  // Saves login information to DB and allows the user to log in.
   async logIn() {
     let email = this.state.email;
     let password = this.state.password;
 
-    let login = new Login({ 
-      email : email,
-      password : password
-    })
+    let login = new Login({
+      email: email,
+      password: password
+    });
 
     this.login = login;
-    await this.login.save()
+    await this.login.save();
 
-    if( !this.login.loggedIn ) { return this.validatesLogin(login)} 
+    if (!this.login.loggedIn) {
+      return this.validatesLogin(login);
+    }
     App.loggedIn = true;
     this.setState(() => ({
-      modalVisible : false,
-      loggedIn: true
+      modalVisible: false,
+      loggedIn: App.loggedIn
     }));
+    //HITTA ADMIN I DB OCH GÖR EN IF SATS
+    let adminuser = await User.find(`.find({email:"${email}"})`);
+
+    if (adminuser[0].admin === true) {
+      this.props.history.push("/adminpage");
+    }
   }
 
-  // Notifies the user if login attempts failed 
+  // Notifies the user if login attempts failed
   validatesLogin(login) {
-    if( login.error === "No such user!") {
+    if (login.error === "No such user!") {
       this.setState(() => ({
-        correctEmail : false
+        correctEmail: false
       }));
     }
-     
-    if( login.error === "The password does not match!") {
+
+    if (login.error === "The password does not match!") {
       this.setState(() => ({
-        correctEmail : true,
-        correctPassword : false
-      }));  
+        correctEmail: true,
+        correctPassword: false
+      }));
     }
   }
 
   render() {
     return (
       <div>
-
         <div className="login-field">
-          <button type="button" onClick={this.toggleLoginModal} className="login-button btn btn-primary" data-toggle="modall" data-target="#myModall">
-            {this.state.loggedIn ? 'Logga Ut' : 'Logga In'}
+          <button
+            type="button"
+            onClick={this.toggleLoginModal}
+            className="login-button btn btn-primary"
+            data-toggle="modall"
+            data-target="#myModall"
+          >
+            {this.state.loggedIn ? "Logga Ut" : "Logga In"}
           </button>
         </div>
 
-        {this.state.modalVisible ?
+        {this.state.modalVisible ? (
           <div className="login-modal">
-
             <div className="modal-header bg-dark my-modal-header">
               <p className="modal-title">Logga In</p>
-              <button type="button" onClick={this.closeLoginModal} className="close close-btn" data-dismiss="modal">&times;</button>
+              <button
+                type="button"
+                onClick={this.closeLoginModal}
+                className="close close-btn"
+                data-dismiss="modal"
+              >
+                &times;
+              </button>
             </div>
 
             <div className="modal-body bg-dark my-modal-body">
@@ -133,10 +168,14 @@ class LoginModal extends React.Component {
                     autoComplete="off"
                     type="email"
                     className="form-control form-style"
-                    placeholder="Email">
-                  </input>
-                  <span className="place-style"></span>
-                  {this.state.correctEmail ? '' : <p id="wrong-email">Felaktigt email!</p>}
+                    placeholder="Email"
+                  />
+                  <span className="place-style" />
+                  {this.state.correctEmail ? (
+                    ""
+                  ) : (
+                    <p id="wrong-email">Felaktigt email!</p>
+                  )}
                 </span>
                 <span className="blockinglogin">
                   <input
@@ -145,23 +184,35 @@ class LoginModal extends React.Component {
                     value={this.state.password}
                     type="password"
                     className="form-control form-style"
-                    placeholder="Lösenord">
-                  </input>
-                  <span className="place-style"></span>
-                  {this.state.correctPassword ? '' : <p id="wrong-password">Felaktigt lösenord!</p>}
+                    placeholder="Lösenord"
+                  />
+                  <span className="place-style" />
+                  {this.state.correctPassword ? (
+                    ""
+                  ) : (
+                    <p id="wrong-password">Felaktigt lösenord!</p>
+                  )}
                 </span>
               </div>
             </div>
 
             <div className="modal-footer bg-dark">
-              <button type="button" onClick={this.logIn} className="btn confirm-login-btn btn-secondary" data-dismiss="modal">Logga in</button>
+              <button
+                type="button"
+                onClick={this.logIn}
+                className="btn confirm-login-btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Logga in
+              </button>
             </div>
-
           </div>
-          : ''}
+        ) : (
+          ""
+        )}
       </div>
-    )
+    );
   }
 }
 
-export default LoginModal
+export default withRouter(LoginModal);

@@ -9,6 +9,8 @@ class BookingConfirm extends Component {
     return (
       <section className="wizard-container ">
         <p> BookingConfirm PAGEEE</p>
+        <p>{this.props.confirmData.adults}</p>
+        <p>{this.props.confirmData.kids}</p>
       </section>
     );
   }
