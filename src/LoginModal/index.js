@@ -88,7 +88,8 @@ class LoginModal extends React.Component {
   async logIn() {
     let email = this.state.email;
     let password = this.state.password;
-
+    App.who = email;
+    console.log(App.who);
     let login = new Login({
       email: email,
       password: password
@@ -105,6 +106,7 @@ class LoginModal extends React.Component {
       modalVisible: false,
       loggedIn: App.loggedIn
     }));
+
     //HITTA ADMIN I DB OCH GÖR EN IF SATS
     let adminuser = await User.find(`.find({email:"${email}"})`);
 
