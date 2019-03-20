@@ -5,6 +5,12 @@ class BookingConfirm extends Component {
     super(props);
     this.state = {};
   }
+
+
+  componentDidMount(){
+    console.log('BookinComfirm ', this.props.mySeats)
+  }
+
   render() {
     return (
       <section className="wizard-container ">
