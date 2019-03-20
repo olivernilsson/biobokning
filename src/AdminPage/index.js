@@ -17,10 +17,24 @@ import {
 import "./style.scss";
 import "./inputmodal.scss";
 import REST from "../REST.js";
+import App from "../App/index.js";
 
 class Film extends REST {}
 class View extends REST {}
 class User extends REST {}
+
+class Login extends REST {
+  static get baseRoute() {
+    return "login/";
+  }
+  async delete() {
+    this._id = "uselesstoken";
+    // we set an id here, because the REST class
+    // will complain if we try to call delete on an object without _id
+    // - and we use delete to logout (see test.js)
+    return super.delete();
+  }
+}
 
 class AdminPage extends Component {
   constructor(props) {
@@ -41,7 +55,8 @@ class AdminPage extends Component {
       showEdited: false,
       salongAdd: "",
       dateAdd: "",
-      timeAdd: ""
+      timeAdd: "",
+      whoIsLoggedIn: ""
     };
     this.toggle = this.toggle.bind(this);
     this.toggleInput = this.toggleInput.bind(this);
@@ -58,6 +73,9 @@ class AdminPage extends Component {
     this.viewings = [];
     this.movie = [];
     this.saveView = [];
+    console.log(App.who);
+    this.testCheckLogin();
+    this.admin = "admin@grupp4.com";
   }
 
   // async saveAdminToDb() {
@@ -72,6 +90,11 @@ class AdminPage extends Component {
   //   await addUser.save();
   //   console.log(addUser);
   // }
+
+  async testCheckLogin() {
+    let whoIsLoggedIn = await Login.find();
+    this.setState({ whoIsLoggedIn: whoIsLoggedIn });
+  }
 
   async componentDidMount() {
     this.movie = await Film.find();
@@ -267,6 +290,10 @@ class AdminPage extends Component {
   }
 
   render() {
+    if (this.state.whoIsLoggedIn.email !== this.admin) {
+      return <div />;
+    }
+
     return (
       <section className="adminpage-holder flex-container">
         <h1> Välj film för att redigera visningar</h1>
