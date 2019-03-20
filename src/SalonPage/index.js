@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import "./style.scss";
 import Seat from "../Seat/index.js";
 import openSocket from "socket.io-client";
+import REST from "../REST";
 const socket = openSocket("http://localhost:3001");
+
+class View extends REST {}
+class Booking extends REST {}
 
 class SalonPage extends Component {
   constructor(props) {
@@ -11,8 +15,9 @@ class SalonPage extends Component {
       arrayWithRowsAndSeats: []
     };
 
+    this.lol = [];
     this.mySeats = [];
-    this.socketseat = [];
+    this.socketseats = [];
     this.toggleSeat = this.toggleSeat.bind(this);
     this.hoverMySeats = this.hoverMySeats.bind(this);
     this.deselectMyHoverSeats = this.deselectMyHoverSeats.bind(this);
@@ -20,7 +25,7 @@ class SalonPage extends Component {
     this.listenForClick();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let view = this.props.salonView;
     let bookings = this.props.salonBookings;
 
@@ -31,12 +36,18 @@ class SalonPage extends Component {
       bookings
     );
 
+    let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
+
+    this.takenSeatsArray = this.takenSeatsArray.concat(presavedbooking.seats);
+
     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
       this.takenSeatsArray
     );
 
     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
   }
+
+  // LAST MOMENT CODE
 
   returnsTakenSeatsForThisViewing(thisView, bookings) {
     let takenSeats = [];
@@ -138,24 +149,73 @@ class SalonPage extends Component {
     this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
-  toggleSeat(id) {
+  async toggleSeat(id) {
+    this.mySeats.length = 0;
     let nbrOfPickedSeats = this.props.personsWantSeat;
-    this.uncolorMyLatestPickedSeats();
+    let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
+
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
         this.seatsBySeatNumber[id + i].className = "blue";
         this.mySeats.push(id + i);
+        this.lol.push(id + i);
       }
     }
     console.log("SalonPage: ", this.mySeats);
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
 
-    socket.emit("seat pick", {
+    // socket.emit("prebooking", {
+    //   socketseats: this.mySeats,
+    //   viewID: this.props.salonView[0]
+    // });
+    this.lol = this.mySeats.concat(presavedbooking.seats);
+
+    socket.emit("prebooking", {
       socketseats: this.mySeats,
       viewID: this.props.salonView[0]
     });
+    console.log("körs");
   }
 
+  listenForClick() {
+    this.uncolorMyLatestPickedSeats();
+    socket.on("prebooking", async message => {
+      console.log("körs2");
+      let socketviewid = message.viewID._id;
+
+      let bookings = this.props.salonBookings;
+      let view = this.props.salonView;
+
+      console.log(message.socketseats);
+
+      let finder = await Booking.find(`.findOneAndUpdate(
+        {bookingId: 'prebook' },
+        {  "$set": {
+          "seats": '${message.socketseats}'
+      }
+    },
+        function(err,result){
+            if (!err) {
+                console.log(result);
+            }
+        })`);
+
+      let presavedbooking = await Booking.find(
+        `.findOne({bookingId:'prebook'})`
+      );
+      console.log(presavedbooking.seats);
+
+      this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
+        view[0]._id,
+        bookings
+      );
+
+      let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
+        message.socketseats
+      );
+
+      this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
+    });
+  }
   //SLUTADE HÄR! FÅ IN ID OCH NR FRÅN TOGGLESEATS
 
   checkIfSeatsArePickable(id, nbrOfPickedSeats) {
@@ -205,7 +265,6 @@ class SalonPage extends Component {
         />
       ));
       updatedArray.push(newRow);
-      this.arr.push(newRow);
     }
 
     this.setState(() => {
@@ -215,47 +274,25 @@ class SalonPage extends Component {
     });
   }
 
-  listenForClick(seatsBySeatNumber) {
-    socket.on("seat pick", message => {
-      let seatNum = 1;
-      let arrayWithRowsAndSeats = [];
+  // listenForClick() {
+  //   socket.on("prebooking", async message => {
+  //     this.uncolorMyLatestPickedSeats();
+  //     let socketviewid = message.viewID._id;
+  //     let bookings = this.props.salonBookings;
+  //     let view = this.props.salonView;
 
-      for (let numberOfSeatsInTheRow of this.seatsPerRow) {
-        let aRowWithSeats = [];
-        while (aRowWithSeats.length < numberOfSeatsInTheRow) {
-          aRowWithSeats.push(seatsBySeatNumber[seatNum]);
-          seatNum++;
-        }
-        //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?
-        arrayWithRowsAndSeats.push(aRowWithSeats);
-      }
+  //     this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
+  //       socketviewid,
+  //       bookings
+  //     );
 
-      // Converting seat objects to seat components
-      this.arr = [];
-      let updatedArray = [];
-      for (let i = 0; i < arrayWithRowsAndSeats.length; i++) {
-        let newRow = arrayWithRowsAndSeats[i].map(seat => (
-          <Seat
-            key={seat.seatNum}
-            className={seat.className}
-            row={seat.row}
-            seatNum={seat.seatNum}
-            toggleSeat={this.toggleSeat}
-            hoverMySeats={this.hoverMySeats}
-            deselectMyHoverSeats={this.deselectMyHoverSeats}
-          />
-        ));
-        updatedArray.push(newRow);
-        this.arr.push(newRow);
-      }
+  //     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
+  //       message.socketseats
+  //     );
 
-      this.setState(() => {
-        return {
-          arrayWithRowsAndSeats: updatedArray
-        };
-      });
-    });
-  }
+  //     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
+  //   });
+  // }
 
   render() {
     let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => (

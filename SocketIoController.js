@@ -13,11 +13,11 @@ module.exports = class SocketIoController {
       console.log("a new client connected");
 
       // let the socket listen to custom events
-      socket.on("seat pick", msg => {
+      socket.on("prebooking", msg => {
         console.log("hey", msg);
         // send the incoming message back to ALL
         // clients (all connected sockets)
-        this.io.emit("seat pick", msg);
+        this.io.emit("prebooking", msg);
       });
     });
   }
