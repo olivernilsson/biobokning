@@ -91,7 +91,7 @@ class SalonPage extends Component {
       this.seatsBySeatNumber[takenSeat].className = 'taken-seat'
     }
     this.prePickBestSeats()
-    if(this.props.mySeats){
+    if(this.props.mySeats.length > 0){
       for(let propIndex of this.props.mySeats){
         this.seatsBySeatNumber[propIndex].className = 'blue'
       }
@@ -102,8 +102,8 @@ class SalonPage extends Component {
 
   prePickBestSeats(){
     let nbrOfPickedSeats = this.props.personsWantSeat
-
-    if(!this.props.mySeats){
+    
+    if(this.props.mySeats.length < 1){
       for(let row = 3; row < this.arrayWithRowsAndSeats.length; row++){
         for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
           let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
@@ -141,7 +141,7 @@ class SalonPage extends Component {
               this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum)
               this.mySeats = this.mySeats.sort(function(a, b){return a - b})
             }
-            return
+            return 
           }
         }
       }
@@ -152,7 +152,7 @@ class SalonPage extends Component {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
       for(let i = 0; i < nbrOfPickedSeats; i++){
-        if(this.seatsBySeatNumber[id+i].className === 'blue') {continue}
+        if(this.seatsBySeatNumber[id+i].className === 'blue'){continue}
         this.seatsBySeatNumber[id+i].className = 'seat'
         if(this.mySeats){
           if(this.mySeats.includes(id+i)){

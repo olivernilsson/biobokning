@@ -184,11 +184,18 @@ class BookingPage extends Component {
   }
 
   preStoreMySeats(){
-    this.setState({
-      mySeats: this.mySeats
-    });
+    if(this.mySeats){
+      this.setState({
+        mySeats: this.mySeats
+      })
+    }
+    if(!this.mySeats){
+      this.setState({
+        mySeats: this.state.mySeats
+      })
+    }
   }
-  
+
   storeMySeats(storeMySeatsX){
     this.mySeats = storeMySeatsX
   }
