@@ -48,14 +48,18 @@ class BookingPage extends Component {
     let bookings = await Booking.find()
     console.log(this.view);
 
+
     this.setState({
       selectedMovieTitle: this.view[0].film,
       selectedMovieSalon: this.view[0].auditorium,
       selectedMovieTime: this.view[0].time,
       selecedMovieDate: this.view[0].date,
       salonBookings: bookings,
-      salonView: this.view
+      salonView: this.view,
+      view: this.view
     });
+
+    console.log(this.state.view)
   }
 
   pricepageAddPerson(event){
@@ -167,14 +171,7 @@ class BookingPage extends Component {
         });
       }
     }
-    else if(this.state.stepCounter === 2){
-      if(this.state.mySeats.length<1){
-        console.log('helo');
-        /*this.setState({
-          stepCounter:2
-        });*/
-      }
-    }
+
 
 
   }
@@ -201,19 +198,24 @@ class BookingPage extends Component {
   }
 
   async testBooking(){
+
+    console.log(this.state.view);
    
       let myNewBooking = await new Booking({
       adults: this.state.adults,
       kids: this.state.kids,
       seniors: this.state.seniors,
       user: this.state.user,
-      view: this.state.view,
+      view: this.state.view[0]._id,
       seats: this.state.mySeats
     });
     
       let result = await myNewBooking.save();
-      //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
-    
+      console.log(result);
+
+      let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
+      console.log(finder);
+
       let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
         myNewBooking.bookingId
       }'})
@@ -222,11 +224,13 @@ class BookingPage extends Component {
       .exec()
       `);
 
-      //console.log(myNewBookingPopulated);
+      console.log(myNewBookingPopulated);
+      
       this.setState({
         booking: myNewBookingPopulated
+
       });
-      //console.log(this.state.booking);
+      console.log(this.state.booking);
   }
 
   
