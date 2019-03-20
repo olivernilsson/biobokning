@@ -36,13 +36,15 @@ class SalonPage extends Component {
       bookings
     );
 
-    let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
+    // let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
 
-    this.takenSeatsArray = this.takenSeatsArray.concat(presavedbooking.seats);
+    // this.takenSeatsArray = this.takenSeatsArray.concat(presavedbooking.seats);
 
     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
       this.takenSeatsArray
     );
+
+    console.log(this.takenSeatsArray);
 
     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
   }
@@ -76,7 +78,7 @@ class SalonPage extends Component {
     let row = 1;
     let seatNum = 1;
     this.seatsBySeatNumber = {};
-    let arrayWithRowsAndSeats = [];
+    this.arrayWithRowsAndSeats = [];
 
     for (let numberOfSeatsInTheRow of this.seatsPerRow) {
       let aRowWithSeats = [];
@@ -95,7 +97,7 @@ class SalonPage extends Component {
       row++;
     }
     this.totalSeats = seatNum;
-    return this.seatsBySeatNumber
+    return this.seatsBySeatNumber;
   }
 
   uncolorMyLatestPickedSeats() {
@@ -107,79 +109,99 @@ class SalonPage extends Component {
     return this.seatsBySeatNumber;
   }
 
-  colorMySeatsAndTakenSeats(takenSeats){
-    this.mySeats = []
-   
-    for(let takenSeat of takenSeats){
-      this.seatsBySeatNumber[takenSeat].className = 'taken-seat'
+  colorMySeatsAndTakenSeats(takenSeats) {
+    this.mySeats = [];
+
+    for (let takenSeat of takenSeats) {
+      this.seatsBySeatNumber[takenSeat].className = "taken-seat";
     }
-    this.prePickBestSeats()
-    if(this.props.mySeats.length > 0){
-      for(let propIndex of this.props.mySeats){
-        this.seatsBySeatNumber[propIndex].className = 'blue'
+    this.prePickBestSeats();
+    if (this.props.mySeats.length > 0) {
+      for (let propIndex of this.props.mySeats) {
+        this.seatsBySeatNumber[propIndex].className = "blue";
       }
       this.mySeats = this.props.mySeats;
     }
     return this.seatsBySeatNumber;
   }
 
-  prePickBestSeats(){
-    let nbrOfPickedSeats = this.props.personsWantSeat
-    
-    if(this.props.mySeats.length < 1){
-      for(let row = 3; row < this.arrayWithRowsAndSeats.length; row++){
-        for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
-          let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
+  prePickBestSeats() {
+    let nbrOfPickedSeats = this.props.personsWantSeat;
 
-          let count = 0
-          this.rankArr = []
-          for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
-            if(seat < middleSeat){
-              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count
-              count += 2
+    if (this.props.mySeats.length < 1) {
+      for (let row = 3; row < this.arrayWithRowsAndSeats.length; row++) {
+        for (
+          let seat = 0;
+          seat < this.arrayWithRowsAndSeats[row].length;
+          seat++
+        ) {
+          let middleSeat = this.arrayWithRowsAndSeats[row].length / 2;
+
+          let count = 0;
+          this.rankArr = [];
+          for (
+            let seat = 0;
+            seat < this.arrayWithRowsAndSeats[row].length;
+            seat++
+          ) {
+            if (seat < middleSeat) {
+              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count;
+              count += 2;
             }
-            if(seat === middleSeat){
-              this.arrayWithRowsAndSeats[row][seat].rank = count - 1
-              count = count - 1
+            if (seat === middleSeat) {
+              this.arrayWithRowsAndSeats[row][seat].rank = count - 1;
+              count = count - 1;
             }
-            if(seat > middleSeat){
-              this.arrayWithRowsAndSeats[row][seat].rank = count -2
-              count -= 2
+            if (seat > middleSeat) {
+              this.arrayWithRowsAndSeats[row][seat].rank = count - 2;
+              count -= 2;
             }
-            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat])
+            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat]);
           }
-          this.rankArr.sort(function(a, b){return b.rank - a.rank})
+          this.rankArr.sort(function(a, b) {
+            return b.rank - a.rank;
+          });
 
-          let seatsUntilTakenSeat = 0
-          for(let seatRank of this.rankArr){
-            if(seatRank.className === 'taken-seat') {break}
-            seatsUntilTakenSeat++
+          let seatsUntilTakenSeat = 0;
+          for (let seatRank of this.rankArr) {
+            if (seatRank.className === "taken-seat") {
+              break;
+            }
+            seatsUntilTakenSeat++;
           }
 
-          if(nbrOfPickedSeats <= seatsUntilTakenSeat){
-            for(let pickedSeats = 0; pickedSeats < nbrOfPickedSeats; pickedSeats++){
-              let rankArrIndex = this.rankArr[pickedSeats].seatNum
-              this.seatsBySeatNumber[rankArrIndex].className = 'blue'
+          if (nbrOfPickedSeats <= seatsUntilTakenSeat) {
+            for (
+              let pickedSeats = 0;
+              pickedSeats < nbrOfPickedSeats;
+              pickedSeats++
+            ) {
+              let rankArrIndex = this.rankArr[pickedSeats].seatNum;
+              this.seatsBySeatNumber[rankArrIndex].className = "blue";
 
-              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum)
-              this.mySeats = this.mySeats.sort(function(a, b){return a - b})
+              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum);
+              this.mySeats = this.mySeats.sort(function(a, b) {
+                return a - b;
+              });
             }
-            return 
+            return;
           }
         }
       }
     }
   }
 
-  deselectMyHoverSeats(id){
+  deselectMyHoverSeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
-    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
-      for(let i = 0; i < nbrOfPickedSeats; i++){
-        if(this.seatsBySeatNumber[id+i].className === 'blue'){continue}
-        this.seatsBySeatNumber[id+i].className = 'seat'
-        if(this.mySeats){
-          if(this.mySeats.includes(id+i)){
-            this.seatsBySeatNumber[id+i].className = 'blue'
+    if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
+      for (let i = 0; i < nbrOfPickedSeats; i++) {
+        if (this.seatsBySeatNumber[id + i].className === "blue") {
+          continue;
+        }
+        this.seatsBySeatNumber[id + i].className = "seat";
+        if (this.mySeats) {
+          if (this.mySeats.includes(id + i)) {
+            this.seatsBySeatNumber[id + i].className = "blue";
           }
         }
       }
@@ -198,24 +220,18 @@ class SalonPage extends Component {
   }
 
   async toggleSeat(id) {
-    this.mySeats.length = 0;
     let nbrOfPickedSeats = this.props.personsWantSeat;
     let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
-
+    this.uncolorMyLatestPickedSeats();
+    this.mySeats.length = 0;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
         this.seatsBySeatNumber[id + i].className = "blue";
         this.mySeats.push(id + i);
         this.lol.push(id + i);
-    this.mySeats.length = 0
-    
-    this.uncolorMyLatestPickedSeats()
-    if(this.checkIfSeatsArePickable(id, nbrOfPickedSeats)){
-      for(let i = 0; i < nbrOfPickedSeats; i++){
-        this.seatsBySeatNumber[id+i].className = 'blue'
-        this.mySeats.push(id+i)
       }
     }
+
     console.log("SalonPage: ", this.mySeats);
 
     // socket.emit("prebooking", {
@@ -271,6 +287,7 @@ class SalonPage extends Component {
       this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
     });
   }
+
   //SLUTADE HÄR! FÅ IN ID OCH NR FRÅN TOGGLESEATS
 
   checkIfSeatsArePickable(id, nbrOfPickedSeats) {
