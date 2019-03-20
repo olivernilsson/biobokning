@@ -47,6 +47,7 @@ class SalonPage extends Component {
         this.presavedbooking.seats
       );
     }
+
     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
       this.takenSeatsArray
     );
@@ -214,6 +215,14 @@ class SalonPage extends Component {
     this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
+  // hoverMyEmptySeat(id) {
+  //   if (this.presavedbooking.seats.includes(id)) {
+  //     return;
+  //   } else {
+  //     this.hoverMySeats(id);
+  //   }
+  // }
+
   hoverMySeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
@@ -228,6 +237,7 @@ class SalonPage extends Component {
     this.mySeats.length = 0;
     let nbrOfPickedSeats = this.props.personsWantSeat;
 
+    this.mySeats.length = 0;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
         this.seatsBySeatNumber[id + i].className = "blue";
@@ -264,7 +274,8 @@ class SalonPage extends Component {
       let finder = await Booking.find(`.findOneAndUpdate(
         {bookingId: 'prebook' },
         {  "$set": {
-          "seats": '${message.socketseats}'
+          "seats": '${message.socketseats}',
+          "view": '${view}'
       }
     },
         function(err,result){
