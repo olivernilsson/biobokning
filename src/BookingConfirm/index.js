@@ -11,6 +11,7 @@ class BookingConfirm extends Component {
         <p> BookingConfirm PAGEEE</p>
         <p>{this.props.confirmData.adults}</p>
         <p>{this.props.confirmData.kids}</p>
+        <p>{this.props.confirmData.kids}</p>
       </section>
     );
   }

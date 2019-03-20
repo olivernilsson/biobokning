@@ -46,6 +46,7 @@ class BookingPage extends Component {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
     let bookings = await Booking.find()
+    console.log(this.view);
 
     this.setState({
       selectedMovieTitle: this.view[0].film,
@@ -124,6 +125,14 @@ class BookingPage extends Component {
 
   countDown() {
     this.preStoreMySeats()
+
+    
+
+    if(this.state.stepCounter==1){
+      this.props.history.push(`/moviesandtrailerspage/${this.view[0].film}`);
+    }
+
+
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -133,6 +142,8 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter - 1
       };
     });
+
+    
   }
 
   async countUp() {
@@ -150,12 +161,18 @@ class BookingPage extends Component {
     
 
     if(this.state.stepCounter === 1){
-      //console.log(this.state.totalPersons);
       if(this.state.totalPersons==0){
-        console.log(this.state.totalPersons);
         this.setState({
           stepCounter:1
         });
+      }
+    }
+    else if(this.state.stepCounter === 2){
+      if(this.state.mySeats.length<1){
+        console.log('helo');
+        /*this.setState({
+          stepCounter:2
+        });*/
       }
     }
 
@@ -313,7 +330,7 @@ class BookingPage extends Component {
             type="button"
             className="btn btn-light"
           >
-            Bakåt
+            Bakåt 
           </button>
           {this.state.stepCounter === 1 ? 
             <PricePage 
@@ -357,6 +374,11 @@ class BookingPage extends Component {
               id="forward"
               type="button"
               className="btn btn-light"
+              /*className={"btn btn-light" + 
+              (this.state.stepCounter===1 ? 
+                this.state.totalPersons>0 ? " blinker": "" 
+                : " blinker"
+              )}*/
             >
               Framåt
             </button>
