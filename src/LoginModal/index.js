@@ -42,7 +42,6 @@ class LoginModal extends React.Component {
 
   async checkIfLoggedIn() {
     App.loggedIn = !(await Login.find()).error;
-
     this.setState({
       loggedIn: App.loggedIn
     });
@@ -70,6 +69,7 @@ class LoginModal extends React.Component {
         modalVisible: true
       });
     }
+    window.bookingComponent.checkIfLoggedInBookingPage();
   }
 
   closeLoginModal() {
@@ -106,8 +106,7 @@ class LoginModal extends React.Component {
       modalVisible: false,
       loggedIn: App.loggedIn
     }));
-
-    //HITTA ADMIN I DB OCH GÖR EN IF SATS
+    window.bookingComponent.checkIfLoggedInBookingPage();
     let adminuser = await User.find(`.find({email:"${email}"})`);
 
     if (adminuser[0].admin === true) {

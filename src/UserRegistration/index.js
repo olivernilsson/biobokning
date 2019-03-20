@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import "./style.scss";
-import { Modal, ModalHeader, ModalBody, Form, Input, FormGroup, Button } from "reactstrap";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Input,
+  FormGroup,
+  Button
+} from "reactstrap";
 import REST from "../REST";
 
 class User extends REST {}
-
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -32,7 +39,6 @@ class UserRegistration extends Component {
     this.emailValid = false;
     this.toggleModal = this.toggleModal.bind(this);
     this.validationForm = this.validationForm.bind(this);
-
   }
 
   async validationForm(e) {
@@ -79,7 +85,7 @@ class UserRegistration extends Component {
           email.length > 9 &&
           password === verifyPassword
       },
-      function () {
+      function() {
         console.log(this.state.registrationDone);
       }
     );
@@ -112,7 +118,7 @@ class UserRegistration extends Component {
       email: email,
       password: password
     });
-    
+
     await addUser.save();
     console.log(addUser);
   }
@@ -123,7 +129,6 @@ class UserRegistration extends Component {
   //     buttonState: !prevState.buttonState
   //    }))
   //  }
-
 
   toggleModal() {
     console.log("toggled");
@@ -151,8 +156,7 @@ class UserRegistration extends Component {
           className={this.props.className}
           id="regModal"
         >
-          <ModalHeader toggle={this.toggleModal} className="bg-dark">
-          </ModalHeader>
+          <ModalHeader toggle={this.toggleModal} className="bg-dark" />
           <ModalBody className="mymodal-style bg-dark">
             <Form>
               <h5 class="modalhead">Registrera dig</h5>
@@ -187,7 +191,9 @@ class UserRegistration extends Component {
 
                 <span className="blocking">
                   <Input
-                    className={this.state.emailStyle === true ? " validated" : ""}
+                    className={
+                      this.state.emailStyle === true ? " validated" : ""
+                    }
                     name="email"
                     onChange={e => this.validationForm(e)}
                     value={this.state.email}
@@ -217,7 +223,9 @@ class UserRegistration extends Component {
                     <Input
                       type="password"
                       className={
-                        this.state.verifyPasswordStyle === true ? " validated" : ""
+                        this.state.verifyPasswordStyle === true
+                          ? " validated"
+                          : ""
                       }
                       name="verifyPassword"
                       onChange={e => this.validationForm(e)}
@@ -236,7 +244,7 @@ class UserRegistration extends Component {
                     }
                   >
                     Minst sju tecken
-              </p>
+                  </p>
 
                   <p
                     className={
@@ -246,7 +254,7 @@ class UserRegistration extends Component {
                     }
                   >
                     Minst en stor bokstav
-              </p>
+                  </p>
 
                   <p
                     className={
@@ -256,12 +264,15 @@ class UserRegistration extends Component {
                     }
                   >
                     Minst en siffra
-              </p>
+                  </p>
                 </div>
                 <div>
                   <button
-                    className="mob-btn btn btn-primary btn-sm"
-                    type="submit" onClick={this.handleData}>Klicka för att registrera dig
+                    className="mob-btn btn btn-primary btn-sm disabled"
+                    type="submit"
+                    onClick={this.handleData}
+                  >
+                    Klicka för att registrera dig
                   </button>
                 </div>
               </FormGroup>
