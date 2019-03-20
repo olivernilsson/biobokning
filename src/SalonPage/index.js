@@ -39,12 +39,17 @@ class SalonPage extends Component {
     // let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
 
     // this.takenSeatsArray = this.takenSeatsArray.concat(presavedbooking.seats);
-
+    this.presavedbooking = await Booking.find(
+      `.findOne({bookingId:'prebook'})`
+    );
+    if (this.presavedbooking.seats.length < 0) {
+      this.takenSeatsArray = this.takenSeatsArray.concat(
+        this.presavedbooking.seats
+      );
+    }
     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
       this.takenSeatsArray
     );
-
-    console.log(this.takenSeatsArray);
 
     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
   }
@@ -220,10 +225,9 @@ class SalonPage extends Component {
   }
 
   async toggleSeat(id) {
-    let nbrOfPickedSeats = this.props.personsWantSeat;
-    let presavedbooking = await Booking.find(`.findOne({bookingId:'prebook'})`);
-    this.uncolorMyLatestPickedSeats();
     this.mySeats.length = 0;
+    let nbrOfPickedSeats = this.props.personsWantSeat;
+
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
         this.seatsBySeatNumber[id + i].className = "blue";
@@ -231,14 +235,13 @@ class SalonPage extends Component {
         this.lol.push(id + i);
       }
     }
-
     console.log("SalonPage: ", this.mySeats);
 
     // socket.emit("prebooking", {
     //   socketseats: this.mySeats,
     //   viewID: this.props.salonView[0]
     // });
-    this.lol = this.mySeats.concat(presavedbooking.seats);
+    this.lol = this.mySeats.concat(this.presavedbooking.seats);
 
     socket.emit("prebooking", {
       socketseats: this.mySeats,
@@ -269,11 +272,6 @@ class SalonPage extends Component {
                 console.log(result);
             }
         })`);
-
-      let presavedbooking = await Booking.find(
-        `.findOne({bookingId:'prebook'})`
-      );
-      console.log(presavedbooking.seats);
 
       this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
         view[0]._id,
