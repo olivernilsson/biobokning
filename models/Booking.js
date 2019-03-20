@@ -26,6 +26,8 @@ bookingSchema.pre("save", function() {
     bookingId += randomItem(alphabet);
   }
   this.bookingId = bookingId;
+  console.log(bookingId);
+  
 });
 
 bookingSchema.pre("validate", async function(next, done) {

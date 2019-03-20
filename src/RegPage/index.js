@@ -7,11 +7,11 @@ export class RegPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: null || "",
-      lastName: null || "",
-      email: null || "",
-      password: null || "",
-      verifyPassword: null || "",
+      firstName: "Test",
+      lastName: "Test",
+      email: "test@test.com",
+      password: "Abc12345",
+      verifyPassword: "Abc12345",
       firstNameStyle: false,
       lastNameStyle: false,
       passwordStyle: false,
@@ -24,6 +24,11 @@ export class RegPage extends React.Component {
 
     this.validationForm = this.validationForm.bind(this);
   }
+
+  componentDidMount(){
+    console.log(this.props)
+  }
+  
 
   handleData = () => {
     let { firstName, lastName, email, password } = this.state;
