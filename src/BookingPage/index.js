@@ -4,6 +4,7 @@ import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
 import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
+import DoubleBooked from "../BookingConfirm/doubleBooked";
 import REST from "../REST";
 import App from "../App/index.js";
 import LoggedInBooking from "../LoggedInBooking/index";
@@ -47,7 +48,8 @@ class BookingPage extends Component {
       salonBookings: [],
       salonView: [],
       disableRegButton: true,
-      loggedInBookingPage: App.loggedIn
+      loggedInBookingPage: App.loggedIn,
+      doubleBooked: false
     };
 
     window.bookingComponent = this;
@@ -238,6 +240,22 @@ class BookingPage extends Component {
     });
     
       let result = await myNewBooking.save();
+      
+      if(result.bookingId){
+        console.log('har id')
+        this.setState({
+          doubleBooked: false
+        })
+      }
+      if(!result.bookingId){
+        console.log('har ej id')
+        this.setState({
+          doubleBooked: true
+        })
+        return
+      }
+
+      
 
       let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
         myNewBooking.bookingId
@@ -482,7 +500,10 @@ class BookingPage extends Component {
           ) : (
             ""
           )}
-          {this.state.stepCounter === 4 ? 
+          {this.state.stepCounter === 4 ? (this.state.doubleBooked ? 
+            <DoubleBooked 
+            /> 
+          : 
             <BookingConfirm 
               confirmData={this.state.booking} 
               totalpersons={this.state.totalPersons}
@@ -492,8 +513,9 @@ class BookingPage extends Component {
               seats={this.state.mySeats}
               salon={this.state.selectedMovieSalon}
               price={this.state.totalprice}
-            />
-          : ""}
+            />)
+          : 
+          ("")}
 
           {this.state.loggedInBookingPage && this.state.stepCounter === 3 ? (
             <button
