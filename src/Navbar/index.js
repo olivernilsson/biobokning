@@ -90,7 +90,7 @@ class NavbarApp extends Component {
   render() {
     return (
       <div>
-        <Navbar className="navbar" dark expand="md">
+        <Navbar className="navbar" dark expand="lg">
           <NavbarBrand className="brand" href="/">
             FilmVisarna AB
           </NavbarBrand>
