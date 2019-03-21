@@ -64,6 +64,7 @@ class LoginModal extends React.Component {
         modalVisible: false
       });
       App.loggedIn = false;
+      this.props.checkLog(App.loggedIn)
     } else {
       this.setState({
         modalVisible: true
@@ -107,6 +108,9 @@ class LoginModal extends React.Component {
       loggedIn: App.loggedIn
     }));
     window.bookingComponent.checkIfLoggedInBookingPage();
+    this.props.checkLog(App.loggedIn, email)
+
+    //HITTA ADMIN I DB OCH GÖR EN IF SATS
     let adminuser = await User.find(`.find({email:"${email}"})`);
 
     if (adminuser[0].admin === true) {
@@ -137,7 +141,7 @@ class LoginModal extends React.Component {
           <button
             type="button"
             onClick={this.toggleLoginModal}
-            className="login-button btn btn-primary"
+            className="login-button btn"
             data-toggle="modall"
             data-target="#myModall"
           >

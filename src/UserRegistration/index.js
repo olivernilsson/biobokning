@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import "./style.scss";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  Input,
-  FormGroup,
-  Button
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Form, Input, FormGroup, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import REST from "../REST";
 
 class User extends REST {}
@@ -30,7 +22,9 @@ class UserRegistration extends Component {
       registrationDone: false,
       minLetter: false,
       bigLetterVal: false,
-      oneNumberVal: false
+      oneNumberVal: false,
+      dropdownOpen: false,
+      amIAdmin: true
       // buttonChange: false
     };
 
@@ -39,6 +33,7 @@ class UserRegistration extends Component {
     this.emailValid = false;
     this.toggleModal = this.toggleModal.bind(this);
     this.validationForm = this.validationForm.bind(this);
+    this.toggleMyBookings = this.toggleMyBookings.bind(this);
   }
 
   async validationForm(e) {
@@ -131,24 +126,84 @@ class UserRegistration extends Component {
   //  }
 
   toggleModal() {
-    console.log("toggled");
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
   }
 
+  toggleMyBookings() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  }
+
   render() {
     return (
-      <section>
-        <div className="registration-field">
-          <button
-            type="button"
-            className="register-button btn btn-primary"
-            onClick={this.toggleModal}
+      <div>
+
+        {this.props.checkLogin ? 
+        <Dropdown className='my-bookings-btn' isOpen={this.state.dropdownOpen} toggle={this.toggleMyBookings}>
+          <DropdownToggle caret>
+          {this.props.email}
+          </DropdownToggle>
+          <DropdownMenu>
+            {this.props.amIAdmin ? 
+              <DropdownItem>Kontrollpanel</DropdownItem> 
+              : 
+              <DropdownItem>Mina Bokningar</DropdownItem>}
+          </DropdownMenu>
+        </Dropdown>
+        : 
+          <section>      
+          <div className="registration-field">
+            <button
+              type="button"
+              className="register-button btn"
+              onClick={this.toggleModal}
+            > 
+              Registrering 
+            </button>
+    
+          </div>
+          <Modal
+            isOpen={this.state.modal}
+            toggle={this.toggleModal}
+            className={this.props.className}
+            id="regModal"
           >
-            {this.props.buttonLabel}Registrering
-          </button>
-        </div>
+            <ModalHeader toggle={this.toggleModal} className="bg-dark">
+            </ModalHeader>
+            <ModalBody className="mymodal-style bg-dark">
+              <Form>
+                <h5 className="modalhead">Registrera dig</h5>
+                <FormGroup>
+                  <div className="group1">
+                    <span className="blocking">
+                      <Input
+                        className={
+                          this.state.firstNameStyle === true ? " validated" : ""
+                        }
+                        type="text"
+                        name="firstName"
+                        onChange={e => this.validationForm(e)}
+                        value={this.state.firstName}
+                        placeholder=" "
+                      />
+                      <span className="place-style">Förnamn</span>
+                    </span>
+                    <span className="blocking">
+                      <Input
+                        className={
+                          this.state.lastNameStyle === true ? " validated" : ""
+                        }
+                        name="lastName"
+                        onChange={e => this.validationForm(e)}
+                        value={this.state.lastName}
+                        placeholder=" "
+                      />
+                      <span className="place-style">Efternamn</span>
+                    </span>
+                  </div>
 
         <Modal
           isOpen={this.state.modal}
@@ -164,30 +219,15 @@ class UserRegistration extends Component {
                 <div className="group1">
                   <span className="blocking">
                     <Input
-                      className={
-                        this.state.firstNameStyle === true ? " validated" : ""
-                      }
-                      type="text"
-                      name="firstName"
+                      className={this.state.emailStyle === true ? " validated" : ""}
+                      name="email"
                       onChange={e => this.validationForm(e)}
-                      value={this.state.firstName}
+                      value={this.state.email}
                       placeholder=" "
                     />
-                    <span className="place-style">Förnamn</span>
+                    <span className="place-style">Email</span>
                   </span>
-                  <span className="blocking">
-                    <Input
-                      className={
-                        this.state.lastNameStyle === true ? " validated" : ""
-                      }
-                      name="lastName"
-                      onChange={e => this.validationForm(e)}
-                      value={this.state.lastName}
-                      placeholder=" "
-                    />
-                    <span className="place-style">Efternamn</span>
-                  </span>
-                </div>
+                </FormGroup>
 
                 <span className="blocking">
                   <Input
@@ -203,13 +243,26 @@ class UserRegistration extends Component {
                 </span>
               </FormGroup>
 
-              <FormGroup>
-                <div>
-                  <span className="blocking">
-                    <Input
-                      type="password"
+                    <span className="blocking">
+                      <Input
+                        type="password"
+                        className={
+                          this.state.verifyPasswordStyle === true ? " validated" : ""
+                        }
+                        name="verifyPassword"
+                        onChange={e => this.validationForm(e)}
+                        value={this.state.verifyPassword}
+                        placeholder=" "
+                      />
+                      <span className="place-style">Repetera lösenord</span>
+                    </span>
+                  </div>
+                  <div className="validate-box flex-column row">
+                    <p
                       className={
-                        this.state.passwordStyle === true ? " validated" : ""
+                        this.state.minLetter === true
+                          ? " validated-text"
+                          : "not-validated"
                       }
                       name="password"
                       onChange={e => this.validationForm(e)}
