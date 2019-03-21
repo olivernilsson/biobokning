@@ -242,13 +242,11 @@ class BookingPage extends Component {
       let result = await myNewBooking.save();
       
       if(result.bookingId){
-        console.log('har id')
         this.setState({
           doubleBooked: false
         })
       }
       if(!result.bookingId){
-        console.log('har ej id')
         this.setState({
           doubleBooked: true
         })
