@@ -12,6 +12,11 @@ class BookingConfirm extends Component {
   }
 
   render() {
+    
+    console.log(this.props.confirmData.adults);
+    console.log(this.props.confirmData.view);
+ 
+    
 
     return (
       <section className="wizard-container ">

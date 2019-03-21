@@ -55,6 +55,7 @@ class BookingPage extends Component {
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
     this.storeMySeats = this.storeMySeats.bind(this);
+    this.preStoreMySeats = this.preStoreMySeats.bind(this);
   }
 
   async componentDidMount() {
@@ -193,6 +194,16 @@ class BookingPage extends Component {
       }
     }
 
+    if(this.state.stepCounter === 2){
+      console.log(this.state.mySeats.length);
+      if(this.state.mySeats.length<1){
+        
+        this.setState({
+          stepCounter:2
+        });
+      }
+    }
+
 
   }
 
@@ -245,7 +256,11 @@ class BookingPage extends Component {
     }
   
 
-  preStoreMySeats(){
+  preStoreMySeats(mySeats){
+    if(mySeats){
+      this.mySeats = mySeats
+    }
+
     if(this.state.stepCounter === 1){
       this.mySeats = []
     }
@@ -434,6 +449,7 @@ class BookingPage extends Component {
               mySeats={this.state.mySeats}
               salonBookings={this.state.salonBookings}
               salonView={this.state.salonView}
+              preStoreMySeats={this.preStoreMySeats}
             />
           ) : (
             ""
