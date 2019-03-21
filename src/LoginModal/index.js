@@ -64,8 +64,8 @@ class LoginModal extends React.Component {
         modalVisible: false
       });
       App.loggedIn = false;
-      this.props.checkLog(App.loggedIn);
       window.bookingComponent.checkIfLoggedInBookingPage();
+      this.props.checkLog(App.loggedIn);
     } else {
       this.setState({
         modalVisible: true
