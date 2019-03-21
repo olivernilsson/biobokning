@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style.scss";
 
 class LoggedInBooking extends Component {
   constructor(props) {
@@ -9,7 +10,10 @@ class LoggedInBooking extends Component {
   render() {
     return (
       <section className="wizard-container ">
-        <p>Bekräfta bokningen genom att klicka på slutför bokning!</p>
+        <p className="logged-in-text">
+          Bekräfta bokningen genom att
+          <br /> klicka på slutför bokning.
+        </p>
       </section>
     );
   }

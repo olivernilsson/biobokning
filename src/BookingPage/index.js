@@ -276,6 +276,8 @@ class BookingPage extends Component {
   .populate('user')
   .exec()
   `);
+
+    console.log(myNewBookingPopulated);
   }
 
   render() {
