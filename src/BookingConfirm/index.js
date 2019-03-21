@@ -6,9 +6,8 @@ class BookingConfirm extends Component {
     this.state = {};
   }
 
-
-  componentDidMount(){
-    console.log('BookinComfirm ', this.props.mySeats)
+  componentDidMount() {
+    console.log("BookinComfirm ", this.props.mySeats);
   }
 
   render() {

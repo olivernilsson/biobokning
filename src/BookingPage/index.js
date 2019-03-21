@@ -11,6 +11,11 @@ import LoggedInBooking from "../LoggedInBooking/index";
 class User extends REST {}
 class View extends REST {}
 class Booking extends REST {}
+class Login extends REST {
+  static get baseRoute() {
+    return "login/";
+  }
+}
 
 class BookingPage extends Component {
   constructor(props) {
@@ -148,8 +153,12 @@ class BookingPage extends Component {
   async countUp() {
     this.preStoreMySeats();
 
+    if (this.state.stepCounter === 3 && App.loggedIn === true) {
+      this.saveLoggedInBookingToUser();
+    }
+
     if (this.state.stepCounter === 3)
-      if (this.state.stepCounter === 3) {
+      if (this.state.stepCounter === 3 && App.loggedIn === false) {
         await this.saveUserToDb();
         this.testBooking();
       }
@@ -174,11 +183,9 @@ class BookingPage extends Component {
     });
 
     await addUser.save();
-    console.log(addUser);
     this.setState({
       user: addUser
     });
-    console.log(this.state.user);
   }
 
   async testBooking() {
@@ -224,6 +231,51 @@ class BookingPage extends Component {
 
   storeMySeats(storeMySeatsX) {
     this.mySeats = storeMySeatsX;
+  }
+
+  async saveLoggedInBookingToUser() {
+    this.logg = await Login.find();
+    this.email = this.logg.email;
+
+    this.loggedIn = await User.find(`.find(
+ {email: '${this.email}'})`);
+
+    let getTheUser = await User.find(`.find({email:'${this.email}'})`);
+
+    let userBooking = await new Booking({
+      adults: this.state.adults,
+      kids: this.state.kids,
+      seniors: this.state.seniors,
+      view: this.view[0]._id,
+      seats: this.state.mySeats
+    });
+
+    await userBooking.save();
+
+    // if (!(await userBooking.hasOwnProperty(`bookingId`))) {
+    //   this.bookingConfirm.confirmationFail = true;
+    //   this.countUp();
+    // } else {
+    let loggedInUser = await User.find(`.findOneAndUpdate({email:'${
+      this.email
+    }' },
+    {  "$addToSet": {
+      "bookings": '${userBooking._id}'
+  }
+}, 
+    function(err,result){
+        if (!err) {
+            console.log(result);
+        }
+    })`);
+
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+      userBooking.bookingId
+    }'})
+  .populate('view')
+  .populate('user')
+  .exec()
+  `);
   }
 
   render() {
