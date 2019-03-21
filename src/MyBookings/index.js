@@ -37,10 +37,12 @@ class MyBookings extends Component {
     this.activeBooking = [];
     this.historyBooking = [];
     this.getBookingsHistory();
+    this.logg = "";
   }
 
   async getBookingsHistory() {
     this.logg = await Login.find();
+    console.log(this.logg);
     this.email = this.logg.email;
     this.loggedIn = await User.find(`.find(
        {email: '${this.email}'})`);
@@ -50,6 +52,10 @@ class MyBookings extends Component {
         populate: { path: 'view' }
     });
         `);
+
+    if (this.logg.error === "Not logged in!") {
+      return;
+    }
 
     let bookings = popuUser[0].bookings;
     let currDate = Date.now();
@@ -93,9 +99,13 @@ class MyBookings extends Component {
   }
 
   render() {
+    if (this.logg === undefined || this.logg === null || this.logg === "") {
+      return <h2 className="centered">Ingen historik att visa</h2>;
+    }
+
     return (
-      <section>
-        <h2>Mina aktuella bokingar:</h2>
+      <section className="mybookingsSection">
+        <h2 className="centered">Mina aktuella bokingar:</h2>
         {this.state.activeBooking.map((listitem, index) => (
           <div key={index}>
             <CardHeader className="d-flex justify-content-center">
@@ -111,7 +121,7 @@ class MyBookings extends Component {
             </CardHeader>
             <UncontrolledCollapse toggler={"#toggler" + index}>
               <Card>
-                <CardBody>
+                <CardBody className="centered">
                   {"Film: " + listitem.view.film}
                   <br />
                   {"Salong: " + listitem.view.auditorium}
@@ -125,13 +135,13 @@ class MyBookings extends Component {
             </UncontrolledCollapse>
           </div>
         ))}
-        <h2>Här kan du se dina tidigare bokningar:</h2>
+        <h2 className="centered">Här kan du se dina tidigare bokningar:</h2>
         {this.state.historyBooking.map((listitem, index) => (
           <div key={index}>
             <CardHeader className="d-flex justify-content-center">
               <Button
                 color="link"
-                id={"toggler" + index}
+                id={"historytoggler" + index}
                 border="none"
                 className="no-decoration"
               >
@@ -139,9 +149,9 @@ class MyBookings extends Component {
                 {"Datum: " + listitem.view.date}
               </Button>
             </CardHeader>
-            <UncontrolledCollapse toggler={"#toggler" + index}>
+            <UncontrolledCollapse toggler={"#historytoggler" + index}>
               <Card>
-                <CardBody>
+                <CardBody className="centered">
                   {"Film: " + listitem.view.film}
                   <br />
                   {"Salong: " + listitem.view.auditorium}
