@@ -34,7 +34,11 @@ class BookingPage extends Component {
       mySeats:[],
       booking: {},
       salonBookings:[],
-      salonView:[]
+      salonView:[],
+      movietitle: null,
+      moviedate: null,
+      movietime: null,
+      totalprice: 0
     };
 
     this.countUp = this.countUp.bind(this);
@@ -198,8 +202,6 @@ class BookingPage extends Component {
   }
 
   async testBooking(){
-
-    console.log(this.state.view);
    
       let myNewBooking = await new Booking({
       adults: this.state.adults,
@@ -211,10 +213,6 @@ class BookingPage extends Component {
     });
     
       let result = await myNewBooking.save();
-      console.log(result);
-
-      let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
-      console.log(finder);
 
       let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
         myNewBooking.bookingId
@@ -224,16 +222,18 @@ class BookingPage extends Component {
       .exec()
       `);
 
-      console.log(myNewBookingPopulated);
-      
+      let adultsPrice= myNewBookingPopulated.adults*120;
+      let kidsPrice= myNewBookingPopulated.kids*75;
+      let seniorPrice= myNewBookingPopulated.seniors*90;
+      let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+
       this.setState({
-        booking: myNewBookingPopulated
-
+        movietitle: myNewBookingPopulated.view.film,
+        moviedate: myNewBookingPopulated.view.date,
+        movietime: myNewBookingPopulated.view.time,
+        totalprice: totalPrice   
       });
-      console.log(this.state.booking);
   }
-
-  
 
   preStoreMySeats(){
     this.setState({
@@ -360,7 +360,16 @@ class BookingPage extends Component {
             ""
           )}
           {this.state.stepCounter === 4 ? 
-            <BookingConfirm confirmData={this.state.booking} />
+            <BookingConfirm 
+              confirmData={this.state.booking} 
+              totalpersons={this.state.totalPersons}
+              movietitle={this.state.movietitle}
+              moviedate={this.state.moviedate}
+              movietime={this.state.movietime}
+              seats={this.state.mySeats}
+              salon={this.state.selectedMovieSalon}
+              price={this.state.totalprice}
+            />
           : ""}
 
           {this.state.stepCounter === 3 ? (
