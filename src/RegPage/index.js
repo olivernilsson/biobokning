@@ -25,10 +25,9 @@ export class RegPage extends React.Component {
     this.validationForm = this.validationForm.bind(this);
   }
 
-  componentDidMount(){
-    console.log(this.props)
+  componentDidMount() {
+    console.log(this.props);
   }
-  
 
   handleData = () => {
     let { firstName, lastName, email, password } = this.state;
@@ -80,7 +79,8 @@ export class RegPage extends React.Component {
           password === verifyPassword
       },
       function() {
-        console.log(this.state.registrationDone);
+        let { registrationDone } = this.state;
+        this.props.validatedReg(registrationDone);
       }
     );
   }

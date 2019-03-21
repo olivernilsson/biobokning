@@ -36,7 +36,8 @@ class UserRegistration extends Component {
       minLetter: false,
       bigLetterVal: false,
       oneNumberVal: false,
-      dropdownOpen: false
+      dropdownOpen: false,
+      amIAdmin: true
       // buttonChange: false
     };
 
@@ -160,9 +161,11 @@ class UserRegistration extends Component {
           >
             <DropdownToggle caret>{this.props.email}</DropdownToggle>
             <DropdownMenu>
-              <DropdownItem>
-                <NavLink to="/mybookings">Mina bokningar</NavLink>
-              </DropdownItem>
+              {this.props.amIAdmin ? (
+                <DropdownItem>Kontrollpanel</DropdownItem>
+              ) : (
+                <DropdownItem>Mina Bokningar</DropdownItem>
+              )}
             </DropdownMenu>
           </Dropdown>
         ) : (
