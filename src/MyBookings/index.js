@@ -128,7 +128,7 @@ class MyBookings extends Component {
                   <br />
                   {"Tid: " + listitem.view.time}
                   <br />
-                  {"Platserna: "}
+                  {"Platser: "}
                   {listitem.seats.map(seat => seat).join("-")}
                 </CardBody>
               </Card>
@@ -158,7 +158,7 @@ class MyBookings extends Component {
                   <br />
                   {"Tid: " + listitem.view.time}
                   <br />
-                  {"Platserna: "}
+                  {"Platser: "}
                   {listitem.seats.map(seat => seat).join("-")}
                 </CardBody>
               </Card>
