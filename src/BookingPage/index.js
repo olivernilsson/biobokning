@@ -209,6 +209,10 @@ class BookingPage extends Component {
   
 
   preStoreMySeats(){
+    if(this.state.stepCounter === 1){
+      this.mySeats = []
+    }
+
     if(this.mySeats){
       this.setState({
         mySeats: this.mySeats
