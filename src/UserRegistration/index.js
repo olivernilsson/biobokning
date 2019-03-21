@@ -162,9 +162,13 @@ class UserRegistration extends Component {
             <DropdownToggle caret>{this.props.email}</DropdownToggle>
             <DropdownMenu>
               {this.props.amIAdmin ? (
-                <DropdownItem>Kontrollpanel</DropdownItem>
+                <DropdownItem>
+                  <NavLink to="/adminpage">Kontrollpanel</NavLink>
+                </DropdownItem>
               ) : (
-                <DropdownItem>Mina Bokningar</DropdownItem>
+                <DropdownItem>
+                  <NavLink to="/mybookings">Mina bokningar</NavLink>
+                </DropdownItem>
               )}
             </DropdownMenu>
           </Dropdown>
