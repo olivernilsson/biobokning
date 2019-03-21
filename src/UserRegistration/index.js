@@ -24,7 +24,8 @@ class UserRegistration extends Component {
       minLetter: false,
       bigLetterVal: false,
       oneNumberVal: false,
-      dropdownOpen: false
+      dropdownOpen: false,
+      amIAdmin: true
       // buttonChange: false
     };
 
@@ -148,7 +149,10 @@ class UserRegistration extends Component {
           {this.props.email}
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem>Mina Bokningar</DropdownItem>
+            {this.props.amIAdmin ? 
+              <DropdownItem>Kontrollpanel</DropdownItem> 
+              : 
+              <DropdownItem>Mina Bokningar</DropdownItem>}
           </DropdownMenu>
         </Dropdown>
         : 
