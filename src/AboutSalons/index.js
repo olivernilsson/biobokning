@@ -15,12 +15,6 @@ class AboutSalons extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.toggle = this.toggle.bind(this);
-    this.state = { collapse: false };
-  }
-
-  toggle() {
-    this.setState(state => ({ collapse: !state.collapse }));
   }
 
   render() {
