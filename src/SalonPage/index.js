@@ -141,6 +141,7 @@ class SalonPage extends Component {
               this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum)
               this.mySeats = this.mySeats.sort(function(a, b){return a - b})
             }
+            this.props.preStoreMySeats(this.mySeats)
             return 
           }
         }
