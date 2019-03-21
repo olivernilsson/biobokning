@@ -7,16 +7,7 @@ class BookingConfirm extends Component {
 
   }
 
-  componentDidMount() {
-    console.log("BookinComfirm ", this.props.mySeats);
-  }
-
   render() {
-
-    console.log(this.props.confirmData.adults);
-    console.log(this.props.confirmData.view);
-
-
 
     return (
       <section className="wizard-container ">

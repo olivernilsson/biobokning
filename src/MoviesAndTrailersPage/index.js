@@ -28,7 +28,6 @@ class MoviesAndTrailersPage extends Component {
   async componentDidMount() {
     let movieroute = window.location.href.split("/").pop();
     let movieUrl = movieroute.replace(/\-/g, " ");
-    console.log(movieUrl);
     this.chosenMovie = await Film.find(`.find({title:"${movieUrl}"})`);
 
     this.setState({

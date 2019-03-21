@@ -186,7 +186,6 @@ class SalonPage extends Component {
         this.mySeats.push(id+i)
       }
     }  
-    console.log('SalonPage: ', this.mySeats)
     this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
   }
 

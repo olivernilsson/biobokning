@@ -147,12 +147,9 @@ class BookingPage extends Component {
   countDown() {
     this.preStoreMySeats()
 
-    
-
     if(this.state.stepCounter==1){
       this.props.history.push(`/moviesandtrailerspage/${this.view[0].film}`);
     }
-
 
     if (this.state.stepCounter < 2) {
       return;
@@ -164,7 +161,11 @@ class BookingPage extends Component {
       };
     });
 
-    
+    if(this.state.stepCounter === 4){
+      this.setState({
+        stepCounter: 4
+      })
+    }
   }
 
   async countUp() {
@@ -195,7 +196,6 @@ class BookingPage extends Component {
     }
 
     if(this.state.stepCounter === 2){
-      console.log(this.state.mySeats.length);
       if(this.state.mySeats.length<1){
         
         this.setState({
@@ -204,6 +204,11 @@ class BookingPage extends Component {
       }
     }
 
+    if(this.state.stepCounter > 3){
+      this.setState({
+        stepCounter: 4
+      })
+    }
 
   }
 
