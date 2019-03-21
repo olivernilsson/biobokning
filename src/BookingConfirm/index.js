@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "./style.scss";
+
 
 class BookingConfirm extends Component {
   constructor(props) {

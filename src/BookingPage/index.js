@@ -404,7 +404,7 @@ class BookingPage extends Component {
             <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
             <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
             <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
-            <p className="selected-movie-date"> Datum:{selecedMovieDate} </p>
+            <p className="selected-movie-date"> Datum: {selecedMovieDate} </p>
           </div>
         }
        
@@ -415,7 +415,7 @@ class BookingPage extends Component {
             type="button"
             className="align-self-center btn "
           >
-            Bakåt
+            {this.state.stepCounter === 4? '' : 'Bakåt'} 
           </button>
 
           {this.stepCounter === 3 ? (
@@ -433,7 +433,7 @@ class BookingPage extends Component {
               type="button"
               className="align-self-center btn btn-light "
             >
-              Framåt
+            {this.state.stepCounter === 4? '' : 'Framåt'} 
             </button>
           )}
         </div>
