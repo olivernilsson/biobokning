@@ -64,13 +64,13 @@ class LoginModal extends React.Component {
         modalVisible: false
       });
       App.loggedIn = false;
-      this.props.checkLog(App.loggedIn)
+      this.props.checkLog(App.loggedIn);
+      window.bookingComponent.checkIfLoggedInBookingPage();
     } else {
       this.setState({
         modalVisible: true
       });
     }
-    window.bookingComponent.checkIfLoggedInBookingPage();
   }
 
   closeLoginModal() {
@@ -108,7 +108,7 @@ class LoginModal extends React.Component {
       loggedIn: App.loggedIn
     }));
     window.bookingComponent.checkIfLoggedInBookingPage();
-    this.props.checkLog(App.loggedIn, email)
+    this.props.checkLog(App.loggedIn, email);
 
     //HITTA ADMIN I DB OCH GÖR EN IF SATS
     let adminuser = await User.find(`.find({email:"${email}"})`);
