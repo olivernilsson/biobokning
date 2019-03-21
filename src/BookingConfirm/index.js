@@ -12,11 +12,11 @@ class BookingConfirm extends Component {
   }
 
   render() {
-    
+
     console.log(this.props.confirmData.adults);
     console.log(this.props.confirmData.view);
- 
-    
+
+
 
     return (
       <section className="wizard-container ">
@@ -26,51 +26,49 @@ class BookingConfirm extends Component {
 
 
           <div className="row">
-            <div className="col-md-12 p-2">
+            <div className="col-md-4 p-2">
               <h3>Titel</h3>
               <div className="font-test">
                 {this.props.movietitle}
               </div>
             </div>
 
-            <div className="col-md-12 p-2">
+            <div className="col-md-4 p-2">
               <h3>Salong</h3>
               <div className="font-test">
                 {this.props.salon}
               </div>
             </div>
-          </div>
 
-
-          <div className="row">
-            <div className="col-md-12 p-2">
+            <div className="col-md-4 p-2">
               <h3>Datum</h3>
               <div className="font-test">
                 {this.props.moviedate}
               </div>
             </div>
-
-            <div className="col-md-12 p-2">
-              <h3>Tid</h3>
-              <div className="font-test">
-                {this.props.movietime}
-              </div>
-            </div>
           </div>
 
 
           <div className="row">
-            <div className="col-md-12 p-2">
+
+            <div className="col-md-4 p-2">
               <h3>Säten</h3>
               <div className="font-test">
                 {this.props.seats.join(', ')}
               </div>
             </div>
 
-            <div className="col-md-12 p-2">
+            <div className="col-md-4 p-2">
               <h3>Pris</h3>
               <div className="font-test">
                 {this.props.price + ' SEK'}
+              </div>
+            </div>
+
+            <div className="col-md-4 p-2">
+              <h3>Tid</h3>
+              <div className="font-test">
+                {this.props.movietime}
               </div>
             </div>
           </div>
@@ -81,6 +79,9 @@ class BookingConfirm extends Component {
 }
 
 export default BookingConfirm;
+
+
+
 
 
 
