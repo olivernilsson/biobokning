@@ -142,6 +142,20 @@
   color: #85ffc7 !important;
 }
 
+
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
+.blinker {
+  animation: blinker 1s linear infinite;
+}
+.lol{
+  border:solid 20px red;
+}
+
 @media screen and (max-width: 950px) {
   #backtext,
   #forward,

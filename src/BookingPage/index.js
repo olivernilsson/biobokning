@@ -40,6 +40,10 @@ class BookingPage extends Component {
       totalPersons: 0,
       mySeats: [],
       booking: {},
+      movietitle: null,
+      moviedate: null,
+      movietime: null,
+      totalprice: 0
       salonBookings: [],
       salonView: [],
       disableRegButton: true,
@@ -58,13 +62,15 @@ class BookingPage extends Component {
     this.view = await View.find(`.find({_id:"${route}"})`);
     let bookings = await Booking.find();
 
+
     this.setState({
       selectedMovieTitle: this.view[0].film,
       selectedMovieSalon: this.view[0].auditorium,
       selectedMovieTime: this.view[0].time,
       selecedMovieDate: this.view[0].date,
       salonBookings: bookings,
-      salonView: this.view
+      salonView: this.view,
+      view: this.view
     });
 
     this.checkIfLoggedInBookingPage();
@@ -138,7 +144,15 @@ class BookingPage extends Component {
   };
 
   countDown() {
-    this.preStoreMySeats();
+    this.preStoreMySeats()
+
+    
+
+    if(this.state.stepCounter==1){
+      this.props.history.push(`/moviesandtrailerspage/${this.view[0].film}`);
+    }
+
+
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -148,6 +162,8 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter - 1
       };
     });
+
+    
   }
 
   async countUp() {
@@ -169,8 +185,15 @@ class BookingPage extends Component {
       };
     });
 
-    if (this.state.stepCounter === 1) {
+    if(this.state.stepCounter === 1){
+      if(this.state.totalPersons==0){
+        this.setState({
+          stepCounter:1
+        });
+      }
     }
+
+
   }
 
   async saveUserToDb() {
@@ -194,27 +217,25 @@ class BookingPage extends Component {
       kids: this.state.kids,
       seniors: this.state.seniors,
       user: this.state.user,
-      view: this.state.view,
+      view: this.state.view[0]._id,
       seats: this.state.mySeats
     });
+    
+      let result = await myNewBooking.save();
 
-    let result = await myNewBooking.save();
-    //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
-
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
-      myNewBooking.bookingId
-    }'})
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        myNewBooking.bookingId
+      }'})
       .populate('view')
       .populate('user')
       .exec()
       `);
 
-    //console.log(myNewBookingPopulated);
-    this.setState({
-      booking: myNewBookingPopulated
-    });
-    //console.log(this.state.booking);
-  }
+      let adultsPrice= myNewBookingPopulated.adults*120;
+      let kidsPrice= myNewBookingPopulated.kids*75;
+      let seniorPrice= myNewBookingPopulated.seniors*90;
+      let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+
 
   
 
@@ -224,7 +245,12 @@ class BookingPage extends Component {
     }
 
     if(this.mySeats){
+  }
       this.setState({
+        movietitle: myNewBookingPopulated.view.film,
+        moviedate: myNewBookingPopulated.view.date,
+        movietime: myNewBookingPopulated.view.time,
+        totalprice: totalPrice   
         mySeats: this.mySeats
       });
     }
@@ -375,7 +401,7 @@ class BookingPage extends Component {
             type="button"
             className="btn btn-light"
           >
-            Bakåt
+            Bakåt 
           </button>
           {this.state.stepCounter === 1 ? (
             <PricePage
@@ -411,6 +437,18 @@ class BookingPage extends Component {
           ) : (
             ""
           )}
+          {this.state.stepCounter === 4 ? 
+            <BookingConfirm 
+              confirmData={this.state.booking} 
+              totalpersons={this.state.totalPersons}
+              movietitle={this.state.movietitle}
+              moviedate={this.state.moviedate}
+              movietime={this.state.movietime}
+              seats={this.state.mySeats}
+              salon={this.state.selectedMovieSalon}
+              price={this.state.totalprice}
+            />
+          : ""}
 
           {this.state.stepCounter === 4 ? (
             <BookingConfirm
@@ -446,6 +484,11 @@ class BookingPage extends Component {
               id="forward"
               type="button"
               className="btn btn-light"
+              /*className={"btn btn-light" + 
+              (this.state.stepCounter===1 ? 
+                this.state.totalPersons>0 ? " blinker": "" 
+                : " blinker"
+              )}*/
             >
               Framåt
             </button>
