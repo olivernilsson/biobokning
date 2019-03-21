@@ -20,7 +20,6 @@ class BookingConfirm extends Component {
 
     return (
       <section className="wizard-container ">
-        <p> BookingConfirm PAGEEE</p>
         
         <h1>Antal personer</h1>
         {this.props.totalpersons}

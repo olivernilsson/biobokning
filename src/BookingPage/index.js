@@ -43,7 +43,7 @@ class BookingPage extends Component {
       movietitle: null,
       moviedate: null,
       movietime: null,
-      totalprice: 0
+      totalprice: 0,
       salonBookings: [],
       salonView: [],
       disableRegButton: true,
@@ -235,8 +235,14 @@ class BookingPage extends Component {
       let kidsPrice= myNewBookingPopulated.kids*75;
       let seniorPrice= myNewBookingPopulated.seniors*90;
       let totalPrice= adultsPrice+kidsPrice+seniorPrice;
-
-
+      
+      this.setState({
+        movietitle: myNewBookingPopulated.view.film,
+        moviedate: myNewBookingPopulated.view.date,
+        movietime: myNewBookingPopulated.view.time,
+        totalprice: totalPrice
+      });
+    }
   
 
   preStoreMySeats(){
@@ -245,12 +251,8 @@ class BookingPage extends Component {
     }
 
     if(this.mySeats){
-  }
-      this.setState({
-        movietitle: myNewBookingPopulated.view.film,
-        moviedate: myNewBookingPopulated.view.date,
-        movietime: myNewBookingPopulated.view.time,
-        totalprice: totalPrice   
+  
+      this.setState({   
         mySeats: this.mySeats
       });
     }
@@ -309,7 +311,18 @@ class BookingPage extends Component {
   .exec()
   `);
 
-    console.log(myNewBookingPopulated);
+    //console.log(myNewBookingPopulated);
+    let adultsPrice= myNewBookingPopulated.adults*120;
+    let kidsPrice= myNewBookingPopulated.kids*75;
+    let seniorPrice= myNewBookingPopulated.seniors*90;
+    let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+    
+    this.setState({
+      movietitle: myNewBookingPopulated.view.film,
+      moviedate: myNewBookingPopulated.view.date,
+      movietime: myNewBookingPopulated.view.time,
+      totalprice: totalPrice
+    });
   }
 
   render() {
@@ -449,15 +462,6 @@ class BookingPage extends Component {
               price={this.state.totalprice}
             />
           : ""}
-
-          {this.state.stepCounter === 4 ? (
-            <BookingConfirm
-              confirmData={this.state.booking}
-              mySeats={this.state.mySeats}
-            />
-          ) : (
-            ""
-          )}
 
           {this.state.loggedInBookingPage && this.state.stepCounter === 3 ? (
             <button
