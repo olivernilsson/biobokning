@@ -15,6 +15,23 @@
   border-bottom-right-radius: 50%;
 }
 
+.prebooked-seat {
+  display: inline-block;
+  background-image: linear-gradient(
+    to top,
+    rgb(205, 240, 9),
+    rgb(255, 251, 4) 40%
+  );
+  margin: 3px 1px 1px 1px;
+  width: 45px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
 .taken-seat {
   display: inline-block;
   background-image: linear-gradient(
@@ -52,12 +69,11 @@
 
 .blueX {
   display: inline-block;
-  background-image:
-    linear-gradient(
-      to top,
-      rgb(255, 255, 255),
-      rgb(145, 191, 235) 60%
-    );
+  background-image: linear-gradient(
+    to top,
+    rgb(255, 255, 255),
+    rgb(145, 191, 235) 60%
+  );
   //border-bottom: solid 2px white;
   margin: 3px 1px 1px 1px;
   width: 45px;
@@ -65,8 +81,8 @@
   border-radius: 5px;
   cursor: pointer;
 
-  border-bottom-left-radius:50%;
-  border-bottom-right-radius:50%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
 }
 
 .blink-me {
@@ -95,7 +111,10 @@
 }
 
 @media screen and (max-width: 900px) {
-  .seat, .blue, .taken-seat, .blink-me {
+  .seat,
+  .blue,
+  .taken-seat,
+  .blink-me {
     width: 32px;
     height: 22px;
   }
@@ -105,7 +124,10 @@
 }
 
 @media screen and (max-width: 725px) {
-  .seat, .blue, .taken-seat, .blink-me {
+  .seat,
+  .blue,
+  .taken-seat,
+  .blink-me {
     width: 22px;
     height: 12px;
   }

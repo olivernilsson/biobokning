@@ -42,7 +42,8 @@ class SalonPage extends Component {
     this.presavedbooking = await Booking.find(
       `.findOne({bookingId:'prebook'})`
     );
-    if (this.presavedbooking.seats.length < 0) {
+    this.presavedbooking.seats.length = 0;
+    if (this.presavedbooking.seats.length > 0) {
       this.takenSeatsArray = this.takenSeatsArray.concat(
         this.presavedbooking.seats
       );
@@ -131,6 +132,22 @@ class SalonPage extends Component {
     return this.seatsBySeatNumber;
   }
 
+  colorSocketSeats(takenSeats) {
+    this.mySeats = [];
+
+    for (let takenSeat of takenSeats) {
+      this.seatsBySeatNumber[takenSeat].className = "prebooked-seat";
+    }
+    this.prePickBestSeats();
+    if (this.props.mySeats.length > 0) {
+      for (let propIndex of this.props.mySeats) {
+        this.seatsBySeatNumber[propIndex].className = "blue";
+      }
+      this.mySeats = this.props.mySeats;
+    }
+    return this.seatsBySeatNumber;
+  }
+
   prePickBestSeats() {
     let nbrOfPickedSeats = this.props.personsWantSeat;
 
@@ -201,15 +218,22 @@ class SalonPage extends Component {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
-        if (this.seatsBySeatNumber[id + i].className === "blue") {
-          continue;
-        }
-        this.seatsBySeatNumber[id + i].className = "seat";
-        if (this.mySeats) {
-          if (this.mySeats.includes(id + i)) {
-            this.seatsBySeatNumber[id + i].className = "blue";
-          }
-        }
+        this.seatsBySeatNumber[id + i].className = this.seatsBySeatNumber[
+          id + i
+        ].className.replace("blink-me", "");
+
+        // if (
+        //   this.seatsBySeatNumber[id + i].className === "blue" ||
+        //   this.seatsBySeatNumber[id + i].className === "taken-seat"
+        // ) {
+        //   continue;
+        // }
+        // this.seatsBySeatNumber[id + i].className = "seat";
+        // if (this.mySeats) {
+        //   if (this.mySeats.includes(id + i)) {
+        //     this.seatsBySeatNumber[id + i].className = "blue";
+        //   }
+        // }
       }
     }
     this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
@@ -227,17 +251,18 @@ class SalonPage extends Component {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
-        this.seatsBySeatNumber[id + i].className = "blink-me";
+        let className = this.seatsBySeatNumber[id + i].className;
+        if (!className.includes("blink-me")) {
+          this.seatsBySeatNumber[id + i].className += " blink-me";
+        }
       }
     }
     this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
   async toggleSeat(id) {
-    this.mySeats.length = 0;
     let nbrOfPickedSeats = this.props.personsWantSeat;
 
-    this.mySeats.length = 0;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
       for (let i = 0; i < nbrOfPickedSeats; i++) {
         this.seatsBySeatNumber[id + i].className = "blue";
@@ -252,7 +277,10 @@ class SalonPage extends Component {
     //   viewID: this.props.salonView[0]
     // });
     this.lol = this.mySeats.concat(this.presavedbooking.seats);
-
+    console.log(this.presavedbooking.seats);
+    console.log(this.takenSeatsArray);
+    console.log(this.mySeats);
+    console.log(this.lol);
     socket.emit("prebooking", {
       socketseats: this.mySeats,
       viewID: this.props.salonView[0]
@@ -261,8 +289,10 @@ class SalonPage extends Component {
   }
 
   listenForClick() {
-    this.uncolorMyLatestPickedSeats();
     socket.on("prebooking", async message => {
+      console.log(this.takenSeatsArray);
+      console.log(this.mySeats);
+      console.log(this.lol);
       console.log("körs2");
       let socketviewid = message.viewID._id;
 
@@ -270,7 +300,6 @@ class SalonPage extends Component {
       let view = this.props.salonView;
 
       console.log(message.socketseats);
-
       let finder = await Booking.find(`.findOneAndUpdate(
         {bookingId: 'prebook' },
         {  "$set": {
@@ -283,15 +312,12 @@ class SalonPage extends Component {
                 console.log(result);
             }
         })`);
-
       this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
         view[0]._id,
         bookings
       );
 
-      let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
-        message.socketseats
-      );
+      let mySeatsAndTakenSeats = this.colorSocketSeats(message.socketseats);
 
       this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
     });
