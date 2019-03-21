@@ -1,10 +1,22 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import "./style.scss";
-import { Modal, ModalHeader, ModalBody, Form, Input, FormGroup, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Input,
+  FormGroup,
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 import REST from "../REST";
 
 class User extends REST {}
-
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -80,7 +92,7 @@ class UserRegistration extends Component {
           email.length > 9 &&
           password === verifyPassword
       },
-      function () {
+      function() {
         console.log(this.state.registrationDone);
       }
     );
@@ -113,7 +125,7 @@ class UserRegistration extends Component {
       email: email,
       password: password
     });
-    
+
     await addUser.save();
     console.log(addUser);
   }
@@ -124,7 +136,6 @@ class UserRegistration extends Component {
   //     buttonState: !prevState.buttonState
   //    }))
   //  }
-
 
   toggleModal() {
     this.setState(prevState => ({
@@ -141,120 +152,131 @@ class UserRegistration extends Component {
   render() {
     return (
       <div>
-
-        {this.props.checkLogin ? 
-        <Dropdown className='my-bookings-btn' isOpen={this.state.dropdownOpen} toggle={this.toggleMyBookings}>
-          <DropdownToggle caret>
-          {this.props.email}
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem>Mina Bokningar</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        : 
-          <section>      
-          <div className="registration-field">
-            <button
-              type="button"
-              className="register-button btn"
-              onClick={this.toggleModal}
-            > 
-              Registrering 
-            </button>
-    
-          </div>
-          <Modal
-            isOpen={this.state.modal}
-            toggle={this.toggleModal}
-            className={this.props.className}
-            id="regModal"
+        {this.props.checkLogin ? (
+          <Dropdown
+            className="my-bookings-btn"
+            isOpen={this.state.dropdownOpen}
+            toggle={this.toggleMyBookings}
           >
-            <ModalHeader toggle={this.toggleModal} className="bg-dark">
-            </ModalHeader>
-            <ModalBody className="mymodal-style bg-dark">
-              <Form>
-                <h5 className="modalhead">Registrera dig</h5>
-                <FormGroup>
-                  <div className="group1">
-                    <span className="blocking">
-                      <Input
-                        className={
-                          this.state.firstNameStyle === true ? " validated" : ""
-                        }
-                        type="text"
-                        name="firstName"
-                        onChange={e => this.validationForm(e)}
-                        value={this.state.firstName}
-                        placeholder=" "
-                      />
-                      <span className="place-style">Förnamn</span>
-                    </span>
-                    <span className="blocking">
-                      <Input
-                        className={
-                          this.state.lastNameStyle === true ? " validated" : ""
-                        }
-                        name="lastName"
-                        onChange={e => this.validationForm(e)}
-                        value={this.state.lastName}
-                        placeholder=" "
-                      />
-                      <span className="place-style">Efternamn</span>
-                    </span>
-                  </div>
+            <DropdownToggle caret>{this.props.email}</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem>
+                <NavLink to="/mybookings">Mina bokningar</NavLink>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        ) : (
+          <section>
+            <div className="registration-field">
+              <button
+                type="button"
+                className="register-button btn"
+                onClick={this.toggleModal}
+              >
+                Registrering
+              </button>
+            </div>
+            <Modal
+              isOpen={this.state.modal}
+              toggle={this.toggleModal}
+              className={this.props.className}
+              id="regModal"
+            >
+              <ModalHeader toggle={this.toggleModal} className="bg-dark" />
+              <ModalBody className="mymodal-style bg-dark">
+                <Form>
+                  <h5 className="modalhead">Registrera dig</h5>
+                  <FormGroup>
+                    <div className="group1">
+                      <span className="blocking">
+                        <Input
+                          className={
+                            this.state.firstNameStyle === true
+                              ? " validated"
+                              : ""
+                          }
+                          type="text"
+                          name="firstName"
+                          onChange={e => this.validationForm(e)}
+                          value={this.state.firstName}
+                          placeholder=" "
+                        />
+                        <span className="place-style">Förnamn</span>
+                      </span>
+                      <span className="blocking">
+                        <Input
+                          className={
+                            this.state.lastNameStyle === true
+                              ? " validated"
+                              : ""
+                          }
+                          name="lastName"
+                          onChange={e => this.validationForm(e)}
+                          value={this.state.lastName}
+                          placeholder=" "
+                        />
+                        <span className="place-style">Efternamn</span>
+                      </span>
+                    </div>
 
-                  <span className="blocking">
-                    <Input
-                      className={this.state.emailStyle === true ? " validated" : ""}
-                      name="email"
-                      onChange={e => this.validationForm(e)}
-                      value={this.state.email}
-                      placeholder=" "
-                    />
-                    <span className="place-style">Email</span>
-                  </span>
-                </FormGroup>
-
-                <FormGroup>
-                  <div>
                     <span className="blocking">
                       <Input
-                        type="password"
                         className={
-                          this.state.passwordStyle === true ? " validated" : ""
+                          this.state.emailStyle === true ? " validated" : ""
                         }
-                        name="password"
+                        name="email"
                         onChange={e => this.validationForm(e)}
-                        value={this.state.password}
+                        value={this.state.email}
                         placeholder=" "
                       />
-                      <span className="place-style">Lösenord</span>
+                      <span className="place-style">Email</span>
                     </span>
+                  </FormGroup>
 
-                    <span className="blocking">
-                      <Input
-                        type="password"
+                  <FormGroup>
+                    <div>
+                      <span className="blocking">
+                        <Input
+                          type="password"
+                          className={
+                            this.state.passwordStyle === true
+                              ? " validated"
+                              : ""
+                          }
+                          name="password"
+                          onChange={e => this.validationForm(e)}
+                          value={this.state.password}
+                          placeholder=" "
+                        />
+                        <span className="place-style">Lösenord</span>
+                      </span>
+
+                      <span className="blocking">
+                        <Input
+                          type="password"
+                          className={
+                            this.state.verifyPasswordStyle === true
+                              ? " validated"
+                              : ""
+                          }
+                          name="verifyPassword"
+                          onChange={e => this.validationForm(e)}
+                          value={this.state.verifyPassword}
+                          placeholder=" "
+                        />
+                        <span className="place-style">Repetera lösenord</span>
+                      </span>
+                    </div>
+                    <div className="validate-box flex-column row">
+                      <p
                         className={
-                          this.state.verifyPasswordStyle === true ? " validated" : ""
+                          this.state.minLetter === true
+                            ? " validated-text"
+                            : "not-validated"
                         }
-                        name="verifyPassword"
-                        onChange={e => this.validationForm(e)}
-                        value={this.state.verifyPassword}
-                        placeholder=" "
-                      />
-                      <span className="place-style">Repetera lösenord</span>
-                    </span>
-                  </div>
-                  <div className="validate-box flex-column row">
-                    <p
-                      className={
-                        this.state.minLetter === true
-                          ? " validated-text"
-                          : "not-validated"
-                      }
-                    >
-                      Minst sju tecken
-                    </p>
+                      >
+                        Minst sju tecken
+                      </p>
                       <p
                         className={
                           this.state.bigLetterVal === true
@@ -263,7 +285,7 @@ class UserRegistration extends Component {
                         }
                       >
                         Minst en stor bokstav
-                    </p>
+                      </p>
                       <p
                         className={
                           this.state.oneNumberVal === true
@@ -272,20 +294,23 @@ class UserRegistration extends Component {
                         }
                       >
                         Minst en siffra
-                    </p>
-                  </div>
-                  <div>
-                    <button
-                      className="mob-btn btn btn-primary btn-sm"
-                      type="submit" onClick={this.handleData}>Klicka för att registrera dig
-                    </button>
-                  </div>
-                </FormGroup>
-              </Form>
-            </ModalBody>
-          </Modal>
-        </section>
-        }
+                      </p>
+                    </div>
+                    <div>
+                      <button
+                        className="mob-btn btn btn-primary btn-sm"
+                        type="submit"
+                        onClick={this.handleData}
+                      >
+                        Klicka för att registrera dig
+                      </button>
+                    </div>
+                  </FormGroup>
+                </Form>
+              </ModalBody>
+            </Modal>
+          </section>
+        )}
       </div>
     );
   }
