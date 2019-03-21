@@ -5,6 +5,8 @@ import SalonPage from "../SalonPage/index";
 import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
 import REST from "../REST";
+import openSocket from "socket.io-client";
+const socket = openSocket("http://localhost:3001");
 
 class User extends REST {}
 class View extends REST {}
@@ -26,15 +28,15 @@ class BookingPage extends Component {
       selectedMovieSalon: null,
       selecedMovieDate: null,
       stepCounter: 1,
-      adults:0,
-      kids:0,
-      seniors:0,
-      maximum:8,
-      totalPersons:0,
-      mySeats:[],
+      adults: 0,
+      kids: 0,
+      seniors: 0,
+      maximum: 8,
+      totalPersons: 0,
+      mySeats: [],
       booking: {},
-      salonBookings:[],
-      salonView:[]
+      salonBookings: [],
+      salonView: []
     };
 
     this.countUp = this.countUp.bind(this);
@@ -45,7 +47,7 @@ class BookingPage extends Component {
   async componentDidMount() {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
-    let bookings = await Booking.find()
+    let bookings = await Booking.find();
 
     this.setState({
       selectedMovieTitle: this.view[0].film,
@@ -57,48 +59,42 @@ class BookingPage extends Component {
     });
   }
 
-  pricepageAddPerson(event){
- 
-    if(event.target.className==='AdultsDown'){
-      if(this.state.adults>0 ){
-      this.setState({adults: this.state.adults -1});
-      this.setState({totalPersons: this.state.totalPersons -1});
-      this.setState({maximum: this.state.maximum+1});
+  pricepageAddPerson(event) {
+    if (event.target.className === "AdultsDown") {
+      if (this.state.adults > 0) {
+        this.setState({ adults: this.state.adults - 1 });
+        this.setState({ totalPersons: this.state.totalPersons - 1 });
+        this.setState({ maximum: this.state.maximum + 1 });
       }
-    }
-    else if(event.target.className==='AdultsUp'){
-      if(this.state.maximum>0){
-      this.setState({adults: this.state.adults+1});
-      this.setState({totalPersons: this.state.totalPersons +1});
-      this.setState({maximum: this.state.maximum-1});
+    } else if (event.target.className === "AdultsUp") {
+      if (this.state.maximum > 0) {
+        this.setState({ adults: this.state.adults + 1 });
+        this.setState({ totalPersons: this.state.totalPersons + 1 });
+        this.setState({ maximum: this.state.maximum - 1 });
       }
-    }
-    else if(event.target.className==='KidsDown'){
-      if(this.state.kids>0){
-      this.setState({kids: this.state.kids-1});
-      this.setState({totalPersons: this.state.totalPersons -1});
-      this.setState({maximum: this.state.maximum+1});
+    } else if (event.target.className === "KidsDown") {
+      if (this.state.kids > 0) {
+        this.setState({ kids: this.state.kids - 1 });
+        this.setState({ totalPersons: this.state.totalPersons - 1 });
+        this.setState({ maximum: this.state.maximum + 1 });
       }
-    }
-    else if(event.target.className==='KidsUp'){
-      if(this.state.maximum>0){
-      this.setState({kids: this.state.kids+1});
-      this.setState({totalPersons: this.state.totalPersons +1});
-      this.setState({maximum: this.state.maximum-1});
+    } else if (event.target.className === "KidsUp") {
+      if (this.state.maximum > 0) {
+        this.setState({ kids: this.state.kids + 1 });
+        this.setState({ totalPersons: this.state.totalPersons + 1 });
+        this.setState({ maximum: this.state.maximum - 1 });
       }
-    }
-    else if(event.target.className==='SeniorsDown'){
-      if(this.state.seniors>0){
-      this.setState({seniors: this.state.seniors-1});
-      this.setState({totalPersons: this.state.totalPersons -1});
-      this.setState({maximum: this.state.maximum+1});
+    } else if (event.target.className === "SeniorsDown") {
+      if (this.state.seniors > 0) {
+        this.setState({ seniors: this.state.seniors - 1 });
+        this.setState({ totalPersons: this.state.totalPersons - 1 });
+        this.setState({ maximum: this.state.maximum + 1 });
       }
-    }
-    else if(event.target.className==='SeniorsUp'){
-      if(this.state.maximum>0){
-      this.setState({seniors: this.state.seniors+1});
-      this.setState({totalPersons: this.state.totalPersons +1});
-      this.setState({maximum: this.state.maximum-1});
+    } else if (event.target.className === "SeniorsUp") {
+      if (this.state.maximum > 0) {
+        this.setState({ seniors: this.state.seniors + 1 });
+        this.setState({ totalPersons: this.state.totalPersons + 1 });
+        this.setState({ maximum: this.state.maximum - 1 });
       }
     }
   }
@@ -123,7 +119,7 @@ class BookingPage extends Component {
   };
 
   countDown() {
-    this.preStoreMySeats()
+    this.preStoreMySeats();
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -136,7 +132,7 @@ class BookingPage extends Component {
   }
 
   async countUp() {
-    this.preStoreMySeats()
+    this.preStoreMySeats();
     if (this.state.stepCounter === 3) {
       await this.saveUserToDb();
       this.testBooking();
@@ -147,19 +143,12 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter + 1
       };
     });
-    
 
-    if(this.state.stepCounter === 1){
-     
+    if (this.state.stepCounter === 1) {
     }
-
-
   }
 
-
   async saveUserToDb() {
-    
-    
     let { dataFirst, dataEmail, dataLast, dataPassword } = this.state;
     let addUser = new User({
       firstName: dataFirst,
@@ -173,13 +162,11 @@ class BookingPage extends Component {
     this.setState({
       user: addUser
     });
-    console.log(this.state.user)
-  
+    console.log(this.state.user);
   }
 
-  async testBooking(){
-   
-      let myNewBooking = await new Booking({
+  async testBooking() {
+    let myNewBooking = await new Booking({
       adults: this.state.adults,
       kids: this.state.kids,
       seniors: this.state.seniors,
@@ -187,42 +174,45 @@ class BookingPage extends Component {
       view: this.state.view,
       seats: this.state.mySeats
     });
-    
-      let result = await myNewBooking.save();
-      //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
-    
-      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
-        myNewBooking.bookingId
-      }'})
+
+    let result = await myNewBooking.save();
+    //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`)
+
+    socket.emit("booking", {
+      socketseats: this.state.mySeats,
+      viewID: this.state.view
+    });
+
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+      myNewBooking.bookingId
+    }'})
       .populate('view')
       .populate('user')
       .exec()
       `);
 
-      //console.log(myNewBookingPopulated);
-      this.setState({
-        booking: myNewBookingPopulated
-      });
-      //console.log(this.state.booking);
+    //console.log(myNewBookingPopulated);
+    this.setState({
+      booking: myNewBookingPopulated
+    });
+    //console.log(this.state.booking);
   }
 
-  
-
-  preStoreMySeats(){
-    if(this.mySeats){
+  preStoreMySeats() {
+    if (this.mySeats) {
       this.setState({
         mySeats: this.mySeats
-      })
+      });
     }
-    if(!this.mySeats){
+    if (!this.mySeats) {
       this.setState({
         mySeats: this.state.mySeats
-      })
+      });
     }
   }
 
-  storeMySeats(storeMySeatsX){
-    this.mySeats = storeMySeatsX
+  storeMySeats(storeMySeatsX) {
+    this.mySeats = storeMySeatsX;
   }
 
   render() {
@@ -235,7 +225,7 @@ class BookingPage extends Component {
 
     return (
       <section>
-        <div className="wrapper progress-wrap " >
+        <div className="wrapper progress-wrap ">
           <ul className="progressbar">
             <li
               className={
@@ -316,34 +306,41 @@ class BookingPage extends Component {
           >
             Bakåt
           </button>
-          {this.state.stepCounter === 1 ? 
-            <PricePage 
-              adults={this.state.adults} 
+          {this.state.stepCounter === 1 ? (
+            <PricePage
+              adults={this.state.adults}
               kids={this.state.kids}
               seniors={this.state.seniors}
               maximum={this.state.maximum}
               addPerson={this.pricepageAddPerson.bind(this)}
-             /> 
-          : ""}
-          {this.state.stepCounter === 2 ? 
-            <SalonPage 
+            />
+          ) : (
+            ""
+          )}
+          {this.state.stepCounter === 2 ? (
+            <SalonPage
               personsWantSeat={this.state.totalPersons}
-              storeMySeats = {this.storeMySeats}
-              mySeats = {this.state.mySeats}
-              salonBookings = {this.state.salonBookings}
-              salonView = {this.state.salonView}
-            /> 
-          : ""}
+              storeMySeats={this.storeMySeats}
+              mySeats={this.state.mySeats}
+              salonBookings={this.state.salonBookings}
+              salonView={this.state.salonView}
+            />
+          ) : (
+            ""
+          )}
           {this.state.stepCounter === 3 ? (
             <RegPage myData={this.handleData} />
           ) : (
             ""
           )}
-          {this.state.stepCounter === 4 ? 
-            <BookingConfirm 
-            confirmData={this.state.booking} 
-            mySeats={this.state.mySeats}/>
-          : ""}
+          {this.state.stepCounter === 4 ? (
+            <BookingConfirm
+              confirmData={this.state.booking}
+              mySeats={this.state.mySeats}
+            />
+          ) : (
+            ""
+          )}
 
           {this.state.stepCounter === 3 ? (
             <button
