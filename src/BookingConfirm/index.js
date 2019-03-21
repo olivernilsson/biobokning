@@ -17,7 +17,7 @@ class BookingConfirm extends Component {
       <section className="wizard-container ">
 
         <div className="col-md-24">
-          <h1 className="p-2 testo">Tack för att du bokade!</h1>
+          <h1 className="p-2 testo">Tack, här finns din bokning!</h1>
 
 
           <div className="row">
@@ -29,7 +29,7 @@ class BookingConfirm extends Component {
             </div>
 
             <div className="col-md-12 p-2">
-              <h3>Salong</h3>
+              <h3>Salon</h3>
               <div className="font-test">
                 {this.props.salon}
               </div>
