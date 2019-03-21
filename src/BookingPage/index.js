@@ -397,6 +397,7 @@ class BookingPage extends Component {
             <br></br>
             <br></br>
             <br></br>
+            <br></br>
           </div> 
         : 
           <div className="selected-movie-box">
