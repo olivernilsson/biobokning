@@ -38,7 +38,8 @@ class NavbarApp extends Component {
     this.state = {
       loggedIn: '',
       email: '',
-      dropdownOpen: false
+      dropdownOpen: false,
+      amIAdmin: ''
     };
 
     this.toggle = this.toggle.bind(this);
@@ -49,11 +50,20 @@ class NavbarApp extends Component {
     let AppLoggedIn = !(await Login.find()).error;
     let user = await Login.find()
 
-    this.setState({
-      loggedIn: AppLoggedIn,
-      email: user.email
-    })
-    
+    if(user.email != 'admin@grupp4.com'){
+      this.setState({
+        loggedIn: AppLoggedIn,
+        email: user.email,
+        amIAdmin: false
+      })
+    } 
+    if(user.email === 'admin@grupp4.com'){
+      this.setState({
+        loggedIn: AppLoggedIn,
+        email: 'Admin',
+        amIAdmin: true
+      })
+    } 
   }
 
   toggle() {
@@ -65,8 +75,16 @@ class NavbarApp extends Component {
   checkLog(AppLoggedIn, email){
     this.setState({
       loggedIn: AppLoggedIn,
-      email: email
+      email: email,
+      amIAdmin: false
     })
+    if(email === 'admin@grupp4.com'){
+      this.setState({
+        loggedIn: AppLoggedIn,
+        email: 'Admin',
+        amIAdmin: true
+      })
+    }
   }
 
   render() {
@@ -126,8 +144,12 @@ class NavbarApp extends Component {
                 </NavLink>
               </NavItem>
 
-              <UserRegistration checkLogin={this.state.loggedIn} email={this.state.email}/>
-              <LoginModal checkLog={this.checkLog}/>
+              <UserRegistration 
+                checkLogin={this.state.loggedIn} 
+                email={this.state.email} 
+                amIAdmin={this.state.amIAdmin}/>
+              <LoginModal 
+                checkLog={this.checkLog}/>
             </Nav>
           </Collapse>
         </Navbar>
