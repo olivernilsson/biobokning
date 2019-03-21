@@ -1,4 +1,3 @@
-
 .registration-field{
   position: absolute;
   right: 130px;
@@ -8,6 +7,20 @@
     text-align: center;
     color: black;
   }
+}
+
+.my-bookings-btn {
+  position: absolute;
+  right: 130px;
+  color:  rgb(133, 255, 199);
+
+  p {
+    text-align: center;
+  }
+}
+
+.register-button{
+  background-color:  rgb(133, 255, 199);
 }
 
 .modalhead{
@@ -79,6 +92,5 @@
   .reg-form {
     width: 100%;
   }
-
-
 }
+

@@ -6,6 +6,8 @@ function Seat(props) {
       <div 
         className={props.className} 
         onClick={() => props.toggleSeat(props.seatNum)}
+        onMouseEnter={() => props.hoverMySeats(props.seatNum)}
+        onMouseLeave={() => props.deselectMyHoverSeats(props.seatNum)}
       >
       </div> 
     );

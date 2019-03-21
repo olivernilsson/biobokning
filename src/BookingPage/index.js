@@ -19,6 +19,8 @@ class BookingPage extends Component {
       dataLast: null,
       dataEmail: null,
       dataPassword: null,
+      view: null,
+      user: null,
       selectedMovieTitle: null,
       selectedMovieTime: null,
       selectedMovieSalon: null,
@@ -30,12 +32,29 @@ class BookingPage extends Component {
       maximum:8,
       totalPersons:0,
       mySeats:[],
-      booking: {}
+      booking: {},
+      salonBookings:[],
+      salonView:[]
     };
 
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
     this.storeMySeats = this.storeMySeats.bind(this);
+  }
+
+  async componentDidMount() {
+    let route = window.location.href.split("/").pop();
+    this.view = await View.find(`.find({_id:"${route}"})`);
+    let bookings = await Booking.find()
+
+    this.setState({
+      selectedMovieTitle: this.view[0].film,
+      selectedMovieSalon: this.view[0].auditorium,
+      selectedMovieTime: this.view[0].time,
+      selecedMovieDate: this.view[0].date,
+      salonBookings: bookings,
+      salonView: this.view
+    });
   }
 
   pricepageAddPerson(event){
@@ -84,17 +103,6 @@ class BookingPage extends Component {
     }
   }
 
-  async componentDidMount() {
-    let route = window.location.href.split("/").pop();
-    this.view = await View.find(`.find({_id:"${route}"})`);
-    this.setState({
-      selectedMovieTitle: this.view[0].film,
-      selectedMovieSalon: this.view[0].auditorium,
-      selectedMovieTime: this.view[0].time,
-      selecedMovieDate: this.view[0].date
-    });
-  }
-
   handleData = (firstName, lastName, email, password) => {
     this.setState({
       dataFirst: firstName,
@@ -127,10 +135,11 @@ class BookingPage extends Component {
     });
   }
 
-  countUp() {
+  async countUp() {
     this.preStoreMySeats()
     if (this.state.stepCounter === 3) {
-      this.saveUserToDb();
+      await this.saveUserToDb();
+      this.testBooking();
     }
 
     this.setState(prevState => {
@@ -141,30 +150,16 @@ class BookingPage extends Component {
     
 
     if(this.state.stepCounter === 1){
-      this.testBooking();
+     
     }
 
 
   }
 
-  async testBooking(){
-    console.log('zup');
-    let myNewBooking = await new Booking({
-      adults: 5,
-      kids: 5,
-      seniors: 5,
-      bookingId: 'yooo'
-    });
-    await myNewBooking.save();
-
-    let finder = await Booking.find(`.findOne({bookingId:'yooo'})`);
-    
-    //console.log(finder.adults);
-    this.state.booking = finder;
-    
-  }
 
   async saveUserToDb() {
+    
+    
     let { dataFirst, dataEmail, dataLast, dataPassword } = this.state;
     let addUser = new User({
       firstName: dataFirst,
@@ -175,14 +170,57 @@ class BookingPage extends Component {
 
     await addUser.save();
     console.log(addUser);
+    this.setState({
+      user: addUser
+    });
+    console.log(this.state.user)
+  
   }
 
-  preStoreMySeats(){
-    this.setState({
-      mySeats: this.mySeats
+  async testBooking(){
+   
+      let myNewBooking = await new Booking({
+      adults: this.state.adults,
+      kids: this.state.kids,
+      seniors: this.state.seniors,
+      user: this.state.user,
+      view: this.state.view,
+      seats: this.state.mySeats
     });
+    
+      let result = await myNewBooking.save();
+      //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
+    
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        myNewBooking.bookingId
+      }'})
+      .populate('view')
+      .populate('user')
+      .exec()
+      `);
+
+      //console.log(myNewBookingPopulated);
+      this.setState({
+        booking: myNewBookingPopulated
+      });
+      //console.log(this.state.booking);
   }
+
   
+
+  preStoreMySeats(){
+    if(this.mySeats){
+      this.setState({
+        mySeats: this.mySeats
+      })
+    }
+    if(!this.mySeats){
+      this.setState({
+        mySeats: this.state.mySeats
+      })
+    }
+  }
+
   storeMySeats(storeMySeatsX){
     this.mySeats = storeMySeatsX
   }
@@ -292,6 +330,8 @@ class BookingPage extends Component {
               personsWantSeat={this.state.totalPersons}
               storeMySeats = {this.storeMySeats}
               mySeats = {this.state.mySeats}
+              salonBookings = {this.state.salonBookings}
+              salonView = {this.state.salonView}
             /> 
           : ""}
           {this.state.stepCounter === 3 ? (
@@ -300,7 +340,9 @@ class BookingPage extends Component {
             ""
           )}
           {this.state.stepCounter === 4 ? 
-            <BookingConfirm confirmData={this.state.booking} />
+            <BookingConfirm 
+            confirmData={this.state.booking} 
+            mySeats={this.state.mySeats}/>
           : ""}
 
           {this.state.stepCounter === 3 ? (
