@@ -64,8 +64,10 @@ class LoginModal extends React.Component {
         modalVisible: false
       });
       App.loggedIn = false;
+      if (window.location.href.includes("bookingpage")) {
+        window.bookingComponent.checkIfLoggedInBookingPage();
+      }
       this.props.checkLog(App.loggedIn);
-      window.bookingComponent.checkIfLoggedInBookingPage();
     } else {
       this.setState({
         modalVisible: true
@@ -105,7 +107,9 @@ class LoginModal extends React.Component {
       modalVisible: false,
       loggedIn: App.loggedIn
     }));
-    window.bookingComponent.checkIfLoggedInBookingPage();
+    if (window.location.href.includes("bookingpage")) {
+      window.bookingComponent.checkIfLoggedInBookingPage();
+    }
     this.props.checkLog(App.loggedIn, email);
 
     //HITTA ADMIN I DB OCH GÖR EN IF SATS
