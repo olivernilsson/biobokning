@@ -22,14 +22,14 @@ class BookingConfirm extends Component {
 
           <div className="row">
             <div className="col-md-12 p-2">
-              <h3>Film title</h3>
+              <h3>Titel</h3>
               <div className="font-test">
                 {this.props.movietitle}
               </div>
             </div>
 
             <div className="col-md-12 p-2">
-              <h3>Salon</h3>
+              <h3>Salong</h3>
               <div className="font-test">
                 {this.props.salon}
               </div>
@@ -39,14 +39,14 @@ class BookingConfirm extends Component {
 
           <div className="row">
             <div className="col-md-12 p-2">
-              <h3>Film date</h3>
+              <h3>Datum</h3>
               <div className="font-test">
                 {this.props.moviedate}
               </div>
             </div>
 
             <div className="col-md-12 p-2">
-              <h3>Film time</h3>
+              <h3>Tid</h3>
               <div className="font-test">
                 {this.props.movietime}
               </div>
@@ -56,14 +56,14 @@ class BookingConfirm extends Component {
 
           <div className="row">
             <div className="col-md-12 p-2">
-              <h3>Seats</h3>
+              <h3>Säten</h3>
               <div className="font-test">
                 {this.props.seats.join(', ')}
               </div>
             </div>
 
             <div className="col-md-12 p-2">
-              <h3>Price</h3>
+              <h3>Pris</h3>
               <div className="font-test">
                 {this.props.price + ' SEK'}
               </div>
