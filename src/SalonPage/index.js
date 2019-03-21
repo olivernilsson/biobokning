@@ -72,7 +72,6 @@ class SalonPage extends Component {
       row++;
     }
     this.totalSeats = seatNum;
-    return this.seatsBySeatNumber
   }
 
   uncolorMyLatestPickedSeats(){
@@ -81,7 +80,6 @@ class SalonPage extends Component {
         this.seatsBySeatNumber[i].className = 'seat'
       }
     }
-    return this.seatsBySeatNumber
   }
 
   colorMySeatsAndTakenSeats(takenSeats){
@@ -97,7 +95,6 @@ class SalonPage extends Component {
       }
       this.mySeats=this.props.mySeats
     }
-    return this.seatsBySeatNumber
   }
 
   prePickBestSeats(){
@@ -162,7 +159,7 @@ class SalonPage extends Component {
         }
       }
     }  
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+    this.convertSeatObjectsToComponentsBeforeRendering()
   }
 
   hoverMySeats(id){
@@ -172,7 +169,7 @@ class SalonPage extends Component {
         this.seatsBySeatNumber[id+i].className = 'blink-me'
       }
     }  
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+    this.convertSeatObjectsToComponentsBeforeRendering()
   }
 
   toggleSeat(id){
@@ -186,7 +183,7 @@ class SalonPage extends Component {
         this.mySeats.push(id+i)
       }
     }  
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber)
+    this.convertSeatObjectsToComponentsBeforeRendering()
   }
 
   checkIfSeatsArePickable(id, nbrOfPickedSeats){
@@ -206,14 +203,14 @@ class SalonPage extends Component {
     return true
   }
 
-  convertSeatObjectsToComponentsBeforeRendering(seatsBySeatNumber){
+  convertSeatObjectsToComponentsBeforeRendering(){
     let seatNum = 1;
     let arrayWithRowsAndSeats = [];
 
     for (let numberOfSeatsInTheRow of this.seatsPerRow) {
       let aRowWithSeats = [];
       while (aRowWithSeats.length < numberOfSeatsInTheRow) {
-        aRowWithSeats.push(seatsBySeatNumber[seatNum]);
+        aRowWithSeats.push(this.seatsBySeatNumber[seatNum]);
         seatNum++;
       }
       //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?

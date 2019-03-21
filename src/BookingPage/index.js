@@ -391,12 +391,22 @@ class BookingPage extends Component {
             </li>
           </ul>
         </div>
-        <div className="selected-movie-box">
-          <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
-          <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
-          <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
-          <p className="selected-movie-date"> Datum:{selecedMovieDate} </p>
-        </div>
+        {this.state.stepCounter === 4 ? 
+          <div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+          </div> 
+        : 
+          <div className="selected-movie-box">
+            <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
+            <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
+            <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
+            <p className="selected-movie-date"> Datum:{selecedMovieDate} </p>
+          </div>
+        }
+       
         <div className="mobile-buttons">
           <button
             id="mobback"
@@ -434,7 +444,7 @@ class BookingPage extends Component {
             type="button"
             className="btn btn-light"
           >
-            Bakåt 
+            {this.state.stepCounter === 4? '' : 'Bakåt'} 
           </button>
           {this.state.stepCounter === 1 ? (
             <PricePage
@@ -515,7 +525,7 @@ class BookingPage extends Component {
                 : " blinker"
               )}*/
             >
-              Framåt
+            {this.state.stepCounter === 4? '' : 'Framåt'} 
             </button>
           )}
         </div>
