@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import "./style.scss";
 import {
   Modal,
@@ -7,13 +8,13 @@ import {
   Form,
   Input,
   FormGroup,
-  Button,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
 import REST from "../REST";
+
 
 class User extends REST {}
 
@@ -36,11 +37,11 @@ class UserRegistration extends Component {
       bigLetterVal: false,
       oneNumberVal: false,
       dropdownOpen: false,
-      amIAdmin: true
-      // buttonChange: false
+      amIAdmin: true,
+      disableRegButton: true,
+
     };
 
-    // this.buttonChange = this.buttonchange.bind(this);
     this.done = false;
     this.emailValid = false;
     this.toggleModal = this.toggleModal.bind(this);
@@ -117,7 +118,9 @@ class UserRegistration extends Component {
     );
   };
 
-  async saveUserToDb() {
+  async saveUserToDb(e) {
+    e.preventDefault();
+    console.log('trying to save to db');
     let { firstName, email, lastName, password } = this.state;
     let addUser = new User({
       firstName: firstName,
@@ -130,12 +133,6 @@ class UserRegistration extends Component {
     console.log(addUser);
   }
 
-  //  buttonChange(){
-  //    console.log("button changes");
-  //    this.setState(prevState =>({
-  //     buttonState: !prevState.buttonState
-  //    }))
-  //  }
 
   toggleModal() {
     this.setState(prevState => ({
@@ -161,9 +158,13 @@ class UserRegistration extends Component {
             <DropdownToggle caret>{this.props.email}</DropdownToggle>
             <DropdownMenu>
               {this.props.amIAdmin ? (
-                <DropdownItem>Kontrollpanel</DropdownItem>
+                <DropdownItem>
+                  <NavLink to="/adminpage">Kontrollpanel</NavLink>
+                </DropdownItem>
               ) : (
-                <DropdownItem>Mina Bokningar</DropdownItem>
+                <DropdownItem>
+                  <NavLink to="/mybookings">Mina bokningar</NavLink>
+                </DropdownItem>
               )}
             </DropdownMenu>
           </Dropdown>
@@ -186,7 +187,7 @@ class UserRegistration extends Component {
             >
               <ModalHeader toggle={this.toggleModal} className="bg-dark" />
               <ModalBody className="mymodal-style bg-dark">
-                <Form>
+                <Form onSubmit={e => this.saveUserToDb(e)}>
                   <h5 className="modalhead">Registrera dig</h5>
                   <FormGroup>
                     <div className="group1">
@@ -302,7 +303,6 @@ class UserRegistration extends Component {
                       <button
                         className="mob-btn btn btn-primary btn-sm"
                         type="submit"
-                        onClick={this.handleData}
                       >
                         Klicka för att registrera dig
                       </button>

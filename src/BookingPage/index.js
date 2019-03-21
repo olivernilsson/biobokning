@@ -40,6 +40,10 @@ class BookingPage extends Component {
       totalPersons: 0,
       mySeats: [],
       booking: {},
+      movietitle: null,
+      moviedate: null,
+      movietime: null,
+      totalprice: 0,
       salonBookings: [],
       salonView: [],
       disableRegButton: true,
@@ -51,6 +55,7 @@ class BookingPage extends Component {
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
     this.storeMySeats = this.storeMySeats.bind(this);
+    this.preStoreMySeats = this.preStoreMySeats.bind(this);
   }
 
   async componentDidMount() {
@@ -58,13 +63,15 @@ class BookingPage extends Component {
     this.view = await View.find(`.find({_id:"${route}"})`);
     let bookings = await Booking.find();
 
+
     this.setState({
       selectedMovieTitle: this.view[0].film,
       selectedMovieSalon: this.view[0].auditorium,
       selectedMovieTime: this.view[0].time,
       selecedMovieDate: this.view[0].date,
       salonBookings: bookings,
-      salonView: this.view
+      salonView: this.view,
+      view: this.view
     });
 
     this.checkIfLoggedInBookingPage();
@@ -138,7 +145,12 @@ class BookingPage extends Component {
   };
 
   countDown() {
-    this.preStoreMySeats();
+    this.preStoreMySeats()
+
+    if(this.state.stepCounter==1){
+      this.props.history.push(`/moviesandtrailerspage/${this.view[0].film}`);
+    }
+
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -148,6 +160,12 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter - 1
       };
     });
+
+    if(this.state.stepCounter === 4){
+      this.setState({
+        stepCounter: 4
+      })
+    }
   }
 
   async countUp() {
@@ -169,8 +187,29 @@ class BookingPage extends Component {
       };
     });
 
-    if (this.state.stepCounter === 1) {
+    if(this.state.stepCounter === 1){
+      if(this.state.totalPersons==0){
+        this.setState({
+          stepCounter:1
+        });
+      }
     }
+
+    if(this.state.stepCounter === 2){
+      if(this.state.mySeats.length<1){
+        
+        this.setState({
+          stepCounter:2
+        });
+      }
+    }
+
+    if(this.state.stepCounter > 3){
+      this.setState({
+        stepCounter: 4
+      })
+    }
+
   }
 
   async saveUserToDb() {
@@ -194,37 +233,46 @@ class BookingPage extends Component {
       kids: this.state.kids,
       seniors: this.state.seniors,
       user: this.state.user,
-      view: this.state.view,
+      view: this.state.view[0]._id,
       seats: this.state.mySeats
     });
+    
+      let result = await myNewBooking.save();
 
-    let result = await myNewBooking.save();
-    //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`);
-
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
-      myNewBooking.bookingId
-    }'})
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        myNewBooking.bookingId
+      }'})
       .populate('view')
       .populate('user')
       .exec()
       `);
 
-    //console.log(myNewBookingPopulated);
-    this.setState({
-      booking: myNewBookingPopulated
-    });
-    //console.log(this.state.booking);
-  }
-
+      let adultsPrice= myNewBookingPopulated.adults*120;
+      let kidsPrice= myNewBookingPopulated.kids*75;
+      let seniorPrice= myNewBookingPopulated.seniors*90;
+      let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+      
+      this.setState({
+        movietitle: myNewBookingPopulated.view.film,
+        moviedate: myNewBookingPopulated.view.date,
+        movietime: myNewBookingPopulated.view.time,
+        totalprice: totalPrice
+      });
+    }
   
 
-  preStoreMySeats(){
+  preStoreMySeats(mySeats){
+    if(mySeats){
+      this.mySeats = mySeats
+    }
+
     if(this.state.stepCounter === 1){
       this.mySeats = []
     }
 
     if(this.mySeats){
-      this.setState({
+  
+      this.setState({   
         mySeats: this.mySeats
       });
     }
@@ -283,7 +331,18 @@ class BookingPage extends Component {
   .exec()
   `);
 
-    console.log(myNewBookingPopulated);
+    //console.log(myNewBookingPopulated);
+    let adultsPrice= myNewBookingPopulated.adults*120;
+    let kidsPrice= myNewBookingPopulated.kids*75;
+    let seniorPrice= myNewBookingPopulated.seniors*90;
+    let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+    
+    this.setState({
+      movietitle: myNewBookingPopulated.view.film,
+      moviedate: myNewBookingPopulated.view.date,
+      movietime: myNewBookingPopulated.view.time,
+      totalprice: totalPrice
+    });
   }
 
   render() {
@@ -332,12 +391,23 @@ class BookingPage extends Component {
             </li>
           </ul>
         </div>
-        <div className="selected-movie-box">
-          <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
-          <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
-          <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
-          <p className="selected-movie-date"> Datum:{selecedMovieDate} </p>
-        </div>
+        {this.state.stepCounter === 4 ? 
+          <div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+          </div> 
+        : 
+          <div className="selected-movie-box">
+            <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
+            <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
+            <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
+            <p className="selected-movie-date"> Datum: {selecedMovieDate} </p>
+          </div>
+        }
+       
         <div className="mobile-buttons">
           <button
             id="mobback"
@@ -345,7 +415,7 @@ class BookingPage extends Component {
             type="button"
             className="align-self-center btn "
           >
-            Bakåt
+            {this.state.stepCounter === 4? '' : 'Bakåt'} 
           </button>
 
           {this.stepCounter === 3 ? (
@@ -363,7 +433,7 @@ class BookingPage extends Component {
               type="button"
               className="align-self-center btn btn-light "
             >
-              Framåt
+            {this.state.stepCounter === 4? '' : 'Framåt'} 
             </button>
           )}
         </div>
@@ -375,7 +445,7 @@ class BookingPage extends Component {
             type="button"
             className="btn btn-light"
           >
-            Bakåt
+            {this.state.stepCounter === 4? '' : 'Bakåt'} 
           </button>
           {this.state.stepCounter === 1 ? (
             <PricePage
@@ -395,6 +465,7 @@ class BookingPage extends Component {
               mySeats={this.state.mySeats}
               salonBookings={this.state.salonBookings}
               salonView={this.state.salonView}
+              preStoreMySeats={this.preStoreMySeats}
             />
           ) : (
             ""
@@ -411,15 +482,18 @@ class BookingPage extends Component {
           ) : (
             ""
           )}
-
-          {this.state.stepCounter === 4 ? (
-            <BookingConfirm
-              confirmData={this.state.booking}
-              mySeats={this.state.mySeats}
+          {this.state.stepCounter === 4 ? 
+            <BookingConfirm 
+              confirmData={this.state.booking} 
+              totalpersons={this.state.totalPersons}
+              movietitle={this.state.movietitle}
+              moviedate={this.state.moviedate}
+              movietime={this.state.movietime}
+              seats={this.state.mySeats}
+              salon={this.state.selectedMovieSalon}
+              price={this.state.totalprice}
             />
-          ) : (
-            ""
-          )}
+          : ""}
 
           {this.state.loggedInBookingPage && this.state.stepCounter === 3 ? (
             <button
@@ -446,8 +520,13 @@ class BookingPage extends Component {
               id="forward"
               type="button"
               className="btn btn-light"
+              /*className={"btn btn-light" + 
+              (this.state.stepCounter===1 ? 
+                this.state.totalPersons>0 ? " blinker": "" 
+                : " blinker"
+              )}*/
             >
-              Framåt
+            {this.state.stepCounter === 4? '' : 'Framåt'} 
             </button>
           )}
         </div>

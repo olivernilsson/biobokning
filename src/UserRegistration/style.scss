@@ -58,9 +58,9 @@
 .mob-btn{
   position: absolute;
   height: 50px;
- bottom: 0;
- width: 100%;
- left: 0px;
+  bottom: 0;
+  width: 100%;
+  left: 0px;
 }
 
 
@@ -70,8 +70,8 @@
    
   }
 
-@media screen and (max-width:  767px) {
-  .registration-field{
+@media screen and (max-width:  992px) {
+  .registration-field, .my-bookings-btn{
     position: relative;
     margin: 10px 0 0 126px;
   }
@@ -81,14 +81,10 @@
   #modalsave-user,.done-btn{
     position: absolute;
     height: 50px;
-   bottom: 0;
-   width: 100%;
-   left: 0px;
-  
+    bottom: 0;
+    width: 100%;
+    left: 0px;
   }
-
-
-
   .reg-form {
     width: 100%;
   }

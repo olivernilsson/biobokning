@@ -89,8 +89,6 @@ class LoginModal extends React.Component {
   async logIn() {
     let email = this.state.email;
     let password = this.state.password;
-    App.who = email;
-    console.log(App.who);
     let login = new Login({
       email: email,
       password: password
