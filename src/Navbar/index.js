@@ -87,7 +87,7 @@ class NavbarApp extends Component {
       <div>
         <Navbar className="navbar" dark expand="lg">
           <NavbarBrand className="brand" href="/">
-           <img class="logo" src={require('./Filmvisarna.PNG')} alt="navbrand"></img>
+           <img className="logo" src={require('./Filmvisarna.PNG')} alt="navbrand"></img>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
