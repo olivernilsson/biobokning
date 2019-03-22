@@ -385,7 +385,7 @@ class SalonPage extends Component {
         aRowWithSeats.push(this.seatsBySeatNumber[seatNum]);
         seatNum++;
       }
-      //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?
+      aRowWithSeats = aRowWithSeats.reverse()
       arrayWithRowsAndSeats.push(aRowWithSeats);
     }
 
