@@ -61,6 +61,9 @@ class MyBookings extends Component {
     let currDate = Date.now();
     //console.log(currDate);
     for (let view of bookings) {
+      if (!view.view) {
+        continue;
+      }
       let movieDate = new Date(view.view.date);
       //console.log(movieDate.getTime());
       if (movieDate.getTime() > currDate) {
