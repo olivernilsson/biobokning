@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./style.scss";
+import App from "../App/index.js";
+import LoggedInBooking from "../LoggedInBooking/index";
 import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
 import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
 import DoubleBooked from "../BookingConfirm/doubleBooked";
 import REST from "../REST";
-import App from "../App/index.js";
-import LoggedInBooking from "../LoggedInBooking/index";
+import openSocket from "socket.io-client";
+const socket = openSocket("http://localhost:3001");
 
 class User extends REST {}
 class View extends REST {}
@@ -64,7 +66,6 @@ class BookingPage extends Component {
     let route = window.location.href.split("/").pop();
     this.view = await View.find(`.find({_id:"${route}"})`);
     let bookings = await Booking.find();
-
 
     this.setState({
       selectedMovieTitle: this.view[0].film,
@@ -147,9 +148,9 @@ class BookingPage extends Component {
   };
 
   countDown() {
-    this.preStoreMySeats()
+    this.preStoreMySeats();
 
-    if(this.state.stepCounter==1){
+    if (this.state.stepCounter == 1) {
       this.props.history.push(`/moviesandtrailerspage/${this.view[0].film}`);
     }
 
@@ -163,10 +164,10 @@ class BookingPage extends Component {
       };
     });
 
-    if(this.state.stepCounter === 4){
+    if (this.state.stepCounter === 4) {
       this.setState({
         stepCounter: 4
-      })
+      });
     }
   }
 
@@ -189,29 +190,27 @@ class BookingPage extends Component {
       };
     });
 
-    if(this.state.stepCounter === 1){
-      if(this.state.totalPersons==0){
+    if (this.state.stepCounter === 1) {
+      if (this.state.totalPersons == 0) {
         this.setState({
-          stepCounter:1
+          stepCounter: 1
         });
       }
     }
 
-    if(this.state.stepCounter === 2){
-      if(this.state.mySeats.length<1){
-        
+    if (this.state.stepCounter === 2) {
+      if (this.state.mySeats.length < 1) {
         this.setState({
-          stepCounter:2
+          stepCounter: 2
         });
       }
     }
 
-    if(this.state.stepCounter > 3){
+    if (this.state.stepCounter > 3) {
       this.setState({
         stepCounter: 4
-      })
+      });
     }
-
   }
 
   async saveUserToDb() {
@@ -238,57 +237,57 @@ class BookingPage extends Component {
       view: this.state.view[0]._id,
       seats: this.state.mySeats
     });
-    
-      let result = await myNewBooking.save();
-      
-      if(result.bookingId){
-        this.setState({
-          doubleBooked: false
-        })
-      }
-      if(!result.bookingId){
-        this.setState({
-          doubleBooked: true
-        })
-        return
-      }
 
-      
+    let result = await myNewBooking.save();
 
-      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
-        myNewBooking.bookingId
-      }'})
+    if (result.bookingId) {
+      this.setState({
+        doubleBooked: false
+      });
+    }
+    if (!result.bookingId) {
+      this.setState({
+        doubleBooked: true
+      });
+      return;
+    }
+
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+      myNewBooking.bookingId
+    }'})
       .populate('view')
       .populate('user')
       .exec()
       `);
+    socket.emit("booking", {
+      socketseats: this.state.mySeats,
+      viewID: this.state.view
+    });
 
-      let adultsPrice= myNewBookingPopulated.adults*120;
-      let kidsPrice= myNewBookingPopulated.kids*75;
-      let seniorPrice= myNewBookingPopulated.seniors*90;
-      let totalPrice= adultsPrice+kidsPrice+seniorPrice;
-      
+    let adultsPrice = myNewBookingPopulated.adults * 120;
+    let kidsPrice = myNewBookingPopulated.kids * 75;
+    let seniorPrice = myNewBookingPopulated.seniors * 90;
+    let totalPrice = adultsPrice + kidsPrice + seniorPrice;
+
+    this.setState({
+      movietitle: myNewBookingPopulated.view.film,
+      moviedate: myNewBookingPopulated.view.date,
+      movietime: myNewBookingPopulated.view.time,
+      totalprice: totalPrice
+    });
+  }
+
+  preStoreMySeats(mySeats) {
+    if (mySeats) {
+      this.mySeats = mySeats;
+    }
+
+    if (this.state.stepCounter === 1) {
+      this.mySeats = [];
+    }
+
+    if (this.mySeats) {
       this.setState({
-        movietitle: myNewBookingPopulated.view.film,
-        moviedate: myNewBookingPopulated.view.date,
-        movietime: myNewBookingPopulated.view.time,
-        totalprice: totalPrice
-      });
-    }
-  
-
-  preStoreMySeats(mySeats){
-    if(mySeats){
-      this.mySeats = mySeats
-    }
-
-    if(this.state.stepCounter === 1){
-      this.mySeats = []
-    }
-
-    if(this.mySeats){
-  
-      this.setState({   
         mySeats: this.mySeats
       });
     }
@@ -347,12 +346,16 @@ class BookingPage extends Component {
   .exec()
   `);
 
+    socket.emit("booking", {
+      socketseats: this.state.mySeats,
+      viewID: this.state.view
+    });
     //console.log(myNewBookingPopulated);
-    let adultsPrice= myNewBookingPopulated.adults*120;
-    let kidsPrice= myNewBookingPopulated.kids*75;
-    let seniorPrice= myNewBookingPopulated.seniors*90;
-    let totalPrice= adultsPrice+kidsPrice+seniorPrice;
-    
+    let adultsPrice = myNewBookingPopulated.adults * 120;
+    let kidsPrice = myNewBookingPopulated.kids * 75;
+    let seniorPrice = myNewBookingPopulated.seniors * 90;
+    let totalPrice = adultsPrice + kidsPrice + seniorPrice;
+
     this.setState({
       movietitle: myNewBookingPopulated.view.film,
       moviedate: myNewBookingPopulated.view.date,
@@ -407,23 +410,26 @@ class BookingPage extends Component {
             </li>
           </ul>
         </div>
-        {this.state.stepCounter === 4 ? 
+        {this.state.stepCounter === 4 ? (
           <div>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-          </div> 
-        : 
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+        ) : (
           <div className="selected-movie-box">
             <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
-            <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
+            <p className="selected-movie-salon">
+              {" "}
+              Salong: {selectedMovieSalon}{" "}
+            </p>
             <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
             <p className="selected-movie-date"> Datum: {selecedMovieDate} </p>
           </div>
-        }
-       
+        )}
+
         <div className="mobile-buttons">
           <button
             id="mobback"
@@ -431,7 +437,7 @@ class BookingPage extends Component {
             type="button"
             className="align-self-center btn "
           >
-            {this.state.stepCounter === 4? '' : 'Bakåt'} 
+            {this.state.stepCounter === 4 ? "" : "Bakåt"}
           </button>
 
           {this.stepCounter === 3 ? (
@@ -449,7 +455,7 @@ class BookingPage extends Component {
               type="button"
               className="align-self-center btn btn-light "
             >
-            {this.state.stepCounter === 4? '' : 'Framåt'} 
+              {this.state.stepCounter === 4 ? "" : "Framåt"}
             </button>
           )}
         </div>
@@ -461,7 +467,7 @@ class BookingPage extends Component {
             type="button"
             className="btn btn-light"
           >
-            {this.state.stepCounter === 4? '' : 'Bakåt'} 
+            {this.state.stepCounter === 4 ? "" : "Bakåt"}
           </button>
           {this.state.stepCounter === 1 ? (
             <PricePage
@@ -498,22 +504,24 @@ class BookingPage extends Component {
           ) : (
             ""
           )}
-          {this.state.stepCounter === 4 ? (this.state.doubleBooked ? 
-            <DoubleBooked 
-            /> 
-          : 
-            <BookingConfirm 
-              confirmData={this.state.booking} 
-              totalpersons={this.state.totalPersons}
-              movietitle={this.state.movietitle}
-              moviedate={this.state.moviedate}
-              movietime={this.state.movietime}
-              seats={this.state.mySeats}
-              salon={this.state.selectedMovieSalon}
-              price={this.state.totalprice}
-            />)
-          : 
-          ("")}
+          {this.state.stepCounter === 4 ? (
+            this.state.doubleBooked ? (
+              <DoubleBooked />
+            ) : (
+              <BookingConfirm
+                confirmData={this.state.booking}
+                totalpersons={this.state.totalPersons}
+                movietitle={this.state.movietitle}
+                moviedate={this.state.moviedate}
+                movietime={this.state.movietime}
+                seats={this.state.mySeats}
+                salon={this.state.selectedMovieSalon}
+                price={this.state.totalprice}
+              />
+            )
+          ) : (
+            ""
+          )}
 
           {this.state.loggedInBookingPage && this.state.stepCounter === 3 ? (
             <button
@@ -546,7 +554,7 @@ class BookingPage extends Component {
                 : " blinker"
               )}*/
             >
-            {this.state.stepCounter === 4? '' : 'Framåt'} 
+              {this.state.stepCounter === 4 ? "" : "Framåt"}
             </button>
           )}
         </div>
