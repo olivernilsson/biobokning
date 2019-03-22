@@ -108,6 +108,7 @@ class MyBookings extends Component {
 
     return (
       <section className="mybookingsSection">
+        <br />
         <h2 className="centered">Mina aktuella bokingar:</h2>
         {this.state.activeBooking.map((listitem, index) => (
           <div key={index}>
@@ -138,6 +139,7 @@ class MyBookings extends Component {
             </UncontrolledCollapse>
           </div>
         ))}
+        <br />
         <h2 className="centered">Här kan du se dina tidigare bokningar:</h2>
         {this.state.historyBooking.map((listitem, index) => (
           <div key={index}>
