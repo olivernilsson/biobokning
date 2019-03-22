@@ -13,7 +13,6 @@ import UserRegistration from "../UserRegistration/index.js";
 import LoginModal from "../LoginModal/index.js";
 import REST from "../REST.js";
 
-
 class Login extends REST {
   static get baseRoute() {
     return "login/";
@@ -31,54 +30,55 @@ class NavbarApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: '',
-      email: '',
+      loggedIn: "",
+      email: "",
       dropdownOpen: false,
-      amIAdmin: ''
+      amIAdmin: ""
     };
 
     this.toggle = this.toggle.bind(this);
     this.checkLog = this.checkLog.bind(this);
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     let AppLoggedIn = !(await Login.find()).error;
-    let user = await Login.find()
+    let user = await Login.find();
 
-    if(user.email != 'admin@grupp4.com'){
+    if (user.email != "admin@grupp4.com") {
       this.setState({
         loggedIn: AppLoggedIn,
         email: user.email,
         amIAdmin: false
-      })
-    } 
-    if(user.email === 'admin@grupp4.com'){
+      });
+    }
+    if (user.email === "admin@grupp4.com") {
       this.setState({
         loggedIn: AppLoggedIn,
-        email: 'Admin',
+        email: "Admin",
         amIAdmin: true
-      })
-    } 
+      });
+    }
   }
 
   toggle() {
     this.setState({
-      isOpen: !this.state.isOpen,
+      isOpen: !this.state.isOpen
     });
   }
 
-  checkLog(AppLoggedIn, email){
+  checkLog(AppLoggedIn, email) {
+    this.toggle();
     this.setState({
       loggedIn: AppLoggedIn,
       email: email,
       amIAdmin: false
-    })
-    if(email === 'admin@grupp4.com'){
+    });
+    if (email === "admin@grupp4.com") {
       this.setState({
         loggedIn: AppLoggedIn,
-        email: 'Admin',
+        email: "Admin",
         amIAdmin: true
-      })
+      });
     }
   }
 
@@ -87,7 +87,11 @@ class NavbarApp extends Component {
       <div>
         <Navbar className="navbar" dark expand="lg">
           <NavbarBrand className="brand" href="/">
-           <img className="logo" src={require('./Filmvisarna.PNG')} alt="navbrand"></img>
+            <img
+              className="logo"
+              src={require("./Filmvisarna.PNG")}
+              alt="navbrand"
+            />
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -98,6 +102,7 @@ class NavbarApp extends Component {
                   exact
                   to="/"
                   activeClassName="active"
+                  onClick={this.toggle}
                 >
                   Start
                 </NavLink>
@@ -107,6 +112,7 @@ class NavbarApp extends Component {
                   className="nav-link"
                   to="/rulespage"
                   activeClassName="active"
+                  onClick={this.toggle}
                 >
                   Regler
                 </NavLink>
@@ -116,6 +122,7 @@ class NavbarApp extends Component {
                   className="nav-link"
                   to="/aboutpage"
                   activeClassName="active"
+                  onClick={this.toggle}
                 >
                   Om oss
                 </NavLink>
@@ -125,6 +132,7 @@ class NavbarApp extends Component {
                   className="nav-link"
                   to="/storepage"
                   activeClassName="active"
+                  onClick={this.toggle}
                 >
                   Butik
                 </NavLink>
@@ -134,17 +142,18 @@ class NavbarApp extends Component {
                   className="nav-link"
                   to="/aboutsalons"
                   activeClassName="active"
+                  onClick={this.toggle}
                 >
                   Våra Salonger
                 </NavLink>
               </NavItem>
 
-              <UserRegistration 
-                checkLogin={this.state.loggedIn} 
-                email={this.state.email} 
-                amIAdmin={this.state.amIAdmin}/>
-              <LoginModal 
-                checkLog={this.checkLog}/>
+              <UserRegistration
+                checkLogin={this.state.loggedIn}
+                email={this.state.email}
+                amIAdmin={this.state.amIAdmin}
+              />
+              <LoginModal checkLog={this.checkLog} />
             </Nav>
           </Collapse>
         </Navbar>

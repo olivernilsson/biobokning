@@ -10,7 +10,7 @@
 
   .login-modal {
     font-size: 2em;
-    background-color:  rgb(133, 255, 199);
+    background-color: rgb(133, 255, 199);
   }
 }
 
@@ -21,14 +21,14 @@
   }
 }
 
-#login-email{
+#login-email {
   background-color: transparent;
   color: white;
 }
 
 .login-button {
   width: 100px;
-  background-color:  rgb(133, 255, 199);
+  background-color: rgb(133, 255, 199);
 }
 
 .login-modal {
@@ -39,14 +39,15 @@
   margin-right: auto;
   left: 0;
   right: 0;
+  top: 20px;
   width: 300px;
 }
 
-#login-email{
+#login-email {
   border-bottom: 1px solid white;
 }
 
-#login-password{
+#login-password {
   border-bottom: 1px solid white;
 }
 
