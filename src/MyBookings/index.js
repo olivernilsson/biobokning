@@ -103,7 +103,12 @@ class MyBookings extends Component {
 
   render() {
     if (this.logg === undefined || this.logg === null || this.logg === "") {
-      return <h2 className="centered">Ingen historik att visa</h2>;
+      return (
+        <div>
+          <br />
+          <h2 className="centered">Ingen historik att visa</h2>
+        </div>
+      );
     }
 
     return (
@@ -170,6 +175,7 @@ class MyBookings extends Component {
             </UncontrolledCollapse>
           </div>
         ))}
+        <br />
       </section>
     );
   }

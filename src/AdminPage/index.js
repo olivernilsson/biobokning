@@ -291,7 +291,12 @@ class AdminPage extends Component {
 
   render() {
     if (this.state.whoIsLoggedIn.email !== this.admin) {
-      return <div />;
+      return (
+        <div>
+          <br />
+          <h2 className="centered">Åtkomst nekad</h2>
+        </div>
+      );
     }
 
     return (
