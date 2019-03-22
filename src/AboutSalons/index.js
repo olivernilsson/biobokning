@@ -8,6 +8,7 @@ import {
   Col,
   Row,
   UncontrolledCollapse,
+  Container,
   CardHeader
 } from "reactstrap";
 
@@ -19,7 +20,7 @@ class AboutSalons extends Component {
 
   render() {
     return (
-      <section className="aboutSalonSection justify-content-center">
+      <Container className="aboutSalonSection justify-content-center">
         <Col md="24">
           <Row className="p-4">
             <Col md="24">
@@ -104,7 +105,7 @@ class AboutSalons extends Component {
             </Col>
           </Row>
         </Col>
-      </section>
+      </Container>
     );
   }
 }
