@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import "./style.scss";
 import Seat from "../Seat/index.js";
 import openSocket from "socket.io-client";
-import REST from "../REST";
-const socket = openSocket("http://localhost:3001");
 
-class View extends REST {}
-class Booking extends REST {}
+const socket = openSocket("http://localhost:3001");
 
 class SalonPage extends Component {
   constructor(props) {
@@ -41,8 +38,6 @@ class SalonPage extends Component {
     );
     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
   }
-
-  // LAST MOMENT CODE
 
   returnsTakenSeatsForThisViewing(thisView, bookings) {
     let takenSeats = [];
@@ -203,7 +198,7 @@ class SalonPage extends Component {
         }
       }
     }
-    this.convertSeatObjectsToComponentsBeforeRendering();
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
   async toggleSeat(id) {
@@ -218,33 +213,15 @@ class SalonPage extends Component {
       }
     }
 
-    console.log("SalonPage: ", this.mySeats);
-
-    console.log(this.takenSeatsArray + " TAKENSEATSARRAY BOOKINGS");
-    console.log(this.mySeats + " MY SEATS");
-
-    // socket.emit("prebooking", {
-    //   socketseats: this.mySeats,
-    //   viewID: this.props.salonView[0]
-    // });
-    console.log("körs");
+    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
   }
 
   listenForSocketBookings() {
     socket.on("booking", async message => {
-      console.log(this.takenSeatsArray + " TAKENSEATSARRAY BOOKINGS");
-      console.log(this.mySeats + " MY SEATS");
       if (message.viewID === this.props.salonView[0]) {
         console.log("not the same show");
         return;
       }
-
-      console.log("körs2");
-      let bookings = this.props.salonBookings;
-      let view = this.props.salonView;
-
-      console.log(message.socketseats);
-
       this.takenSeatsArray = [
         ...new Set(this.takenSeatsArray.concat(message.socketseats))
       ];
@@ -252,11 +229,6 @@ class SalonPage extends Component {
       for (let takenSeat of this.takenSeatsArray) {
         this.seatsBySeatNumber[takenSeat].className += " taken-seat";
       }
-      // this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
-      //   view[0]._id,
-      //   bookings
-      // );
-
       this.convertSeatObjectsToComponentsBeforeRendering(
         this.seatsBySeatNumber
       );
@@ -290,74 +262,6 @@ class SalonPage extends Component {
   //   });
   // }
 
-  prePickBestSeats() {
-    let nbrOfPickedSeats = this.props.personsWantSeat;
-
-    if (this.props.mySeats.length < 1) {
-      for (let row = 3; row < this.arrayWithRowsAndSeats.length; row++) {
-        for (
-          let seat = 0;
-          seat < this.arrayWithRowsAndSeats[row].length;
-          seat++
-        ) {
-          let middleSeat = this.arrayWithRowsAndSeats[row].length / 2;
-
-          let count = 0;
-          this.rankArr = [];
-          for (
-            let seat = 0;
-            seat < this.arrayWithRowsAndSeats[row].length;
-            seat++
-          ) {
-            if (seat < middleSeat) {
-              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count;
-              count += 2;
-            }
-            if (seat === middleSeat) {
-              this.arrayWithRowsAndSeats[row][seat].rank = count - 1;
-              count = count - 1;
-            }
-            if (seat > middleSeat) {
-              this.arrayWithRowsAndSeats[row][seat].rank = count - 2;
-              count -= 2;
-            }
-            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat]);
-          }
-          this.rankArr.sort(function(a, b) {
-            return b.rank - a.rank;
-          });
-
-          let seatsUntilTakenSeat = 0;
-          for (let seatRank of this.rankArr) {
-            if (seatRank.className === "taken-seat") {
-              break;
-            }
-            seatsUntilTakenSeat++;
-          }
-
-          if (nbrOfPickedSeats <= seatsUntilTakenSeat) {
-            for (
-              let pickedSeats = 0;
-              pickedSeats < nbrOfPickedSeats;
-              pickedSeats++
-            ) {
-              let rankArrIndex = this.rankArr[pickedSeats].seatNum;
-              this.seatsBySeatNumber[rankArrIndex].className = "blue";
-
-              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum);
-              this.mySeats = this.mySeats.sort(function(a, b) {
-                return a - b;
-              });
-            }
-            return;
-          }
-        }
-      }
-    }
-    this.convertSeatObjectsToComponentsBeforeRendering();
-  }
-  //SLUTADE HÄR! FÅ IN ID OCH NR FRÅN TOGGLESEATS
-
   checkIfSeatsArePickable(id, nbrOfPickedSeats) {
     let seats = id + nbrOfPickedSeats;
     let myTemporarySeats = [];
@@ -385,7 +289,7 @@ class SalonPage extends Component {
         aRowWithSeats.push(this.seatsBySeatNumber[seatNum]);
         seatNum++;
       }
-      aRowWithSeats = aRowWithSeats.reverse()
+      aRowWithSeats = aRowWithSeats.reverse();
       arrayWithRowsAndSeats.push(aRowWithSeats);
     }
 
@@ -413,27 +317,6 @@ class SalonPage extends Component {
       };
     });
   }
-
-  // listenForClick() {
-  //   socket.on("prebooking", async message => {
-  //     this.uncolorMyLatestPickedSeats();
-  //     let socketviewid = message.viewID._id;
-  //     let bookings = this.props.salonBookings;
-  //     let view = this.props.salonView;
-
-  //     this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
-  //       socketviewid,
-  //       bookings
-  //     );
-
-  //     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
-  //       message.socketseats
-  //     );
-
-  //     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
-  //   });
-  // }
-
   render() {
     let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => (
       <div key={row[0].key}> {row} </div>
