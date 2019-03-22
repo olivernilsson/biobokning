@@ -231,13 +231,21 @@ iframe {
   border: none;
 }
 
+@media screen and (max-width: 990px) {
+  .play {
+    position: relative;
+  }
+}
+
 @media screen and (max-width: 680px) {
   .bg-image {
     height: auto;
   }
 
   .play {
-    top: 15vh;
+    top: 10vh;
+    height: 80px;
+    width: 80px;
   }
 
   .page-info {
@@ -253,7 +261,9 @@ iframe {
 
   .play {
     position: relative;
-    top: 10vh;
+    top: 6vh;
+    height: 60px;
+    width: 60px;
   }
 
   .page-info {

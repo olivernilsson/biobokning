@@ -176,6 +176,7 @@ class SalonPage extends Component {
       }
     }
   }
+
   deselectMyHoverSeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
@@ -317,6 +318,7 @@ class SalonPage extends Component {
       };
     });
   }
+
   render() {
     let arrayWithRowsAndSeats = this.state.arrayWithRowsAndSeats.map(row => (
       <div key={row[0].key}> {row} </div>
@@ -324,14 +326,12 @@ class SalonPage extends Component {
 
     return (
       <section className="wizard-container ">
-        <div
-          className="demo salon"
-          onClick={this.props.storeMySeats(this.mySeats)}
-        >
+        <div className="demo salon" onClick={this.props.storeMySeats(this.mySeats)}>
           <div className="container">
             <div className="row1" />
 
             {arrayWithRowsAndSeats}
+
           </div>
         </div>
       </section>
