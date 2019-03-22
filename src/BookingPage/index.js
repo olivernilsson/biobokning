@@ -178,11 +178,6 @@ class BookingPage extends Component {
     let result = await myNewBooking.save();
     //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`)
 
-    socket.emit("booking", {
-      socketseats: this.state.mySeats,
-      viewID: this.state.view
-    });
-
     let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
       myNewBooking.bookingId
     }'})
@@ -190,7 +185,12 @@ class BookingPage extends Component {
       .populate('user')
       .exec()
       `);
+    socket.emit("booking", {
+      socketseats: this.state.mySeats,
+      viewID: this.state.view
+    });
 
+    console.log(myNewBooking);
     //console.log(myNewBookingPopulated);
     this.setState({
       booking: myNewBookingPopulated

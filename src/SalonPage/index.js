@@ -12,7 +12,6 @@ class SalonPage extends Component {
   constructor(props) {
     super(props);
     this.listenForSocketBookings();
-    this.listenForSocketPrebookings();
     this.state = {
       arrayWithRowsAndSeats: []
     };
@@ -161,10 +160,10 @@ class SalonPage extends Component {
     console.log(this.takenSeatsArray + " TAKENSEATSARRAY BOOKINGS");
     console.log(this.mySeats + " MY SEATS");
 
-    socket.emit("prebooking", {
-      socketseats: this.mySeats,
-      viewID: this.props.salonView[0]
-    });
+    // socket.emit("prebooking", {
+    //   socketseats: this.mySeats,
+    //   viewID: this.props.salonView[0]
+    // });
     console.log("körs");
   }
 
@@ -183,48 +182,47 @@ class SalonPage extends Component {
 
       console.log(message.socketseats);
 
+      this.takenSeatsArray = this.takenSeatsArray.concat(message.socketseats);
+      for (let takenSeat of this.takenSeatsArray) {
+        this.seatsBySeatNumber[takenSeat].className += " taken-seat";
+      }
       this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
         view[0]._id,
         bookings
       );
 
-      this.takenSeatsArray = this.takenSeatsArray.concat(message.socketseats);
-      for (let takenSeat of this.takenSeatsArray) {
-        this.seatsBySeatNumber[takenSeat].className += " taken-seat";
-      }
-
       this.convertSeatObjectsToComponentsBeforeRendering(
         this.seatsBySeatNumber
       );
     });
   }
 
-  listenForSocketPrebookings() {
-    socket.on("prebooking", async message => {
-      console.log(this.takenSeatsArray + " TAKENSEATSARRAY BOOKINGS");
-      console.log(this.mySeats + " MY SEATS");
-      if (message.viewID === this.props.salonView[0]) {
-        console.log("not the same show");
-        return;
-      }
+  // listenForSocketPrebookings() {
+  //   socket.on("prebooking", async message => {
+  //     console.log(this.takenSeatsArray + " TAKENSEATSARRAY BOOKINGS");
+  //     console.log(this.mySeats + " MY SEATS");
+  //     if (message.viewID === this.props.salonView[0]) {
+  //       console.log("not the same show");
+  //       return;
+  //     }
 
-      console.log(message.socketseats);
+  //     console.log(message.socketseats);
 
-      for (let seatNr in this.seatsBySeatNumber) {
-        this.seatsBySeatNumber[seatNr].className = this.seatsBySeatNumber[
-          seatNr
-        ].className.replace("prebooked-seat", "");
-      }
+  //     for (let seatNr in this.seatsBySeatNumber) {
+  //       this.seatsBySeatNumber[seatNr].className = this.seatsBySeatNumber[
+  //         seatNr
+  //       ].className.replace("prebooked-seat", "");
+  //     }
 
-      for (let takenSeat of message.socketseats) {
-        this.seatsBySeatNumber[takenSeat].className += " prebooked-seat";
-      }
+  //     for (let takenSeat of message.socketseats) {
+  //       this.seatsBySeatNumber[takenSeat].className += " prebooked-seat";
+  //     }
 
-      this.convertSeatObjectsToComponentsBeforeRendering(
-        this.seatsBySeatNumber
-      );
-    });
-  }
+  //     this.convertSeatObjectsToComponentsBeforeRendering(
+  //       this.seatsBySeatNumber
+  //     );
+  //   });
+  // }
 
   prePickBestSeats() {
     let nbrOfPickedSeats = this.props.personsWantSeat;
