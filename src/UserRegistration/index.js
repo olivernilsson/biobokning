@@ -139,6 +139,9 @@ class UserRegistration extends Component {
       modal: !prevState.modal
     }));
   }
+  handleChange(e) {
+    this.setState({registrationDone: e.target.value})
+  }
 
   toggleMyBookings() {
     this.setState(prevState => ({
@@ -303,6 +306,8 @@ class UserRegistration extends Component {
                       <button
                         className="mob-btn btn btn-primary btn-sm"
                         type="submit"
+                        disabled={!this.state.registrationDone}
+                        onClick={this.toggleModal}
                       >
                         Klicka för att registrera dig
                       </button>
