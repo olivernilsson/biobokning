@@ -41,11 +41,9 @@ class StartPage extends Component {
     });
         `);
     this.setState({ populateUsers: populateUser });
-    console.log(this.state.populateUsers);
     this.state.populateUsers.map(User =>
       User.bookings.length ? this.savedUser.push(User) : ""
     );
-    console.log(this.savedUser);
 
     for (let i = 0; i < 5; i++) {
       this.savedUser.map(User =>

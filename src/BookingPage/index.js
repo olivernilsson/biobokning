@@ -4,13 +4,21 @@ import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
 import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
+import DoubleBooked from "../BookingConfirm/doubleBooked";
 import REST from "../REST";
 import openSocket from "socket.io-client";
 const socket = openSocket("http://localhost:3001");
+import App from "../App/index.js";
+import LoggedInBooking from "../LoggedInBooking/index";
 
 class User extends REST {}
 class View extends REST {}
 class Booking extends REST {}
+class Login extends REST {
+  static get baseRoute() {
+    return "login/";
+  }
+}
 
 class BookingPage extends Component {
   constructor(props) {
@@ -35,13 +43,23 @@ class BookingPage extends Component {
       totalPersons: 0,
       mySeats: [],
       booking: {},
+      movietitle: null,
+      moviedate: null,
+      movietime: null,
+      totalprice: 0,
       salonBookings: [],
-      salonView: []
+      salonView: [],
+      disableRegButton: true,
+      loggedInBookingPage: App.loggedIn,
+      doubleBooked: false
     };
 
+    window.bookingComponent = this;
+    this.validatedReg();
     this.countUp = this.countUp.bind(this);
     this.countDown = this.countDown.bind(this);
     this.storeMySeats = this.storeMySeats.bind(this);
+    this.preStoreMySeats = this.preStoreMySeats.bind(this);
   }
 
   async componentDidMount() {
@@ -49,14 +67,18 @@ class BookingPage extends Component {
     this.view = await View.find(`.find({_id:"${route}"})`);
     let bookings = await Booking.find();
 
+
     this.setState({
       selectedMovieTitle: this.view[0].film,
       selectedMovieSalon: this.view[0].auditorium,
       selectedMovieTime: this.view[0].time,
       selecedMovieDate: this.view[0].date,
       salonBookings: bookings,
-      salonView: this.view
+      salonView: this.view,
+      view: this.view
     });
+
+    this.checkIfLoggedInBookingPage();
   }
 
   pricepageAddPerson(event) {
@@ -99,6 +121,18 @@ class BookingPage extends Component {
     }
   }
 
+  checkIfLoggedInBookingPage = () => {
+    if (App.loggedIn === true) {
+      this.setState({
+        disableRegButton: false
+      });
+    } else {
+      this.setState({ disableRegButton: true });
+    }
+
+    this.setState({ loggedInBookingPage: App.loggedIn });
+  };
+
   handleData = (firstName, lastName, email, password) => {
     this.setState({
       dataFirst: firstName,
@@ -106,20 +140,21 @@ class BookingPage extends Component {
       dataEmail: email,
       dataPassword: password
     });
+  };
 
-    console.log(
-      this.state.dataFirst +
-        ` ` +
-        this.state.dataLast +
-        ` ` +
-        this.state.dataEmail +
-        ` ` +
-        this.state.dataPassword
-    );
+  validatedReg = registrationDone => {
+    if (registrationDone === true) {
+      this.setState({ disableRegButton: false });
+    }
   };
 
   countDown() {
-    this.preStoreMySeats();
+    this.preStoreMySeats()
+
+    if(this.state.stepCounter==1){
+      this.props.history.push(`/moviesandtrailerspage/${this.view[0].film}`);
+    }
+
     if (this.state.stepCounter < 2) {
       return;
     }
@@ -129,14 +164,26 @@ class BookingPage extends Component {
         stepCounter: prevState.stepCounter - 1
       };
     });
+
+    if(this.state.stepCounter === 4){
+      this.setState({
+        stepCounter: 4
+      })
+    }
   }
 
   async countUp() {
     this.preStoreMySeats();
-    if (this.state.stepCounter === 3) {
-      await this.saveUserToDb();
-      this.testBooking();
+
+    if (this.state.stepCounter === 3 && App.loggedIn === true) {
+      this.saveLoggedInBookingToUser();
     }
+
+    if (this.state.stepCounter === 3)
+      if (this.state.stepCounter === 3 && App.loggedIn === false) {
+        await this.saveUserToDb();
+        this.testBooking();
+      }
 
     this.setState(prevState => {
       return {
@@ -144,8 +191,29 @@ class BookingPage extends Component {
       };
     });
 
-    if (this.state.stepCounter === 1) {
+    if(this.state.stepCounter === 1){
+      if(this.state.totalPersons==0){
+        this.setState({
+          stepCounter:1
+        });
+      }
     }
+
+    if(this.state.stepCounter === 2){
+      if(this.state.mySeats.length<1){
+        
+        this.setState({
+          stepCounter:2
+        });
+      }
+    }
+
+    if(this.state.stepCounter > 3){
+      this.setState({
+        stepCounter: 4
+      })
+    }
+
   }
 
   async saveUserToDb() {
@@ -158,11 +226,9 @@ class BookingPage extends Component {
     });
 
     await addUser.save();
-    console.log(addUser);
     this.setState({
       user: addUser
     });
-    console.log(this.state.user);
   }
 
   async testBooking() {
@@ -171,16 +237,29 @@ class BookingPage extends Component {
       kids: this.state.kids,
       seniors: this.state.seniors,
       user: this.state.user,
-      view: this.state.view,
+      view: this.state.view[0]._id,
       seats: this.state.mySeats
     });
+    
+      let result = await myNewBooking.save();
+      
+      if(result.bookingId){
+        this.setState({
+          doubleBooked: false
+        })
+      }
+      if(!result.bookingId){
+        this.setState({
+          doubleBooked: true
+        })
+        return
+      }
 
-    let result = await myNewBooking.save();
-    //let finder = await Booking.find(`.findOne({bookingId:'${myNewBooking.bookingId}'})`)
+      
 
-    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
-      myNewBooking.bookingId
-    }'})
+      let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+        myNewBooking.bookingId
+      }'})
       .populate('view')
       .populate('user')
       .exec()
@@ -190,17 +269,32 @@ class BookingPage extends Component {
       viewID: this.state.view
     });
 
-    console.log(myNewBooking);
-    //console.log(myNewBookingPopulated);
-    this.setState({
-      booking: myNewBookingPopulated
-    });
-    //console.log(this.state.booking);
-  }
-
-  preStoreMySeats() {
-    if (this.mySeats) {
+      let adultsPrice= myNewBookingPopulated.adults*120;
+      let kidsPrice= myNewBookingPopulated.kids*75;
+      let seniorPrice= myNewBookingPopulated.seniors*90;
+      let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+      
       this.setState({
+        movietitle: myNewBookingPopulated.view.film,
+        moviedate: myNewBookingPopulated.view.date,
+        movietime: myNewBookingPopulated.view.time,
+        totalprice: totalPrice
+      });
+    }
+  
+
+  preStoreMySeats(mySeats){
+    if(mySeats){
+      this.mySeats = mySeats
+    }
+
+    if(this.state.stepCounter === 1){
+      this.mySeats = []
+    }
+
+    if(this.mySeats){
+  
+      this.setState({   
         mySeats: this.mySeats
       });
     }
@@ -213,6 +307,64 @@ class BookingPage extends Component {
 
   storeMySeats(storeMySeatsX) {
     this.mySeats = storeMySeatsX;
+  }
+
+  async saveLoggedInBookingToUser() {
+    this.logg = await Login.find();
+    this.email = this.logg.email;
+
+    this.loggedIn = await User.find(`.find(
+ {email: '${this.email}'})`);
+
+    let getTheUser = await User.find(`.find({email:'${this.email}'})`);
+
+    let userBooking = await new Booking({
+      adults: this.state.adults,
+      kids: this.state.kids,
+      seniors: this.state.seniors,
+      view: this.view[0]._id,
+      seats: this.state.mySeats
+    });
+
+    await userBooking.save();
+
+    // if (!(await userBooking.hasOwnProperty(`bookingId`))) {
+    //   this.bookingConfirm.confirmationFail = true;
+    //   this.countUp();
+    // } else {
+    let loggedInUser = await User.find(`.findOneAndUpdate({email:'${
+      this.email
+    }' },
+    {  "$addToSet": {
+      "bookings": '${userBooking._id}'
+  }
+}, 
+    function(err,result){
+        if (!err) {
+            console.log(result);
+        }
+    })`);
+
+    let myNewBookingPopulated = await Booking.find(`.findOne({bookingId:'${
+      userBooking.bookingId
+    }'})
+  .populate('view')
+  .populate('user')
+  .exec()
+  `);
+
+    //console.log(myNewBookingPopulated);
+    let adultsPrice= myNewBookingPopulated.adults*120;
+    let kidsPrice= myNewBookingPopulated.kids*75;
+    let seniorPrice= myNewBookingPopulated.seniors*90;
+    let totalPrice= adultsPrice+kidsPrice+seniorPrice;
+    
+    this.setState({
+      movietitle: myNewBookingPopulated.view.film,
+      moviedate: myNewBookingPopulated.view.date,
+      movietime: myNewBookingPopulated.view.time,
+      totalprice: totalPrice
+    });
   }
 
   render() {
@@ -261,12 +413,23 @@ class BookingPage extends Component {
             </li>
           </ul>
         </div>
-        <div className="selected-movie-box">
-          <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
-          <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
-          <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
-          <p className="selected-movie-date"> Datum:{selecedMovieDate} </p>
-        </div>
+        {this.state.stepCounter === 4 ? 
+          <div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+          </div> 
+        : 
+          <div className="selected-movie-box">
+            <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
+            <p className="selected-movie-salon"> Salong: {selectedMovieSalon} </p>
+            <p className="selected-movie-time"> Tid: {selectedMovieTime} </p>
+            <p className="selected-movie-date"> Datum: {selecedMovieDate} </p>
+          </div>
+        }
+       
         <div className="mobile-buttons">
           <button
             id="mobback"
@@ -274,7 +437,7 @@ class BookingPage extends Component {
             type="button"
             className="align-self-center btn "
           >
-            Bakåt
+            {this.state.stepCounter === 4? '' : 'Bakåt'} 
           </button>
 
           {this.stepCounter === 3 ? (
@@ -290,9 +453,9 @@ class BookingPage extends Component {
               onClick={this.countUp}
               id="mobforward"
               type="button"
-              className="align-self-center btn btn-light"
+              className="align-self-center btn btn-light "
             >
-              Framåt
+            {this.state.stepCounter === 4? '' : 'Framåt'} 
             </button>
           )}
         </div>
@@ -304,7 +467,7 @@ class BookingPage extends Component {
             type="button"
             className="btn btn-light"
           >
-            Bakåt
+            {this.state.stepCounter === 4? '' : 'Bakåt'} 
           </button>
           {this.state.stepCounter === 1 ? (
             <PricePage
@@ -324,30 +487,56 @@ class BookingPage extends Component {
               mySeats={this.state.mySeats}
               salonBookings={this.state.salonBookings}
               salonView={this.state.salonView}
+              preStoreMySeats={this.preStoreMySeats}
             />
           ) : (
             ""
           )}
           {this.state.stepCounter === 3 ? (
-            <RegPage myData={this.handleData} />
+            this.state.loggedInBookingPage ? (
+              <LoggedInBooking />
+            ) : (
+              <RegPage
+                myData={this.handleData}
+                validatedReg={this.validatedReg}
+              />
+            )
           ) : (
             ""
           )}
-          {this.state.stepCounter === 4 ? (
-            <BookingConfirm
-              confirmData={this.state.booking}
-              mySeats={this.state.mySeats}
-            />
-          ) : (
-            ""
-          )}
+          {this.state.stepCounter === 4 ? (this.state.doubleBooked ? 
+            <DoubleBooked 
+            /> 
+          : 
+            <BookingConfirm 
+              confirmData={this.state.booking} 
+              totalpersons={this.state.totalPersons}
+              movietitle={this.state.movietitle}
+              moviedate={this.state.moviedate}
+              movietime={this.state.movietime}
+              seats={this.state.mySeats}
+              salon={this.state.selectedMovieSalon}
+              price={this.state.totalprice}
+            />)
+          : 
+          ("")}
 
-          {this.state.stepCounter === 3 ? (
+          {this.state.loggedInBookingPage && this.state.stepCounter === 3 ? (
             <button
               onClick={this.countUp}
               id="forward"
               type="button"
-              className="done-btn btn  btn-sm "
+              className="done-btn btn  btn-sm"
+            >
+              Slutför bokningen
+            </button>
+          ) : this.state.stepCounter === 3 ? (
+            <button
+              onClick={this.countUp}
+              id="forward"
+              type="button"
+              className="done-btn btn  btn-sm"
+              disabled={this.state.disableRegButton}
             >
               Slutför bokningen
             </button>
@@ -357,8 +546,13 @@ class BookingPage extends Component {
               id="forward"
               type="button"
               className="btn btn-light"
+              /*className={"btn btn-light" + 
+              (this.state.stepCounter===1 ? 
+                this.state.totalPersons>0 ? " blinker": "" 
+                : " blinker"
+              )}*/
             >
-              Framåt
+            {this.state.stepCounter === 4? '' : 'Framåt'} 
             </button>
           )}
         </div>

@@ -8,32 +8,84 @@ import {
   NavbarBrand,
   Nav,
   NavItem
-  // UncontrolledDropdown,
-  // DropdownToggle,
-  // DropdownMenu,
-  // DropdownItem
 } from "reactstrap";
-import UserLogin from "../UserLogin/index";
-import UserRegistration from "../UserRegistration/index";
+import UserRegistration from "../UserRegistration/index.js";
+import LoginModal from "../LoginModal/index.js";
+import REST from "../REST.js";
+
+
+class Login extends REST {
+  static get baseRoute() {
+    return "login/";
+  }
+  async delete() {
+    this._id = "uselesstoken";
+    // we set an id here, because the REST class
+    // will complain if we try to call delete on an object without _id
+    // - and we use delete to logout (see test.js)
+    return super.delete();
+  }
+}
 
 class NavbarApp extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loggedIn: '',
+      email: '',
+      dropdownOpen: false,
+      amIAdmin: ''
+    };
 
     this.toggle = this.toggle.bind(this);
+    this.checkLog = this.checkLog.bind(this);
+  }
+
+  async componentDidMount(){
+    let AppLoggedIn = !(await Login.find()).error;
+    let user = await Login.find()
+
+    if(user.email != 'admin@grupp4.com'){
+      this.setState({
+        loggedIn: AppLoggedIn,
+        email: user.email,
+        amIAdmin: false
+      })
+    } 
+    if(user.email === 'admin@grupp4.com'){
+      this.setState({
+        loggedIn: AppLoggedIn,
+        email: 'Admin',
+        amIAdmin: true
+      })
+    } 
   }
 
   toggle() {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
+  }
+
+  checkLog(AppLoggedIn, email){
+    this.setState({
+      loggedIn: AppLoggedIn,
+      email: email,
+      amIAdmin: false
+    })
+    if(email === 'admin@grupp4.com'){
+      this.setState({
+        loggedIn: AppLoggedIn,
+        email: 'Admin',
+        amIAdmin: true
+      })
+    }
   }
 
   render() {
     return (
       <div>
-        <Navbar className="navbar" dark expand="md">
+        <Navbar className="navbar" dark expand="lg">
           <NavbarBrand className="brand" href="/">
             FilmVisarna AB
           </NavbarBrand>
@@ -56,7 +108,7 @@ class NavbarApp extends Component {
                   to="/rulespage"
                   activeClassName="active"
                 >
-                  RulesPage
+                  Regler
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -65,7 +117,7 @@ class NavbarApp extends Component {
                   to="/aboutpage"
                   activeClassName="active"
                 >
-                  AboutPage
+                  Om oss
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -74,7 +126,7 @@ class NavbarApp extends Component {
                   to="/storepage"
                   activeClassName="active"
                 >
-                  StorePage
+                  Butik
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -83,12 +135,16 @@ class NavbarApp extends Component {
                   to="/aboutsalons"
                   activeClassName="active"
                 >
-                  About Salon
+                  Våra Salonger
                 </NavLink>
               </NavItem>
 
-              <UserRegistration />
-              <UserLogin />
+              <UserRegistration 
+                checkLogin={this.state.loggedIn} 
+                email={this.state.email} 
+                amIAdmin={this.state.amIAdmin}/>
+              <LoginModal 
+                checkLog={this.checkLog}/>
             </Nav>
           </Collapse>
         </Navbar>

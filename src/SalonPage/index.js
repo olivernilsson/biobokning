@@ -90,7 +90,6 @@ class SalonPage extends Component {
       row++;
     }
     this.totalSeats = seatNum;
-    return this.seatsBySeatNumber;
   }
 
   uncolorMyLatestPickedSeats() {
@@ -99,7 +98,6 @@ class SalonPage extends Component {
         this.seatsBySeatNumber[i].className = "seat";
       }
     }
-    return this.seatsBySeatNumber;
   }
 
   colorMySeatsAndTakenSeats(takenSeats) {
@@ -115,9 +113,53 @@ class SalonPage extends Component {
       }
       this.mySeats = this.props.mySeats;
     }
-    return this.seatsBySeatNumber;
   }
 
+  prePickBestSeats(){
+    let nbrOfPickedSeats = this.props.personsWantSeat
+    
+    if(this.props.mySeats.length < 1){
+      for(let row = 3; row < this.arrayWithRowsAndSeats.length; row++){
+        for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
+          let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
+
+          let count = 0
+          this.rankArr = []
+          for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
+            if(seat < middleSeat){
+              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count
+              count += 2
+            }
+            if(seat === middleSeat){
+              this.arrayWithRowsAndSeats[row][seat].rank = count - 1
+              count = count - 1
+            }
+            if(seat > middleSeat){
+              this.arrayWithRowsAndSeats[row][seat].rank = count -2
+              count -= 2
+            }
+            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat])
+          }
+          this.rankArr.sort(function(a, b){return b.rank - a.rank})
+
+          let seatsUntilTakenSeat = 0
+          for(let seatRank of this.rankArr){
+            if(seatRank.className === 'taken-seat') {break}
+            seatsUntilTakenSeat++
+          }
+
+          if(nbrOfPickedSeats <= seatsUntilTakenSeat){
+            for(let pickedSeats = 0; pickedSeats < nbrOfPickedSeats; pickedSeats++){
+              let rankArrIndex = this.rankArr[pickedSeats].seatNum
+              this.seatsBySeatNumber[rankArrIndex].className = 'blue'
+
+              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum)
+              this.mySeats = this.mySeats.sort(function(a, b){return a - b})
+            }
+            this.props.preStoreMySeats(this.mySeats)
+            return 
+          }
+        }
   deselectMyHoverSeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
@@ -139,8 +181,8 @@ class SalonPage extends Component {
           this.seatsBySeatNumber[id + i].className += " blink-me";
         }
       }
-    }
-    this.convertSeatObjectsToComponentsBeforeRendering(this.seatsBySeatNumber);
+    }  
+    this.convertSeatObjectsToComponentsBeforeRendering()
   }
 
   async toggleSeat(id) {
@@ -287,7 +329,8 @@ class SalonPage extends Component {
           }
         }
       }
-    }
+    }  
+    this.convertSeatObjectsToComponentsBeforeRendering()
   }
   //SLUTADE HÄR! FÅ IN ID OCH NR FRÅN TOGGLESEATS
 
@@ -308,14 +351,14 @@ class SalonPage extends Component {
     return true;
   }
 
-  convertSeatObjectsToComponentsBeforeRendering(seatsBySeatNumber) {
+  convertSeatObjectsToComponentsBeforeRendering(){
     let seatNum = 1;
     let arrayWithRowsAndSeats = [];
 
     for (let numberOfSeatsInTheRow of this.seatsPerRow) {
       let aRowWithSeats = [];
       while (aRowWithSeats.length < numberOfSeatsInTheRow) {
-        aRowWithSeats.push(seatsBySeatNumber[seatNum]);
+        aRowWithSeats.push(this.seatsBySeatNumber[seatNum]);
         seatNum++;
       }
       //aRowWithSeats = aRowWithSeats.reverse() // IS THIS NECESSARY?

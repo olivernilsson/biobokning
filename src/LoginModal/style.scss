@@ -10,21 +10,25 @@
 
   .login-modal {
     font-size: 2em;
+    background-color:  rgb(133, 255, 199);
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 992px) {
   .login-field {
     position: relative;
     margin: 10px 0 0 16px;
   }
 }
+
 #login-email{
   background-color: transparent;
   color: white;
 }
+
 .login-button {
   width: 100px;
+  background-color:  rgb(133, 255, 199);
 }
 
 .login-modal {

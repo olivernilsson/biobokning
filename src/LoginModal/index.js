@@ -42,7 +42,6 @@ class LoginModal extends React.Component {
 
   async checkIfLoggedIn() {
     App.loggedIn = !(await Login.find()).error;
-
     this.setState({
       loggedIn: App.loggedIn
     });
@@ -65,6 +64,10 @@ class LoginModal extends React.Component {
         modalVisible: false
       });
       App.loggedIn = false;
+      if (window.location.href.includes("bookingpage")) {
+        window.bookingComponent.checkIfLoggedInBookingPage();
+      }
+      this.props.checkLog(App.loggedIn);
     } else {
       this.setState({
         modalVisible: true
@@ -88,8 +91,6 @@ class LoginModal extends React.Component {
   async logIn() {
     let email = this.state.email;
     let password = this.state.password;
-    App.who = email;
-    console.log(App.who);
     let login = new Login({
       email: email,
       password: password
@@ -106,6 +107,10 @@ class LoginModal extends React.Component {
       modalVisible: false,
       loggedIn: App.loggedIn
     }));
+    if (window.location.href.includes("bookingpage")) {
+      window.bookingComponent.checkIfLoggedInBookingPage();
+    }
+    this.props.checkLog(App.loggedIn, email);
 
     //HITTA ADMIN I DB OCH GÖR EN IF SATS
     let adminuser = await User.find(`.find({email:"${email}"})`);
@@ -138,7 +143,7 @@ class LoginModal extends React.Component {
           <button
             type="button"
             onClick={this.toggleLoginModal}
-            className="login-button btn btn-primary"
+            className="login-button btn"
             data-toggle="modall"
             data-target="#myModall"
           >
