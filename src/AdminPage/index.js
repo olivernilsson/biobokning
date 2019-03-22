@@ -46,6 +46,7 @@ class AdminPage extends Component {
       isOpen: false,
       selectedValue: "",
       title: "",
+      salongTitleDropDown: "",
       modal: false,
       inputModal: false,
       addModal: false,
@@ -56,7 +57,10 @@ class AdminPage extends Component {
       salongAdd: "",
       dateAdd: "",
       timeAdd: "",
-      whoIsLoggedIn: ""
+      whoIsLoggedIn: "",
+      salongTitle: "",
+      salongs: [],
+      salongDropDown: false
     };
     this.toggle = this.toggle.bind(this);
     this.toggleInput = this.toggleInput.bind(this);
@@ -70,6 +74,8 @@ class AdminPage extends Component {
     this.saveNewView = this.saveNewView.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
     this.editingView = this.editingView.bind(this);
+    this.choseSalong = this.choseSalong.bind(this);
+    this.toggleSalong = this.toggleSalong.bind(this);
     this.viewings = [];
     this.movie = [];
     this.saveView = [];
@@ -101,8 +107,29 @@ class AdminPage extends Component {
 
     this.setState({ movies: this.movie });
     console.log(this.state.movies);
+
+    this.view = await View.find();
+    this.views = [];
+
+    for (let key in this.view) {
+      if (this.view.hasOwnProperty(key)) {
+        if (!this.views.includes(this.view[key].auditorium))
+          this.views.push(this.view[key].auditorium);
+      }
+      this.setState({ salongs: this.views });
+    }
+
     await this.render();
   }
+
+  choseSalong = async event => {
+    console.log("körs");
+    await this.setState({
+      salongTitle: event.target.value,
+      salongTitleDropDown: true
+    });
+    console.log(this.state.title, this.state.title);
+  };
 
   choseMovie = async event => {
     this.viewings.length = 0;
@@ -283,6 +310,12 @@ class AdminPage extends Component {
     });
   }
 
+  toggleSalong() {
+    this.setState({
+      inputModal: !this.state.salongDropDown
+    });
+  }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -421,6 +454,7 @@ class AdminPage extends Component {
           </ModalFooter>
         </Modal>
 
+        {/* REDIGERA VISNING  */}
         <div>
           <Modal
             className="inputmodalstyle"
@@ -440,17 +474,30 @@ class AdminPage extends Component {
                   <br /> {this.editTitle}
                 </p>
                 <InputGroup className="input-box">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText className="input-styling">
-                      Salong
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    onChange={this.editingView}
-                    name="salong"
-                    className="underline-styling"
-                    placeholder={this.editAudit}
-                  />
+                  <ButtonDropdown
+                    className="dropbutton-style"
+                    isOpen={this.state.isOpen}
+                    toggle={this.toggle}
+                  >
+                    <DropdownToggle caret size="lg">
+                      {this.state.salongTitleDropDown
+                        ? this.state.salongTitle
+                        : "Välj Salong"}
+                    </DropdownToggle>
+
+                    <DropdownMenu>
+                      {this.state.salongs.map(view => (
+                        <DropdownItem
+                          value={view}
+                          onClick={this.choseSalong}
+                          key={view}
+                          className="dropdown-item"
+                        >
+                          {view}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </ButtonDropdown>
                 </InputGroup>
                 <InputGroup className="input-box">
                   <InputGroupAddon addonType="prepend">
