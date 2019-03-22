@@ -8,14 +8,9 @@ import {
   NavbarBrand,
   Nav,
   NavItem
-  // UncontrolledDropdown,
-  // DropdownToggle,
-  // DropdownMenu,
-  // DropdownItem
 } from "reactstrap";
 import UserRegistration from "../UserRegistration/index.js";
 import LoginModal from "../LoginModal/index.js";
-//import App from "../App/index.js";
 import REST from "../REST.js";
 
 
@@ -90,7 +85,7 @@ class NavbarApp extends Component {
   render() {
     return (
       <div>
-        <Navbar className="navbar" dark expand="md">
+        <Navbar className="navbar" dark expand="lg">
           <NavbarBrand className="brand" href="/">
             FilmVisarna AB
           </NavbarBrand>
@@ -113,7 +108,7 @@ class NavbarApp extends Component {
                   to="/rulespage"
                   activeClassName="active"
                 >
-                  RulesPage
+                  Regler
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -122,7 +117,7 @@ class NavbarApp extends Component {
                   to="/aboutpage"
                   activeClassName="active"
                 >
-                  AboutPage
+                  Om oss
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -131,7 +126,7 @@ class NavbarApp extends Component {
                   to="/storepage"
                   activeClassName="active"
                 >
-                  StorePage
+                  Butik
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -140,7 +135,7 @@ class NavbarApp extends Component {
                   to="/aboutsalons"
                   activeClassName="active"
                 >
-                  About Salon
+                  Våra Salonger
                 </NavLink>
               </NavItem>
 

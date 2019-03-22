@@ -1,0 +1,52 @@
+.aboutSalonSection {
+  overflow-x: hidden;
+}
+
+.card {
+  background-color: #1f2833;
+}
+
+.no-decoration {
+  color: #85ffc7;
+}
+
+.centered {
+  text-align: center;
+}
+
+.mybookingsSection {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.card-header:first-child {
+  border-radius: 0;
+}
+
+.card {
+  border-radius: 0;
+}
+
+.h2-spacing {
+  padding-left: 1rem;
+}
+
+.no-decoration:hover {
+  text-decoration: none;
+  color: #39ffa4;
+}
+.no-decoration:focus {
+  text-decoration: none;
+}
+
+.collapse-header {
+  text-align: center;
+}
+
+.card-header {
+  background-color: #16574e;
+}
+
+.card-body {
+  color: #c5c6c7;
+}

@@ -1,50 +1,84 @@
 import React, { Component } from "react";
+import "./style.scss";
+
 
 class BookingConfirm extends Component {
   constructor(props) {
     super(props);
-    
 
-  }
 
-  componentDidMount() {
-    console.log("BookinComfirm ", this.props.mySeats);
   }
 
   render() {
-    
-    console.log(this.props.confirmData.adults);
-    console.log(this.props.confirmData.view);
- 
-    
 
     return (
       <section className="wizard-container ">
-        
-        <h1>Antal personer</h1>
-        {this.props.totalpersons}
-        
-        <h1>Film title</h1>
-        {this.props.movietitle}
 
-        <h1>Film date</h1>
-        {this.props.moviedate}
+        <div className="col-md-24">
+          <h1 className="p-2 testo">Tack, här finns din bokning!</h1>
 
-        <h1>Film time</h1>
-        {this.props.movietime}
 
-        <h1>säten</h1>
-        {this.props.seats}
+          <div className="row">
+            <div className="col-md-4 p-2">
+              <h3>Titel</h3>
+              <div className="font-test">
+                {this.props.movietitle}
+              </div>
+            </div>
 
-        <h1>salong</h1>
-        {this.props.salon}
+            <div className="col-md-4 p-2">
+              <h3>Salong</h3>
+              <div className="font-test">
+                {this.props.salon}
+              </div>
+            </div>
 
-        <h1>pris</h1>
-        {this.props.price}
-       
+            <div className="col-md-4 p-2">
+              <h3>Datum</h3>
+              <div className="font-test">
+                {this.props.moviedate}
+              </div>
+            </div>
+          </div>
+
+
+          <div className="row">
+
+            <div className="col-md-4 p-2">
+              <h3>Säten</h3>
+              <div className="font-test">
+                {this.props.seats.join(', ')}
+              </div>
+            </div>
+
+            <div className="col-md-4 p-2">
+              <h3>Pris</h3>
+              <div className="font-test">
+                {this.props.price + ' SEK'}
+              </div>
+            </div>
+
+            <div className="col-md-4 p-2">
+              <h3>Tid</h3>
+              <div className="font-test">
+                {this.props.movietime}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     );
   }
 }
 
 export default BookingConfirm;
+
+
+
+
+
+
+
+
+
+
