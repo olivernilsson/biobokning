@@ -411,13 +411,7 @@ class BookingPage extends Component {
           </ul>
         </div>
         {this.state.stepCounter === 4 ? (
-          <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-          </div>
+          ""
         ) : (
           <div className="selected-movie-box">
             <p className="selected-movie-title"> Film: {selectedMovieTitle} </p>
@@ -430,16 +424,18 @@ class BookingPage extends Component {
           </div>
         )}
 
-        <div className="mobile-buttons">
+        <div className={this.state.stepCounter === 4 ? '' : "mobile-buttons" }>
+         {this.state.stepCounter === 4 ? "" : 
           <button
-            id="mobback"
-            onClick={this.countDown}
-            type="button"
-            className="align-self-center btn "
-          >
-            {this.state.stepCounter === 4 ? "" : "Bakåt"}
-          </button>
-
+              id="mobback"
+              onClick={this.countDown}
+              type="button"
+              className="align-self-center btn "
+            >
+            Bakåt
+            </button>
+          }
+          
           {this.stepCounter === 3 ? (
             <button
               id="mobout"
@@ -449,26 +445,30 @@ class BookingPage extends Component {
               Slutför bokningen
             </button>
           ) : (
+            (this.state.stepCounter === 4 ? "" : 
             <button
               onClick={this.countUp}
               id="mobforward"
               type="button"
               className="align-self-center btn btn-light "
             >
-              {this.state.stepCounter === 4 ? "" : "Framåt"}
-            </button>
+            Framåt
+            </button>)
           )}
         </div>
 
         <div className=" pagewrap ">
-          <button
-            onClick={this.countDown}
-            id="backtext"
-            type="button"
-            className="btn btn-light"
-          >
-            {this.state.stepCounter === 4 ? "" : "Bakåt"}
-          </button>
+          {this.state.stepCounter === 4 ? "" 
+            : 
+            <button
+              onClick={this.countDown}
+              id="backtext"
+              type="button"
+              className="btn btn-light"
+            >
+            Bakåt
+            </button>
+          }
           {this.state.stepCounter === 1 ? (
             <PricePage
               adults={this.state.adults}
@@ -543,6 +543,8 @@ class BookingPage extends Component {
               Slutför bokningen
             </button>
           ) : (
+            (this.state.stepCounter === 4 ? "" 
+            :
             <button
               onClick={this.countUp}
               id="forward"
@@ -554,8 +556,8 @@ class BookingPage extends Component {
                 : " blinker"
               )}*/
             >
-              {this.state.stepCounter === 4 ? "" : "Framåt"}
-            </button>
+            Framåt
+            </button>)
           )}
         </div>
       </section>

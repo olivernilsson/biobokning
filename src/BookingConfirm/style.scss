@@ -7,7 +7,32 @@
   }
 }
 
+@media screen and (max-width: 950px) {
+  .booking-confirm-container {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+
+}
+
 .h4-upper {
-  margin-top: 150px;
+  margin-top: 650px;
   margin-bottom: 30px;
 }
+
+@media screen and (min-width: 950px) {
+  .booking-confirm-container {
+    margin-top: 150px;
+    margin-left: 250px;
+    margin-right: 250px;
+  }
+
+
+}
+// .booking-confirm-container {
+//   margin-top: 150px;
+//   margin-left: 150px;
+//   margin-right: 150px;
+// }
