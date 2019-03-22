@@ -22,6 +22,7 @@ class SalonPage extends Component {
     this.toggleSeat = this.toggleSeat.bind(this);
     this.hoverMySeats = this.hoverMySeats.bind(this);
     this.deselectMyHoverSeats = this.deselectMyHoverSeats.bind(this);
+    this.listenForSocketBookings = this.listenForSocketBookings.bind(this);
   }
 
   async componentDidMount() {
@@ -38,7 +39,6 @@ class SalonPage extends Component {
     let mySeatsAndTakenSeats = this.colorMySeatsAndTakenSeats(
       this.takenSeatsArray
     );
-
     this.convertSeatObjectsToComponentsBeforeRendering(mySeatsAndTakenSeats);
   }
 
@@ -115,51 +115,72 @@ class SalonPage extends Component {
     }
   }
 
-  prePickBestSeats(){
-    let nbrOfPickedSeats = this.props.personsWantSeat
-    
-    if(this.props.mySeats.length < 1){
-      for(let row = 3; row < this.arrayWithRowsAndSeats.length; row++){
-        for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
-          let middleSeat = (this.arrayWithRowsAndSeats[row].length)/2
+  prePickBestSeats() {
+    let nbrOfPickedSeats = this.props.personsWantSeat;
 
-          let count = 0
-          this.rankArr = []
-          for(let seat = 0; seat < this.arrayWithRowsAndSeats[row].length; seat++){
-            if(seat < middleSeat){
-              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count
-              count += 2
+    if (this.props.mySeats.length < 1) {
+      for (let row = 3; row < this.arrayWithRowsAndSeats.length; row++) {
+        for (
+          let seat = 0;
+          seat < this.arrayWithRowsAndSeats[row].length;
+          seat++
+        ) {
+          let middleSeat = this.arrayWithRowsAndSeats[row].length / 2;
+
+          let count = 0;
+          this.rankArr = [];
+          for (
+            let seat = 0;
+            seat < this.arrayWithRowsAndSeats[row].length;
+            seat++
+          ) {
+            if (seat < middleSeat) {
+              this.arrayWithRowsAndSeats[row][seat].rank = 2 + count;
+              count += 2;
             }
-            if(seat === middleSeat){
-              this.arrayWithRowsAndSeats[row][seat].rank = count - 1
-              count = count - 1
+            if (seat === middleSeat) {
+              this.arrayWithRowsAndSeats[row][seat].rank = count - 1;
+              count = count - 1;
             }
-            if(seat > middleSeat){
-              this.arrayWithRowsAndSeats[row][seat].rank = count -2
-              count -= 2
+            if (seat > middleSeat) {
+              this.arrayWithRowsAndSeats[row][seat].rank = count - 2;
+              count -= 2;
             }
-            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat])
+            this.rankArr.push(this.arrayWithRowsAndSeats[row][seat]);
           }
-          this.rankArr.sort(function(a, b){return b.rank - a.rank})
+          this.rankArr.sort(function(a, b) {
+            return b.rank - a.rank;
+          });
 
-          let seatsUntilTakenSeat = 0
-          for(let seatRank of this.rankArr){
-            if(seatRank.className === 'taken-seat') {break}
-            seatsUntilTakenSeat++
+          let seatsUntilTakenSeat = 0;
+          for (let seatRank of this.rankArr) {
+            if (seatRank.className === "taken-seat") {
+              break;
+            }
+            seatsUntilTakenSeat++;
           }
 
-          if(nbrOfPickedSeats <= seatsUntilTakenSeat){
-            for(let pickedSeats = 0; pickedSeats < nbrOfPickedSeats; pickedSeats++){
-              let rankArrIndex = this.rankArr[pickedSeats].seatNum
-              this.seatsBySeatNumber[rankArrIndex].className = 'blue'
+          if (nbrOfPickedSeats <= seatsUntilTakenSeat) {
+            for (
+              let pickedSeats = 0;
+              pickedSeats < nbrOfPickedSeats;
+              pickedSeats++
+            ) {
+              let rankArrIndex = this.rankArr[pickedSeats].seatNum;
+              this.seatsBySeatNumber[rankArrIndex].className = "blue";
 
-              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum)
-              this.mySeats = this.mySeats.sort(function(a, b){return a - b})
+              this.mySeats.push(this.seatsBySeatNumber[rankArrIndex].seatNum);
+              this.mySeats = this.mySeats.sort(function(a, b) {
+                return a - b;
+              });
             }
-            this.props.preStoreMySeats(this.mySeats)
-            return 
+            this.props.preStoreMySeats(this.mySeats);
+            return;
           }
         }
+      }
+    }
+  }
   deselectMyHoverSeats(id) {
     let nbrOfPickedSeats = this.props.personsWantSeat;
     if (this.checkIfSeatsArePickable(id, nbrOfPickedSeats)) {
@@ -181,8 +202,8 @@ class SalonPage extends Component {
           this.seatsBySeatNumber[id + i].className += " blink-me";
         }
       }
-    }  
-    this.convertSeatObjectsToComponentsBeforeRendering()
+    }
+    this.convertSeatObjectsToComponentsBeforeRendering();
   }
 
   async toggleSeat(id) {
@@ -224,14 +245,17 @@ class SalonPage extends Component {
 
       console.log(message.socketseats);
 
-      this.takenSeatsArray = this.takenSeatsArray.concat(message.socketseats);
+      this.takenSeatsArray = [
+        ...new Set(this.takenSeatsArray.concat(message.socketseats))
+      ];
+
       for (let takenSeat of this.takenSeatsArray) {
         this.seatsBySeatNumber[takenSeat].className += " taken-seat";
       }
-      this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
-        view[0]._id,
-        bookings
-      );
+      // this.takenSeatsArray = this.returnsTakenSeatsForThisViewing(
+      //   view[0]._id,
+      //   bookings
+      // );
 
       this.convertSeatObjectsToComponentsBeforeRendering(
         this.seatsBySeatNumber
@@ -329,8 +353,8 @@ class SalonPage extends Component {
           }
         }
       }
-    }  
-    this.convertSeatObjectsToComponentsBeforeRendering()
+    }
+    this.convertSeatObjectsToComponentsBeforeRendering();
   }
   //SLUTADE HÄR! FÅ IN ID OCH NR FRÅN TOGGLESEATS
 
@@ -351,7 +375,7 @@ class SalonPage extends Component {
     return true;
   }
 
-  convertSeatObjectsToComponentsBeforeRendering(){
+  convertSeatObjectsToComponentsBeforeRendering() {
     let seatNum = 1;
     let arrayWithRowsAndSeats = [];
 

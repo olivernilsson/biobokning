@@ -21,21 +21,21 @@ module.exports = class SocketIoController {
         this.io.emit("booking", msg);
       });
 
-      socket.on("prebooking", msg => {
-        console.log("hey", msg);
-        if (!this.prebookingSeatsByView[msg.viewId]) {
-          this.prebookingSeatsByView[msg.viewId] = [];
-        }
-        this.prebookingSeatsByView[msg.viewId] = this.prebookingSeatsByView[
-          msg.viewId
-        ].concat(msg.socketseats);
-        // send the incoming message back to ALL
-        // clients (all connected sockets)
-        this.io.emit("prebooking", {
-          viewId: msg.viewId,
-          socketseats: this.prebookingSeatsByView[msg.viewId]
-        });
-      });
+      // socket.on("prebooking", msg => {
+      //   console.log("hey", msg);
+      //   if (!this.prebookingSeatsByView[msg.viewId]) {
+      //     this.prebookingSeatsByView[msg.viewId] = [];
+      //   }
+      //   this.prebookingSeatsByView[msg.viewId] = this.prebookingSeatsByView[
+      //     msg.viewId
+      //   ].concat(msg.socketseats);
+      //   // send the incoming message back to ALL
+      //   // clients (all connected sockets)
+      //   this.io.emit("prebooking", {
+      //     viewId: msg.viewId,
+      //     socketseats: this.prebookingSeatsByView[msg.viewId]
+      //   });
+      // });
     });
   }
 };
