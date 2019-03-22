@@ -170,6 +170,7 @@ class MyBookings extends Component {
             </UncontrolledCollapse>
           </div>
         ))}
+        <br />
       </section>
     );
   }
