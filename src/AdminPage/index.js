@@ -17,11 +17,9 @@ import {
 import "./style.scss";
 import "./inputmodal.scss";
 import REST from "../REST.js";
-import App from "../App/index.js";
 
 class Film extends REST {}
 class View extends REST {}
-class User extends REST {}
 
 class Login extends REST {
   static get baseRoute() {
@@ -50,7 +48,6 @@ class AdminPage extends Component {
       modal: false,
       inputModal: false,
       addModal: false,
-
       time: "",
       date: "",
       showEdited: false,
@@ -200,12 +197,12 @@ class AdminPage extends Component {
   }
 
   async saveNewView() {
-    let { title, timeAdd, salongAdd, dateAdd } = this.state;
+    let { title, timeAdd, salongTitle, dateAdd } = this.state;
     let toBeAdded = await View.find(`.find({film:"${title}"})`);
 
     let newAddedView = await new View({
       film: title,
-      auditorium: salongAdd,
+      auditorium: salongTitle,
       time: timeAdd,
       date: dateAdd
     });
@@ -279,7 +276,7 @@ class AdminPage extends Component {
         </div>
       );
     }
-    this.setState({ selectedMovie: true });
+    this.setState({ selectedMovie: true, salongTitleDropDown: false });
   }
 
   toggleAddViewModal() {
@@ -363,17 +360,30 @@ class AdminPage extends Component {
                   <br /> {this.state.selectedValue}
                 </p>
                 <InputGroup className="input-box">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText className="input-styling">
-                      Salong
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    onChange={this.addingNewView}
-                    name="salongAdd"
-                    className="underline-styling"
-                    placeholder="T.ex Stora Salongen"
-                  />
+                  <ButtonDropdown
+                    className="dropbutton-salons"
+                    isOpen={this.state.salongDropDown}
+                    toggle={this.toggleSalongDropdown}
+                  >
+                    <DropdownToggle caret size="sm">
+                      {this.state.salongTitleDropDown
+                        ? this.state.salongTitle
+                        : "Välj Salong"}
+                    </DropdownToggle>
+
+                    <DropdownMenu>
+                      {this.state.salongs.map(view => (
+                        <DropdownItem
+                          value={view}
+                          onClick={this.choseSalong}
+                          key={view}
+                          className="dropdown-item"
+                        >
+                          {view}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </ButtonDropdown>
                 </InputGroup>
                 <InputGroup className="input-box">
                   <InputGroupAddon addonType="prepend">
