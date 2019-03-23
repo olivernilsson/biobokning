@@ -50,7 +50,7 @@ class AdminPage extends Component {
       modal: false,
       inputModal: false,
       addModal: false,
-      salong: "",
+
       time: "",
       date: "",
       showEdited: false,
@@ -75,27 +75,14 @@ class AdminPage extends Component {
     this.onDismiss = this.onDismiss.bind(this);
     this.editingView = this.editingView.bind(this);
     this.choseSalong = this.choseSalong.bind(this);
-    this.toggleSalong = this.toggleSalong.bind(this);
+    this.toggleSalongDropdown = this.toggleSalongDropdown.bind(this);
     this.viewings = [];
     this.movie = [];
     this.saveView = [];
-    console.log(App.who);
+
     this.testCheckLogin();
     this.admin = "admin@grupp4.com";
   }
-
-  // async saveAdminToDb() {
-  //   let addUser = new User({
-  //     firstName: "admin",
-  //     lastName: "admin",
-  //     email: "admin@grupp4.com",
-  //     password: "admin",
-  //     admin: true
-  //   });
-
-  //   await addUser.save();
-  //   console.log(addUser);
-  // }
 
   async testCheckLogin() {
     let whoIsLoggedIn = await Login.find();
@@ -106,7 +93,6 @@ class AdminPage extends Component {
     this.movie = await Film.find();
 
     this.setState({ movies: this.movie });
-    console.log(this.state.movies);
 
     this.view = await View.find();
     this.views = [];
@@ -123,12 +109,10 @@ class AdminPage extends Component {
   }
 
   choseSalong = async event => {
-    console.log("körs");
     await this.setState({
       salongTitle: event.target.value,
       salongTitleDropDown: true
     });
-    console.log(this.state.title, this.state.title);
   };
 
   choseMovie = async event => {
@@ -181,14 +165,14 @@ class AdminPage extends Component {
   }
 
   async saveEditedView() {
-    let { salong, time, date } = this.state;
+    let { salongTitle, time, date } = this.state;
     let viewId = this.saveView[0][0]._id;
     let viewTitle = this.saveView[0][0].film;
 
     let saveThisView = await View.find(`.findOneAndReplace({_id:'${viewId}' },
         {  "$set": {
           "date": '${date}',
-          "auditorium": '${salong}',
+          "auditorium": '${salongTitle}',
           "time":'${time}' ,
       }
     },
@@ -310,9 +294,9 @@ class AdminPage extends Component {
     });
   }
 
-  toggleSalong() {
+  toggleSalongDropdown() {
     this.setState({
-      inputModal: !this.state.salongDropDown
+      salongDropDown: !this.state.salongDropDown
     });
   }
 
@@ -454,12 +438,11 @@ class AdminPage extends Component {
           </ModalFooter>
         </Modal>
 
-        {/* REDIGERA VISNING  */}
         <div>
           <Modal
             className="inputmodalstyle"
             isOpen={this.state.inputModal}
-            toggle={this.toggleInput}
+            toggle={this.toggle}
           >
             <ModalHeader
               className="inputmodalstyle modify-modal-header"
@@ -475,11 +458,11 @@ class AdminPage extends Component {
                 </p>
                 <InputGroup className="input-box">
                   <ButtonDropdown
-                    className="dropbutton-style"
-                    isOpen={this.state.isOpen}
-                    toggle={this.toggle}
+                    className="dropbutton-salons"
+                    isOpen={this.state.salongDropDown}
+                    toggle={this.toggleSalongDropdown}
                   >
-                    <DropdownToggle caret size="lg">
+                    <DropdownToggle caret size="sm">
                       {this.state.salongTitleDropDown
                         ? this.state.salongTitle
                         : "Välj Salong"}
