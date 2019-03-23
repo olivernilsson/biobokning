@@ -153,7 +153,6 @@ class StartPage extends Component {
                       <tbody>
                         <tr>
                           <td>{index + 1 + ": " + movie.title} </td>
-                          <td className="floatRight">{movieC.count} </td>
                         </tr>
                       </tbody>
                     </table>
