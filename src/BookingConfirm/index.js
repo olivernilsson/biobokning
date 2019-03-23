@@ -19,24 +19,32 @@ class BookingConfirm extends Component {
             <h1 className="p-2 testo">Tack, här finns din bokning!</h1>
 
             <div className="row">
-              <div className="col-md-4 p-2">
+            
+              <div className="col-md-3 p-2">
                 <h3>Titel</h3>
                 <div className="font-test">
                   {this.props.movietitle}
                 </div>
               </div>
 
-              <div className="col-md-4 p-2">
+              <div className="col-md-3 p-2">
                 <h3>Salong</h3>
                 <div className="font-test">
                   {this.props.salon}
                 </div>
               </div>
 
-              <div className="col-md-4 p-2">
+              <div className="col-md-3 p-2">
                 <h3>Datum</h3>
                 <div className="font-test">
                   {this.props.moviedate}
+                </div>
+              </div>
+
+              <div className="col-md-3 p-2">
+                <h3>Boknings id</h3>
+                <div className="font-test">
+                  {this.props.bookingId}
                 </div>
               </div>
             </div>

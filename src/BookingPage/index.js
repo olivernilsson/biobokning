@@ -6,7 +6,7 @@ import PricePage from "../PricePage/index";
 import SalonPage from "../SalonPage/index";
 import { RegPage } from "../RegPage/index";
 import BookingConfirm from "../BookingConfirm/index";
-import DoubleBooked from "../BookingConfirm/doubleBooked";
+import DoubleBooked from "../BookingConfirm/doubleBooked.js";
 import REST from "../REST";
 import openSocket from "socket.io-client";
 const socket = openSocket("http://localhost:3001");
@@ -51,7 +51,8 @@ class BookingPage extends Component {
       salonView: [],
       disableRegButton: true,
       loggedInBookingPage: App.loggedIn,
-      doubleBooked: false
+      doubleBooked: false,
+      bookingId:''
     };
 
     window.bookingComponent = this;
@@ -235,16 +236,19 @@ class BookingPage extends Component {
       seniors: this.state.seniors,
       user: this.state.user,
       view: this.state.view[0]._id,
-      seats: this.state.mySeats
+      seats: this.state.mySeats,
+      bookingId: this.state.bookingId
     });
 
     let result = await myNewBooking.save();
 
     if (result.bookingId) {
       this.setState({
-        doubleBooked: false
+        bookingId: result.bookingId,
+        doubleBooked: false,
       });
     }
+
     if (!result.bookingId) {
       this.setState({
         doubleBooked: true
@@ -316,7 +320,8 @@ class BookingPage extends Component {
       kids: this.state.kids,
       seniors: this.state.seniors,
       view: this.view[0]._id,
-      seats: this.state.mySeats
+      seats: this.state.mySeats,
+      bookingid: this.state.bookingId
     });
 
     await userBooking.save();
@@ -360,7 +365,9 @@ class BookingPage extends Component {
       movietitle: myNewBookingPopulated.view.film,
       moviedate: myNewBookingPopulated.view.date,
       movietime: myNewBookingPopulated.view.time,
-      totalprice: totalPrice
+      totalprice: totalPrice,
+      bookingId: userBooking.bookingId
+
     });
   }
 
@@ -517,6 +524,7 @@ class BookingPage extends Component {
                 seats={this.state.mySeats}
                 salon={this.state.selectedMovieSalon}
                 price={this.state.totalprice}
+                bookingId={this.state.bookingId}
               />
             )
           ) : (
