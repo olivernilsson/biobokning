@@ -46,17 +46,21 @@ class AdminPage extends Component {
       isOpen: false,
       selectedValue: "",
       title: "",
+      salongTitleDropDown: "",
       modal: false,
       inputModal: false,
       addModal: false,
-      salong: "",
+
       time: "",
       date: "",
       showEdited: false,
       salongAdd: "",
       dateAdd: "",
       timeAdd: "",
-      whoIsLoggedIn: ""
+      whoIsLoggedIn: "",
+      salongTitle: "",
+      salongs: [],
+      salongDropDown: false
     };
     this.toggle = this.toggle.bind(this);
     this.toggleInput = this.toggleInput.bind(this);
@@ -70,26 +74,15 @@ class AdminPage extends Component {
     this.saveNewView = this.saveNewView.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
     this.editingView = this.editingView.bind(this);
+    this.choseSalong = this.choseSalong.bind(this);
+    this.toggleSalongDropdown = this.toggleSalongDropdown.bind(this);
     this.viewings = [];
     this.movie = [];
     this.saveView = [];
-    console.log(App.who);
+
     this.testCheckLogin();
     this.admin = "admin@grupp4.com";
   }
-
-  // async saveAdminToDb() {
-  //   let addUser = new User({
-  //     firstName: "admin",
-  //     lastName: "admin",
-  //     email: "admin@grupp4.com",
-  //     password: "admin",
-  //     admin: true
-  //   });
-
-  //   await addUser.save();
-  //   console.log(addUser);
-  // }
 
   async testCheckLogin() {
     let whoIsLoggedIn = await Login.find();
@@ -100,9 +93,27 @@ class AdminPage extends Component {
     this.movie = await Film.find();
 
     this.setState({ movies: this.movie });
-    console.log(this.state.movies);
+
+    this.view = await View.find();
+    this.views = [];
+
+    for (let key in this.view) {
+      if (this.view.hasOwnProperty(key)) {
+        if (!this.views.includes(this.view[key].auditorium))
+          this.views.push(this.view[key].auditorium);
+      }
+      this.setState({ salongs: this.views });
+    }
+
     await this.render();
   }
+
+  choseSalong = async event => {
+    await this.setState({
+      salongTitle: event.target.value,
+      salongTitleDropDown: true
+    });
+  };
 
   choseMovie = async event => {
     this.viewings.length = 0;
@@ -154,14 +165,14 @@ class AdminPage extends Component {
   }
 
   async saveEditedView() {
-    let { salong, time, date } = this.state;
+    let { salongTitle, time, date } = this.state;
     let viewId = this.saveView[0][0]._id;
     let viewTitle = this.saveView[0][0].film;
 
     let saveThisView = await View.find(`.findOneAndReplace({_id:'${viewId}' },
         {  "$set": {
           "date": '${date}',
-          "auditorium": '${salong}',
+          "auditorium": '${salongTitle}',
           "time":'${time}' ,
       }
     },
@@ -280,6 +291,12 @@ class AdminPage extends Component {
   toggleInput() {
     this.setState({
       inputModal: !this.state.inputModal
+    });
+  }
+
+  toggleSalongDropdown() {
+    this.setState({
+      salongDropDown: !this.state.salongDropDown
     });
   }
 
@@ -425,7 +442,7 @@ class AdminPage extends Component {
           <Modal
             className="inputmodalstyle"
             isOpen={this.state.inputModal}
-            toggle={this.toggleInput}
+            toggle={this.toggle}
           >
             <ModalHeader
               className="inputmodalstyle modify-modal-header"
@@ -440,17 +457,30 @@ class AdminPage extends Component {
                   <br /> {this.editTitle}
                 </p>
                 <InputGroup className="input-box">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText className="input-styling">
-                      Salong
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    onChange={this.editingView}
-                    name="salong"
-                    className="underline-styling"
-                    placeholder={this.editAudit}
-                  />
+                  <ButtonDropdown
+                    className="dropbutton-salons"
+                    isOpen={this.state.salongDropDown}
+                    toggle={this.toggleSalongDropdown}
+                  >
+                    <DropdownToggle caret size="sm">
+                      {this.state.salongTitleDropDown
+                        ? this.state.salongTitle
+                        : "Välj Salong"}
+                    </DropdownToggle>
+
+                    <DropdownMenu>
+                      {this.state.salongs.map(view => (
+                        <DropdownItem
+                          value={view}
+                          onClick={this.choseSalong}
+                          key={view}
+                          className="dropdown-item"
+                        >
+                          {view}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </ButtonDropdown>
                 </InputGroup>
                 <InputGroup className="input-box">
                   <InputGroupAddon addonType="prepend">
