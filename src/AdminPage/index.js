@@ -276,7 +276,7 @@ class AdminPage extends Component {
         </div>
       );
     }
-    this.setState({ selectedMovie: true });
+    this.setState({ selectedMovie: true, salongTitleDropDown: false });
   }
 
   toggleAddViewModal() {
