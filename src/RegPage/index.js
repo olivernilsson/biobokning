@@ -7,11 +7,11 @@ export class RegPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "Test",
-      lastName: "Test",
-      email: "test@test.com",
-      password: "Abc12345",
-      verifyPassword: "Abc12345",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      verifyPassword: "",
       firstNameStyle: false,
       lastNameStyle: false,
       passwordStyle: false,
