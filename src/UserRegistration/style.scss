@@ -1,0 +1,92 @@
+.registration-field{
+  position: absolute;
+  right: 130px;
+
+  p {
+    padding: 5px;
+    text-align: center;
+    color: black;
+  }
+}
+
+.my-bookings-btn {
+  position: absolute;
+  right: 130px;
+  color:  rgb(133, 255, 199);
+
+  p {
+    text-align: center;
+  }
+}
+
+.register-button{
+  background-color:  rgb(133, 255, 199);
+}
+
+.modalhead{
+  color: #fff;
+}
+
+.reg-modal-header{
+  color: whitesmoke;
+}
+
+.reg-modal-body{
+  height: 150px;
+}
+
+.register-modal{
+  display: none;
+  
+}
+
+.blocking-registration{
+  margin-top: 20px;
+  position: relative;
+  margin-right: 40px;
+}
+
+.close-button{
+  color: white;
+}
+
+
+.mymodal-style{
+  height: 550px;
+}
+
+.mob-btn{
+  position: absolute;
+  height: 50px;
+  bottom: 0;
+  width: 100%;
+  left: 0px;
+}
+
+
+.mverify-tecken,.mverify-bokstav,.mverify-number,.mverify-email{
+  color: lightcoral;
+  font-size: 12px;
+   
+  }
+
+@media screen and (max-width:  992px) {
+  .registration-field, .my-bookings-btn{
+    position: relative;
+    margin: 10px 0 0 126px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  #modalsave-user,.done-btn{
+    position: absolute;
+    height: 50px;
+    bottom: 0;
+    width: 100%;
+    left: 0px;
+  }
+  .reg-form {
+    width: 100%;
+  }
+}
+

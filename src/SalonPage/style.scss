@@ -1,0 +1,21 @@
+.salon-rows > .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row1 {
+  margin-top: 80px;
+}
+
+.h4-salon {
+  margin-top: 80px;
+}
+
+
+
+@media screen and (max-width: 700px) {
+  .screen {
+    width: 200px;
+  }
+}
