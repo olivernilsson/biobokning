@@ -326,6 +326,19 @@ class BookingPage extends Component {
 
     await userBooking.save();
 
+    if (userBooking.bookingId) {
+      this.setState({
+        doubleBooked: false,
+      });
+    }
+
+    if (!userBooking.bookingId) {
+      this.setState({
+        doubleBooked: true
+      });
+      return;
+    }
+
     // if (!(await userBooking.hasOwnProperty(`bookingId`))) {
     //   this.bookingConfirm.confirmationFail = true;
     //   this.countUp();
